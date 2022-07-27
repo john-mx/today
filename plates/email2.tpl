@@ -35,7 +35,7 @@ use DigitalMx as u;
 
 echo <<<EOT
 
-<table border:0; margin:6px;max-width:700px'>
+<table border:0; margin:6px;max-width:90vw'>
 <tr><td style="$sgtitle">
 Today in Joshua Tree National Park</td></tr>
 <tr><td style="$sgsub">
