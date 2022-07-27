@@ -23,18 +23,19 @@ $twolocs = ['jr','hq'];
 
 // what function?
 
-$f = t4();
+$f = temail($Plates,$Today);
 
 
 
-function t1 () {
-global $Today;
+function t1 ($Plates,$Today) {
+
 $z = $Today->load_cache('wapi',true);
 
 u\echor ($z, 'result of test');
 }
 
-function t2 () {
+function t2 ($Plates,$Today) {
+
 	echo $Today->start_page('test page','b');
 
 	 u\echor ($z,'Today input to plates');
@@ -42,8 +43,17 @@ function t2 () {
 	echo $Plates->render('today-boot',$z);
 }
 
-function t3 (){
-global $Today;
+function temail ($Plates,$Today) {
+
+//	echo $Today->start_page('test page','b');
+	$z = $Today->prepare_today();
+	// u\echor ($z,'Today input to plates');
+
+	echo $Plates->render('email2',$z);
+}
+
+function tprint ($Plates,$Today){
+
 	// echo $Today->start_page('test page','p');
 // 	$z = $Today -> prepare_today();
 // 	$out =  $Plates->render('today-print',$z);
@@ -75,8 +85,8 @@ global $Today;
 
 
 }
-function t4 () {
-	global $Today;
+function t4 ($Plates,$Today) {
+
 	$data = file_get_contents(REPO_PATH . '/public/pages/today2.html');
 	//echo $data; exit;
 	$Today->print_pdf($data,'pages/test2.pdf');

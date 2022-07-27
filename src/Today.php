@@ -249,10 +249,11 @@ public function rebuild($force = false) {
 		. $page_body_txt ;
 	file_put_contents (SITE_PATH . '/pages/today4.html',$new_page);
 
-	$page_body_em = $this->Plates -> render ('today5',$y);
-	$new_page = $this->start_page('Today in the Park (for email)')
-		. $page_body_em ;
-	file_put_contents (SITE_PATH . '/pages/today5.html',$new_page);
+	$page_body_em = $this->Plates -> render ('email2',$y);
+	$new_page = "<html><head><title>Today in the Park (for email)
+		</title></head><body style='width:100vw;max-width:700px'>";
+		$new_page .= $page_body_em ;
+	file_put_contents (SITE_PATH . '/pages/email.html',$new_page);
 
 $page_body_print = $this->Plates -> render ('print',$y);
 	$print_page = $this->start_page('Today in the Park (print)','p')
@@ -497,8 +498,8 @@ $this->logger->info("Cache $section refreshed.");
 					break;
 
 				case 'properties':
-					$locs = ['jr','cw','hq','br','kv'];
-					$w = $this->set_properties(plocs);
+					$plocs = ['jr','cw','hq','br','kv'];
+					$w = $this->set_properties($plocs);
 					if (!$w)die ("no properties");
 					break;
 

@@ -59,7 +59,7 @@ Data is collected from a number of places that report information like weather, 
 	<td class='left'><tt>just plain text</tt></td></tr>
 
 <tr><td>
-	<div class='likebutton'><a href='/pages/today5.html' target='email'>Limited styles for email</a></div></td>
+	<div class='likebutton'><a href='/pages/email.html' target='email'>Limited styles for email</a></div></td>
 	<td class='left'>For email, all the style information has to be defined "inline", without using style sheets.  This version does that, and sh9uld be good for copy/paste into an email.</td></tr>
 <tr><td>
 	<div class='likebutton'><a href='/pages/print.html' target='print'>print version</a></div></td>
