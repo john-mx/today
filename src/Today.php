@@ -221,9 +221,9 @@ public function rebuild($force = false) {
 
 	$page_body = $this->Plates -> render('main',$y);
 
-	$static_page = $this->start_page('Today in the Park (static)')
+	$wapi_page = $this->start_page('Today in the Park (wapi)')
 		. $page_body;
-	file_put_contents (SITE_PATH . '/pages/today.html',$static_page);
+	file_put_contents (SITE_PATH . '/pages/wapi.html',$wapi_page);
 
 	$scroll_page = $this->start_page('Today in the Park (scrolling)','s')
 		. $page_body . self::$scroll_script;
@@ -234,24 +234,24 @@ public function rebuild($force = false) {
 	file_put_contents( SITE_PATH . '/pages/snap.html', $snap_page);
 
 
-	$page_body_new = $this->Plates -> render ('today2',$y);
+	$page_body_wgov = $this->Plates -> render ('today2',$y);
 	$new_page = $this->start_page('Today in the Park (weather.gov)')
-		. $page_body_new;
-	file_put_contents (SITE_PATH . '/pages/today2.html',$new_page);
+		. $page_body_wgov;
+	file_put_contents (SITE_PATH . '/pages/wgov.html',$new_page);
 
-	$page_body_con = $this->Plates -> render ('today3',$y);
-	$new_page = $this->start_page('Today in the Park (condensed)')
-		. $page_body_con;
-	file_put_contents (SITE_PATH . '/pages/today3.html',$new_page);
+	// $page_body_con = $this->Plates -> render ('today3',$y);
+// 	$new_page = $this->start_page('Today in the Park (condensed)')
+// 		. $page_body_con;
+// 	file_put_contents (SITE_PATH . '/pages/today3.html',$new_page);
 
-	$page_body_txt = $this->Plates -> render ('today4',$y);
+	$page_body_txt = $this->Plates -> render ('ptext',$y);
 	$new_page = $this->start_page('Today in the Park (text only)')
 		. $page_body_txt ;
-	file_put_contents (SITE_PATH . '/pages/today4.html',$new_page);
+	file_put_contents (SITE_PATH . '/pages/ptext.html',$new_page);
 
 	$page_body_em = $this->Plates -> render ('email2',$y);
 	$new_page = "<html><head><title>Today in the Park (for email)
-		</title></head><body style='width:100vw;max-width:700px'>";
+		</title></head><body style='width:700px'>";
 		$new_page .= $page_body_em ;
 	file_put_contents (SITE_PATH . '/pages/email.html',$new_page);
 
@@ -263,7 +263,7 @@ $page_body_print = $this->Plates -> render ('print',$y);
 	// make a pdf version if none exists.  This limits to 1 per day.
 	$pdf = '/pages/' . "${this_day}.pdf";
 	if (!file_exists(SITE_PATH . $pdf)){
-	//	$this->print_pdf($print_page,$pdf);
+		$this->print_pdf($print_page,$pdf);
 	}
 
 
@@ -1374,7 +1374,6 @@ if (empty($html)) die ("no html to print_pdf");
 
 
 #	$data = "@pages/print.html";
-	if (!$html = file_get_contents(REPO_PATH . '/public/pages/today2.html') ) die ("no data in html ");
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL,"https://api.typeset.sh");
@@ -1387,7 +1386,7 @@ if (empty($html)) die ("no html to print_pdf");
 	$resp = curl_exec($ch);
 
 	curl_close ($ch);
-echo $resp;
+
 
 	file_put_contents(SITE_PATH . $pdffile,$resp);
 

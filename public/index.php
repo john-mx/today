@@ -32,38 +32,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <p>This project generates the Today in the Park report in a variety of formats.
 Data is collected from a number of places that report information like weather, air quality, astronomical data, and more.  Local data is collected manually through an <a href='admin.php' target ='admin'>admin page</a>.</p>
 <p>Data from remote sites like weather.gov is checked for age each time it is accessed, and updated if over some limit, like 3 hours.</p>
-<p>The various pages are all generated automatically every few hours from the collected data.  If necessary, they can be updated sooner using the buttons below.</p>
+<p>The pages are all updated automatically every few hours.  If necessary, they can be updated sooner using the buttons below.</p>
 
 <h3>Pages</h3>
 
 <table>
 <tr><td>
-	<div class='likebutton'><a href='/pages/today.html' target='today'>static</a></div></td>
+	<div class='likebutton'><a href='/pages/wapi.html' target='today'>wapi</a></div></td>
 	<td class='left'>Static Page using weatherapi.com for weather</td></tr>
 
 <tr><td>
-	<div class='likebutton'><a href='/pages/today2.html' target='today'>wgov</a></div></td>
+	<div class='likebutton'><a href='/pages/wgov.html' target='today'>wgov</a></div></td>
 	<td class='left'>Static Page using weather.gov for weather</td></tr>
 
 <tr><td>
 	<div class='likebutton'><a href='/pages/scroll.html' target='scroll'>scroll</a></div></td>
-	<td class='left'>Like today, but with smooth scrolling from top to bottomr.</td></tr>
+	<td class='left'>Like wapi, but with smooth scrolling from top to bottom.  (Works on smart tv or computer, does not work on phone.)</td></tr>
 
 <tr><td>
 	<div class='likebutton'><a href='/pages/snap.html' target='snap'>snap</a></div></td>
-	<td class='left'>Like today, but divided into sections, and snaps every 10 seconds to athe next section.  Intended for TV monitor.  Allow 10 seconds for animation to start.</td></tr>
+	<td class='left'>Like wapi, but divided into sections, and snaps every 10 seconds to athe next section.  Intended for TV monitor.  Allow 10 seconds for animation to start.</td></tr>
 
 
 <tr><td>
-	<div class='likebutton'><a href='/pages/today4.html' target='text'>Text only</a></div></td>
+	<div class='likebutton'><a href='/pages/ptext.html' target='text'>Text only</a></div></td>
 	<td class='left'><tt>just plain text</tt></td></tr>
 
 <tr><td>
 	<div class='likebutton'><a href='/pages/email.html' target='email'>Limited styles for email</a></div></td>
-	<td class='left'>For email, all the style information has to be defined "inline", without using style sheets.  This version does that, and sh9uld be good for copy/paste into an email.</td></tr>
+	<td class='left'>For email, all the style information has to be defined "inline", without using style sheets.  This version does that, and sh9uld be good for copy/paste into an email. View page, select all, copy, and paste into an email.</td></tr>
 <tr><td>
 	<div class='likebutton'><a href='/pages/print.html' target='print'>print version</a></div></td>
-	<td class='left'>Designed for printing on 8.5x11; smaller type, condensed layout. takes 2 pages. </td></tr>
+	<td class='left'>Designed for printing on 8.5x11; smaller type, condensed layout. takes 2 pages.<br>
+		Will be available as a pdf page, but it isn't working right yet.
+	<!-- <a href="/pages/" . date('Y-d-m') .".pdf">PDF version is here.</a> -->
+	</td></tr>
 
 
 </table>

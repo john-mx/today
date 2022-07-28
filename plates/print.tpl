@@ -134,24 +134,21 @@ if(empty($weather)): echo "<p>No Data</p>"; else: ?>
 
 
 <div class='in2' style='width:45%; float:left;'>
-<?php if(empty($fire)): echo "<p>No Data</p>"; else:?>
 <h4>Fire Information </h4>
+<?php if(empty($fire)): echo "<p>No Data</p>"; else:?>
 	 	<p style = 'width:100%;'> <b>Current Fire Level:</b> <span style="background-color:<?=$fire['color']?>">
 	 	<?=$fire['level']?> </span></p>
 			<div class='left'>
 				<?=Defs::$firewarn[$fire['level']]?>
 			</div>
-			<?php endif; ?>
+<?php endif; ?>
 </div>
 
 
-
-
-<?php if(0 || empty($air)): echo "<p>No Data</p>"; else:
-// echo "Retrieved at  " . date ('M j h:i a',$air['jr']['dt']);
-?>
+<div class='in2' style='width:45%; float:left;'>
 <h4>Air Quality </h4>
-<table class='in2' style='width:40%;float:left;'>
+<?php if( empty($air)): echo "<p>No Data</p>"; else: ?>
+<table >
 <tr><th>Location</th><th>Air Quality</th><th>Particulates (PM10)</th><th>Ozone</th></tr>
 <?php foreach ($air as $loc => $dat) :
 	if (! in_array($loc,array_keys(Defs::$sitenames))) continue;
@@ -173,7 +170,8 @@ if(empty($weather)): echo "<p>No Data</p>"; else: ?>
 </table>
 
 <?php endif; ?>
-<div style='clear:left;'></div>
+</div>
+<div style='clear:left;'><br></div>
 <!-- ####################################### -->
 
 </div><br /><div id='page25'>
