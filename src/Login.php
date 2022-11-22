@@ -24,13 +24,18 @@ use DigitalMx\jotr\Definitions as Defs;
 class Login
 {
 
+	private $pwlevels=[];
 
+	public function __construct(){
+	 $inifile = Defs::$Files['passwords'];
+	 $this->pwlevels = parse_ini_file(REPO_PATH . '/config/'. $inifile);
 
-	public function check_pwlevel (int $min_pwl = 0) {
+	}
+
+	public function check_pw (int $min_pwl = 0) {
 		$pwl  = $this->get_pwlevel();
 		if ($pwl >= $min_pwl) return true;
-
-		$pwl = $this->get_pw();
+		$this->show_login();
 
 	}
 
@@ -38,18 +43,10 @@ class Login
 		return $_SESSION['pw_level'] ?? 0 ;
 	}
 
-	private function get_pw() {
-		echo <<< eof
-		<script>window.open('/login.php','login')</script>
-eof;
 
-	}
-
-	public function set_pwlevel ($pw='') {
-		$pwlevels = parse_ini_file(REPO_PATH . '/config/'. Defs::$Files['passwords']);
-		#u\echor ($pwlevels);
-		$pwx = $pwlevels[$pw] ?? 0;
-		$pwx = intval($pwx);
+	public function set_pwl ($pw='') {
+		// look up value from pw table
+		$pwx = intval($this->pwlevels[$pw] ?? 0);
 		$pwl = 0;
 		if (!empty($pwx) && is_integer($pwx) && $pwx > 0) {
 			$pwl = $pwx;
@@ -58,5 +55,20 @@ eof;
 		return $pwl;
 	}
 
+	private function show_login() {
+
+	echo <<<EOF
+	<h3>Login Required</h3>
+	<p>Please Log In </p>
+	<form method = 'post'>
+	<input type='hidden' name='type' value='login'>
+	<input type=text name='pw' id = 'pw' size=10>
+	<input type='submit'>
+	</form>
+
+	<script>document.getElementById('pw').focus();</script>
+	EOF;
+exit;
+	}
 
 }

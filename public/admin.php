@@ -30,30 +30,19 @@ echo $Today->start_page('Admin JOTR Today','h'); #add hidden js
 
 // check for login status
 
+if (isset($_POST['pw']) ) {// is login
+	$Login->set_pwl($_POST['pw']);
+	show_admin($Today,$Plates);
+	exit;
+}
+$Login->check_pw(1);
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET'){
-	$pwl = $Login -> get_pwlevel();
-	if (!$pwl)  {
-		show_login();
-		exit;
-	} else {
-		show_admin($Today,$Plates);
-		exit;
-	}
-} elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	if ($_POST['type'] == 'login') {
-		login($_POST['pw'],$Today,$Plates,$Login);
 
-	}
-	elseif  ($_POST['type'] == 'update') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		post_data ($_POST,$Today);
 		exit;
-	} else {
-		echo "Error: illegal post type" . BRNL;
-		exit;
-	}
 } else {
-	echo "Error: illegal request method" . BRNL;
+	show_admin($Today,$Plates);
 	exit;
 }
 
@@ -103,18 +92,4 @@ function post_data($post,$Today){
 
 }
 
-function show_login () {
-echo <<<EOF
 
-<p>Please Log In </p>
-<form method = 'post'>
-<input type='hidden' name='type' value='login'>
-<input type=text name='pw' id = 'pw' size=10>
-<input type='submit'>
-</form>
-
-<script>document.getElementById('pw').focus();</script>
-EOF;
-
-exit;
-}

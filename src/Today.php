@@ -8,6 +8,7 @@ namespace DigitalMx\jotr;
 	use DigitalMx as u;
 	use DigitalMx\jotr\Definitions as Defs;
 
+
 //END START
 
 
@@ -161,41 +162,6 @@ function PageUp() {
 EOT;
 
 
-public static $dummy_calendar = array
-			 (
-            0 => array
-                (
-                		'dt' => 1639620000,
-
-                    'location' => 'Indian Cove amphitheater',
-                    'type' => 'Ranger Program',
-                    'title' => 'Adaptations to the the Desert',
-                    'duration' => '30 min',
-                    'note' => '',
-                ),
-
-            '1' => array
-                (
-                    'dt' => 1657558800,
-                    'location' => 'Discovery Trail trailhead',
-                    'type' => 'Walk and Talk',
-                    'title' => 'Where these rocks came from',
-                    'duration' => '30 min',
-                    'note' => 'Gather at the crosswalk on Park Drive',
-                ),
-
-            '2' => array
-                (
-                    'dt' => 163962000,
-                    'location' => 'Joshua Tree Cultural Center',
-                    'type' => 'Ranger Talk',
-                    'title' => 'tbd',
-                    'duration' => '30 min',
-                    'note' => '',
-                ),
-            );
-
-
 
 ###############################
 
@@ -203,13 +169,14 @@ public function __construct($c){
 	$this->Plates = $c['Plates'];
 	$this -> Defs = $c['Defs'];
 	$this-> logger = $c['logger'];
+	$this->Cal = $c['Calendar'];
 
 	// locations to use for weather report
 	$this -> wlocs = ['jr','hq','cw','br'] ;
 	$this -> airlocs = ['jr','cw','br'];
 
 	$this -> max_age = Defs::$cache_times;
-	$this -> properties = $this->load_cache('properties');
+	//$this -> properties = $this->load_cache('properties');
 
 }
 
@@ -218,6 +185,8 @@ public function rebuild($force = false) {
 
 	$y = $this->prepare_today ($force);
 	// set forecee to true to force all cahces to rebuild now, instead of on schedule
+
+
 
 	$page_body = $this->Plates -> render('main',$y);
 
@@ -319,13 +288,11 @@ $z=[];
 	$z['camps']['cgavail'] = $y['admin']['cgavail'];
 	$z['camps']['cgstatus'] = $y['admin']['cgstatus'];
 
-	$z['calendar'] = $y['calendar'];
-
-
+	$z['calendar'] = $this->Cal->filter_calendar($y['calendar'],4);
 
 
 	$this->logger->info('formed today array');
- //  u\echor($z, 'z array for today', STOP);
+//   u\echor($z, 'z array for today');
 	return $z;
 }
 
@@ -345,7 +312,7 @@ $fire_levels = array_keys(Defs::$firewarn);
 	}
 	$y['admin']['cg_options'] = $opts;
 
-	$y['calendar'] = $this->load_cache('calendar');
+	//$y['calendar'] = $this->filter_calendar($this->load_cache('calendar'));
 	$y['alerts'] = $this->load_cache('alerts');
 // 	u\echor ($y, 'Y to admin',NOSTOP);
 	return $y;
@@ -376,26 +343,6 @@ public function post_admin ($post) {
 	$this -> write_cache('admin',$y);
 
 
-// calendar
-	$y = $post['calendar'];
-//   u\echor($y,'incoming calendar',NOSTOP);
-	foreach ($y as $n => $cal){
-// u\echor($cal);
-		if (!empty($cal['cdatetime'])){
-			// convert text date to time stamp and save a key
-
-			$dt = $this->str_to_ts($cal['cdatetime']);
-			$cal['dt'] = $dt;
-			$x[] = $cal;
-		//	u\echor($x,'',STOP);
-		}
-	}
-
-	$xs = $this->element_sort($x,'dt');
-// u\echor($x,'c2');
-// u\echor($xs,'post sort',STOP);
-	$this->write_cache('calendar',$xs);
-
 
 //rebuild the pages
 	$this->rebuild();
@@ -409,7 +356,7 @@ public function post_admin ($post) {
 
 
 
-public function load_cache ($section,bool $force=false) {
+private function load_cache ($section, bool $force=false) {
 		$refresh = $force;
 
 		if (! $refresh && !file_exists (CACHE[$section])) {
@@ -426,9 +373,7 @@ public function load_cache ($section,bool $force=false) {
 			}
 		}
 
-//	if ($section == 'admin') $refresh = true;
 
-			//echo "load $section cache: refresh " , ($refresh)?'true':'false' , BRNL;
 		if ($refresh) {
 			if (! $this->refresh_cache($section) ) {
 				u\echoAlert ("Unable to refresh cache: $section.  Using old version.");
@@ -488,14 +433,6 @@ $this->logger->info("Cache $section refreshed.");
 
 					break;
 
-				case 'calendar' :
-					if (!file_exists(CACHE['calendar'])) {
-						$w = self::$dummy_calendar;
-					}
-					$w = $this->filter_calendar();;
-					$this->logger->info("Cache $section refreshed.");
-					$this -> write_cache($section,$w);
-					break;
 
 				case 'properties':
 					$plocs = ['jr','cw','hq','br','kv'];
@@ -1136,54 +1073,6 @@ private function curl_options () {
 	return $options;
 }
 
-function element_sort(array $array, string $on, $order=SORT_ASC)
-{
-	/* copied from php manual.
-		 sorts a list of arrays by one of the elemnts
-		array (
-			123 => array (
-				'name' => 'asdfl',
-				...
-			124 => ...
-
-		$sorted = element_sort($unsorted, 'name');
-
-
-	*/
-
-
-    $new_array = array();
-    $sortable_array = array();
-
-    if (count($array) > 0) {
-        foreach ($array as $k => $v) {
-            if (is_array($v)) {
-                foreach ($v as $k2 => $v2) {
-                    if ($k2 == $on) {
-                        $sortable_array[$k] = $v2;
-                    }
-                }
-            } else {
-                $sortable_array[$k] = $v;
-            }
-        }
-
-        switch ($order) {
-            case SORT_ASC:
-                asort($sortable_array);
-            break;
-            case SORT_DESC:
-                arsort($sortable_array);
-            break;
-        }
-
-        foreach ($sortable_array as $k => $v) {
-            $new_array[$k] = $array[$k];
-        }
-    }
-
-    return $new_array;
-}
 
 
 
@@ -1288,7 +1177,7 @@ private function str_to_ts($edt) {
 			}
 		}
 
-private function write_cache(string $section,array $z) {
+public function write_cache(string $section,array $z) {
 	if (empty($z)){
 	trigger_error("Writing empty array to $section", E_USER_WARNING) ;
 

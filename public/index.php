@@ -5,19 +5,21 @@ namespace DigitalMx\jotr;
 
 //BEGIN START
 	require  'init.php';
+
 	use DigitalMx as u;
 	use DigitalMx\jotr\Definitions as Defs;
 	use DigitalMx\jotr\Today;
 
 	$Plates = $container['Plates'];
 	$Defs = $container['Defs'];
-	$Today = $container['Today'];
 
+	$Today = $container['Today'];
 
 //END START
 
 
-echo $Today->start_page('Project Index');
+echo $Today ->start_page('Project Index');
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	if (array_key_exists('rebuild',$_POST)) {

@@ -54,6 +54,13 @@ $container['Today'] = function ($c) {
 	$pl = new \DigitalMx\jotr\Today($c);
     return $pl;
 };
+
+$container['Calendar'] = function ($c) {
+	$pl = new \DigitalMx\jotr\Calendar($c);
+	return $pl;
+};
+
+
 $container['Login'] = function ($c) {
 	$pl = new \DigitalMx\jotr\Login();
     return $pl;

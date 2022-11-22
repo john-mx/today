@@ -1,5 +1,7 @@
 pinto wye = 33.9917,-116.1402
 
+rapdiapi.com: user jorygun
+
 api.weather.com
 key 098273e9f48149029c4141515220107
 http://api.weatherapi.com/v1/forecast.json?key= 098273e9f48149029c4141515220107&q=33.9917,-116.1402 &days=3&aqi=yes&alerts=yes
@@ -89,6 +91,8 @@ https://www.airnowapi.org/aq/data/?startDate=2022-07-16T15&endDate=2022-07-16T16
 iqair: free servicew only provides aqi by city.
 
 openweathermap.org
+api key 8f15b8d7833c050a41538d5b0ee4204a
+
 cw openweathermap.org response for cw (Today.php (615))
 
 Array
@@ -169,3 +173,19 @@ airowm gives different results (and dt) for jr, br, hq
                                 )
 
                             [dt] => 1658458400
+
+
+Weatherbit air qual via rapidapi
+(25 encpoints/day free)
+CURLOPT_URL => "https://air-quality.p.rapidapi.com/forecast/airquality?lat=35.779&lon=-78.638&hours=72",
+CURLOPT_HTTPHEADER => [
+		"X-RapidAPI-Host: air-quality.p.rapidapi.com",
+		"X-RapidAPI-Key: 3265344ed7msha201cc19c90311ap10b167jsn4cb2a9e0710e"
+	],
+
+Weatherbit alerts, forecast
+5 day forecast
+
+weatherbit.io
+user: jorygun
+apikey: fadae99f3f834942980eceec7637925b

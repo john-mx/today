@@ -10,9 +10,19 @@ use DigitalMx as u;
 
 <!-- ############################## -->
 <div id='page1'>
+<h3>Announcements </h3>
+<?php if(!empty($admin['announcements'])) : ?>
+	<div class='in2 border'><ul>
+	<?php $anlist = explode("\n",$admin['announcements']);
+		foreach ($anlist as $item) :?>
+			<li><?=$item?></li>
+		<?php endforeach ?>
+		</ul>
+	</div><br />
+<?php endif; ?>
 
 <?php if (!empty($admin['alerts'])) : ?>
-<h4>Active Alerts </h4>
+<h3>Active Alerts </h3>
 	<div class='in2 warn'>
 	<ul>
 	<?php $anlist = explode("\n",$admin['alerts']);
@@ -24,7 +34,7 @@ use DigitalMx as u;
 	</div><br />
 <?php endif; ?>
 
-<h4>Light and Dark</h4>
+<h3>Light and Dark</h3>
 <?php if(empty($light)): echo "<p>No Data</p>"; else: ?>
 <table class = 'in2'>
 <colgroup>
@@ -54,61 +64,16 @@ use DigitalMx as u;
 <!-- ####################################### -->
 </div><br /><div id='page2'>
 
-<h4>Announcements </h4>
-<?php if(!empty($admin['announcements'])) : ?>
-	<div class='in2 border'><ul>
-	<?php $anlist = explode("\n",$admin['announcements']);
-		foreach ($anlist as $item) :?>
-			<li><?=$item?></li>
-		<?php endforeach ?>
-		</ul>
-	</div><br />
-<?php endif; ?>
 
-<?php if(empty($calendar)) : echo "No Data"; else:
-?>
-<h4>Calendar</h4>
-<table class='caltable'>
-<!-- <tr><th>Date and Time</th><th>Location</th><th>Type</th><th>Title</th></tr> -->
-<tbody>
-<tr class='border-bottom'><td colspan='3'><b>Events</b></td></tr>
-<?php $calempty = 1;
-	foreach ($calendar as $cal) :
-	// stop looking if more than 3 days out
-if (($cal['dt'] < time() ) || ($cal['dt'] > (time() + 3600*24*3 ))) continue;
-	$calempty = 0;
-	$datetime = date('l M j g:i a', $cal['dt']);
-	$rowclass = (empty($cal['note'])) ? 'border-bottom' : 'no-bottom';
-	?>
 
-	<tr class="border-bottom">
-	<td style='vertical-align:top;'><?=$datetime ?> <br />
-	<?php if ($dur = $cal['duration']): ?>
-		&nbsp;&nbsp;(<?=$dur?>)
-		<?php endif; ?>
-		</td>
+<?php
+  $this->insert('calendar',['calendar' =>$calendar])?>
 
- 	<td class='left'>
- 	<b><?=$cal['title']?></b> <br />
- 	<?=$cal['type'] ?>  at <?=$cal['location']?>
-	</td><td class='left'>
-		<?=$cal['note'] ?? '' ?>
-
-	</td>
- </tr>
-
-<?php endforeach; ?>
-<?php if($calempty): echo "No Events in next 3 days"; endif; ?>
-</tbody>
-
-</table>
-
-<?php endif; ?>
 
 <!-- ####################################### -->
 </div><br /><div id='page3'>
 
-<h4>Fire Information </h4>
+<h3>Fire Information </h3>
 <div class='in2' >
 <?php if(empty($fire)): echo "<p>No Data</p>"; else:?>
 
@@ -126,7 +91,7 @@ if (($cal['dt'] < time() ) || ($cal['dt'] > (time() + 3600*24*3 ))) continue;
 <?php if(0 || empty($air)): echo "<p>No Data</p>"; else:
 // echo "Retrieved at  " . date ('M j h:i a',$air['jr']['dt']);
 ?>
-<h4>Air Quality </h4>
+<h3>Air Quality </h3>
 <table class='in2' >
 <tr><th>Location</th><th>Air Quality</th><th>Particulates (PM10)</th><th>Ozone</th></tr>
 <?php foreach ($air as $loc => $dat) :
@@ -152,7 +117,7 @@ if (($cal['dt'] < time() ) || ($cal['dt'] > (time() + 3600*24*3 ))) continue;
 <div style='clear:left;'></div>
 <!-- ####################################### -->
 </div><br /><div id='page24'>
-<h4>Weather</h4>
+<h3>Weather</h3>
 <?php $weather = $wapi['fc'];
 if(empty($weather)): echo "<p>No Data</p>"; else: ?>
 
@@ -216,7 +181,7 @@ if(empty($weather)): echo "<p>No Data</p>"; else: ?>
 <!-- ####################################### -->
 </div><br /><div id='page25'>
 
-<h4>Campgrounds</h4>
+<h3>Campgrounds</h3>
 
 <?php if (!empty($campgroundadivse)) : ?>
 	<div class='warn'><?=$campgroundadvise?></div>

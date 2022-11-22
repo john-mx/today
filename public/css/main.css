@@ -40,6 +40,12 @@ input {
 	border: 1px solid #CC9;
 	}
 
+input:invalid {
+	background-color:#F00;
+}
+
+.invalid { background-color:#Fcc;}
+
 textarea {
 	background-color:#FFC;
 	border: 1px solid #CC9;

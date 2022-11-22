@@ -15,7 +15,7 @@ class Definitions {
 
 	// File Definitions
 	public static $Files = [
-		'passwords' => 'passwords.ini'
+		'passwords' => 'passwords.ini',
 	];
 
 
@@ -232,7 +232,7 @@ public static $coordinates = [
 
 				'calendar' => 60*12,
 				'admin' => 0,
-				'properties' => 60*24*7,
+				'properties' => 0, // not using this
 				'wgov' => 240,
 				'wapi' => 240,
 				'airq' => 240,

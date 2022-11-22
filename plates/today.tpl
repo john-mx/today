@@ -64,43 +64,10 @@ use DigitalMx as u;
 	</div><br />
 <?php endif; ?>
 
-<?php if(empty($calendar)) : echo "No Data"; else:
-?>
+<?php
+  $this->insert('calendar',['calendar' =>$calendar])?>
 
-<table class='caltable'>
-<!-- <tr><th>Date and Time</th><th>Location</th><th>Type</th><th>Title</th></tr> -->
-<tbody>
-<tr class='border-bottom'><td colspan='3'><b>Events</b></td></tr>
-<?php $calempty = 1;
-	foreach ($calendar as $cal) :
-	// stop looking if more than 3 days out
-if (($cal['dt'] < time() ) || ($cal['dt'] > (time() + 3600*24*3 ))) continue;
-	$calempty = 0;
-	$datetime = date('l M j g:i a', $cal['dt']);
-	$rowclass = (empty($cal['note'])) ? 'border-bottom' : 'no-bottom';
-	?>
 
-	<tr class="border-bottom">
-	<td style='vertical-align:top;'><?=$datetime ?> <br />
-	<?php if ($dur = $cal['duration']): ?>
-		&nbsp;&nbsp;(<?=$dur?>)
-		<?php endif; ?>
-		</td>
-
- 	<td class='left'>
- 	<b><?=$cal['title']?></b> <br />
- 	<?=$cal['type'] ?>  at <?=$cal['location']?>
-	</td><td class='left'>
-		<?=$cal['note'] ?? '' ?>
-
-	</td>
- </tr>
-
-<?php endforeach; ?>
-<?php if($calempty): echo "No Events in next 3 days"; endif; ?>
-</tbody>
-
-</table>
 
 <?php endif; ?>
 

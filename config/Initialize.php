@@ -101,7 +101,7 @@ class Initialize
 			define ('NOSTOP',false); // these are for u\echor utility
     }
 
- private function setPlatform(){
+ 	private function setPlatform(){
     // using PWD because it seems to alwasy work, even in cron
         $sig = $_SERVER['DOCUMENT_ROOT'];
         $sig2 = getenv('PWD');

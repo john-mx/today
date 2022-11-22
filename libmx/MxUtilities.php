@@ -1157,4 +1157,13 @@ function linkEmail($em,$name){
 	return "<a href='mailto:$em'>$name</a>";
 }
 
+function alertBadInput ($msg) {
+	$t = "Bad Input. $msg";
 
+	echo "<script>
+		alert(\"$t\");
+		window.history.go(-1);
+		</script>
+		";
+		exit;
+}

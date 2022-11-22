@@ -18,12 +18,13 @@ namespace DigitalMx\jotr;
 **/
 
 ini_set('error_reporting', E_ALL);
-#ini_set('display_errors', 1);
+ini_set('display_errors', 1);
 
-if (!session_start()){
+if (!defined ('INIT')){
+	if (!session_start()){
 	die ("Failed to initialize session");
 }
-
+}
 ini_set("pcre.jit", "0"); #required for preg_match();
 
 
@@ -65,7 +66,6 @@ if (! file_exists( $repoloc .  "/vendor/autoload.php")) {
 require $repoloc . "/vendor/autoload.php";
 
 
-
 // set up exceptions under my namespace.  Just so I don't have to put \ in front
 class Exception extends \Exception {}
 class RuntimeException extends \RuntimeException {}
@@ -75,11 +75,14 @@ class ResourceException extends \RuntimeException{}
 //class DataException extends \Exception {}
 
 
+
 // sets paths, constants, requires
 $init = new Initialize();
 
 //creates container and services for most of the classes
 require  REPO_PATH . "/config/services.php";
+
+
 
 if (REPO == 'live'){
     ini_set('display_errors', 0);
@@ -88,34 +91,8 @@ if (REPO == 'live'){
 }
 
 
-
-/*
-    if running from web, check for login, set session, build menus
-    if (!empty($_SERVER)) {
-    login checks for an secode and updates Session['login']
-    $login = new Login($container);
-    $login->checkLogin();
-    use $login->checkLevel(val) for minimum levels on pages
-
-    easiest to retrieve menu bar from session array.
-    docpage doesn;t use the container.
-
-    $menu = new Menu ($container);
-    $_SESSION['menubar'] = $menu-> getMenuBar();
-    }
-*/
-
-
-
-#$pdo = $container['pdo'];
-// set cache files ($loc => file);
-
-
-
 date_default_timezone_set('America/Los_Angeles');
 
-
-use DigitalMx\jotr\Today;
 
  define ('INIT',1);
 
