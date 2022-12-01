@@ -534,13 +534,16 @@ public function load_cache ($section, bool $force=false) {
 
 ########  CACHES #############
 public function refresh_caches($force=false) {
+$v=true; #verbose
 // refreshes all the external caches, if they are due
 	#$caches = ['wapi','airq','airowm','wgov','airnow','galerts'];
 		if ($this->over_cache_time('wapi') || $force) {
 				$this->rebuild_cache_wapi();
+
 		}
 		if ($this->over_cache_time('airq') || $force) {
 			$this->rebuild_cache_airq();
+
 		}
 		if ($this->over_cache_time('airowm') || $force) {
 			$this->rebuild_cache_airowm();
@@ -1578,9 +1581,11 @@ private function over_cache_time($section) {
 	//global $Defs;
 	if (!file_exists(CACHE[$section])){ return true;}
 
-	$filemtime = filemtime (CACHE[$section]);
+	$filetime = filemtime (CACHE[$section]);
 	$limit = $this->Defs->getMaxTime($section);
-	if ($limit && (time() - $filemtime > $limit)) return true;
+	$diff = time() - $filetime;
+	if ($limit && ($diff > $limit)) return true;
+	echo "$section: limit $limit; diff $diff;" . BR;
 	return false;
 }
 
