@@ -15,51 +15,73 @@ use DigitalMx as u;
 <?php
 if(empty($weather)): echo "<p>No Data</p>"; else:
 	echo "Weather.gov forcast updated at " . date('M d g:i a',$weather['update']) . BR;
+	?>
+	<table class = 'in2 col-border'>
+		<colgroup>
+		<col >
+		<col>
+		<col >
+		<col>
+		<col >
+		</colgroup>
+
+	<tr><th></th><th></th>
+		<?php
+			for ($i=1;$i<4;++$i) : //for 3 days
+				$day = $weather['jr'][$i];
+		//u\echor ($day ,'day',STOP);
+				echo "<th>{$day[0]['daytext']}</th>";
+			endfor;
+		?>
+		</tr>
+	<?php
 	foreach ($weather as $loc=>$days) :
 		if ($loc == 'update') continue;
 		$locname = Defs::$sitenames[$loc];
-
 		?>
-		<p class='sectionhead'><?=$locname?></p>
 
-	<table class = 'in2 col-border'>
-		<colgroup>
 
-		<col style='width:33%;'>
-		<col style='width:33%;'>
-		<col style='width:33%;'>
-		</colgroup>
+		<tr style = 'border-top:1px solid black;'>
+			<td rowspan='2'><b><?=$locname?></b></td>
 
-		<!--
-<tr>
-		<?php
-		// 	for ($i=1;$i<4;++$i) : //for 3 days
-// 				$day = $days[$i];
-// 		//	u\echor ($day ,'day',STOP);
-// 				//echo "<th>{$day[0]['daytext']}</th>";
-// 			endfor;
-		?>
-		</tr>
- -->
-
-		<tr >
+			<td>Day</td>
 			<?php
 			for ($i=1;$i<4;++$i) : //for 3 days
-				echo "<td >";
-				foreach ($days[$i] as $p) :
-			//	u\echor($p,'period',STOP);
+				$p = $days[$i][0] ;
+
 				?>
-					<div class = '$fcclass' style='padding-top:3px;padding-bottom:3px;'>
-						<b><i><?=$p['name']?></i></b>:
+					<td>
+							<?php if (count($days[$i]) == 2) : ?>
+								<?=$p['shortForecast']?>.
+								<?= $p['highlow']?>. <br />
+								Wind <?=$p['windSpeed']?>;
+							<?php endif; ?>
+
+					</td>
+			<?php endfor; #day ?>
+		</tr>
+		<tr >
+
+			<td class='bg-black white'>Night</td>
+			<?php
+			for ($i=1;$i<4;++$i) : //for 3 days
+				if (count($days[$i]) == 2) :
+					$p = $days[$i][1] ;
+				else :
+					$p = $days[$i][0] ;
+				endif;
+				?>
+					<td class='bg-black white'>
+					<div >
 								<?=$p['shortForecast']?>.
 								<?= $p['highlow']?>. <br />
 								Wind <?=$p['windSpeed']?>;
 
 					</div>
-					<?php endforeach; #period ?>
-				</td>
+					</td>
 			<?php endfor; #day ?>
 		</tr>
+		<?php endforeach; // loc? ?>
 	</table>
-	<?php endforeach; // loc?
-	endif; ?>
+
+	<?php endif; ?>

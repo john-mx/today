@@ -97,37 +97,7 @@ public static $dummy_today = array
 
 );
 
-private static $scroll_script = <<<EOT
-<script>
 
-function pageScroll() {
-    	window.scrollBy(0,3); // horizontal and vertical scroll increments
-    	scrolldelay = setTimeout('pageScroll()',50); // scrolls every 100 milliseconds
-            if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
-        		scrolldelay = setTimeout('PageUp()',2000);
-    		}
-
-}
-
-function PageUp() {
-	window.scrollTo(0, 0);
-}
-
-</script>
-
-
-<script>
-	let timeout = setTimeout(() => {
-  document.querySelector('#target').scrollIntoView();
-}, 5000);
-
-(function() {
-  document.querySelector('#bottom').scrollIntoView();
-})();
-</script>
-
-
-EOT;
 
 private static $snap_script = <<<EOT
 <script>
@@ -1543,13 +1513,14 @@ private function fire_data($fire_level) {
 public function start_page ($title = 'Today in the Park',$pcode='') {
 	$scbody = '';
 	$added_headers = "";
-	if ($pcode=='s') {$scbody='onLoad="pageScroll()"';
+	if ($pcode=='s') {
+		$scbody='onLoad="pageScroll()"';
 		$added_headers = "<style>html {scroll-behavior: smooth;}</style>";
 	}
-	if ($pcode=='z'){
+	elseif ($pcode=='z'){
 		$scbody = "onLoad='startRotation(10)'";
 	}
-	if ($pcode=='b'){
+	elseif ($pcode=='b'){
 		$added_headers = <<<EOT
 <!-- Latest compiled and minified CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -1558,7 +1529,7 @@ public function start_page ($title = 'Today in the Park',$pcode='') {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 EOT;
 }
-	if ($pcode=='p'){ #print
+	elseif ($pcode=='p'){ #print
 		$added_headers = "<link rel='stylesheet' media='print' href = '/css/media.css' >";
 	}
 	$site_url = SITE_URL;
@@ -1573,6 +1544,7 @@ EOT;
 	<title>$title $platform</title>
 	<script src='/js/snap.js'></script>
 	<script src='/js/hide.js'></script>
+
 	<link rel='stylesheet' href = '/css/main.css' />
 
 	$added_headers

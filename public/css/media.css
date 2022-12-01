@@ -1,22 +1,4 @@
-@media print {
-   body {
-      color: #000;
-      background: #fff;
-      width:100%;
-      font: 9.5pt "Times New Roman", Times, serif;
-line-height: 1.3;
-      }
 
+body { width:100vw;}
 
-}
-
-
-@page {
-       size: 8.5in 11in;
-      margin: 0.5in;
-   }
-
-@media screen {
-	body { max-width: 1200px;}
-}
 

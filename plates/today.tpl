@@ -15,7 +15,7 @@ use DigitalMx as u;
 
 
 <?php
-	$this->insert('light',['light' => $data['light']]);
+	$this->insert('light_condensed',['light' => $data['light']]);
 ?>
 <?php
 	$this->insert('notices',['notices' => $data['notices']]);
@@ -23,6 +23,8 @@ use DigitalMx as u;
 <?php
   $this->insert('calendar',['calendar' => $data['calendar']])
 ?>
+
+<?php $this->insert('weather_brief',['weather' => $data['weather'] ]); ?>
 
 <!--
 <div id='page2' style="page-break-after: always;"><br /></div>
@@ -52,7 +54,7 @@ use DigitalMx as u;
 <div id='page2'>
  -->
 
-<?php $this->insert('weather_brief',['weather' => $data['weather'] ]); ?>
+
 
 <?php $this->insert('campground',['camps' => $data['camps'] ]); ?>
 
@@ -61,3 +63,5 @@ use DigitalMx as u;
 <hr>
 <p id='bottom' class='right'><?=$data['version'] ?>
 <br>build <?php echo date('dHi'); ?></p>
+
+<?php $this->insert('scroll_script'); ?>

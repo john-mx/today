@@ -16,10 +16,13 @@ ini_set('display_errors', 1);
 
 //END START
 
+$qs = $_SERVER['QUERY_STRING'] ?? '';
+
 
 $y = $Today->prepare_topics ();
 #u\echor($y);
 
-	echo $Today->start_page();
-	echo $Plates -> render('today',['data'=>$y]);
+	echo $Today->start_page('Today in the Park',$qs);
+	echo $Plates -> render('today',['data'=>$y]) ;
+//	if ($qs == 's')echo $Plates -> render ('scroll_script');
 //	u\echor($y,'data to plate');

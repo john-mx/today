@@ -21,9 +21,10 @@ if(empty($calendar)) : echo "No Calendar (calendar.tpl)"; else:
 		$rowclass = (empty($cal['note'])) ? 'border-bottom' : 'no-bottom';
 	?>
 	<?php if ($eventdate != $lasteventdate) :?>
-
-	<tr class="border-bottom" style='background-color:#F3984D';>
-	<td colspan=3><b><?=$eventdate ?> </b></td>
+	<tr class="border-bottom" style='background-color:#F3984D; ';>
+	<td colspan=3
+	style='font-size:0.8em;padding-bottom:3px;padding-top:3px;'>
+	<b><?=$eventdate ?> </b></td>
 </tr>
 	<?php endif; ?>
 	<tr>
