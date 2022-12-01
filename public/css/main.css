@@ -141,6 +141,9 @@ table.caltable {
 	table-layout:fixed;
 }
 
+table.caltable td {
+	text-align:left;
+}
 table.header {
 	background-color:black;
 	width:85%;
