@@ -32,12 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 ?>
 
 <p>This project generates the Today in the Park report in a variety of formats.
-Data is collected from a number of places that report information like weather, air quality, astronomical data, and more.  Local data is collected manually through an <a href='admin.php' target ='admin'>admin page</a>.</p>
-<p>Data from remote sites like weather.gov is checked for age each time it is accessed, and updated if over some limit, like 3 hours.</p>
-<p>The pages are all updated automatically every few hours.  If necessary, they can be updated sooner using the buttons below.</p>
+Data is collected every few hours from a number of places that report information like weather, air quality, astronomical data, and more. Local data is entered manually through an admin page linked below.</p>
 
-<h3>Pages</h3>
-<a href='/today.php' target='today'>Click to produce live report</a>
+
+<h4>Pages</h4>
+ <a href='admin.php' target ='admin'>Admin Page</a> (password 'abcd')<br />
+<a href='/today.php' target='today'>Current Today report</a>
 
 <!--
 <table>

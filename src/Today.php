@@ -1604,6 +1604,8 @@ private function split_coord ($loc) {
 
 private function over_cache_time($section) {
 	//global $Defs;
+	if (!file_exists(CACHE[$section])){ return true;}
+
 	$filemtime = filemtime (CACHE[$section]);
 	$limit = $this->Defs->getMaxTime($section);
 	if ($limit && (time() - $filemtime > $limit)) return true;

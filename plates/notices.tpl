@@ -6,7 +6,7 @@ use DigitalMx as u;
 <?php if (!empty ($d= $notices['alerts'])) : ?>
 <div class='in2 float' style='width:45%;'>
 <h4 class='black'>Active Alerts:</h4>
-
+<div class='warn'>
 <?php
 		echo "<ul>";
 		$anlist = explode("\n",$d);
@@ -17,11 +17,13 @@ use DigitalMx as u;
 		echo "</ul>" . NL;
 	?>
 	</div>
+	</div>
 <?php endif; ?>
 
 <?php if(!empty($d = $notices['announcements'])) : ?>
 <div class='in2 float' style='width:45%;'>
 <h4>Announcements</h4>
+<div>
 	<?php
 		echo "<ul>";
 		$anlist = explode("\n",$d);
@@ -31,6 +33,7 @@ use DigitalMx as u;
 			endforeach;
 		echo "</ul>" . NL;
 	?>
+	</div>
 	</div>
 <?php endif; ?>
 
