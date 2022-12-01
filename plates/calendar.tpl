@@ -32,13 +32,14 @@ if(empty($calendar)) : echo "No Calendar (calendar.tpl)"; else:
 	</td>
  	<td class='left'>
  	<?=$cal['type']?>
- 	 at <?=$cal['location']?><br>
- 	( <?=$cal['duration']?>)
-	</td><td>
- 	<b><?=$cal['title']?></b>
+ 	 at <?=$cal['location']?>
  	<?php if (!empty($cal['note'])) : ?>
 			<br /><i><?=$cal['note'] ?? '' ?></i>
  	<?php endif; ?>
+	</td><td>
+ 	<b><?=$cal['title']?></b>
+ 	( <?=$cal['duration']?>)
+
 	</td>
 
 	</tr>
