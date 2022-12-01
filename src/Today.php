@@ -170,17 +170,17 @@ public function __construct($c){
 	$this -> Defs = $c['Defs'];
 	$this-> logger = $c['logger'];
 	$this->Cal = $c['Calendar'];
-
+	$this->Cg = $c['CgOpens'];
 	// locations to use for weather report
-	$this -> wlocs = ['jr','hq','cw','br'] ;
-	$this -> airlocs = ['jr','cw','br'];
+	$this -> wlocs = ['jr','cw','br'] ; // weather locations
+	$this -> airlocs = ['jr','cw','br']; // air quality locations
 
 	$this -> max_age = Defs::$cache_times;
 	//$this -> properties = $this->load_cache('properties');
 
 }
 
-public function rebuild($force = false) {
+public function rebuild_pages ()  {
 	// rebuilds caches and regenerates today pages
 
 	$y = $this->prepare_today ($force);
@@ -203,10 +203,10 @@ public function rebuild($force = false) {
 	file_put_contents( SITE_PATH . '/pages/snap.html', $snap_page);
 
 
-	$page_body_wgov = $this->Plates -> render ('today2',$y);
-	$new_page = $this->start_page('Today in the Park (weather.gov)')
-		. $page_body_wgov;
-	file_put_contents (SITE_PATH . '/pages/wgov.html',$new_page);
+// 	$page_body_wgov = $this->Plates -> render ('today2',$y);
+// 	$new_page = $this->start_page('Today in the Park (weather.gov)')
+// 		. $page_body_wgov;
+// 	file_put_contents (SITE_PATH . '/pages/wgov.html',$new_page);
 
 	// $page_body_con = $this->Plates -> render ('today3',$y);
 // 	$new_page = $this->start_page('Today in the Park (condensed)')
@@ -238,8 +238,127 @@ $page_body_print = $this->Plates -> render ('print',$y);
 
 	$this->logger->info( "Pages updated" );
 }
+public function prepare_topics(){
+	/*
+		build topic arrays from caches and defs.
+		Each topic goes to a display template.
+		Overall display is built by combining display templates.
+		Topics are:
+			general: alerts, announcements, pithy, fire
+			weather: site->data
+			campgrounds: cg->status, notes, opens, etc
+			sun: sunrise, sunset, uv, air
+			calendar: events
+		*/
 
-public function prepare_today($force=false) {
+		$topics = [];
+	#	foreach (['general','weather','campgrounds','sun','calendar'] as $topic) {
+
+		$topics = array_merge(
+			$this->build_topic_general(),
+			$this->build_topic_weather(),
+			$this->build_topic_campgrounds(),
+			$this->build_topic_light(),
+			$this->build_topic_air(),
+			$this->build_topic_calendar(),
+
+
+
+		);
+
+
+//	u\echor($topics,'topics',NOSTOP);
+
+		return $topics;
+}
+
+public function build_topic_calendar() {
+	$z=$this->load_cache('calendar');
+#	u\echor($z,'calendar',STOP);
+	$y=$this->Cal->filter_calendar($z,3);
+	return ['calendar' => $y];
+}
+public function build_topic_air() {
+	$z=[];
+	$z=$this->load_cache('airnow');
+	$y = $this->format_airnow($z);
+	return ['air' => $y];
+
+}
+
+
+public function build_topic_light() {
+	$z = [];
+	#$light['x'] = 'x';
+	$y = $this->load_cache('wapi');
+	$zz = $this->format_wapi($y);
+
+	#u\echor($zz,'formatted light', NOSTOP);
+
+	$z['light']= $zz['light'];
+	$z['light']['moonpic'] = $this->Defs->getMoonPic($z['light']['moonphase']);
+
+	$z['uv'] = $this->uv_data($z['light']['uv']);
+
+
+#	$z['air'] = $this->format_airowm($y['airowm']) ?? [];
+
+	return ['light' => $z];
+}
+
+
+public function build_topic_weather() {
+	$w = $this->load_cache('wgov');
+	$z = $this->format_wgov($w);
+#u\echor($z,'formatted wgov');
+
+	return $z;
+}
+
+public function build_topic_campgrounds() {
+	$y = $this->load_cache('admin');
+
+	$w['camps']['cg_notes'] = $y['cgnotes'];
+	$w['camps']['cg_status'] = $y['cgstatus'];
+	$w['camps']['cg_open'] = $this->load_cache('cgopen');
+	$w['camps']['asof'] = $this->getMtime('cgopen');
+
+
+	$w['camps']['cgfull'] = !array_filter($w['camps']['cg_open']);
+
+#	u\echor($w);
+
+	return $w;
+}
+
+public function build_topic_general() {
+	/* load date from admin cache, then reformat for display */
+
+	$y = $this->load_cache('admin');
+
+		//clean text for display (spec chars, nl2br) but don't change stored info.
+
+		 	$t = $this->clean_text($y['pithy']);
+			 $z['pithy'] = $t;
+
+			$t = $this->format_alerts ($y['alerts']);
+			$z['notices']['alerts'] = trim($t);
+
+				$t = $this->clean_text($y['announcements']);
+			$z['notices']['announcements'] = trim($t);
+
+			$fire_level = $y['fire_level'];
+			$z['fire']['level'] = $fire_level;
+			$z['fire']['color'] = Defs::get_color($fire_level);
+
+			$z['version'] = file_get_contents(REPO_PATH . "/data/version") ;
+			$z['target'] = date('l M j, Y');
+	//u\echor($z,'topic general', NOSTOP);
+	return $z;
+
+}
+
+public function Xprepare_today($force=false) {
  /*set force true or false to force cache updates
   get sections needed and assemble inito data array y
   which is ready for the template to use.
@@ -255,10 +374,10 @@ public function prepare_today($force=false) {
   */
 
 
-	foreach (['wgov','wapi','airowm','airnow','calendar','admin','wgova'] as $section) {
+	foreach (['wgov','airowm','airnow','calendar','admin','wgova','camp','cgopen'] as $section) {
 		$y[$section] = $this -> load_cache ($section, $force);
 	}
-// 	u\echor ($y, 'y array into today');
+ 	u\echor ($y, 'y array into today',STOP);
 
 //	echo 'Version: ' . $v . BRNL; exit;
 $z=[];
@@ -267,7 +386,7 @@ $z=[];
 
 	$z['admin'] = $y['admin'];
 		//clean text for display (spec chars, nl2br) but don't change stored info.
-	foreach(['pithy','fire_warn','weather_warn','announcements'] as $txt){
+	foreach(['pithy','fire_warn','weather_warn','announcements','alerts'] as $txt){
 		if (!empty ($y['admin'][$txt])) {
 			$z['admin'][$txt] = $this->clean_text($y['admin'][$txt]);
 		}
@@ -285,14 +404,15 @@ $z=[];
 
 	$z['air'] = $this->format_airowm($y['airowm']);
 
-	$z['camps']['cgavail'] = $y['admin']['cgavail'];
-	$z['camps']['cgstatus'] = $y['admin']['cgstatus'];
+	$z['camps']['info'] = $y['camps'];
+	$z['camps']['cgopen'] = $y['cgopen'];
+	$z['camps']['asof'] = $this->getMtime('cgopen');
 
 	$z['calendar'] = $this->Cal->filter_calendar($y['calendar'],4);
 
 
 	$this->logger->info('formed today array');
-//   u\echor($z, 'z array for today');
+u\echor($z, 'z array for today',STOP);
 	return $z;
 }
 
@@ -302,22 +422,65 @@ public function prepare_admin() {
 	$y['admin'] = $this->load_cache('admin');
 // 	u\echor ($y, 'read admin cache', NOSTOP);
 
-$fire_levels = array_keys(Defs::$firewarn);
+	// set firelevel options array
+	$fire_levels = array_keys(Defs::$firewarn);
 	$y['admin']['fire_level_options'] = u\buildOptions($fire_levels,$y['admin']['fire_level']);
 
 // camps
 	foreach (array_keys(Defs::$campsites) as $cgcode){
-		$opt = u\buildOptions(Defs::$cgavail, $y['admin']['cgavail'][$cgcode]);
-			$opts[$cgcode]  = $opt;
+		$opt = u\buildOptions(Defs::$cgstatus, $y['admin']['cgstatus'][$cgcode]);
+		$opts[$cgcode]  = $opt;
+		$notes[$cgcode] = $y['admin']['cgnotes'][$cgcode];
+
 	}
 	$y['admin']['cg_options'] = $opts;
+	$y['admin']['cg_notes'] = $notes;
+
+	$y['admin']['cgopen'] = $this->load_cache('cgopen') ?? [];
+	$y['admin']['cgfull'] =  (!array_filter($y['admin']['cgopen'])) ? 1:0;
+
 
 	//$y['calendar'] = $this->filter_calendar($this->load_cache('calendar'));
-	$y['alerts'] = $this->load_cache('alerts');
-// 	u\echor ($y, 'Y to admin',NOSTOP);
+	// if (! $galerts = $this->rebuild_cache_galerts() ){
+// 	}
+
+	$y['galerts'] = $this->load_cache('galerts');
+
+// u\echor ($y, 'Y to admin',NOSTOP);
 	return $y;
 }
 
+
+public function format_galert($galerts){
+
+
+#	u\echor($cache);
+	$x = [];
+	foreach ($galerts['features'] as $galert){
+#	u\echor($galert,'galert',STOP);
+
+		$props = $galert['properties'];
+
+			$alert_exp = strtotime($props['expires']);
+			if ($alert_exp < time()) continue;
+			$alert=[];
+
+			$alert['headline'] = $props['headline'];
+			$alert['category'] = $props['category'];
+			$alert['event'] = $props['event'];
+			$alert['expires'] = $props['expires'];
+			$alert['description'] = $props['description'];
+			$alert['instruction'] = $props['instruction'];
+			$alert['expire_ts'] = $alert_exp;
+
+
+			$x[] =$alert;
+
+		}
+	#	if (empty($x)){ $x = ['No Alerts'];}
+		return $x;
+
+}
 
 public function post_admin ($post) {
  /* insert posted data and dependencies into cacjes
@@ -328,24 +491,31 @@ public function post_admin ($post) {
 
 //  admin cache
 	$y=[];
-	$y['announcements'] = $post['announcements'];
+	$y['announcements'] = trim($post['announcements']);
 	$y['updated'] = date('d M H:i');
-	$y['pithy'] = u\despecial($post['pithy']);
+	$y['pithy'] = trim(u\despecial($post['pithy']));
 //fire
 
 	$y['fire_level'] = $post['fire_level'];
 //weather
-	$y['alerts'] = $post['alerts'];
+	$y['alerts'] = trim($post['alerts']);
 
-	$y['cgavail'] = $post['cgavail']; // array
+
 	$y['cgstatus'] = $post['cgstatus']; // array
 // 	u\echor ($y,'to write admin cache',STOP);
+	$y['cgnotes']  =$post['cgnotes'] ; //array
+
 	$this -> write_cache('admin',$y);
 
-
+	$cgo = $post['cgopen'];
+	// set opens based on status
+	foreach ($y['cgstatus'] as $cg=>$status){
+		if ($status == 'Closed'){$cgo[$cg] = 0;}
+	}
+	$this->write_cache('cgopen',$cgo);
 
 //rebuild the pages
-	$this->rebuild();
+	#$this->rebuild();
 
 
 
@@ -356,13 +526,13 @@ public function post_admin ($post) {
 
 
 
-private function load_cache ($section, bool $force=false) {
+public function load_cache ($section, bool $force=false) {
 		$refresh = $force;
-
+#echo "loading cache $section" . BR;
 		if (! $refresh && !file_exists (CACHE[$section])) {
 			$refresh = true;
 		} elseif (!$refresh) {
-			$mtime = filemtime (CACHE[$section]);
+			$mtime = $this->getMtime($section);
 			$maxtime = $this->Defs->getMaxtime ($section) ;
 			// $maxtime set to 0 if cache is maintanined elswhere,
 			// by admin or by resetting another cache.
@@ -375,20 +545,368 @@ private function load_cache ($section, bool $force=false) {
 
 
 		if ($refresh) {
-			if (! $this->refresh_cache($section) ) {
+			if (0 && ! $this->refresh_cache($section) ) {
 				u\echoAlert ("Unable to refresh cache: $section.  Using old version.");
 				$this->logger->notice("Unable to refresh cache $section");
 			}
 		}
 
 		$y = json_decode (file_get_contents(CACHE[$section]), true);
+
+#u\echor($y,$section) . BR;
+
+		if ($section == 'camp'){u\echor ($y,'y',STOP);}
 		return $y;
 }
 
 
 
 
-public function refresh_cache (string $section ) {
+########  CACHES #############
+public function refresh_caches($force=false) {
+// refreshes all the external caches, if they are due
+	#$caches = ['wapi','airq','airowm','wgov','airnow','galerts'];
+		if ($this->over_cache_time('wapi') || $force) {
+				$this->rebuild_cache_wapi();
+		}
+		if ($this->over_cache_time('airq') || $force) {
+			$this->rebuild_cache_airq();
+		}
+		if ($this->over_cache_time('airowm') || $force) {
+			$this->rebuild_cache_airowm();
+		}
+		if ($this->over_cache_time('wgov') || $force) {
+				$this->rebuild_cache_wgov();
+		}
+		if ($this->over_cache_time('airnow') || $force) {
+				$this->rebuild_cache_airnow();
+		}
+		if ($this->over_cache_time('galerts') || $force) {
+				$this->rebuild_cache_galerts();
+		}
+
+			#	$this -> rebuild_properties('jr');
+
+	}
+
+
+private function rebuild_cache_wapi($locs=[] ) {
+	$x=[];
+	$src = 'wapi';
+	if (empty($locs)){$locs = $this->wlocs;}
+
+	foreach ($locs as $loc) {
+		[$lat,$lon] = $this -> split_coord($loc);
+		$curl_header = [];
+
+		$url = 'http://api.weatherapi.com/v1/forecast.json?key=' . $this->Defs->getKey('weatherapi') . '&q='. $this->Defs->getCoords($loc) . '&days=3&aqi=yes&alerts=yes';
+		$expected = '';
+		$loginfo = "$src:$loc";
+		if (!$aresp = $this->get_curl($loginfo,$url, $expected, $curl_header) ) {
+			$aresp = [];
+		}
+
+		$x[$loc] = $aresp;
+	} # next loc
+	return $x;
+	$this->write_cache($src,$x);
+
+}
+
+private function rebuild_cache_airq() {
+	$x=[];
+	$src = 'airq';
+	$locs = $this->airlocs;
+	$curl_header = [
+			"X-RapidAPI-Host: air-quality.p.rapidapi.com",
+			"X-RapidAPI-Key: 3265344ed7msha201cc19c90311ap10b167jsn4cb2a9e0710e"
+				];
+	foreach ($locs as $loc) {
+		[$lat,$lon] = $this -> split_coord($loc);
+		$expected = 'aqi'; #field to test for good result
+		$url = "https://air-quality.p.rapidapi.com/current/airquality?lon=$lon&lat=$lat";
+
+		$loginfo = "$src:$loc";
+		if (!$aresp = $this->get_curl($loginfo,$url, $expected, $curl_header) ) return false;
+
+		$x[$loc] = $aresp;
+	} # next loc
+
+	$this->write_cache($src,$x);
+
+}
+
+private function rebuild_cache_airowm() {
+	$x=[];
+	$src = 'airowm';
+	$locs = $this->airlocs;
+
+	foreach ($locs as $loc) {
+		[$lat,$lon] = $this -> split_coord($loc);
+		$curl_header = [];
+
+		$url = "http://api.openweathermap.org/data/2.5/air_pollution?lat={$lat}&lon={$lon}&appid=" . $this->Defs->getKey('openweathermap');
+
+		$expected = '';
+
+		$loginfo = "$src:$loc";
+		if (!$aresp = $this->get_curl($loginfo,$url, $expected, $curl_header) ) return false;
+		$x[$loc] = $aresp;
+	} # next loc
+
+	$this->write_cache($src,$x);
+
+}
+
+public function rebuild_cache_wgov() {
+/*
+https://api.weather.gov/gridpoints/{office}/{grid X},{grid Y}/forecast
+
+https://api.weather.gov/gridpoints/PSR/13,102/forecast
+
+zones:
+Lost Horse (west JtNP) zoneid=CAZ560
+JTNP East CAZ561
+JTNP CAZ230
+Morongo basin CAZ525
+Coachella valley CAZ061
+PSP CAZ261
+Yucca CAZ228
+Salton CAZ563
+
+modoc county CAZ285
+		geocode SAME 006049
+
+
+
+29p airport SITE KNXP
+
+metadata by lat-lon
+https://api.weather.gov/points/{lat},{lon}
+
+get stations for zone
+https://api.weather.gov/gridpoints/PSR/13,102/stations
+
+FIPS
+CA = 06
+San Bern = 071
+Riverside = 065
+
+Site
+Blackrock 9002
+29p 0017
+cw 0010
+coord: 34.0714,-116.3906,
+
+*/
+
+	$x=[];
+	$src = 'wgov';
+	$locs = $this->wlocs;
+	#$locs = ['br'];
+
+	foreach ($locs as $loc) {
+		[$lat,$lon] = $this -> split_coord($loc);
+		$curl_header = [];
+
+		$url = "https://api.weather.gov/gridpoints/" . $this->Defs->getGridpoints($loc) ."/forecast";
+		#$url = "https://api.weather.gov/points/$lat,$lon";
+		$expected = 'properties';
+
+		$loginfo = "$src:$loc";
+		if (!$aresp = $this->get_curl($loginfo,$url, $expected, $curl_header) ) return false;
+
+		$x[$loc] = $aresp;
+	} # next loc
+
+	$this->write_cache($src,$x);
+
+}
+
+private function rebuild_cache_airnow() {
+/*
+airnow (from eps.gov)
+api key Your API Key: 7FB4BEFF-A568-4FE4-8E67-F1EE36B5C04B
+format appliction/json
+
+https://www.airnowapi.org/aq/forecast/latLong/?format=application/json&latitude=39.0509&longitude=-121.4453&date=2022-07-16&distance=25&API_KEY=7FB4BEFF-A568-4FE4-8E67-F1EE36B5C04B
+(no results for foreccast
+
+current:
+https://www.airnowapi.org/aq/observation/latLong/current/?format=application/json&latitude=33.99&longitude=-116.14&distance=25&API_KEY=7FB4BEFF-A568-4FE4-8E67-F1EE36B5C04B
+(gives black rock)
+
+
+*/
+	$x=[];
+	$src = 'airnow';
+	$locs = $this->airlocs;
+
+	foreach ($locs as $loc) {
+		[$lat,$lon] = $this -> split_coord($loc);
+		$curl_header = [];
+
+		$url = "https://www.airnowapi.org/aq/observation/latLong/current/?format=application/json&latitude=$lat&longitude=$lon&distance=25&API_KEY=" . $this->Defs->getKey('airnow');
+				$expected = 'AQI'; #field to test for good result
+		$loginfo = "$src:$loc";
+		if (!$aresp = $this->get_curl($loginfo,$url, $expected, $curl_header) ) return false;
+		$x[$loc] = $aresp;
+	} # next loc
+
+	$this->write_cache($src,$x);
+
+}
+
+public function rebuild_cache_galerts () {
+
+	/* must get uniform format for alerts to display right
+	headline
+	category
+	event
+	expires
+	description
+	action
+
+
+*/
+	$y=[];
+
+	$src = 'wapi';
+
+	if ( $r = $this->rebuild_cache_wapi(['jr'])) {
+// 	u\echor($r,'From wapi',NOSTOP);
+		$alerts = $r['jr']['alerts']['alert'];
+		$x=[];
+		foreach ($alerts as $alertno => $ad){
+			$alert_exp = strtotime($ad['expires']);
+			if ($alert_exp < time()) continue;
+			$alert=[];
+			$alert['headline'] = $ad['headline'];
+			$alert['category'] = $ad['category'];
+			$alert['event'] = $ad['event'];
+			$alert['expires'] = $ad['expires'];
+			$alert['description'] = $ad['desc'];
+			$alert['instruction'] = $ad['instruction'];
+			$alert['expire_ts'] = $alert_exp;
+
+			$x[] =$alert;
+
+		}
+		$y[$src] = $x;
+	}
+
+	$src = 'wgovalerts';
+		if ( ! $r = $this->rebuild_cache_wgalerts() ) return false;
+//	u\echor($r,'get wgalerts',NOSTOP);
+		$items = $r['features'];
+
+		foreach ($items as $item){
+			$ad = $item['properties'];
+
+			$alert_exp = strtotime($ad['expires']);
+			if ($alert_exp < time()) continue;
+			$alert=[];
+
+			$alert['headline'] = $ad['headline'];
+			$alert['category'] = $ad['category'];
+			$alert['event'] = $ad['event'];
+			$alert['expires'] = $ad['expires'];
+			$alert['description'] = $ad['description'];
+			$alert['instruction'] = $ad['instruction'];
+			$alert['expire_ts'] = $alert_exp;
+
+			$x[] =$alert;
+
+		}
+		$y[$src] = $x;
+
+		$this->write_cache('galerts',$y);
+//u\echor($y,'from external  alerts', NOSTOP);
+	return $y;
+}
+
+
+private function rebuild_cache_wgalerts() {
+/*
+alerts used only in galerts. No cache saved.
+
+https://api.weather.gov/alerts/active/zone/{zoneId}
+
+2zones:
+Lost Horse (west JtNP) zoneid=CAZ560
+JTNP East CAZ561
+JTNP CAZ230
+Morongo basin CAZ525
+Coachella valley CAZ061
+PSP CAZ261
+Yucca CAZ228
+Salton CAZ563
+Siskiyou CAZ285
+PDX ORZ006
+
+*/
+	$x=[];
+	$src = 'wgalerts';
+	$zone = 'CAZ285'; #joshua tree np
+#	$zone = 'ORZ006'; #pdx
+#	$zone = 'CAZ082'; #shasta
+#	$zone = 'COZ040'; #denver
+
+	$curl_header = [];
+	$url = "https://api.weather.gov/alerts/active/zone/$zone";
+		$expected = '';
+		$loginfo = "$src: zone $zone";
+		if (!$aresp = $this->get_curl($loginfo,$url, $expected, $curl_header) ) return false;
+		$x = $aresp;
+
+	//$this->write_cache($src,$x);
+	return $x;
+}
+
+private function rebuild_properties() {
+	$locs=['jr','pdx','shasta'];
+	$x=[];
+	$x['update'] = time();
+	$src = 'properties';
+	foreach ($locs as $loc){
+		[$lat,$lon] = $this -> split_coord($loc);
+		$curl_header = [];
+		$loginfo = "$src: $loc";
+		$url = "https://api.weather.gov/points/$lat,$lon";
+					//(https://api.weather.gov/points/{lat},{lon}).
+		$expected = 'properties';
+		if (!$aresp = $this->get_curl($loginfo,$url, $expected, $curl_header) ) continue;
+		$x[$loc] = $aresp['properties'];
+	}
+	$this->write_cache($src,$x);
+}
+
+public function set_properties (array $locs) {
+	// gets meta data for each location by lat,lon
+	// saves it in data file properties.json
+	$src = 'props';
+	$x = array('src'=>$src);
+	$x['update'] = time();
+
+
+
+	if ( ! $r = $this->get_external ($src,$locs)) return false;
+	//u\echor($r,'From external',STOP);
+
+	foreach ($r as $loc => $d){	//uses weather.gov api directly
+		$y[$loc] = $d['properties'];
+	} #end foreach
+// u\echor($y,'properties',STOP);
+
+	$this->write_cache('properties',$y);
+	echo "Properties updated" . BRNL;
+	return true;
+
+
+}
+
+// OBSOLETE??
+public function Xrefresh_cache (string $cache ) {
 	/* loads data from all source fgiles and rebuilds the cache fie compoetely.
 	init is array of data to be set as inital conditions.
 	= either default init or latest today array.
@@ -398,37 +916,37 @@ public function refresh_cache (string $section ) {
 	// creates or updates the section's cache file
 	//$v = array ('updated' => time());
 
-	//echo " Refreshing $section" . BRNL;
+	//echo " Refreshing $cache" . BRNL;
 
 	// external $w
-			switch ($section) {
+			switch ($cache) {
 				case 'wapi':
-					if (! $r = $this->get_external ($section,$this->wlocs) ){
+					if (! $r = $this->get_external ($cache,$this->wlocs) ){
 						// failed to get update.  Warn and go on
-						//echoAlert "Warning: attempt to reload $section failed.";
-						$this->logger->notice("attempt to refresh $section failed");
+						//echoAlert "Warning: attempt to reload $cache failed.";
+						$this->logger->notice("attempt to refresh $cache failed");
 						return false;
 					}
-						$this->logger->info("Cache $section refreshed.");
+						$this->logger->info("Cache $cache refreshed.");
 				//	if (!$w = $this -> format_wapi($r) ){
-				// 		echo "Warning: failed to parse data returned from $section";
+				// 		echo "Warning: failed to parse data returned from $cache";
 // 						return false;
 // 					}
-					$this->write_cache ($section,$r);
+					$this->write_cache ($cache,$r);
 					break;
 				case 'airowm':
-					if (! $r = $this->get_external ($section,$this->airlocs) ){
+					if (! $r = $this->get_external ($cache,$this->airlocs) ){
 						// failed to get update.  Warn and go on
 						//echo "Warning: attempt to reload $src failed.";
-						$this->logger->notice("attempt to refresh $section failed");
+						$this->logger->notice("attempt to refresh $cache failed");
 						return false;
 					}
-$this->logger->info("Cache $section refreshed.");
+$this->logger->info("Cache $cache refreshed.");
 				//	if (!$w = $this -> format_airowm($r) ){
-// 						echo "Warning: failed to parse data returned from $section";
+// 						echo "Warning: failed to parse data returned from $cache";
 // 						return false;
 // 					}
-					$this->write_cache ($section,$r);
+					$this->write_cache ($cache,$r);
 
 
 					break;
@@ -440,70 +958,70 @@ $this->logger->info("Cache $section refreshed.");
 					if (!$w)die ("no properties");
 					break;
 
-				case 'wgova':
-					if (! $r = $this->get_external ($section,['hq']) ){
-					//echo  "Warning: attempt to reload $section failed.";
+				case 'wgova': // alerts
+					if (! $r = $this->get_external ($cache,['hq']) ){
+					//echo  "Warning: attempt to reload $cache failed.";
 						return false;
 					}
-					$this->logger->info("Cache $section refreshed.");
-					$this->write_cache ($section,$r);
+					$this->logger->info("Cache $cache refreshed.");
+					$this->write_cache ($cache,$r);
 					break;
 
-				case 'wgov':
-					if (! $r = $this->get_external ($section,$this->wlocs) ){
+				case 'wgov': //weather
+					if (! $r = $this->get_external ($cache,$this->wlocs) ){
 						// failed to get update.  Warn and go on
 	//					u\echor ($r,'in refresh cache');
-// 						echo "Warning: attempt to reload $section failed.";
-		$this->logger->notice("attempt to refresh $section failed");
+// 						echo "Warning: attempt to reload $cache failed.";
+		$this->logger->notice("attempt to refresh $cache failed");
 						return false;
 					}
-					$this->logger->info("Cache $section refreshed.");
+					$this->logger->info("Cache $cache refreshed.");
 				//	if (!$w = $this -> format_wgov($r) ){
-// 						echo "Warning: failed to parse data returned from $section";
+// 						echo "Warning: failed to parse data returned from $cache";
 // 						return false;
 // 					}
-					$this->write_cache ($section,$r);
+					$this->write_cache ($cache,$r);
 					break;
 				case 'admin':
 						$w = self::$dummy_today;
-						$this->write_cache($section,$w);
+						$this->write_cache($cache,$w);
 						break;
 
 				case 'alerts':
 						$w= $this->get_alerts();
-						$this->logger->info("Cache $section refreshed.");
-						$this -> write_cache($section,$w);
+						$this->logger->info("Cache $cache refreshed.");
+						$this -> write_cache($cache,$w);
 						break;
 
 				case 'airnow':
-					if (! $r = $this->get_external ($section,$this->airlocs) ){
+					if (! $r = $this->get_external ($cache,$this->airlocs) ){
 						// failed to get update.  Warn and go on
-// 						echo "Warning: attempt to reload $section failed.";
-					$this->logger->notice("attempt to refresh $section failed");
+// 						echo "Warning: attempt to reload $cache failed.";
+					$this->logger->notice("attempt to refresh $cache failed");
 						return false;
 					}
-					$this->logger->info("Cache $section refreshed.");
+					$this->logger->info("Cache $cache refreshed.");
 					//if (!$w = $this -> format_airnow($r) ){
-// 						echo "Warning: failed to parse data returned from $section";
+// 						echo "Warning: failed to parse data returned from $cache";
 // 						return false;
 // 					}
-					$this->write_cache ($section,$r);
+					$this->write_cache ($cache,$r);
 
 					break;
 
 				case 'airq':
-					if (! $r = $this->get_external ($section,$this->airlocs) ){
+					if (! $r = $this->get_external ($cache,$this->airlocs) ){
 						// failed to get update.  Warn and go on
-// 						echo "Warning: attempt to reload $section failed.";
-$this->logger->notice("attempt to refresh $section failed");
+// 						echo "Warning: attempt to reload $cache failed.";
+$this->logger->notice("attempt to refresh $cache failed");
 						return false;
 					}
-					$this->logger->info("Cache $section refreshed.");
+					$this->logger->info("Cache $cache refreshed.");
 					//if (!$w = $this -> format_airq($r) ){
-// 						echo "Warning: failed to parse data returned from $section";
+// 						echo "Warning: failed to parse data returned from $cache";
 // 						return false;
 // 					}
-						$this -> write_cache($section,$r);
+						$this -> write_cache($cache,$r);
 						break;
 
 
@@ -513,13 +1031,20 @@ $this->logger->notice("attempt to refresh $section failed");
 					return true;
 					break;
 
+				case 'cgopen':
+					return false;
+
+					break;
+
 				default: return false;
 		}
 
 	return true;
 }
 
-private function filter_calendar() {
+######### END CACHES ############
+
+public function filter_calendar() {
 	/*
 		removes expired events from calendar and sort by date
 		calenar = array (
@@ -543,7 +1068,7 @@ private function filter_calendar() {
 	}
 //  		u\echor($z,'cal filtered', STOP);
 	if (!empty($z)){
-		$z = $this->element_sort($z, 'dt');
+		$z = u\element_sort($z, 'dt');
 	}
 	return $z;
 
@@ -608,7 +1133,7 @@ public function update_section(string $section,array $u) {
 
 #-----------------  LOAD EXTERNASL --------------------
 
-public function get_external (string $src,array $locs=['hq']) {
+public function Xget_external (string $src,array $locs=['hq']) {
 	/*
 		supply one of the source codes ('wapi') and an array
 		of at least one valid location (even if not used)
@@ -816,7 +1341,10 @@ Array
  }
 
 
-
+private function getMtime($section){
+	$mtime = filemtime (CACHE[$section]);
+	return $mtime;
+}
 
 public function format_wapi ($r) {
 
@@ -905,13 +1433,24 @@ public function wgov_to_forecast($weathergov) {
 	return $fc;
 }
 
+private function format_alerts($r){
+	if (empty($r)) return '';
+	$t = $this->clean_text($r);
+	$anlist = explode("\n",$t);
+	foreach ($anlist as $al){
 
+	}
+	return $t;
+}
 
 public function format_wgov ($r) {
 
 	$x=[];
-	$x['update'] = time();
+
 	foreach ($r as $loc => $ldata){	//uses weather.gov api directly
+		if (empty($x['update'])){
+			$x['update'] = strtotime($ldata['properties']['updated']);
+		}
 		$periods = $ldata['properties']['periods'] ?? '';
 
 		$day = 0;
@@ -929,7 +1468,7 @@ public function format_wgov ($r) {
 				$lastday = $daytext;
 			}
 			$p['daytext'] = $daytext;
-			$p['highlow'] = $highlow . ' around ' . $p['temperature'] . '&deg; F';
+			$p['highlow'] = "$highlow ". $p['temperature'] . '&deg; F' ;
 
 			$x[$loc][$day][] = $p;
 
@@ -937,105 +1476,10 @@ public function format_wgov ($r) {
 
 	} #end foreach location
 
-	return $x;
+	$weather['weather'] = $x;
+	return $weather;
 }
 
-public function get_alerts () {
-
-	/* must get uniform format for alerts to display right
-	headline
-	category
-	event
-	expires
-	description
-	action
-
-
-
-
-
-*/
-	$y=[];
-
-	$src = 'wapi';
-
-	if ( ! $r = $this->load_cache ($src)) return false;
-// 	u\echor($r,'From external',STOP);
-		$alerts = $r['jr']['alerts']['alert'];
-		$x=[];
-		foreach ($alerts as $alertno => $ad){
-			$alert_exp = strtotime($ad['expires']);
-			if ($alert_exp < time()) continue;
-			$alert=[];
-			$alert['headline'] = $ad['headline'];
-			$alert['category'] = $ad['category'];
-			$alert['event'] = $ad['event'];
-			$alert['expires'] = $ad['expires'];
-			$alert['description'] = $ad['desc'];
-			$alert['instruction'] = $ad['instruction'];
-			$alert['expire_ts'] = $alert_exp;
-
-			$x[] =$alert;
-
-		}
-		$y[$src] = $x;
-
-
-		$src = 'wgova';
-		if ( ! $r = $this->get_external ($src,['jr'] )) return false;
-//	u\echor($r,'From external',STOP);
-		$items = $r['jr']['features'];
-
-		foreach ($items as $item){
-			$ad = $item['properties'];
-
-			$alert_exp = strtotime($ad['expires']);
-			if ($alert_exp < time()) continue;
-			$alert=[];
-
-			$alert['headline'] = $ad['headline'];
-			$alert['category'] = $ad['category'];
-			$alert['event'] = $ad['event'];
-			$alert['expires'] = $ad['expires'];
-			$alert['description'] = $ad['description'];
-			$alert['instruction'] = $ad['instruction'];
-			$alert['expire_ts'] = $alert_exp;
-
-			$x[] =$alert;
-
-		}
-		$y[$src] = $x;
-
-
-//u\echor($y,'from external  alerts', NOSTOP);
-
-	echo "External alerts updated" . BRNL;
-	return $y;
-}
-
-public function set_properties ($locs) {
-	// gets meta data for each location by lat,lon
-	// saves it in data file properties.json
-	$src = 'props';
-	$x = array('src'=>$src);
-	$x['update'] = time();
-
-
-
-	if ( ! $r = $this->get_external ($src,$locs)) return false;
-	//u\echor($r,'From external',STOP);
-
-	foreach ($r as $loc => $d){	//uses weather.gov api directly
-		$y[$loc] = $d['properties'];
-	} #end foreach
-// u\echor($y,'properties',STOP);
-
-	$this->write_cache('properties',$y);
-	echo "Properties updated" . BRNL;
-	return true;
-
-
-}
 
 
 
@@ -1151,16 +1595,18 @@ EOF;
 }
 
 private function split_coord ($loc) {
-	$coord = Defs::$coordinates[$loc];
+	if (!$coord = Defs::$coordinates[$loc]){
+		die ("Attempt to get coordinates of undefined location $loc");
+	}
 	[$lat,$long] = explode(',',$coord);
 	return [$lat,$long];
 }
 
 private function over_cache_time($section) {
 	//global $Defs;
-	$filemtime = filemtime(CACHE[$section] );
+	$filemtime = filemtime (CACHE[$section]);
 	$limit = $this->Defs->getMaxTime($section);
-	if ($time() - $filemtime > $limit) return true;
+	if ($limit && (time() - $filemtime > $limit)) return true;
 	return false;
 }
 
@@ -1184,6 +1630,7 @@ public function write_cache(string $section,array $z) {
 	}
 
 	file_put_contents(CACHE[$section],json_encode($z));
+	$this->logger->notice("Cache $section updated");
 }
 
 public function clean_text( $text = '') {
@@ -1191,7 +1638,7 @@ public function clean_text( $text = '') {
 	if (empty($text)) return '';
 	$t = htmlspecialchars($text,ENT_QUOTES);
 	$t = nl2br($t);
-	return $t;
+	return trim($t);
 }
 
 function get_curl ($src, $url,string $expected='',array $header=[]) {
@@ -1199,6 +1646,7 @@ function get_curl ($src, $url,string $expected='',array $header=[]) {
 			for expected result if supplied.
 			returns result array on success
 			returns false on erro.
+			$src is just for log info
 		*/
 		$curl = curl_init();
 		$curl_options = $this->curl_options();
@@ -1210,33 +1658,36 @@ function get_curl ($src, $url,string $expected='',array $header=[]) {
 		$success=0;
 		while (!$success) {
 			static $tries =0;
+			$fail = '';
 			//u\echor($aresp,"Here's what I got for $src:");
 
 			if ($tries > 2){
 					//echo "Can't get valid data from ext source  $src";
-				$this->logger->notice("No valid curl response on $src.",$aresp);
-				return false;
+				$this->logger->notice("Curl failed for $src: $fail.");
+				return [];
 			}
 			if (! $response = curl_exec($curl)) {
-				$success = 0; //echo "No curl resp on $src"; return false;
+				$success = 0;
+				$fail = "No curl responce on $src";
 			}else { $success = 1;}
 
 
 			if ($success && !$aresp = json_decode($response, true) ){
-				$success = 0; //echo " failed decode ";
+				$success = 0;
+				$fail = " failed JSON decode ";
 			}else { $success = 1;}
 
 			if ($success &&  $expected && !u\inMultiArray($expected,$aresp)) {
-				$success = 0; //echo "failed expected";
+				$success = 0;
+				$fail = "failed expected result $expected";
 			}else { $success = 1;}
 
 			if (! $success) {
-				//echo "Failed to get expected result from external site for $src. Try $tries. Retrying" . BRNL;
 					++$tries;
 					sleep (1);
 
 			} else {
-
+				$this->logger->info("Curl success for $src");
 				curl_close($curl);
 				return $aresp;
 			}

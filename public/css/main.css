@@ -34,6 +34,7 @@ h1 { font-size: 2em;
 	font-weight:bold;
 	text-align:center;}
 
+.tdate {margin-bottom:0;}
 
 input {
 	background-color:#FFC;
@@ -76,6 +77,8 @@ button {
 {
 	font-style: italic;
 	text-align: center;
+	margin-top:6px;
+	margin-bottom:6px;
 }
 
 
@@ -110,6 +113,8 @@ button {
 	color:white;
 }
 
+div.float {float:left;}
+div.clear {clear:left;}
 
 table {
 	border-collapse: collapse;
@@ -133,11 +138,9 @@ table.caltable {
 	margin-left:2em;
 	text-align:left;
 	width:90%;
+	table-layout:fixed;
 }
-table.caltable>tbody>tr>:nth-child(1){
-	width:25%;
-	text-align:left;
-}
+
 table.header {
 	background-color:black;
 	width:85%;

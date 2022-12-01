@@ -1,10 +1,8 @@
 <?php
 namespace DigitalMx\jotr;
 
-ini_set('display_errors', 1);
-
 //BEGIN START
-	require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
+
 	use DigitalMx as u;
 	use DigitalMx\jotr\Definitions as Defs;
 
@@ -68,53 +66,6 @@ class Calendar {
 
 	//$tz = new \DateTimeZone('America/Los_Angeles');
 
-function element_sort(array $array, string $on, $order=SORT_ASC)
-{
-	/* copied from php manual.
-		 sorts a list of arrays by one of the elemnts
-		array (
-			123 => array (
-				'name' => 'asdfl',
-				...
-			124 => ...
-
-		$sorted = element_sort($unsorted, 'name');
-
-
-	*/
-
-    $new_array = array();
-    $sortable_array = array();
-
-    if (count($array) > 0) {
-        foreach ($array as $k => $v) {
-            if (is_array($v)) {
-                foreach ($v as $k2 => $v2) {
-                    if ($k2 == $on) {
-                        $sortable_array[$k] = $v2;
-                    }
-                }
-            } else {
-                $sortable_array[$k] = $v;
-            }
-        }
-
-        switch ($order) {
-            case SORT_ASC:
-                asort($sortable_array);
-            break;
-            case SORT_DESC:
-                arsort($sortable_array);
-            break;
-        }
-
-        foreach ($sortable_array as $k => $v) {
-            $new_array[$k] = $array[$k];
-        }
-    }
-
-    return $new_array;
-}
 
 	public function dayset(int $i,string $days) {
 		// i is the calendar line
@@ -223,7 +174,7 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 
 	}
 #	u\echor($z, 'presort cal', false);
-		$z = $this->element_sort($z, 'dt');
+		$z = u\element_sort($z, 'dt');
 
 #u\echor($z, 'new cal', true);
 
@@ -262,7 +213,7 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 				$dts = $testdt->format('U'); #timestamp
 				$schevent['dt'] = $dts;
 				return $schevent;
-#				echo "added ${event['title']} on $testdate." . BR;
+				echo "added ${event['title']} on $testdate." . BR;
 		}
 
 

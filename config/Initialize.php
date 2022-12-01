@@ -97,6 +97,7 @@ class Initialize
 
 
 			define ('CACHE',Defs::$caches);
+			define ('CACHE_PATH',$paths['repo'] .'/data');
 			define ('STOP' , true);
 			define ('NOSTOP',false); // these are for u\echor utility
     }

@@ -37,7 +37,9 @@ Data is collected from a number of places that report information like weather, 
 <p>The pages are all updated automatically every few hours.  If necessary, they can be updated sooner using the buttons below.</p>
 
 <h3>Pages</h3>
+<a href='/today.php' target='today'>Click to produce live report</a>
 
+<!--
 <table>
 <tr><td>
 	<div class='likebutton'><a href='/pages/wapi.html' target='today'>wapi</a></div></td>
@@ -67,7 +69,7 @@ Data is collected from a number of places that report information like weather, 
 	<div class='likebutton'><a href='/pages/print.html' target='print'>print version</a></div></td>
 	<td class='left'>Designed for printing on 8.5x11; smaller type, condensed layout. takes 2 pages.<br>
 		Will be available as a pdf page, but it isn't working right yet.
-	<!-- <a href="/pages/" . date('Y-d-m') .".pdf">PDF version is here.</a> -->
+	<!~~ <a href="/pages/" . date('Y-d-m') .".pdf">PDF version is here.</a> ~~>
 	</td></tr>
 
 
@@ -82,3 +84,4 @@ Use this button to rebuild all the pages.  Caches will be refreshed only if they
 	<button type='submit' name='reload' value=true>Reload and Rebuild</button>
 </form>
 
+ -->

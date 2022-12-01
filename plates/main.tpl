@@ -4,7 +4,7 @@ use DigitalMx as u;
 ?>
 
 <div >
-<h2><?=$target ?> </h2>
+<h2 class='tdate'><?=$target ?> </h2>
 <p class='pithy'><?=$admin['pithy'] ?? '' ?></p>
 </div>
 
@@ -72,18 +72,6 @@ use DigitalMx as u;
 
 <!-- ####################################### -->
 </div><br /><div id='page3'>
-
-<h3>Fire Information </h3>
-<div class='in2' >
-<?php if(empty($fire)): echo "<p>No Data</p>"; else:?>
-
-	 	<p style = 'width:100%;'> <b>Current Fire Level:</b> <span style="background-color:<?=$fire['color']?>">
-	 	<?=$fire['level']?> </span></p>
-			<div class='left'>
-				<?=Defs::$firewarn[$fire['level']]?>
-			</div>
-			<?php endif; ?>
-</div>
 
 
 
@@ -181,45 +169,9 @@ if(empty($weather)): echo "<p>No Data</p>"; else: ?>
 <!-- ####################################### -->
 </div><br /><div id='page25'>
 
-<h3>Campgrounds</h3>
+<?php $this->insert('campground',['camps'=>$camps]); ?>
 
-<?php if (!empty($campgroundadivse)) : ?>
-	<div class='warn'><?=$campgroundadvise?></div>
-<?php endif; ?>
 
-<?php if(empty($camps)): echo "No Data"; else: ?>
-<table  class='in2 alt-gray border-bottom'>
-<tr><th>Campgrounds</th><th>Availability</th><th>Sites</th><th>Features</th><th>Status</th></tr>
-<?php foreach (['ic','jr','sp','hv','be','wt','ry','br','cw'] as $cg) : ?>
-	<tr class='border-bottom'>
-		<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
-	 <td> <?= $camps['cgavail'][$cg] ?> </td>
-	<td> <?= Defs::$campsites[$cg] ?> </td>
-		<td> <?= Defs::$campfeatures [$cg] ?> </td>
-	<td> <?= $camps['cgstatus'][$cg] ?>  </td>
-	</tr>
-	<?php endforeach;?>
-
-</table>
-<?php endif; ?>
-
-<div  style='float:left;width:30%;margin-left:2em;'><br />"Open" means First Come; First Served.  Find an open campsite and claim it.  Pay a ranger at the campground or at the entrance station.</div>
-.
-<div  style='float:left;width:30%;'>
-<p>Camp features:<br>
-	W: Water at Campground<br>
-	D: Dump Site for RVs<br>
-	G: Group sites available for large groups.<br>
-	H: Horse sites
-</p>
-</div>
-.
-<div style='float:left;width:30%'>
-<p>Reservations are made ONLY using the recreation.gov web site or call at 1-877-444-6777. They cannot be made by park rangers. </p>
-
-</div>
-
-<div style='clear:left;'></div>
 
 </div>
 <hr>

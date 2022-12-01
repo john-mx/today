@@ -13,7 +13,7 @@ namespace DigitalMx\jotr;
 
 //END START
 
-echo	$Today->rebuild();
+echo	$Today->refresh_caches ();
 echo "Done";
 
 

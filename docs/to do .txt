@@ -1,3 +1,0 @@
-To do
-1. api for open sites at campgrounds
-2.  api for calendar

@@ -6,13 +6,14 @@ ini_set('display_errors', 1);
 //BEGIN START
 	require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 	use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
-	use DigitalMx\jotr\Today;
+
 
 	$Plates = $container['Plates'];
 	$Defs = $container['Defs'];
 	$Today = $container['Today'];
+	$Cal = $container['Calendar'];
 
+	echo $Today->start_page('Test Page');
 
 //END START
 
@@ -23,18 +24,99 @@ $twolocs = ['jr','hq'];
 
 // what function?
 
-$f = temail($Plates,$Today);
+$f = alerts();
+
+function refresh($force=false){
+		global $Today,$Plates,$Defs;
+	$z=$Today->refresh_caches($force);
+	exit;
+}
+
+function calendar(){
+	global $Today,$Plates,$Defs,$Cal;
+
+	$c = $Cal->load_cache();
+#u\echor($c);
+
+	$calendar = $Cal->filter_calendar($c,4);
+	#u\echor($calendar,'filtered cal',false);
+	$platedata = array('calendar'=>$calendar);
+	echo $Plates->render('calendar',$platedata);
+	exit;
+}
+
+
+function today(){
+	global $Today,$Plates,$Defs;
+
+	$z=$Today->prepare_topics();
+	echo $Plates->render('today',['data'=>$z]);
+	u\echor($z,'prepared topics');
+	exit;
+}
+
+function light(){
+	global $Today,$Plates,$Defs;
+
+	$z=$Today->build_topic_light ();
+	echo $Plates->render('light',['data'=>$z]);
+	u\echor($z,'prepared liught');
+	exit;
+}
 
 
 
-function t1 ($Plates,$Today) {
+function weather(){
+	global $Today,$Plates,$Defs;
+#	$Today->rebuild_cache_wgov();
+
+	$z=$Today->build_topic_weather();
+	echo $Plates->render('weather_brief',$z);
+	exit;
+}
+
+
+function camps(){
+	global $Today,$Plates,$Defs;
+	$z=$Today->build_topic_campgrounds();
+
+	exit;
+}
+
+function prep () {
+	global $Today,$Plates,$Defs;
+
+	$z = $Today->prepare_topics();
+	u\echor($z,'topic array', STOP);
+}
+
+
+function alerts() {
+	global $Today,$Plates,$Defs;
+
+	echo "Testing " . 'galerts ' . BR;
+	$Today->rebuild_cache_galerts();;
+	exit;
+}
+
+function props (){
+	global $Today,$Plates,$Defs;
+
+	 "Testing " . 'props ' . BR;
+	$z = $Today->rebuild_caches(['properties']);
+	exit;
+}
+
+function t1 () {
+	global $Today,$Plates,$Defs;
 
 $z = $Today->load_cache('wapi',true);
 
 u\echor ($z, 'result of test');
 }
 
-function t2 ($Plates,$Today) {
+function t2 () {
+	global $Today,$Plates,$Defs;
 
 	echo $Today->start_page('test page','b');
 

@@ -1,9 +1,16 @@
+
+
 <?php
 if(empty($calendar)) : echo "No Calendar (calendar.tpl)"; else:
 ?>
-<h3>Upcoming Events</h3>
+<h4>Upcoming Events</h4>
 <table class='caltable'>
-<tr><th>Date and Time</th><th>Program</th><th>Duration</th></tr>
+<colgroup>
+        <col style="width: 15%;">
+        <col style="width: 40%;">
+        <col >
+</colgroup>
+<tr><th>Time </th><th>Program</th><th>Topic</th></tr>
 <tbody>
 
 <?php
@@ -16,21 +23,24 @@ if(empty($calendar)) : echo "No Calendar (calendar.tpl)"; else:
 	<?php if ($eventdate != $lasteventdate) :?>
 
 	<tr class="border-bottom" style='background-color:#F3984D';>
-	<td colspan=4><b><?=$eventdate ?> </b></td>
+	<td colspan=3><b><?=$eventdate ?> </b></td>
 </tr>
 	<?php endif; ?>
 	<tr>
 	<td><?=$eventtime?><br />
-	<?=$cal['type']?>
+
 	</td>
  	<td class='left'>
- 	<b><?=$cal['title']?></b> <br />
- 	 &nbsp;&nbsp;&nbsp;at <?=$cal['location']?>
+ 	<?=$cal['type']?>
+ 	 at <?=$cal['location']?><br>
+ 	( <?=$cal['duration']?>)
+	</td><td>
+ 	<b><?=$cal['title']?></b>
  	<?php if (!empty($cal['note'])) : ?>
 			<br /><i><?=$cal['note'] ?? '' ?></i>
  	<?php endif; ?>
 	</td>
-	<td><?=$cal['duration']?> </td>
+
 	</tr>
 
 	<?php $lasteventdate = $eventdate; ?>

@@ -89,11 +89,15 @@ public static $gridpoints = [
 	];
 
 public static $coordinates = [
+// no spaces!
 	'jr' => '33.9917,-116.1402',
 	'br' => '34.0733,-116.3907',
 	'kv' => '33.9272,-116.1875',
 	'hq' => '34.1348,-116.0815',
 	'cw' => '33.7485,-115.8211',
+	'pdx' => '45.5152,-122.6784',
+	'shasta' => '41.3099,-122.3106',
+	'denver' => '39.7392,-104.9903',
 ];
 
 	public static $api_keys = array (
@@ -170,6 +174,7 @@ public static $coordinates = [
 		'cw' => 'Cottonwood',
 		'hq'	=> 'Twentynine Palms',
 		'kv' => 'Keys View',
+		'pdx' => 'Portland, OR',
 	];
 
 	public static $campsites = [
@@ -196,8 +201,8 @@ public static $coordinates = [
 		'cw' => 'D,W,',
 	];
 
-	public static $cgavail = [
-		'Open',
+	public static $cgstatus = [
+		'First',
 		'Reservation',
 		'Closed',
 	];
@@ -208,7 +213,7 @@ public static $coordinates = [
 	'airnow' => 'airnowapi.org/observation',
 	'wapi' => 'api.weatherapi.com forecast',
 	'wgov' => 'weather.gov',
-	'wgova' => 'weather.gov alerts',
+	'wgovalerts' => 'weather.gov alerts',
 
 	];
 
@@ -222,7 +227,9 @@ public static $coordinates = [
 				'properties' => REPO_PATH . "/data/properties.json",
 				'wapi' => REPO_PATH . "/data/wapi.json",
 				'wgov' => REPO_PATH . "/data/wgov.json",
-				'wgova' => REPO_PATH . "/data/wgova.json",
+				'galerts' => REPO_PATH . "/data/galerts.json",
+				'cgopen' => REPO_PATH . "/data/cgopen.json",
+				'camp' => REPO_PATH . "/data/camp.json",
 			);
 
 // time before refresh in minutes.  0 means
@@ -238,8 +245,10 @@ public static $coordinates = [
 				'airq' => 240,
 				'airnow' => 240,
 				'airowm' => 240,
-				'alerts' => 60,
-				'wgova' => 60,
+				'alerts' => 0,
+				'galerts' => 120,
+				'cgopen' =>240,
+				'camp' => 0,
 
 
 

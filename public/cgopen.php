@@ -12,14 +12,24 @@ ini_set('display_errors', 1);
 	$Plates = $container['Plates'];
 	$Defs = $container['Defs'];
 	$Today = $container['Today'];
+	$CgOpens = $container['CgOpens'];
 
 
 //END START
 
 
-$y = $Today->prepare_topics ();
-#u\echor($y);
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+	//u\echor($_POST, 'post',STOP);
+	$CgOpens->save_opens($_POST['open']);
+}
+$opens = $CgOpens -> get_opens();
 
-	echo $Today->start_page();
-	echo $Plates -> render('today',['data'=>$y]);
-//	u\echor($y,'data to plate');
+
+
+	$data['opens'] = $opens;
+	u\echor($data);
+		echo $Plates->render('cgopen',$data);
+
+
+
+

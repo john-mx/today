@@ -25,16 +25,10 @@ $wlocs = ['jr','cw','kv','hq','br'];
 //}
 
 
-if ($z = $Today->refresh_cache('weather') ){
+if ($z = $Today->rebuild_properties() {
 	echo "Succeeded";
 	u\echor($z,'result');
 } else {
 	echo "Failed";
 }
 
-if ($z = $Today->refresh_cache('alerts') ){
-	echo "Succeeded";
-	u\echor($z,'result');
-} else {
-	echo "Failed";
-}
