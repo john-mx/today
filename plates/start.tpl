@@ -6,7 +6,7 @@
 // start with $meta = [title,pcode];
 	$pcode = $meta['pcode'] ?? '';
 	$title = $meta['title'] ?? 'Today in the Park';
-
+	$titlex = $title . ":$pcode" . " (" .PLATFORM . ") ";
 
 	$scbody = '';
 	$added_headers = "";
@@ -45,7 +45,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
    <meta http-equiv="refresh" content="900" >
 
-	<title><?=$title?> (<?=PLATFORM?>)</title>
+	<title><?=$titlex?></title>
 	<script src='/js/snap.js'></script>
 	<script src='/js/check_time.js'></script>
 	<script src='/js/hide.js'></script>
@@ -62,7 +62,9 @@ Department of the Interior<br>
 Joshua Tree National Park
 <h1 style='margin:0'>Today in Joshua Tree National Park</h1>
 </td><td style='width:80px;'>
-<img src='/images/Shield-7599-alpha.png' alt="NPS Shield" />
+<!-- <img src='/images/Shield-7599-alpha.png' alt="NPS Shield" /> -->
 </td></tr>
 </table>
-
+<?php if ($title !== 'Today'): ?>
+<h2><?=$title?></h2>
+<?php endif; ?>

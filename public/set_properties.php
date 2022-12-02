@@ -16,18 +16,15 @@ namespace DigitalMx\jotr;
 
 //END START
 
-$wlocs = ['jr','cw','kv','hq','br'];
+echo $Plates->render('start',['meta'=>['title'=>'Rebuild Properties']]);
 
-// if ($Today->set_properties ($wlocs) ){
-// 	echo "Succeeded";
-// } else {
-// 	echo "Failed";
-//}
+?>
+<p>This page rebuilds the properties (coordinates, zones, etc.) for the sites used for weather forcasts.  Data is stored in properties.json,  It should not normally change and the stored data is not used for anything except reference.</p>
+<?php
 
-
-if ($z = $Today->rebuild_properties() {
+if ($z = $Today->rebuild_properties()) {
 	echo "Succeeded";
-	u\echor($z,'result');
+	//u\echor($z,'result');
 } else {
 	echo "Failed";
 }

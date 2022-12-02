@@ -245,7 +245,7 @@ public function prepare_topics(){
 public function build_topic_calendar() {
 	$z=$this->load_cache('calendar');
 #	u\echor($z,'calendar',STOP);
-	$y=$this->Cal->filter_calendar($z,3);
+	$y=$this->Cal->filter_calendar($z,2);
 	return ['calendar' => $y];
 }
 public function build_topic_air() {
@@ -842,8 +842,8 @@ PDX ORZ006
 	return $x;
 }
 
-private function rebuild_properties() {
-	$locs=['jr','pdx','shasta'];
+public function rebuild_properties() {
+	$locs=['br','cw','jr','pdx','shasta'];
 	$x=[];
 	$x['update'] = time();
 	$src = 'properties';
@@ -854,10 +854,15 @@ private function rebuild_properties() {
 		$url = "https://api.weather.gov/points/$lat,$lon";
 					//(https://api.weather.gov/points/{lat},{lon}).
 		$expected = 'properties';
-		if (!$aresp = $this->get_curl($loginfo,$url, $expected, $curl_header) ) continue;
+		if (!$aresp = $this->get_curl($loginfo,$url, $expected, $curl_header) ) {sleep (2); #retry
+			if (!$aresp = $this->get_curl($loginfo,$url, $expected, $curl_header) ) {
+				return false;
+			}
+		}
 		$x[$loc] = $aresp['properties'];
 	}
 	$this->write_cache($src,$x);
+	return true;
 }
 
 public function set_properties (array $locs) {

@@ -22,7 +22,8 @@ $qs = $_SERVER['QUERY_STRING'] ?? '';
 $y = $Today->prepare_topics ();
 #u\echor($y);
 
-$meta=array('pcode' => $qs,'title'=>'Today In The Park');
+// using "Today' as title prevents it from re-appearing on the today page.
+$meta=array('pcode' => $qs,'title'=>'Today');
 	echo $Plates->render ('start',['meta'=>$meta]);
 
 //	echo $Today->start_page('Today in the Park',$qs);

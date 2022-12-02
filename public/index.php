@@ -18,7 +18,7 @@ namespace DigitalMx\jotr;
 //END START
 
 
-echo $Plates->render('start',['meta'=>'JOTR Today Index page']);
+echo $Plates->render('start',['meta'=>['title'=>'Today Index']]);
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -54,7 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 <h4>Pages</h4>
  <a href='admin.php' target ='admin'>Admin Page</a> (password 'abcd')<br />
-<a href='/today.php' target='today'>Current Today report</a>
+<a href='/today.php' target='today'>Current Today report</a><br />
+<a href='/set_properties.php' target='_blank'>Reset properties.json</a> (only used for reference).
+
 
 <!--
 <table>

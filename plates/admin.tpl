@@ -14,8 +14,6 @@ function setopen(){
 </script>
 
 
-<h2>Admin Page</h2>
-
 
 <form method='post'>
 <input type='hidden' name='type' value='update'>

@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		post_data ($_POST,$Today);
 		exit;
 } else {
-	$meta['title'] = 'Admin JOTR Today';
+	$meta['title'] = 'Today Admin';
 	echo $Plates->render ('start',['meta'=>$meta]);
 
 	show_admin($Today,$Plates);
@@ -86,11 +86,7 @@ function post_data($post,$Today){
 	//u\echor ($post);
 	$Today->post_admin($post);
 
-	echo "<p><b>Success</b></p>
-		<p>Go to <a href='/today.php'>Today page</a></p>";
-	echo "
-		<p>Go to <a href='/admin.php' >Admin page</a></p>";
-
+	echo "<script>window.location.href = '/'</script>";
 }
 
 
