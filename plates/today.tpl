@@ -1,6 +1,17 @@
 <?php
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
+$pcode = $meta['pcode'];
+
+switch ($pcode) {
+	case 'snap':
+		$divvis='none';
+		break;
+
+	default:
+		$divvis='block';
+}
+
 ?>
 
 <div >
@@ -9,10 +20,7 @@ use DigitalMx as u;
 </div>
 
 <!-- ############################## -->
-<!--
-<div id='page1'>
- -->
-
+<div id="page1" style="display: block;">
 
 <?php
 	$this->insert('light_condensed',['light' => $data['light']]);
@@ -21,14 +29,22 @@ use DigitalMx as u;
 	$this->insert('notices',['notices' => $data['notices']]);
 ?>
 <?php
+	$this->insert('advice',['advice' => $data['advice']]);
+?>
+</div> <!-- end page-->
+<div id="page2" style="display: <?=$divvis?>;">
+
+<?php
   $this->insert('calendar',['calendar' => $data['calendar']])
 ?>
 
+</div> <!-- end page-->
+<div id="page3" style="display: <?=$divvis?>;">
+
 <?php $this->insert('weather_brief',['weather' => $data['weather'] ]); ?>
 
-<!--
-<div id='page2' style="page-break-after: always;"><br /></div>
- -->
+</div> <!-- end page-->
+<div id="page4" style="display: <?=$divvis?>;">
 
 
 <div class='in2' style='width:45%; float:left;'>
@@ -41,18 +57,13 @@ use DigitalMx as u;
 </div>
 
 <div class='clear'></div>
-<!--
-<div id='page4'><br /></div>
- -->
+
+</div> <!-- end page-->
+<div id="page5" style="display: <?=$divvis?>;">
+
 
 <!-- ############################## -->
 
-<!--
-</div><br />
- -->
-<!--
-<div id='page2'>
- -->
 
 
 
@@ -64,4 +75,8 @@ use DigitalMx as u;
 <p id='bottom' class='right'><?=$data['version'] ?>
 <br>build <?php echo date('dHi'); ?></p>
 
+</div> <!-- end page-->
+
 <?php $this->insert('scroll_script'); ?>
+
+

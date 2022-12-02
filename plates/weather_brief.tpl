@@ -83,5 +83,5 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 		</tr>
 		<?php endforeach; // loc? ?>
 	</table>
-
+</div>
 	<?php endif; ?>

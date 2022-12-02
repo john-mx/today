@@ -323,6 +323,9 @@ public function build_topic_general() {
 
 			$z['version'] = file_get_contents(REPO_PATH . "/data/version") ;
 			$z['target'] = date('l M j, Y');
+
+			$z['advice'] = $this->clean_text($y['advice']);
+
 	//u\echor($z,'topic general', NOSTOP);
 	return $z;
 
@@ -416,6 +419,7 @@ public function prepare_admin() {
 
 	$y['galerts'] = $this->load_cache('galerts');
 
+
 // u\echor ($y, 'Y to admin',NOSTOP);
 	return $y;
 }
@@ -469,6 +473,8 @@ public function post_admin ($post) {
 	$y['fire_level'] = $post['fire_level'];
 //weather
 	$y['alerts'] = trim($post['alerts']);
+
+	$y['advice'] = trim($post['advice']);
 
 
 	$y['cgstatus'] = $post['cgstatus']; // array
@@ -1520,7 +1526,7 @@ public function start_page ($title = 'Today in the Park',$pcode='') {
 		$scbody='onLoad="pageScroll()"';
 		$added_headers = "<style>html {scroll-behavior: smooth;}</style>";
 	}
-	elseif ($pcode=='z'){
+	elseif ($pcode=='p'){
 		$scbody = "onLoad='startRotation(10)'";
 	}
 	elseif ($pcode=='b'){

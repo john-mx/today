@@ -58,7 +58,12 @@ function setopen(){
 <h4>Enter closures/announcements</h4>
 One announcement per line.(<cr>)  They will be listed as bullets<br />
 <textarea name='announcements' ><?=$admin['announcements'] ?></textarea>
-</p>
+
+
+<h4>Enter visitor advice</h4>
+One announcement per line.(<cr>)  They will be listed as bullets<br />
+<textarea name='advice' ><?=$admin['advice'] ?></textarea>
+
 
 <h4>Enter fire status</h4>
 <p>General Fire Level: <select name='fire_level'><?=$admin['fire_level_options']?></select>

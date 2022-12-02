@@ -22,7 +22,12 @@ $qs = $_SERVER['QUERY_STRING'] ?? '';
 $y = $Today->prepare_topics ();
 #u\echor($y);
 
-	echo $Today->start_page('Today in the Park',$qs);
-	echo $Plates -> render('today',['data'=>$y]) ;
+$meta=array('pcode' => $qs,'title'=>'Today In The Park');
+	echo $Plates->render ('start',['meta'=>$meta]);
+
+//	echo $Today->start_page('Today in the Park',$qs);
+	echo $Plates -> render('today',['data'=>$y,'meta'=>$meta]) ;
+// 	file_put_contents(REPO_PATH .'/data/test.html',
+// 		$Plates -> render('today',['data'=>$y]) );
 //	if ($qs == 's')echo $Plates -> render ('scroll_script');
 //	u\echor($y,'data to plate');
