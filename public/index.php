@@ -31,9 +31,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 ?>
 
-<p>This project generates the Today in the Park report in a variety of formats.
-Data is collected every few hours from a number of places that report information like weather, air quality, astronomical data, and more. Local data is entered manually through an admin page linked below.</p>
+<p>This project generates the "Today in the Park" report in a variety of formats.</p>
 
+<ol>
+<li> Local data, such as park alerts, closures, and fire level, are entered manually by an admin using the admin.php page.
+<li> External data is collected every few hours from a number of places that report information like weather, air quality, astronomical data, and more. This date is stored on the site.
+<li> The "today" page is built by combining all this data in a user-friendly format.
+<li> The today page can be retrieved with a style code:
+<table>
+<tr><td>URL</td><td>Result</td></tr>
+<tr><td><a href="/today.php" target='today'>/today.php</a>
+</td><td>Regular web page with all data</td></tr>
+<tr><td><a href="/today.php?scroll" target='scroll'>/today.php?scroll</a>
+</td><td>Page slowly scrolls to the bottom, then restarts</td></tr>
+<tr><td><a href="/today.php?snap" target='snap'>/today.php?snap</a>
+</td><td>Page displays a section for 10 seconds, then next section, and so on, before starting over.</td></tr>
+<tr><td><a href="/today.php?print" target='print'>/today.php?print</a>
+</td><td>Regular web page prepared for printing with smaller type and defined pages.</td></tr>
+</table>
+</li>
+</ol>
 
 <h4>Pages</h4>
  <a href='admin.php' target ='admin'>Admin Page</a> (password 'abcd')<br />
