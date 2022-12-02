@@ -47,6 +47,7 @@
 
 	<title><?=$title?> (<?=PLATFORM?>)</title>
 	<script src='/js/snap.js'></script>
+	<script src='/js/check_time.js'></script>
 	<script src='/js/hide.js'></script>
 
 	<link rel='stylesheet' href = '/css/main.css' />

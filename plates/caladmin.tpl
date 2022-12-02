@@ -66,7 +66,7 @@ Note: in list below, repeating events are shown first, then one-time events.
 
 		<tr  style='vertical-align:top;'>
 
-			<td >On or After: <br /><input type = 'text' size='15'
+			<td >On or After date: <br /><input type = 'text' size='15'
 				name="calendar[<?=$i?>][date]"
 				value ="<?= $event['date']?>" >
 

@@ -18,25 +18,9 @@ ini_set('display_errors', 1);
 
 //END START
 
+echo $Plates->render('start',['meta'=>['title'=>'JOTR Today Calander Admin']]);
 
-echo <<<EOT
-<!DOCTYPE html>
-<head>
-<link rel='stylesheet' href='/css/main.css'>
-<title>JOTR Today Calendar Admin</title>
-<script>
-function checkTime(element) {
 
-	if (element.value == 0 || element.value == null)
-		element.className = 'invalid';
-	else
-		element.className = 'input';
-}
-
-</script>
-</head>
-<body>
-EOT;
 
 if (isset($_POST['pw']) ) {// is login
 	$Login->set_pwl($_POST['pw']);

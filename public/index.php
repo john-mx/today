@@ -18,7 +18,7 @@ namespace DigitalMx\jotr;
 //END START
 
 
-echo $Today ->start_page('Project Index');
+echo $Plates->render('start',['meta'=>'JOTR Today Index page']);
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
