@@ -26,8 +26,6 @@ namespace DigitalMx\jotr;
 
 
 //END START
-echo $Today->start_page('Admin JOTR Today','h'); #add hidden js
-
 // check for login status
 
 if (isset($_POST['pw']) ) {// is login
@@ -42,6 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		post_data ($_POST,$Today);
 		exit;
 } else {
+	$meta['title'] = 'Admin JOTR Today';
+	echo $Plates->render ('start',['meta'=>$meta]);
+
 	show_admin($Today,$Plates);
 	exit;
 }
@@ -51,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ####################
 
 function show_admin ($Today,$Plates) {
+ //echo $Today->start_page('Admin JOTR Today','h'); #add hidden js
 
 
 	$y = $Today-> prepare_admin();

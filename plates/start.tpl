@@ -4,7 +4,7 @@
 	use DigitalMx\jotr\Today;
 
 // start with $meta = [title,pcode];
-	$pcode = $meta['pcode'];
+	$pcode = $meta['pcode'] ?? '';
 	$title = $meta['title'] ?? 'Today in the Park';
 
 
@@ -30,7 +30,7 @@
 
 		default:
 			u\echoAlert ("Undefined option: $pcode");
-				echo "<script>history.back()</script>";
+				echo "<script>window.location.href='/today.php';</script>";
 				exit;
 	}
 
@@ -43,8 +43,9 @@
 <head>
    <meta charset="utf-8" />
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <meta http-equiv="refresh" content="900" >
 
-	<title><?=$title?> <?=PLATFORM?></title>
+	<title><?=$title?> (<?=PLATFORM?>)</title>
 	<script src='/js/snap.js'></script>
 	<script src='/js/hide.js'></script>
 

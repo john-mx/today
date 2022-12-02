@@ -902,7 +902,7 @@ public function Xrefresh_cache (string $cache ) {
 				case 'wapi':
 					if (! $r = $this->get_external ($cache,$this->wlocs) ){
 						// failed to get update.  Warn and go on
-						//echoAlert "Warning: attempt to reload $cache failed.";
+						// "Warning: attempt to reload $cache failed.";
 						$this->logger->notice("attempt to refresh $cache failed");
 						return false;
 					}
@@ -1519,7 +1519,7 @@ private function fire_data($fire_level) {
 
 	return $fire;
 }
-public function start_page ($title = 'Today in the Park',$pcode='') {
+public function Xstart_page ($title = 'Today in the Park',$pcode='') {
 	$scbody = '';
 	$added_headers = "";
 	if ($pcode=='s') {
@@ -1602,7 +1602,7 @@ private function str_to_ts($edt) {
 					throw new RuntimeException ("Illegal date/time: $edt");
 				return $t;
 			} catch (RuntimeException $e) {
-				u\echoalert ($e->getMessage());
+				u\echoAlert ($e->getMessage());
 				echo "<script>history.back()</script>";
 				exit;
 			}
