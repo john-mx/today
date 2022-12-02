@@ -87,10 +87,9 @@ function post_data($post,$Today){
 	$Today->post_admin($post);
 
 	echo "<p><b>Success</b></p>
-		<p>Go to <a href='/'>Index page</a></p>";
+		<p>Go to <a href='/today.php'>Today page</a></p>";
 	echo "
-		<p>Go to <a href='/admin.php' >/admin.php</> to reload this page. </p>
-		";
+		<p>Go to <a href='/admin.php' >Admin page</a></p>";
 
 }
 
