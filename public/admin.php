@@ -26,7 +26,6 @@ namespace DigitalMx\jotr;
 
 
 //END START
-// check for login status
 
 if (isset($_POST['pw']) ) {// is login
 	$Login->set_pwl($_POST['pw']);
@@ -38,10 +37,12 @@ $Login->check_pw(1);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		post_data ($_POST,$Today);
+		echo "<script>window.location.href='/today.php';</script>";
 		exit;
+
 } else {
-	$meta['title'] = 'Today Admin';
-	echo $Plates->render ('start',['meta'=>$meta]);
+	echo $Plates->render('start',['meta'=>['title'=>'Today Admin Page']]);
+
 
 	show_admin($Today,$Plates);
 	exit;
@@ -86,7 +87,7 @@ function post_data($post,$Today){
 	//u\echor ($post);
 	$Today->post_admin($post);
 
-	echo "<script>window.location.href = '/'</script>";
+
 }
 
 
