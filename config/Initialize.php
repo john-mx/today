@@ -39,7 +39,7 @@ class Initialize
         $this->setIncludes($this->paths['repo'] );
 			$this->loadRequires($this->paths['repo']);
         $this->setConstants($this->paths );
-       # $this->startLogger();
+      #  $this->startLogger();
 
 
     }
@@ -155,33 +155,10 @@ class Initialize
         )
       );
     }
-private function startLogger() {
-$logdir = dirname(__DIR__) . '/logs';
-#$stream = new StreamHandler($logdir .'/today_app.log', Level::Debug);
-$output = "%datetime% > %level_name% > %message% %context% %extra%\n";
-$dateFormat = "Y-m-d H:i";
-$formatter = new LineFormatter($output, $dateFormat);
-// Create a handler
-#
 
-$fileHandler = new RotatingFileHandler($logdir .'/today_app.log');
-$fileHandler->setFormatter($formatter);
-
-$firephp = new FirePHPHandler();
-
-// Create the logger
-$logger = new Logger('today_app');
-// Now add some handlers
-$logger->pushHandler($fileHandler);
-$logger->pushHandler($firephp);
-#$logger->pushProcessor(new \Monolog\Processor\IntrospectionProcessor(Logger::DEBUG, array()));
-
-// You can now use your logger
-$logger->info('My logger is now ready');
-
-}
 
 
 } #end class init
 
 //EOF
+

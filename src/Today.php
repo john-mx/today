@@ -7,6 +7,7 @@ namespace DigitalMx\jotr;
 	//require_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 	use DigitalMx as u;
 	use DigitalMx\jotr\Definitions as Defs;
+	use DigitalMx\jotr\Log;
 
 
 //END START
@@ -138,7 +139,7 @@ EOT;
 public function __construct($c){
 	$this->Plates = $c['Plates'];
 	$this -> Defs = $c['Defs'];
-	$this-> logger = $c['logger'];
+
 	$this->Cal = $c['Calendar'];
 	$this->Cg = $c['CgOpens'];
 	// locations to use for weather report
@@ -147,6 +148,8 @@ public function __construct($c){
 
 	$this -> max_age = Defs::$cache_times;
 	//$this -> properties = $this->load_cache('properties');
+
+
 
 }
 
@@ -206,7 +209,7 @@ $page_body_print = $this->Plates -> render ('print',$y);
 	}
 
 
-	$this->logger->info( "Pages updated" );
+	Log::info( "Pages updated" );
 }
 public function prepare_topics(){
 	/*
@@ -384,7 +387,7 @@ $z=[];
 	$z['calendar'] = $this->Cal->filter_calendar($y['calendar'],4);
 
 
-	$this->logger->info('formed today array');
+	Log::info('formed today array');
 u\echor($z, 'z array for today',STOP);
 	return $z;
 }
@@ -507,6 +510,7 @@ public function load_cache ($section, bool $force=false) {
 #echo "loading cache $section" . BR;
 		if (! $refresh && !file_exists (CACHE[$section])) {
 			$refresh = true;
+			Log::notice ("Cache $section does not exist. Refreshing.");
 		} elseif (!$refresh) {
 			$mtime = $this->getMtime($section);
 			$maxtime = $this->Defs->getMaxtime ($section) ;
@@ -523,7 +527,7 @@ public function load_cache ($section, bool $force=false) {
 		if ($refresh) {
 			if (0 && ! $this->refresh_cache($section) ) {
 				u\echoAlert ("Unable to refresh cache: $section.  Using old version.");
-				$this->logger->notice("Unable to refresh cache $section");
+				Log::notice("Unable to refresh cache $section");
 			}
 		}
 
@@ -589,6 +593,7 @@ private function rebuild_cache_wapi($locs=[] ) {
 	} # next loc
 	return $x;
 	$this->write_cache($src,$x);
+	Log::info('Rebuilt cache wapi.');
 
 }
 
@@ -612,6 +617,7 @@ private function rebuild_cache_airq() {
 	} # next loc
 
 	$this->write_cache($src,$x);
+	Log::info('Rebuilt cache airq.');;
 
 }
 
@@ -634,6 +640,7 @@ private function rebuild_cache_airowm() {
 	} # next loc
 
 	$this->write_cache($src,$x);
+	Log::info('Rebuilt cache airowm.');
 
 }
 
@@ -697,7 +704,7 @@ coord: 34.0714,-116.3906,
 
 		$x[$loc] = $aresp;
 	} # next loc
-
+Log::info('Rebuilt cache wgov.');
 	$this->write_cache($src,$x);
 
 }
@@ -733,6 +740,7 @@ https://www.airnowapi.org/aq/observation/latLong/current/?format=application/jso
 	} # next loc
 
 	$this->write_cache($src,$x);
+	Log::info('Rebuilt cache airnow.');
 
 }
 
@@ -753,7 +761,7 @@ public function rebuild_cache_galerts () {
 	$src = 'wapi';
 
 	if ( $r = $this->rebuild_cache_wapi(['jr'])) {
-// 	u\echor($r,'From wapi',NOSTOP);
+ //	u\echor($r,'From wapi',STOP);
 		$alerts = $r['jr']['alerts']['alert'];
 		$x=[];
 		foreach ($alerts as $alertno => $ad){
@@ -769,8 +777,8 @@ public function rebuild_cache_galerts () {
 			$alert['expire_ts'] = $alert_exp;
 
 			$x[] =$alert;
-
 		}
+		Log::info('Updated wapi for alerts');
 		$y[$src] = $x;
 	}
 
@@ -798,7 +806,7 @@ public function rebuild_cache_galerts () {
 
 		}
 		$y[$src] = $x;
-
+		Log::info('Updated galerts for alerts');
 		$this->write_cache('galerts',$y);
 //u\echor($y,'from external  alerts', NOSTOP);
 	return $y;
@@ -862,6 +870,7 @@ public function rebuild_properties() {
 		$x[$loc] = $aresp['properties'];
 	}
 	$this->write_cache($src,$x);
+	Log::info('Rebuilt properites');
 	return true;
 }
 
@@ -908,10 +917,10 @@ public function Xrefresh_cache (string $cache ) {
 					if (! $r = $this->get_external ($cache,$this->wlocs) ){
 						// failed to get update.  Warn and go on
 						// "Warning: attempt to reload $cache failed.";
-						$this->logger->notice("attempt to refresh $cache failed");
+						Log::notice("attempt to refresh $cache failed");
 						return false;
 					}
-						$this->logger->info("Cache $cache refreshed.");
+						Log::info("Cache $cache refreshed.");
 				//	if (!$w = $this -> format_wapi($r) ){
 				// 		echo "Warning: failed to parse data returned from $cache";
 // 						return false;
@@ -922,10 +931,10 @@ public function Xrefresh_cache (string $cache ) {
 					if (! $r = $this->get_external ($cache,$this->airlocs) ){
 						// failed to get update.  Warn and go on
 						//echo "Warning: attempt to reload $src failed.";
-						$this->logger->notice("attempt to refresh $cache failed");
+						Log::notice("attempt to refresh $cache failed");
 						return false;
 					}
-$this->logger->info("Cache $cache refreshed.");
+Log::info("Cache $cache refreshed.");
 				//	if (!$w = $this -> format_airowm($r) ){
 // 						echo "Warning: failed to parse data returned from $cache";
 // 						return false;
@@ -947,7 +956,7 @@ $this->logger->info("Cache $cache refreshed.");
 					//echo  "Warning: attempt to reload $cache failed.";
 						return false;
 					}
-					$this->logger->info("Cache $cache refreshed.");
+					Log::info("Cache $cache refreshed.");
 					$this->write_cache ($cache,$r);
 					break;
 
@@ -956,10 +965,10 @@ $this->logger->info("Cache $cache refreshed.");
 						// failed to get update.  Warn and go on
 	//					u\echor ($r,'in refresh cache');
 // 						echo "Warning: attempt to reload $cache failed.";
-		$this->logger->notice("attempt to refresh $cache failed");
+		Log::notice("attempt to refresh $cache failed");
 						return false;
 					}
-					$this->logger->info("Cache $cache refreshed.");
+					Log::info("Cache $cache refreshed.");
 				//	if (!$w = $this -> format_wgov($r) ){
 // 						echo "Warning: failed to parse data returned from $cache";
 // 						return false;
@@ -973,7 +982,7 @@ $this->logger->info("Cache $cache refreshed.");
 
 				case 'alerts':
 						$w= $this->get_alerts();
-						$this->logger->info("Cache $cache refreshed.");
+						Log::info("Cache $cache refreshed.");
 						$this -> write_cache($cache,$w);
 						break;
 
@@ -981,10 +990,10 @@ $this->logger->info("Cache $cache refreshed.");
 					if (! $r = $this->get_external ($cache,$this->airlocs) ){
 						// failed to get update.  Warn and go on
 // 						echo "Warning: attempt to reload $cache failed.";
-					$this->logger->notice("attempt to refresh $cache failed");
+					Log::notice("attempt to refresh $cache failed");
 						return false;
 					}
-					$this->logger->info("Cache $cache refreshed.");
+					Log::info("Cache $cache refreshed.");
 					//if (!$w = $this -> format_airnow($r) ){
 // 						echo "Warning: failed to parse data returned from $cache";
 // 						return false;
@@ -997,10 +1006,10 @@ $this->logger->info("Cache $cache refreshed.");
 					if (! $r = $this->get_external ($cache,$this->airlocs) ){
 						// failed to get update.  Warn and go on
 // 						echo "Warning: attempt to reload $cache failed.";
-$this->logger->notice("attempt to refresh $cache failed");
+Log::notice("attempt to refresh $cache failed");
 						return false;
 					}
-					$this->logger->info("Cache $cache refreshed.");
+					Log::info("Cache $cache refreshed.");
 					//if (!$w = $this -> format_airq($r) ){
 // 						echo "Warning: failed to parse data returned from $cache";
 // 						return false;
@@ -1202,7 +1211,7 @@ public function Xget_external (string $src,array $locs=['hq']) {
 // attempt to get data.  3 retries.
 	if (!$aresp = $this->get_curl($src,$url, $expected, $curl_header) )
 	{
-		$this->logger->notice("get_curl failed on $src, $url, $expected");
+		Log::notice("get_curl failed on $src, $url, $expected");
 		return false;
 	}
 	$x[$loc] = $aresp;
@@ -1596,7 +1605,7 @@ private function over_cache_time($section) {
 	$limit = $this->Defs->getMaxTime($section);
 	$diff = time() - $filetime;
 	if ($limit && ($diff > $limit)) return true;
-	echo "$section: limit $limit; diff $diff;" . BR;
+//	echo "$section: limit $limit; diff $diff;" . BR;
 	return false;
 }
 
@@ -1620,7 +1629,7 @@ public function write_cache(string $section,array $z) {
 	}
 
 	file_put_contents(CACHE[$section],json_encode($z));
-	$this->logger->notice("Cache $section updated");
+	Log::notice("Cache $section updated");
 }
 
 public function clean_text( $text = '') {
@@ -1636,7 +1645,7 @@ function get_curl ($src, $url,string $expected='',array $header=[]) {
 			for expected result if supplied.
 			returns result array on success
 			returns false on erro.
-			$src is just for log info
+			$src is just for TLog info
 		*/
 		$curl = curl_init();
 		$curl_options = $this->curl_options();
@@ -1653,7 +1662,7 @@ function get_curl ($src, $url,string $expected='',array $header=[]) {
 
 			if ($tries > 2){
 					//echo "Can't get valid data from ext source  $src";
-				$this->logger->notice("Curl failed for $src: $fail.");
+				Log::notice("Curl failed for $src: $fail.");
 				return [];
 			}
 			if (! $response = curl_exec($curl)) {
@@ -1677,7 +1686,7 @@ function get_curl ($src, $url,string $expected='',array $header=[]) {
 					sleep (1);
 
 			} else {
-				$this->logger->info("Curl success for $src");
+
 				curl_close($curl);
 				return $aresp;
 			}

@@ -3,7 +3,18 @@
 	use DigitalMx\jotr\Definitions as Defs;
 	use DigitalMx\jotr\Today;
 
-// start with $meta = [title,pcode];
+/* start with $meta = [title,pcode];
+	A working title is creeated from title . pcode (platform)
+	This is used in the title header tag, so that's what shows up as the pages
+	title in the browser.
+	The title without embellishment is used at the top of the page,
+	UNLESS the title is 'Today'.  That supresses the title on the page body
+	because on the today page, the title is the current date instead.
+
+	So for the today page, use "Today" as the title.  For all other pages,
+	use a reasonable title for the top of the page.
+	*/
+
 	$pcode = $meta['pcode'] ?? '';
 	$title = $meta['title'] ?? 'Today in the Park';
 	$titlex = $title . ":$pcode" . " (" .PLATFORM . ") ";
@@ -26,6 +37,9 @@
 
 		case 'print':
 			$added_headers = "<link rel='stylesheet' media='print' href = '/css/media.css' >";
+				u\echoAlert ("Not implemented yet: $pcode");
+				echo "<script>window.location.href='/today.php';</script>";
+				exit;
 			break;
 
 		default:

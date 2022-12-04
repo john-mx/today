@@ -8,17 +8,22 @@ namespace DigitalMx\jotr;
 
 	use DigitalMx as u;
 	use DigitalMx\jotr\Definitions as Defs;
-	use DigitalMx\jotr\Today;
+	#use DigitalMx\jotr\Today;
+
 
 	$Plates = $container['Plates'];
 	$Defs = $container['Defs'];
 
 	$Today = $container['Today'];
 
+
 //END START
 
 
 echo $Plates->render('start',['meta'=>['title'=>'Today Index']]);
+;
+
+//Log::error('starting index' . __FILE__ . __LINE__);
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){

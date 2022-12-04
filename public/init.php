@@ -79,6 +79,7 @@ class ResourceException extends \RuntimeException{}
 // sets paths, constants, requires
 $init = new Initialize();
 
+
 //creates container and services for most of the classes
 require  REPO_PATH . "/config/services.php";
 
@@ -92,7 +93,6 @@ if (REPO == 'live'){
 
 
 date_default_timezone_set('America/Los_Angeles');
-
 
  define ('INIT',1);
 
