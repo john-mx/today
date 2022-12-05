@@ -2,7 +2,7 @@
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
 
-$pcode = $meta['pcode'];
+$pcode ??= '';
 
 switch ($pcode) {
 	case 'snap':

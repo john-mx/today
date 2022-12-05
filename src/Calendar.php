@@ -23,6 +23,7 @@ class Calendar {
                     'type' => 'Ranger Program',
                     'title' => 'Adaptations to the the Desert',
                     'duration' => '30 min',
+                    'suspended' => true,
                     'note' => '',
                 ),
 
@@ -36,6 +37,7 @@ class Calendar {
                     'type' => 'Walk and Talk',
                     'title' => 'Where these rocks came from',
                     'duration' => '30 min',
+                  'suspended' => true,
                     'note' => 'Gather at the crosswalk on Park Drive',
                 ),
 
@@ -49,6 +51,7 @@ class Calendar {
                     'type' => 'Ranger Talk',
                     'title' => 'The Local Tribes',
                     'duration' => '30 min',
+                    'suspended' => true,
                     'note' => '',
                 ),
             );
@@ -61,6 +64,7 @@ class Calendar {
 	 	'location'=>'',
 	 	'type'=>'','title'=>'',
 	 	'duration' => '',
+	 	'suspended' => false,
 	 	'note'=>''
 	 	);
 
@@ -129,6 +133,8 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 
 	foreach ($calendar as $event){ #keep if these conditions:
 		if (empty ($event['time'])) {continue;} #nope
+
+		if (empty($event['suspended'])) $event['suspended'] = false;
 
 #	echo "Testing " . $event['title'] . BR;
 
@@ -281,7 +287,9 @@ public function prepare_calendar(array $calendar) {
 			u\alertBadInput ("Event must have a duration");
 		}
 
-
+		if (empty($event['suspended'])){
+			$event['suspended'] = false;
+		}
 
 		// convert "day4 = on" to days string
 		$days='';

@@ -24,10 +24,10 @@ $y = $Today->prepare_topics ();
 
 // using "Today' as title prevents it from re-appearing on the today page.
 $meta=array('pcode' => $qs,'title'=>'Today');
-	echo $Plates->render ('start',['meta'=>$meta]);
+	echo $Plates->render ('start',['pcode' => $qs,'title'=>'Today']);
 
 //	echo $Today->start_page('Today in the Park',$qs);
-	echo $Plates -> render('today',['data'=>$y,'meta'=>$meta]) ;
+	echo $Plates -> render('today',['data'=>$y,'pcode'=>$qs]) ;
 // 	file_put_contents(REPO_PATH .'/data/test.html',
 // 		$Plates -> render('today',['data'=>$y]) );
 //	if ($qs == 's')echo $Plates -> render ('scroll_script');

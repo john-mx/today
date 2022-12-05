@@ -1006,7 +1006,7 @@ Log::info("Cache $cache refreshed.");
 					if (! $r = $this->get_external ($cache,$this->airlocs) ){
 						// failed to get update.  Warn and go on
 // 						echo "Warning: attempt to reload $cache failed.";
-Log::notice("attempt to refresh $cache failed");
+						Log::notice("attempt to refresh $cache failed");
 						return false;
 					}
 					Log::info("Cache $cache refreshed.");
@@ -1211,7 +1211,7 @@ public function Xget_external (string $src,array $locs=['hq']) {
 // attempt to get data.  3 retries.
 	if (!$aresp = $this->get_curl($src,$url, $expected, $curl_header) )
 	{
-		Log::notice("get_curl failed on $src, $url, $expected");
+		#Log::info("get_curl failed on $src, $url, $expected");
 		return false;
 	}
 	$x[$loc] = $aresp;
@@ -1629,7 +1629,7 @@ public function write_cache(string $section,array $z) {
 	}
 
 	file_put_contents(CACHE[$section],json_encode($z));
-	Log::notice("Cache $section updated");
+	Log::info("Cache $section updated");
 }
 
 public function clean_text( $text = '') {

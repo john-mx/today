@@ -5,7 +5,8 @@ require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 
 	use DigitalMx as u;
 	use DigitalMx\jotr\Definitions as Defs;
-$Log = $container['Login'];
+	use DigitalMx\jotr\Login;
+#$Login = $container['Login'];
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST'){
 	show_login();

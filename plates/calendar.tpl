@@ -16,6 +16,7 @@ if(empty($calendar)) : echo "No Calendar (calendar.tpl)"; else:
 <?php
 	$lasteventdate = '';
 	foreach ($calendar as $cal) :
+		if ($cal['suspended']){continue;} // dont display
 		$eventdate = date('l M j',$cal['dt']);
 		$eventtime = date('g:i a', $cal['dt']);
 		$rowclass = (empty($cal['note'])) ? 'border-bottom' : 'no-bottom';

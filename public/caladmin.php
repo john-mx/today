@@ -18,7 +18,7 @@ ini_set('display_errors', 1);
 
 //END START
 
-echo $Plates->render('start',['meta'=>['title'=>'Today Calander Admin']]);
+echo $Plates->render('start',['title'=>'Today Calender Admin']);
 
 
 

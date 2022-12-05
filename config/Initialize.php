@@ -94,7 +94,7 @@ class Initialize
         define ('PLATFORM',$this->platform);
         define ('DB_INI',$paths['db_ini']);
 
-
+		define ('LOG_DIR', REPO_PATH . "/logs");
 
 			define ('CACHE',Defs::$caches);
 			define ('CACHE_PATH',$paths['repo'] .'/data');

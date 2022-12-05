@@ -41,10 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		exit;
 
 } else {
-	echo $Plates->render('start',['meta'=>['title'=>'Today Admin Page']]);
-
-
-	show_admin($Today,$Plates);
+	echo $Plates->render('start',['title'=>'Admin Page']);
+		$y = $Today-> prepare_admin();
+		echo $Plates->render('admin',$y);
 	exit;
 }
 
@@ -52,18 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 ####################
 
-function show_admin ($Today,$Plates) {
- //echo $Today->start_page('Admin JOTR Today','h'); #add hidden js
 
-
-	$y = $Today-> prepare_admin();
-
-// 	u\echor($y, 'To Plates', );
-
-	echo $Plates->render('admin',$y);
-
-
-}
 function login($pw,$Today,$Plates,$Login) {
 
 

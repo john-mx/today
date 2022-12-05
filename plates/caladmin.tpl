@@ -20,7 +20,10 @@ use DigitalMx as u;
 
 
 <h4>Calendar</h4>
-<p>
+<ol>
+<li>Enter Time for the event.  If you remove the time, the event will be deleted, If you want to stop displaying the event, but keep it in the system for later use, check the "Suspend" box.
+<li>Enter the Date for the event, or, earliest date if it is a repeating event.
+<li>
 Enter date and time for event. <br>
 If event repeats, check the days it repeats on.  If there is a starting date, then the first scheduled event will be on the first checked day on or after the date.If there is no starting date entered, repeating schedule will start immediately; i.e., starting date is today. <br />
 Repeating events will continue until the date entered as Last Day.  <br>
@@ -48,7 +51,7 @@ Note: in list below, repeating events are shown first, then one-time events.
 
 		<tr style='vertical-align:top;'>
 
-			<td><input type = 'text' size='30'
+			<td>Title: <input type = 'text' size='30'
 				name="calendar[<?=$i?>][title]"
 				value="<?=$event['title']?>" > </td>
 
@@ -66,22 +69,28 @@ Note: in list below, repeating events are shown first, then one-time events.
 
 		<tr  style='vertical-align:top;'>
 
-			<td >On or After date: <br /><input type = 'text' size='15'
+				<td id='timetd'>Time: <input type=text name="calendar[<?=$i?>][time]" size='8' value="<?=$event['time']?>" id='timeset[<?=$i?>]' placeholder = '2:30 pm' onChange='checkTime(this)' class='<?=$eventtimeclass?>'>
+				0 or blank removes event.<br>
+				<input type='checkbox' name='calendar[<?=$i?>][suspended]'
+					<?php if ($event['suspended']): ?> checked <?php endif; ?>
+					> Suspended: keep,but don't display.)
+			</td>
+
+				<td >On or After date: <br /><input type = 'text' size='15'
 				name="calendar[<?=$i?>][date]"
 				value ="<?= $event['date']?>" >
 
 			</td>
-				<td id='timetd'>Time: <input type=text name="calendar[<?=$i?>][time]" size='8' value="<?=$event['time']?>" id='timeset[<?=$i?>]' placeholder = '2:30 pm' onChange='checkTime(this)' class='<?=$eventtimeclass?>'><br />
-				Blank = remove event.
-			</td>
 			<td>
 			 Repeat Every: <br />
 Su&nbsp;M&nbsp;&nbsp;T&nbsp;&nbsp;W&nbsp;&nbsp;Th&nbsp;F&nbsp;&nbsp;Sa <br />
-			<?=$dayset?>
-			</td><td>
-
+			<?=$dayset?> <br />
 				Last day of repeat<br />
 				<input type='text' size='15' name = "calendar[<?=$i?>][end]" value="<?=$event['end']?>">
+
+			</td><td>
+
+
 
 				</td>
 

@@ -1,6 +1,8 @@
 <?php
 namespace DigitalMx\jotr;
 
+use DigitalMx as u;
+
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\LineFormatter;
@@ -35,26 +37,34 @@ class Log {
 	 */
 	protected static function configureInstance()
 	{
-		$dir = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'logs';
+		$dir = LOG_DIR;
 		$log = $dir . '/today.log';
 
 		if (!file_exists($dir)){
 			mkdir($dir, 0777, true);
 		}
 
-		$fileHandler = new RotatingFileHandler($log,5);
+
+
+		$logger = new Logger('Today');
+#		$logger->reset();
+
+			$outputFormat = "[%datetime%] %level_name% > %message% %context% %extra%\n";
+
+			$dateFormat = 'Y-m-d H:i';
+		$line_format = new LineFormatter($outputFormat, $dateFormat);
 		$stream = new StreamHandler($log, Level::Debug);
-		$output = "%datetime% %level_name% > %message% %context% %extra%\n";
-		$dateFormat = "Y-m-d H:i";
-		$formatter = new LineFormatter($output, $dateFormat);
-		$stream->setFormatter($formatter);
+			$stream->setFormatter($line_format);
+		//	u\echor($stream,'stream',STOP);
+		$logger -> pushHandler($stream);
+
+		$fileHandler = new RotatingFileHandler($log,5);
+		$logger->pushHandler($fileHandler);
 
 		$errhandler = new StreamHandler('php://stderr');
-$logger = new Logger('Today');
-		$logger->pushHandler($stream);
+	//	$logger->pushHandler($errhandler);
 
-		$logger->pushHandler($fileHandler);
-		$logger->pushHandler($errhandler);
+
 
 
 		self::$instance = $logger;
