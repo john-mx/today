@@ -8,9 +8,6 @@ namespace DigitalMx\jotr;
 
 	use DigitalMx as u;
 	use DigitalMx\jotr\Definitions as Defs;
-	#use DigitalMx\jotr\Today;
-
-
 	$Plates = $container['Plates'];
 	$Defs = $container['Defs'];
 
@@ -38,11 +35,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 <p>This project generates the "Today in the Park" report in a variety of formats.</p>
 
+
 <ol>
 <li> Local data, such as park alerts, closures, and fire level, are entered manually by an admin using the admin.php page.
 <li> External data is collected every few hours from a number of places that report information like weather, air quality, astronomical data, and more. This date is stored on the site.
 <li> The "today" page is built by combining all this data in a user-friendly format.
-<li> The today page can be retrieved with a style code by appending ?style_name
+<li>It can be accessed as an ordinary web page, a scrolling page for use on a TV monitor, or a form set up for printing (page breaks, etc). The today page can be retrieved with a style code by appending ?style_name.
+<li>The "open campsites" will be obtained live from rec.gov.
 </ol>
 <h4>Pages</h4>
 <table class='left'>
@@ -56,9 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 </td><td class='left'>Page displays a section for 10 seconds, then next section, and so on, before starting over.</td></tr>
 <tr><td class='left'><a href="/today.php?print" target='print'>/today.php?print</a>
 </td><td class='left'>Regular web page prepared for printing with smaller type and defined pages.</td></tr>
-<tr><td class='left'><a href='/admin.php' target='admin'>Admin page</a> </td><td class='left'>(password 'abcd')</td></tr>
-<tr><td class='left'><a href='/set_properties.php' target='_blank'>Reset properties.json</a> </td><td class='left'>(only used for reference, not live).</td></tr>
-<tr><td class='left'><a href='/cron_update.php' target='_blank'>Run cronfile</a></td><td class='left'> (Updates all the external caches; should run automatically).</td></tr>
+<tr><td class='left'><a href='/admin.php' target='admin'>Admin page</a> </td><td class='left'>Ranger sets things like alerts, closures, campground status, etc.  (password 'abcd')</td></tr>
+<tr><td class='left'><a href='/set_properties.php' target='_blank'>Reset properties.json</a> </td><td class='left'>gets coordinates, zones, and other data from weather.gov for significant sites. (only used for reference, not live).</td></tr>
+<tr><td class='left'><a href='/cron_update.php' target='_blank'>Manually run crontab</a></td><td class='left'> Updates all the external data (weather, airq, alerts); should run automatically every few hours.</td></tr>
 </table>
 
 

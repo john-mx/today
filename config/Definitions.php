@@ -34,6 +34,17 @@ public static $scale_color = [
 
 	];
 
+public static $firecolor = [
+		'Low' => 'green',
+		'Moderate' => 'blue',
+		'High' => "yellow",
+		'Very High' => 'orange',
+		'Extreme' => 'red',
+
+
+
+	];
+
 public static $firewarn = [
 
 		'Low' => 'not bad',
@@ -283,6 +294,7 @@ public static $coordinates = [
 	public static function fire_warn($fdesc) {
 		return self::$firewarn[$fdesc];
 	}
+	public static function get_firecolor($x) {return self:: $firecolor[$x] ?? '';}
 
 	public static function getEcode($ecode) {
 		return self::$ecodes[$ecode];

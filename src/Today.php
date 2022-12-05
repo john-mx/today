@@ -322,7 +322,7 @@ public function build_topic_general() {
 
 			$fire_level = $y['fire_level'];
 			$z['fire']['level'] = $fire_level;
-			$z['fire']['color'] = Defs::get_color($fire_level);
+			$z['fire']['color'] = Defs::get_firecolor($fire_level);
 
 			$z['version'] = file_get_contents(REPO_PATH . "/data/version") ;
 			$z['target'] = date('l M j, Y');
@@ -617,7 +617,7 @@ private function rebuild_cache_airq() {
 	} # next loc
 
 	$this->write_cache($src,$x);
-	Log::info('Rebuilt cache airq.');;
+	Log::info('Rebuilt cache airq.');
 
 }
 
@@ -760,7 +760,7 @@ public function rebuild_cache_galerts () {
 
 	$src = 'wapi';
 
-	if ( $r = $this->rebuild_cache_wapi(['jr'])) {
+	 $r = $this->load_cache('wapi');
  //	u\echor($r,'From wapi',STOP);
 		$alerts = $r['jr']['alerts']['alert'];
 		$x=[];
@@ -780,7 +780,7 @@ public function rebuild_cache_galerts () {
 		}
 		Log::info('Updated wapi for alerts');
 		$y[$src] = $x;
-	}
+
 
 	$src = 'wgovalerts';
 		if ( ! $r = $this->rebuild_cache_wgalerts() ) return false;
@@ -1528,7 +1528,7 @@ private function uv_data($uv) {
 private function fire_data($fire_level) {
 	$fire = array (
 		'level' => $fire_level,
-		'color' => $this->Defs->get_color($fire_level),
+		'color' => $this->Defs->get_firecolor($fire_level),
 		);
 
 	return $fire;
