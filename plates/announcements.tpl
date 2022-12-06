@@ -3,11 +3,13 @@ use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
 ?>
 
-<?php if (!empty ($d= $notices['alerts'])) : ?>
+
+
+<?php if(!empty($d = $notices['announcements'])) : ?>
 <div class='float'>
-<h4 class='black'>Active Alerts:</h4>
-<div class='warn'>
-<?php
+<h4>Announcements</h4>
+<div>
+	<?php
 		echo "<ul>";
 		$anlist = explode("\n",$d);
 			foreach ($anlist as $item) :
@@ -19,4 +21,5 @@ use DigitalMx as u;
 	</div>
 	</div>
 <?php endif; ?>
+
 

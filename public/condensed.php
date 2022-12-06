@@ -21,22 +21,17 @@ $qs = $_SERVER['QUERY_STRING'] ?? '';
 
 $y = $Today->prepare_topics ();
 //u\echor($y,'y',STOP);
-
-// using "Today' as title prevents it from re-appearing on the today page.
 $meta=array(
 	'pcode' => $qs,
-	'title'=>'Today',
+	'title'=>'Today Condensed',
 	'target'=> $y['target']?? '',
 	'pithy'=> $y['pithy'] ?? '',
+	'extra' => "<style>body{font-size:24px;}</style>",
 
 	);
 
 	echo $Plates->render ('start',$meta);
+;
+// using "Today' as title prevents it from re-appearing on the today page.
 
-//	echo $Today->start_page('Today in the Park',$qs);
-	echo $Plates -> render('today',['data'=>$y,'pcode'=>$qs]) ;
-
-// 	file_put_contents(REPO_PATH .'/data/test.html',
-// 		$Plates -> render('today',['data'=>$y]) );
-//	if ($qs == 's')echo $Plates -> render ('scroll_script');
-//	u\echor($y,'data to plate');
+	echo $Plates -> render('condensed',['data'=>$y,'pcode'=>$qs]) ;

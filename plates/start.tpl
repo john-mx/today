@@ -35,7 +35,7 @@
 			break;
 
 		case 'snap':
-			$scbody = "onLoad='startRotation(10)'";
+			$scbody = "onLoad='startRotation(15)'";
 			break;
 
 
@@ -83,6 +83,11 @@ Joshua Tree National Park
 <!-- <img src='/images/Shield-7599-alpha.png' alt="NPS Shield" /> -->
 </td></tr>
 </table>
-<?php if ($title !== 'Today'): ?>
-<h2><?=$title?></h2>
+<div>
+<?php if (substr($title,0,5) == 'Today'): ?>
+	<h2 style='margin-bottom:6px;'><?=$target?></h2>
+	<p class='pithy'><?=$pithy ?></p><br />
+<?php else: ?>
+	<h2><?=$title?></h2>
 <?php endif; ?>
+</div >

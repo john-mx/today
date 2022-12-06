@@ -15,11 +15,6 @@ switch ($pcode) {
 
 ?>
 
-<div >
-<h2><?=$data['target'] ?> </h2>
-<p class='pithy'><?=$data['pithy'] ?? '' ?></p>
-</div>
-
 <!-- ############################## -->
 <div id="page1" style="display: block;">
 
@@ -27,8 +22,11 @@ switch ($pcode) {
 	$this->insert('light_condensed',['light' => $data['light']]);
 ?>
 <?php
-	$this->insert('notices',['notices' => $data['notices']]);
+	$this->insert('alerts',['notices' => $data['notices']]);
+		$this->insert('announcements',['notices' => $data['notices']]);
+
 ?>
+<div class='clear'></div>
 <?php
 	$this->insert('advice',['advice' => $data['advice']]);
 ?>
@@ -72,9 +70,8 @@ switch ($pcode) {
 
 <div style='clear:left;'></div>
 
-<hr>
-<p id='bottom' class='right'><?=$data['version'] ?>
-<br>build <?php echo date('dHi'); ?></p>
+<?php $this->insert('end'); ?>
+
 
 </div> <!-- end page-->
 

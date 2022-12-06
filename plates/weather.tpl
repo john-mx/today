@@ -2,65 +2,71 @@
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
 ?>
-
-<div >
-
-<h4>Weather Forecast</h4>
-<?php if (!empty($admin['weather_warn'])) : ?>
-	<p class='in2 inline'><b>Local Warning</b></p> Updated <?=$admin['updated']?>
-	<div class='warn'><?=$admin['weather_warn']?></div>
-<?php endif; ?>
-
-
+<h4>Weather Forecast
+<span style="font-weight:normal;font-size:1rem;;">
 <?php
-if(empty($weather)): echo "<p>No Data</p>"; else:
-	echo "Weather.gov forcast updated at " . date('M d g:i a',$weather['update']) . BR;
-	foreach ($weather as $loc=>$days) :
+if(empty($weather)): echo "No Data"; else:
+	echo "(Updated from Weather.gov at " . date('M d g:i a',$weather['update']).")" . NL;
+	?>
+	</span></h4>
+
+	<table class = 'in2 col-border'>
+<tr><th></th>
+		<?php
+			for ($i=1;$i<4;++$i) : //for 3 days
+				$day = $weather['jr'][$i];
+		//u\echor ($day ,'day',STOP);
+				echo "<th>{$day[0]['daytext']}</th>";
+			endfor;
+		?>
+		</tr>
+
+<?php	foreach ($weather as $loc=>$days) :
 		if ($loc == 'update') continue;
 		$locname = Defs::$sitenames[$loc];
 
 		?>
-		<p class='sectionhead'><?=$locname?></p>
 
-	<table class = 'in2 col-border'>
-		<colgroup>
+		<tr class='bg-orange'><td colspan=4'><b><?=$locname?></b></td></tr>
 
-		<col style='width:33%;'>
-		<col style='width:33%;'>
-		<col style='width:33%;'>
-		</colgroup>
-
-		<!--
-<tr>
-		<?php
-		// 	for ($i=1;$i<4;++$i) : //for 3 days
-// 				$day = $days[$i];
-// 		//	u\echor ($day ,'day',STOP);
-// 				//echo "<th>{$day[0]['daytext']}</th>";
-// 			endfor;
-		?>
-		</tr>
- -->
-
-		<tr >
+		<tr>
+		<td>Day</td>
 			<?php
 			for ($i=1;$i<4;++$i) : //for 3 days
-				echo "<td >";
-				foreach ($days[$i] as $p) :
-			//	u\echor($p,'period',STOP);
+				$p = $days[$i][0] ;
+
 				?>
-					<div class = '$fcclass' style='padding-top:3px;padding-bottom:3px;'>
-						<b><i><?=$p['name']?></i></b><br>
-								<?=$p['detailedForecast']?><br>
-								<!--
-<?= $p['highlow']?><br>
+					<td>
+							<?php if (count($days[$i]) == 2) : ?>
+								<?=$p['shortForecast']?>.
+								<?= $p['highlow']?>. <br />
 								Wind <?=$p['windSpeed']?>;
- -->
-					</div>
-					<?php endforeach; #period ?>
-				</td>
+							<?php endif; ?>
+
+					</td>
 			<?php endfor; #day ?>
 		</tr>
+		<tr >
+
+			<td class='bg-black white'>Night</td>
+			<?php
+			for ($i=1;$i<4;++$i) : //for 3 days
+				if (count($days[$i]) == 2) :
+					$p = $days[$i][1] ;
+				else :
+					$p = $days[$i][0] ;
+				endif;
+				?>
+					<td class='bg-black white'>
+					<div >
+								<?=$p['shortForecast']?>.
+								<?= $p['highlow']?>. <br />
+								Wind <?=$p['windSpeed']?>;
+
+					</div>
+					</td>
+			<?php endfor; #day ?>
+ </tr>
+	<?php endforeach; // loc? ?>
 	</table>
-	<?php endforeach; // loc?
-	endif; ?>
+<?php	endif; ?>

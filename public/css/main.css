@@ -17,7 +17,7 @@ line-height: 1.1;
    }
 
 @media screen {
-	body { max-width: 1800px;}
+	body { width: 1200px;}
 }
 
 
@@ -40,6 +40,7 @@ h5
 h4
 {
 	margin-bottom: 3px;
+	margin-top:0.5em;
 	font-size: 1.2em;
 
 	font-weight:bold;
@@ -119,7 +120,8 @@ button {
 .lt-grn { background-color: #D4FB79; }
 .bg-lgrn { background-color: #D4FB79; }
 .bg-yellow {background-color: yellow; }
-
+.bg-orange {background-color:#F3984D;}
+.width50 {width:50%;}
 
 .bg-black{
 	background-color:black;
@@ -198,15 +200,36 @@ tr.heads td {
 	text-align:center;
 }
 
+tr.border-top td
+{
+	border-bottom: 0;
+	border-top: 1px solid black;
+}
+tr.border-top th
+{
+	border-bottom: 0;
+	border-top: 1px solid black;
+}
 tr.border-bottom td
 {
-	border-left: 0;
-	border-right: 0;
+
 	border-top: 0;
 	border-bottom: 1px solid black;
 
 }
+tr.border-bottom th
+{
+	border-top: 0;
+	border-bottom: 1px solid black;
+}
  tr.borders td {
+ 	border-left: 1px solid black;
+ 	border-right: 1px solid black;
+ 	border-top: 1px solid black;
+ 	border-bottom: 1px solid black;
+ }
+
+ tr.borders th {
  	border-left: 1px solid black;
  	border-right: 1px solid black;
  	border-top: 1px solid black;
@@ -231,6 +254,10 @@ table.col-border td, table.col-border th {
 		border-right: 1px solid gray;
 		border-top: 0;
 		border-bottom: 0;
+	}
+tr.col-border  th {
+	border-left: 1px solid gray;
+		border-right: 1px solid gray;
 	}
 .alt-gray tr:nth-child(even)  {
 	background: #CCC;

@@ -21,11 +21,11 @@ table.index td {text-align:left;}
 </style>
 EOT;
 
-echo $Plates->render('start',['title'=>'Today Index','extra'=>$tablestyle]);
+echo $Plates->render('start',['title'=>'Index','extra'=>$tablestyle]);
 ;
 
 //Log::error('starting index' . __FILE__ . __LINE__);
-Log::info('Index page');
+//Log::info('Index page');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	if (array_key_exists('rebuild',$_POST)) {
@@ -57,6 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 </td><td >Page slowly scrolls to the bottom, then restarts</td></tr>
 <tr><td ><a href="/today.php?snap" target='snap'>/today.php?snap</a>
 </td><td >Page displays a section for 10 seconds, then next section, and so on, before starting over.</td></tr>
+<tr><td><a href="/condensed.php?snap" target='snap'>/condensed.php?snap</a>
+<td>Large type version with minimal information</td></tr>
 <tr><td ><a href="/today.php?print" target='print'>/today.php?print</a>
 </td><td >Regular web page prepared for printing with smaller type and defined pages.</td></tr>
 <tr><td ><a href='/admin.php' target='admin'>Admin page</a> </td><td >Ranger sets things like alerts, closures, campground status, etc.  (password 'abcd')</td></tr>
@@ -71,3 +73,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 </table>
 
+<?php echo $Plates->render ('end'); ?>

@@ -17,13 +17,6 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 	echo "Weather.gov forcast updated at " . date('M d g:i a',$weather['update']) . BR;
 	?>
 	<table class = 'in2 col-border'>
-		<colgroup>
-		<col >
-		<col>
-		<col >
-		<col>
-		<col >
-		</colgroup>
 
 	<tr><th></th><th></th>
 		<?php

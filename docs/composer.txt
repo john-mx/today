@@ -1,0 +1,7 @@
+// composer on pair (version 3.2 reqs 8.1)
+
+
+To use composer with php 8.1 you would need to modify the composer command
+to the following.
+
+/usr/local/bin/php81  /usr/local/bin/composer your_command

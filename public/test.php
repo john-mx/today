@@ -13,7 +13,7 @@ ini_set('display_errors', 1);
 	$Today = $container['Today'];
 	$Cal = $container['Calendar'];
 
-	echo $Today->start_page('Test Page');
+	echo $Plates->render('start',['title'=>'Test Page']);
 
 //END START
 
@@ -24,7 +24,7 @@ $twolocs = ['jr','hq'];
 
 // what function?
 
-$f = alerts();
+$f = weather();
 
 function refresh($force=false){
 		global $Today,$Plates,$Defs;
@@ -66,7 +66,7 @@ function light(){
 
 
 
-function weather(){
+function weather_b(){
 	global $Today,$Plates,$Defs;
 #	$Today->rebuild_cache_wgov();
 
@@ -99,6 +99,15 @@ function alerts() {
 	exit;
 }
 
+function weather() {
+global $Today,$Plates,$Defs;
+
+	echo "Testing " . 'weather ' . BR;
+	$z = $Today->prepare_topics();
+	echo $Plates->render('weather',$z);
+	exit
+	;
+	}
 function props (){
 	global $Today,$Plates,$Defs;
 

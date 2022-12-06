@@ -6,7 +6,7 @@ use DigitalMx as u;
 <?php if(empty($fire)): echo "<p>No Data</p>"; else:?>
 	<hr style="border:10px solid <?=$fire['color'] ?>;">
 	 	<p style = 'width:100%;'>
-	 	<b>Current Fire Level:</b>
+	 	<b> Fire Danger:</b>
 
 	 	<?=$fire['level']?>
 	 	</p>
