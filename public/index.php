@@ -70,7 +70,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <tr><td ><a href='/logview.php' target='_blank'>View Logs.</td>
 	<td>Displays list of log records.</td></tr>
 
-
 </table>
 
 <?php echo $Plates->render ('end'); ?>
