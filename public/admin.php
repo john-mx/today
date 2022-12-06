@@ -27,20 +27,23 @@ namespace DigitalMx\jotr;
 
 //END START
 
+
+
 if (isset($_POST['pw']) ) {// is login
 	$Login->set_pwl($_POST['pw']);
-	show_admin($Today,$Plates);
-	exit;
 }
+
+
 $Login->check_pw(1);
 
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (isset($_POST) && !isset($_POST['pw']) ) {
 		post_data ($_POST,$Today);
 		echo "<script>window.location.href='/today.php';</script>";
 		exit;
 
 } else {
+
 	echo $Plates->render('start',['title'=>'Admin Page']);
 		$y = $Today-> prepare_admin();
 		echo $Plates->render('admin',$y);
