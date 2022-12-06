@@ -10,7 +10,7 @@ if(empty($calendar)) : echo "No Calendar (calendar.tpl)"; else:
         <col style="width: 40%;">
         <col >
 </colgroup>
-<tr><th>Time </th><th>Program</th><th>Topic</th></tr>
+<tr><th>Time </th><th>Topic</th><th>Information</th></tr>
 <tbody>
 
 <?php
@@ -32,17 +32,20 @@ if(empty($calendar)) : echo "No Calendar (calendar.tpl)"; else:
 	<td><?=$eventtime?><br />
 
 	</td>
- 	<td class='left'>
+	</td><td class='left'>
+ 	<b><?=$cal['title']?></b>
+ 	( <?=$cal['duration']?>)<br />
  	<?=$cal['type']?>
  	 at <?=$cal['location']?>
- 	<?php if (!empty($cal['note'])) : ?>
-			<br /><i><?=$cal['note'] ?? '' ?></i>
- 	<?php endif; ?>
-	</td><td>
- 	<b><?=$cal['title']?></b>
- 	( <?=$cal['duration']?>)
 
 	</td>
+
+ 	<td class='left'>
+
+ 	<?php if (!empty($cal['note'])) : ?>
+			<?=$cal['note'] ?? '' ?>
+ 	<?php endif; ?>
+
 
 	</tr>
 
