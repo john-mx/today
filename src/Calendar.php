@@ -97,11 +97,12 @@ public function parse_time($t){
 // 	return $time;
 }
 public function add_types ($cal) {
-	// adds type selecty options to each entry
+	// adds type select options to each entry
 	$eventtypes = array(
+	'Evening Program',
 	'Guided Activity',
-	'Ranger Talk',
 	'Guided Hike',
+	'Guided Tour',
 	'Short Program',
 	);
 	foreach ($cal as $event){

@@ -148,6 +148,7 @@ public function __construct($c){
 
 	$this -> max_age = Defs::$cache_times;
 	//$this -> properties = $this->load_cache('properties');
+	$this->cache_lock = REPO_PATH . "/data/cache.lock";
 
 
 
@@ -246,14 +247,21 @@ public function prepare_topics(){
 }
 
 public function build_topic_calendar() {
-	$z=$this->load_cache('calendar');
+	if (!$z=$this->load_cache('calendar')) {
+	 	Log::error ("Could not load cache calendar");
+	 	return [];
+	 }
+
 #	u\echor($z,'calendar',STOP);
 	$y=$this->Cal->filter_calendar($z,2);
 	return ['calendar' => $y];
 }
 public function build_topic_air() {
 	$z=[];
-	$z=$this->load_cache('airnow');
+	if(!$z=$this->load_cache('airnow')){
+	 	Log::error ("Could not load cache air");
+	 	return [];
+	 }
 	$y = $this->format_airnow($z);
 	return ['air' => $y];
 
@@ -263,7 +271,10 @@ public function build_topic_air() {
 public function build_topic_light() {
 	$z = [];
 	#$light['x'] = 'x';
-	$y = $this->load_cache('wapi');
+	if (!$y = $this->load_cache('wapi') ){
+	 	Log::error ("Could not load cache wapi");
+	 	return [];
+	 }
 	$zz = $this->format_wapi($y);
 
 	#u\echor($zz,'formatted light', NOSTOP);
@@ -281,19 +292,32 @@ public function build_topic_light() {
 
 
 public function build_topic_weather() {
-	$w = $this->load_cache('wgov');
+	if (!$w = $this->load_cache('wgov') ){
+	 	Log::error ("Could not load cache wgov");
+	 	return [];
+	 }
 	$z = $this->format_wgov($w);
 #u\echor($z,'formatted wgov');
 
+	//get current temp
+	$y = $this->load_cache('wapi');
+	$z['current'] = $y['jr']['current'];
+	//u\echor($z['current'],'z',STOP);
 	return $z;
 }
 
 public function build_topic_campgrounds() {
-	$y = $this->load_cache('admin');
+	if (!$y = $this->load_cache('admin') ){
+	 	Log::error ("Could not load cache admin");
+	 	return [];
+	 }
 
 	$w['camps']['cg_notes'] = $y['cgnotes'];
 	$w['camps']['cg_status'] = $y['cgstatus'];
-	$w['camps']['cg_open'] = $this->load_cache('cgopen');
+	if (!$w['camps']['cg_open'] = $this->load_cache('cgopen')){
+	 	Log::error ("Could not load cache cg_open");
+	 	return [];
+	 }
 	$w['camps']['asof'] = $this->getMtime('cgopen');
 
 
@@ -307,7 +331,10 @@ public function build_topic_campgrounds() {
 public function build_topic_general() {
 	/* load date from admin cache, then reformat for display */
 
-	$y = $this->load_cache('admin');
+	if (!$y = $this->load_cache('admin') ){
+	 	Log::error ("Could not load cache admin");
+	 	return [];
+	 }
 
 		//clean text for display (spec chars, nl2br) but don't change stored info.
 
@@ -351,7 +378,10 @@ public function Xprepare_today($force=false) {
 
 
 	foreach (['wgov','airowm','airnow','calendar','admin','wgova','camp','cgopen'] as $section) {
-		$y[$section] = $this -> load_cache ($section, $force);
+		if (!$y[$section] = $this -> load_cache ($section, $force)){
+	 	Log::error("Could not load cache $section");
+	 	return [];
+	 }
 	}
  	u\echor ($y, 'y array into today',STOP);
 
@@ -395,7 +425,10 @@ u\echor($z, 'z array for today',STOP);
 
 public function prepare_admin() {
 // get sections needed for the admin form
-	$y['admin'] = $this->load_cache('admin');
+	if (!$y['admin'] = $this->load_cache('admin')){
+	 	Log::error ("Could not load cache admin");
+	 	return [];
+	 }
 // 	u\echor ($y, 'read admin cache', NOSTOP);
 
 	// set firelevel options array
@@ -420,7 +453,10 @@ public function prepare_admin() {
 	// if (! $galerts = $this->rebuild_cache_galerts() ){
 // 	}
 
-	$y['galerts'] = $this->load_cache('galerts');
+	if (!$y['galerts'] = $this->load_cache('galerts') ){
+	 	Log::error ("Could not load cache galerts");
+	 	return [];
+	 }
 
 
 // u\echor ($y, 'Y to admin',NOSTOP);
@@ -506,6 +542,7 @@ public function post_admin ($post) {
 
 
 public function load_cache ($section, bool $force=false) {
+
 		$refresh = $force;
 #echo "loading cache $section" . BR;
 		if (! $refresh && !file_exists (CACHE[$section])) {
@@ -529,13 +566,23 @@ public function load_cache ($section, bool $force=false) {
 				u\echoAlert ("Unable to refresh cache: $section.  Using old version.");
 				Log::notice("Unable to refresh cache $section");
 			}
+
+		}
+		$lock_count = 0;
+		while (file_exists($this->cache_lock)){
+			++$lock_count;
+			if ($lock_count > 3){
+				Log::error("Cannot read cache $section due to lock");
+				return [];
+			}
+			sleep (2);
 		}
 
 		$y = json_decode (file_get_contents(CACHE[$section]), true);
 
 #u\echor($y,$section) . BR;
 
-		if ($section == 'camp'){u\echor ($y,'y',STOP);}
+
 		return $y;
 }
 
@@ -591,10 +638,10 @@ private function rebuild_cache_wapi($locs=[] ) {
 
 		$x[$loc] = $aresp;
 	} # next loc
-	return $x;
+
 	$this->write_cache($src,$x);
 	Log::info('Rebuilt cache wapi.');
-
+	return $x;
 }
 
 private function rebuild_cache_airq() {
@@ -735,6 +782,7 @@ https://www.airnowapi.org/aq/observation/latLong/current/?format=application/jso
 		$url = "https://www.airnowapi.org/aq/observation/latLong/current/?format=application/json&latitude=$lat&longitude=$lon&distance=25&API_KEY=" . $this->Defs->getKey('airnow');
 				$expected = 'AQI'; #field to test for good result
 		$loginfo = "$src:$loc";
+		$this->lock_cache();
 		if (!$aresp = $this->get_curl($loginfo,$url, $expected, $curl_header) ) return false;
 		$x[$loc] = $aresp;
 	} # next loc
@@ -744,6 +792,18 @@ https://www.airnowapi.org/aq/observation/latLong/current/?format=application/jso
 
 }
 
+private function lock_cache(){
+		touch ($this->cache_lock) ;
+}
+private function unlock_cache($section = ''){
+	// Log::info ("keeping cahce lock $section");
+// 	return [];
+		if (file_exists($this->cache_lock) ){
+				unlink ($this->cache_lock);
+		} else {
+			Log::error("cache_lock does not exist: $section.");
+		}
+}
 public function rebuild_cache_galerts () {
 
 	/* must get uniform format for alerts to display right
@@ -760,7 +820,10 @@ public function rebuild_cache_galerts () {
 
 	$src = 'wapi';
 
-	 $r = $this->load_cache('wapi');
+	 if (!$r = $this->load_cache('wapi') ) {
+	 	Log::error ("Could not load cache wapi");
+	 	return [];
+	 }
  //	u\echor($r,'From wapi',STOP);
 		$alerts = $r['jr']['alerts']['alert'];
 		$x=[];
@@ -783,7 +846,10 @@ public function rebuild_cache_galerts () {
 
 
 	$src = 'wgovalerts';
-		if ( ! $r = $this->rebuild_cache_wgalerts() ) return false;
+		if ( ! $r = $this->rebuild_cache_wgalerts() ) {
+	 	Log::error ("Could not load cache wapi");
+	 	return [];
+	 }
 //	u\echor($r,'get wgalerts',NOSTOP);
 		$items = $r['features'];
 
@@ -1655,6 +1721,7 @@ function get_curl ($src, $url,string $expected='',array $header=[]) {
 				curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
 		$aresp = [];
 		$success=0;
+		$this->lock_cache();
 		while (!$success) {
 			static $tries =0;
 			$fail = '';
@@ -1663,6 +1730,7 @@ function get_curl ($src, $url,string $expected='',array $header=[]) {
 			if ($tries > 2){
 					//echo "Can't get valid data from ext source  $src";
 				Log::notice("Curl failed for $src: $fail.");
+				$this->unlock_cache($src);
 				return [];
 			}
 			if (! $response = curl_exec($curl)) {
@@ -1683,10 +1751,10 @@ function get_curl ($src, $url,string $expected='',array $header=[]) {
 
 			if (! $success) {
 					++$tries;
-					sleep (1);
+					sleep (10);
 
 			} else {
-
+				$this->unlock_cache($src);
 				curl_close($curl);
 				return $aresp;
 			}

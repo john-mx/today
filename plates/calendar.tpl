@@ -10,7 +10,7 @@ if(empty($calendar)) : echo "No Calendar (calendar.tpl)"; else:
         <col style="width: 40%;">
         <col >
 </colgroup>
-<tr><th>Time </th><th>Topic</th><th>Information</th></tr>
+<tr><th>Time </th><th>Program and Location</th><th>Information</th></tr>
 <tbody>
 
 <?php

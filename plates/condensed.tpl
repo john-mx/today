@@ -62,16 +62,28 @@ $uv = $data['light']['uv'];
 <h4>Park Conditions</h4>
 	<div class='in2'>
 
-	<div class='float width50'>
+	<div class='float '>
 		<b>Fire Danger:</b>
 <?=$data['fire']['level']?>
 	</div>
-	<div class='float width50'>
+	<div class='float '>
 		<b>Air Quality: </b>
 <?=$data['air']['br']['aqi']?>
  - <?=$data['air']['br']['aqi_scale'] ?><br />
-<span style='font-size:16px;'>Observed at Black Rock <?php echo date ('m/d g:i a',$data['air']['br']['observed_dt']);?></span>
+<small>At Black Rock <?php echo date ('m/d g:i a',$data['air']['br']['observed_dt']);?></small>
 	</div>
+<div class='float'>
+<?php // u\echor($data['current'],'current',STOP); ?>
+	<b>Current Temp</b> :
+	<?php
+		echo
+		$data['current']['temp_f'] ." &deg;F"
+		. "<br /><small> Jumbo Rocks "
+		. date('m/d g:i a',$data['current']['last_updated_epoch'])
+		." </small>"
+		. NL;
+	?>
+</div>
 	<div class='clear'></div>
 </div>
 <!-- end page-->

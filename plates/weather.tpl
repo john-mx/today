@@ -2,11 +2,13 @@
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
 ?>
-<h4>Weather Forecast
+<h4>Weather
 <span style="font-weight:normal;font-size:1rem;;">
 <?php
+//u\echor($weather,'weather',STOP);
 if(empty($weather)): echo "No Data"; else:
-	echo "(Updated from Weather.gov at " . date('M d g:i a',$weather['update']).")" . NL;
+
+	echo "Forecast (Updated from Weather.gov at " . date('M d g:i a',$weather['update']).")" . NL;
 	?>
 	</span></h4>
 
