@@ -532,7 +532,7 @@ private function rebuild_cache_wapi($locs=[] ) {
 		$url = 'http://api.weatherapi.com/v1/forecast.json?key=' . $this->Defs->getKey('weatherapi') . '&q='. $this->Defs->getCoords($loc) . '&days=3&aqi=yes&alerts=yes';
 		$expected = '';
 		$loginfo = "$src:$loc";
-		if (!$aresp = $this->get_curl($loginfo,$url, $expected, $curl_header) ) {
+		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
 			$aresp = [];
 		}
 
@@ -558,7 +558,7 @@ private function rebuild_cache_airq() {
 		$url = "https://air-quality.p.rapidapi.com/current/airquality?lon=$lon&lat=$lat";
 
 		$loginfo = "$src:$loc";
-		if (!$aresp = $this->get_curl($loginfo,$url, $expected, $curl_header) ) return false;
+		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) return false;
 
 		$x[$loc] = $aresp;
 	} # next loc
@@ -582,7 +582,7 @@ private function rebuild_cache_airowm() {
 		$expected = '';
 
 		$loginfo = "$src:$loc";
-		if (!$aresp = $this->get_curl($loginfo,$url, $expected, $curl_header) ) return false;
+		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) return false;
 		$x[$loc] = $aresp;
 	} # next loc
 
@@ -647,7 +647,7 @@ coord: 34.0714,-116.3906,
 		$expected = 'properties';
 
 		$loginfo = "$src:$loc";
-		if (!$aresp = $this->get_curl($loginfo,$url, $expected, $curl_header) ) return false;
+		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) return false;
 
 		$x[$loc] = $aresp;
 	} # next loc
@@ -683,7 +683,7 @@ https://www.airnowapi.org/aq/observation/latLong/current/?format=application/jso
 				$expected = 'AQI'; #field to test for good result
 		$loginfo = "$src:$loc";
 		$this->lock_cache();
-		if (!$aresp = $this->get_curl($loginfo,$url, $expected, $curl_header) ) return false;
+		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) return false;
 		$x[$loc] = $aresp;
 	} # next loc
 
@@ -797,7 +797,7 @@ PDX ORZ006
 	$url = "https://api.weather.gov/alerts/active/zone/$zone";
 		$expected = '';
 		$loginfo = "$src: zone $zone";
-		if (!$aresp = $this->get_curl($loginfo,$url, $expected, $curl_header) ) return false;
+		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) return false;
 		$x = $aresp;
 	Log::info("Retrieved cache $loginfo");
 
@@ -817,8 +817,8 @@ public function rebuild_properties() {
 		$url = "https://api.weather.gov/points/$lat,$lon";
 					//(https://api.weather.gov/points/{lat},{lon}).
 		$expected = 'properties';
-		if (!$aresp = $this->get_curl($loginfo,$url, $expected, $curl_header) ) {sleep (2); #retry
-			if (!$aresp = $this->get_curl($loginfo,$url, $expected, $curl_header) ) {
+		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {sleep (2); #retry
+			if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
 				return false;
 			}
 		}
@@ -1323,7 +1323,7 @@ public function write_cache(string $section,array $z) {
 	}
 
 	file_put_contents(CACHE[$section],json_encode($z));
-	Log::info("Writing cache $src");
+	Log::info("Writing cache $section");
 }
 
 private function getMtime($section){
@@ -1339,7 +1339,7 @@ public function clean_text( $text = '') {
 	return trim($t);
 }
 
-function get_curl ($src, $url,string $expected='',array $header=[]) {
+function get_external ($src, $url,string $expected='',array $header=[]) {
 		/* tries to geet the url, tests for suc cess and
 			for expected result if supplied.
 			returns result array on success
@@ -1355,11 +1355,9 @@ function get_curl ($src, $url,string $expected='',array $header=[]) {
 		$aresp = [];
 		$success=0;
 		$this->lock_cache();
+		$fail = '';	$tries = 0;
 		while (!$success) {
-			static $tries =0;
-			$fail = '';
 			//u\echor($aresp,"Here's what I got for $src:");
-
 			if ($tries > 2){
 					//echo "Can't get valid data from ext source  $src";
 				Log::notice("Curl failed for $src: $fail.");
@@ -1774,9 +1772,9 @@ public function Xget_external (string $src,array $locs=['hq']) {
 
 
 // attempt to get data.  3 retries.
-	if (!$aresp = $this->get_curl($src,$url, $expected, $curl_header) )
+	if (!$aresp = $this->get_external($src,$url, $expected, $curl_header) )
 	{
-		#Log::info("get_curl failed on $src, $url, $expected");
+		#Log::info("get_external failed on $src, $url, $expected");
 		return false;
 	}
 	$x[$loc] = $aresp;
