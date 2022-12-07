@@ -427,6 +427,7 @@ public function prepare_admin() {
 // get sections needed for the admin form
 	if (!$y['admin'] = $this->load_cache('admin')){
 	 	Log::error ("Could not load cache admin");
+	 	exit;
 	 	return [];
 	 }
 // 	u\echor ($y, 'read admin cache', NOSTOP);
@@ -437,9 +438,9 @@ public function prepare_admin() {
 
 // camps
 	foreach (array_keys(Defs::$campsites) as $cgcode){
-		$opt = u\buildOptions(Defs::$cgstatus, $y['admin']['cgstatus'][$cgcode]);
+		$opt = u\buildOptions(Defs::$cgstatus, $y['admin']['cgstatus'][$cgcode] ?? '');
 		$opts[$cgcode]  = $opt;
-		$notes[$cgcode] = $y['admin']['cgnotes'][$cgcode];
+		$notes[$cgcode] = $y['admin']['cgnotes'][$cgcode] ?? '';
 
 	}
 	$y['admin']['cg_options'] = $opts;
@@ -580,7 +581,7 @@ public function load_cache ($section, bool $force=false) {
 
 		$y = json_decode (file_get_contents(CACHE[$section]), true);
 
-#u\echor($y,$section) . BR;
+//u\echor($y,$section,STOP) . BR;
 
 
 		return $y;

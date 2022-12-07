@@ -61,8 +61,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <td>Large type version with minimal information</td></tr>
 <tr><td ><a href="/today.php?print" target='print'>/today.php?print</a>
 </td><td >Regular web page prepared for printing with smaller type and defined pages.</td></tr>
+
+<tr><td colspan='2' class='bg-yellow'>Ranger Admin Pages</td></tr>
+
 <tr><td ><a href='/admin.php' target='admin'>Admin page</a> </td><td >Ranger sets things like alerts, closures, campground status, etc.  (password 'abcd')</td></tr>
 <tr><td ><a href='/caladmin.php' target='admin'>Calendar admin page</a> </td><td >Set events for calendar, one time or repeating.</td></tr>
+
 <tr><td colspan='2' class='bg-yellow'>Developer Functions</td></tr>
 <tr><td ><a href='/set_properties.php' target='_blank'>Reset properties.json</a> </td><td >gets coordinates, zones, and other data from weather.gov for significant sites. (only used for reference, not live).</td></tr>
 <tr><td ><a href='/cron_update.php' target='_blank'>Manually run crontab</a></td><td > Updates all the external data (weather, airq, alerts); should run automatically every few hours.</td></tr>

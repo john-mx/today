@@ -76,8 +76,8 @@ One announcement per line.(<cr>)  They will be listed as bullets<br />
 <button type='button' onClick='setopen()'> All Sites Full</button>
 <table>
 <tr><th>Campground</th><th>Status</th><th>Open Sites</th><th>Notes</th></tr>
-<?php foreach (array_keys($admin['cgstatus']) as $scode): ?>
-	<tr><td><?= Defs::$sitenames[$scode]?></td>
+<?php foreach (array_keys(Defs::$campsites) as $scode): ?>
+	<tr><td><?= Defs::$sitenames[$scode] ?></td>
 
 		<td><select name="cgstatus[<?=$scode?>]"><?=$admin['cg_options'][$scode]?></select></td>
 		<td><input type='text' name="cgopen[<?=$scode?>]"
