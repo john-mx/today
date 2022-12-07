@@ -75,6 +75,4 @@ switch ($pcode) {
 
 </div> <!-- end page-->
 
-<?php $this->insert('scroll_script'); ?>
-
 

@@ -128,6 +128,6 @@ $uv = $data['light']['uv'];
 <?php $this->insert('end'); ?>
 
 
-<?php $this->insert('scroll_script'); ?>
+
 
 <?php #echo '<hr>';u\echor($data,'data'); ?>

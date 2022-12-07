@@ -2,17 +2,17 @@
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
 ?>
-<h4>Weather
-<span style="font-weight:normal;font-size:1rem;;">
+<h4>Weather</h4>
 <?php
 //u\echor($weather,'weather',STOP);
-if(empty($weather)): echo "No Data"; else:
-
-	echo "Forecast (Updated from Weather.gov at " . date('M d g:i a',$weather['update']).")" . NL;
+if(empty($weather)): echo "<p>No Data</p>"; else:
+	$weather_updated =  date('M d g:i a',$weather['update']);
 	?>
-	</span></h4>
-
 	<table class = 'in2 col-border'>
+	<tr class='border-bottom'><td colspan='5' class='left'>
+	<small>Weather.gov forcast updated at <?=$weather_updated?></small>
+	</td></tr>
+
 <tr><th></th>
 		<?php
 			for ($i=1;$i<4;++$i) : //for 3 days

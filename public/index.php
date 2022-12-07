@@ -51,16 +51,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <h4>Pages</h4>
 <table class='index'>
 <tr><td >URL</td><td >Result</td></tr>
+<tr class='bg-yellow'><td>'Today' Pages</td><td>add '?snap' or '?scroll' to cycle through sections</tr>
+
 <tr><td ><a href="/today.php" target='today'>/today.php</a>
 </td><td >Regular web page with all data</td></tr>
+<tr><td><a href="/condensed.php" target='snap'>/condensed.php</a><td>Large type version with minimal information</td></tr>
+<tr><td ><a href="/today.php?print" target='print'>/today.php?print</a></td><td >Regular web page prepared for printing with smaller type and defined pages.</td></tr>
+
+<tr><td colspan='2'>--------- animated -----------</td></tr>
 <tr><td ><a href="/today.php?scroll" target='scroll'>/today.php?scroll</a>
-</td><td >Page slowly scrolls to the bottom, then restarts</td></tr>
+</td><td >(not recommended) Page slowly scrolls to the bottom, then restarts</td></tr>
 <tr><td ><a href="/today.php?snap" target='snap'>/today.php?snap</a>
 </td><td >Page displays a section for 10 seconds, then next section, and so on, before starting over.</td></tr>
-<tr><td><a href="/condensed.php?snap" target='snap'>/condensed.php?snap</a>
-<td>Large type version with minimal information</td></tr>
-<tr><td ><a href="/today.php?print" target='print'>/today.php?print</a>
-</td><td >Regular web page prepared for printing with smaller type and defined pages.</td></tr>
+<tr><td><a href="/condensed.php?snap" target='snap'>/condensed.php?snap</a><td>Large type version with minimal information</td></tr>
 
 <tr><td colspan='2' class='bg-yellow'>Ranger Admin Pages</td></tr>
 

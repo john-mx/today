@@ -14,11 +14,13 @@ use DigitalMx as u;
 
 <?php
 if(empty($weather)): echo "<p>No Data</p>"; else:
-	echo "Weather.gov forcast updated at " . date('M d g:i a',$weather['update']) . BR;
+	$weather_updated =  date('M d g:i a',$weather['update']);
 	?>
 	<table class = 'in2 col-border'>
-
-	<tr><th></th><th></th>
+	<tr class='border-bottom'><td colspan='5' class='left'>
+	<small>Weather.gov forcast updated at <?=$weather_updated?></small>
+	</td></tr>
+	<tr class='no-border border-bottom'><th></th><th></th>
 		<?php
 			for ($i=1;$i<4;++$i) : //for 3 days
 				$day = $weather['jr'][$i];

@@ -25,6 +25,8 @@
 	$scbody = '';
 	$added_headers = $extra;
 
+	$myversion = "<br /><span class='red'>ALPHA VERSION " . exec("git tag |sort -V | tail -1") . "</span>";
+
 	switch ($pcode) {
 		case '';
 
@@ -32,10 +34,12 @@
 		case 'scroll':
 			$scbody='onLoad="pageScroll()"';
 			$added_headers .= "<style>html {scroll-behavior: smooth;}</style>";
+			$added_headers .= "<script src='/js/scroll_scripts.js'></script>";
 			break;
 
 		case 'snap':
 			$scbody = "onLoad='startRotation(15)'";
+			$added_headers .= "	<script src='/js/snap.js'></script>";
 			break;
 
 
@@ -64,7 +68,7 @@
    <meta http-equiv="refresh" content="900" >
 
 	<title><?=$titlex?></title>
-	<script src='/js/snap.js'></script>
+
 	<script src='/js/check_time.js'></script>
 	<script src='/js/hide.js'></script>
 
@@ -78,6 +82,7 @@
 <tr style='background-color:black;text-align:right;color:white;'><td style='background-color:black;text-align:right;color:white;'>
 Department of the Interior<br>
 Joshua Tree National Park
+<?=$myversion?>
 <h1 style='margin:0'>Today in Joshua Tree National Park</h1>
 </td><td style='width:80px;'>
 <!-- <img src='/images/Shield-7599-alpha.png' alt="NPS Shield" /> -->
