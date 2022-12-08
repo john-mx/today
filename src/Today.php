@@ -935,7 +935,7 @@ public function format_galert($galerts){
 
 ######### END CACHES ############
 
-public function filter_calendar() {
+public function Xfilter_calendar() {
 	/*
 		removes expired events from calendar and sort by date
 		calenar = array (

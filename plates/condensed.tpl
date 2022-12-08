@@ -57,47 +57,20 @@ $uv = $data['light']['uv'];
 		</tr>
 	</table>
 
-<?php $this->insert('alerts',['notices' => $data['notices']]); ?>
-<div class='clear'></div>
-<h4>Park Conditions</h4>
-	<div class='in2'>
+<?php $this->insert('notices',['notices' => $data['notices']]); ?>
 
-	<div class='float '>
-		<b>Fire Danger:</b>
-<?=$data['fire']['level']?>
-	</div>
-	<div class='float '>
-		<b>Air Quality: </b>
-<?=$data['air']['br']['aqi']?>
- - <?=$data['air']['br']['aqi_scale'] ?><br />
-<small>At Black Rock <?php echo date ('m/d g:i a',$data['air']['br']['observed_dt']);?></small>
-	</div>
-<div class='float'>
-<?php // u\echor($data['current'],'current',STOP); ?>
-	<b>Current Temp</b> :
-	<?php
-		echo
-		$data['current']['temp_f'] ." &deg;F"
-		. "<br /><small> Jumbo Rocks "
-		. date('m/d g:i a',$data['current']['last_updated_epoch'])
-		." </small>"
-		. NL;
-	?>
-</div>
-	<div class='clear'></div>
-</div>
+<?php
+	$conditions = array(
+		'fire'=>$data['fire'],
+		'air'=>$data['air'],
+		'current' => $data['current'],
+		);
+	$this->insert('conditions',$conditions);
+?>
+
 <!-- end page-->
 	</div>
 	<div id="page2" style="display: <?=$divvis?>;">
-
-<?php $this->insert('announcements',['notices'=> $data['notices']]); ?>
-		<div class='clear'>
-		</div>
-<?php	$this->insert('advice',['advice' => $data['advice']]);?>
-
-<!-- end page-->
-	</div>
-	<div id="page3" style="display: <?=$divvis?>;">
 
 <?php
   $this->insert('calendar',['calendar' => $data['calendar']])
@@ -122,12 +95,12 @@ $uv = $data['light']['uv'];
 <?php $this->insert('fees'); ?>
 
 
-<!-- end page-->
-	</div>
+
 
 <?php $this->insert('end'); ?>
 
-
+<!-- end page-->
+	</div>
 
 
 <?php #echo '<hr>';u\echor($data,'data'); ?>

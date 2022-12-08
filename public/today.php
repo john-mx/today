@@ -20,7 +20,7 @@ $qs = $_SERVER['QUERY_STRING'] ?? '';
 
 
 $y = $Today->prepare_topics ();
-//u\echor($y,'y',STOP);
+u\echor($y,'y',STOP);
 
 // using "Today' as title prevents it from re-appearing on the today page.
 $meta=array(

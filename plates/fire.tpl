@@ -11,9 +11,11 @@ use DigitalMx as u;
 	 	<?=$fire['level']?>
 	 	</p>
 
-			<div class='left'>
+			<!--
+<div class='left'>
 				<?=Defs::$firewarn[$fire['level']]?>
 			</div>
+ -->
 			<?php endif; ?>
 
 

@@ -30,11 +30,9 @@ $Login->check_pw(1);
 
 
 if (!empty($_POST) && !isset($_POST['pw'])) {	#u\echor ($_POST,'Post',false);
-	$z = $Cal->prepare_calendar($_POST['calendar']);
-	#u\echor ($z,'prepared');
+	$z = $Cal->post_calendar ($_POST['calendar']);
 
-	$Cal->write_cache('calendar',$z);
-		//echo "<script>window.location.href='/calendar.php';</script>";
+
 
 }
 

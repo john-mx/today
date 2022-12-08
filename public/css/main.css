@@ -1,13 +1,21 @@
 @media print {
+	/*
+		use smaller type, larger lin spacing.
+	*/
    body {
       color: #000;
       background: #fff;
-      width:100%;
-      font: 8.0pt "Times New Roman", Times, serif;
+
+      font: 9.0pt "Times New Roman", Times, serif;
 line-height: 1.1;
       }
 
-
+	div.break {page-break-before: always;}
+/*
+	use this class for diviison to be omitted when printed.
+	(e.g., for time-sensitive that would be wrong on printed item)
+ */
+	.no-print {display:none;}
 }
 
 
@@ -144,11 +152,12 @@ button {
 div.float {float:left; margin-right:1em;;}
 div.clear {clear:left;}
 
+
 table {
 	border-collapse: collapse;
 	border: 2px solid black;
 	font-family: arial,san-serif;
-	font-size:0.9em;
+	font-size:0.8em;
 }
 
 table tr th {border-bottom: 2px solid black;}
@@ -277,19 +286,20 @@ table .alt-gray tr:nth-child(even)  {
 
 	padding: 3px;
 	/* margin-bottom: 1em; */
-	margin-left:2em;
+	/* margin-left:2em; */
 	margin-right:2em;
-	width: 90%;
-	color: red;
+
 
 }
 .warn li {
-	margin-bottom:1em;
+	margin-bottom:0.4em;
 }
+
 .warn ul {
 	margin-top:0;
 	margin-bottom:0;
 }
+
 .in2 { margin-left: 2em;
 	margin-right: 0;
 	width:90%;

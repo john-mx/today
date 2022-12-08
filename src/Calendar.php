@@ -70,6 +70,9 @@ class Calendar {
 
 	//$tz = new \DateTimeZone('America/Los_Angeles');
 
+	public function __construct() {
+		$this->tz = new \DateTimezone('America/Los_Angeles');
+	}
 
 	public function dayset(int $i,string $days) {
 		// i is the calendar line
@@ -112,6 +115,13 @@ public function add_types ($cal) {
 return $z;
 }
 
+public function post_calendar($cal){
+
+	$cal = $this->check_calendar($cal);
+	$cal = $this->filter_calendar($cal);
+	$this->write_calendar($cal);
+}
+
 public function filter_calendar(array $calendar,int $transform = 0) {
 	/*
 		removes expired events from calendar and sort by date
@@ -125,43 +135,49 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 
 	Transform is number of days of recurring events to transform
 		into individual dates.  If transform is 0, the recurring
-		events are left as is (as for edit screen).  If it's 3,
+		events are left as is (as for admin screen).  If it's 3,
 		then any recurring ewvents in the next 3 days are inserted as scheduled events.  (as for display).
 
 	*/
 
+
+
 	$z=[];
 
 	foreach ($calendar as $event){ #keep if these conditions:
-		if (empty ($event['time'])) {continue;} #nope
+		if (empty ($event['time'])) {continue;} #drop
 
 		if (empty($event['suspended'])) $event['suspended'] = false;
+
 
 #	echo "Testing " . $event['title'] . BR;
 
 
  // test for recurring
-
-		if (empty ($event['days']) && !empty ($event['date'] )) {
+		if ($event['suspended']) {
+			if ($transform == 0) {$z[] = $event;}
+			else{ continue;} #skip if not admin
+		}
+		elseif (empty ($event['days']) && !empty ($event['date'] )) { //scheduled
 			$z[] = $this->parse_scheduled($event);
 			#echo "added scheduled ${event['title']}" . BR;
 
-		} elseif ($transform == 0) { #return for admin sccreen
-			$event['dt'] = 0;
+		} elseif ($transform == 0 ) { #keep for admin sccreen, but don't expand
+			$event['dt'] = 0; // unscheduled; float to top
 			$z[] = $event;
 			#echo "passed for admih scheduled ${event['title']}" . BR;
-		} else { // recurring
+		} else { // active recurring
 				// prepare starting date
 				if (empty($edate = trim($event['date']))){
 					$edate = date('M d,Y'); #today
 				}
 				$begindate = $edate . ' ' . trim($event['time']);
-				try{ $begindt = new \DateTime($begindate); }
+				try{ $begindt = new \DateTime($begindate,$this->tz); }
 				catch (\Exception $e) {u\alertBadInput ("Illegal start date for recurring event: $begindate");
 					exit; // should have got during prepare function
 				}
 				if (!empty($enddate = trim($event['end']))){
-					if (! $enddt = new \DateTime($enddate,) ){
+					if (! $enddt = new \DateTime($enddate,$this->tz) ){
 						u\alertBadInput ("Illegal end date for recurring event: $enddate");
 						exit; // should have got at prepare
 					}
@@ -189,10 +205,10 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 }
 
 	function parse_recurring($event,$begindt,$enddt,$i) {
-
+		$now = new \DateTime();
 		#create actual event list
 		$testdt = new \DateTime($event['time']); // today at sched time
-		$testdt->modify (" + $i day");
+	$testdt->modify (" + $i day");
 
 		$testdate = $testdt->format('M d');
 
@@ -207,7 +223,9 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 					return [];
 
 		}
-
+		if ($testdt < $now) {// past
+			return [];
+		}
 
 		$wd = $testdt->format('w'); #get day of werek
 #echo "... iteration $i " . ' on ' . $testdt->format('M d') . " day is $wd." . BR;
@@ -218,6 +236,7 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 				$schevent['date'] = $testdt->format('M d Y');
 				$schevent ['days'] = '';
 				$dts = $testdt->format('U'); #timestamp
+	//	echo "Test dt " .$testdt->format('M d Y H:i') . 'for' . $event['time']  . BR;
 				$schevent['dt'] = $dts;
 				return $schevent;
 				echo "added ${event['title']} on $testdate." . BR;
@@ -230,13 +249,14 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 
 	function parse_scheduled ($event) {
 			$edate = $event['date'] . ' ' . $event['time'];
-			$edt = new \DateTime($edate) ;
-			$today = new \DateTime();
+			$edt = new \DateTime($edate,$this->tz) ;
+			$now = new \DateTime();
+			//$today->setTimeZone('America/Los_Angeles');
 
 		#echo "Set dt to $edate" . BR;
 
 
-		if ($edt < $today){return [];} #past date
+		if ($edt < $now){return [];} #past date
 		$dts = $edt->format('U');
 		$event['dt'] = $dts;
 		//
@@ -249,7 +269,8 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 
 
 
-public function prepare_calendar(array $calendar) {
+public function check_calendar(array $calendar) {
+// check post data
 	$z=[];
 	foreach ($calendar as $event){
 		if (empty($time = $event['time'])){continue;}
@@ -305,9 +326,9 @@ public function prepare_calendar(array $calendar) {
 }
 
 #u\echor ($z,'new',true);
-public function write_cache(string $section,array $z) {
+public function write_calendar(array $z) {
 
-	file_put_contents(CACHE[$section],json_encode($z));
+	return file_put_contents(CACHE['calendar'],json_encode($z) ,LOCK_EX);
 }
 
 

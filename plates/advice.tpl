@@ -6,7 +6,7 @@ use DigitalMx as u;
 <?php if (!empty ($d= $advice)) : ?>
 
 <h4 class='black'>Ranger Recommendations</h4>
-<div class='in2 '>
+<div class='in2 warn'>
 
 <?php
 		echo "<ul>";

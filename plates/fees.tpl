@@ -5,7 +5,7 @@ Purchase Your Pass Before You Get To The Entrance</b>
 </div>
 <table  class='in2 alt-gray border-bottom'>
 
-<tr class='border-top borders'><th colspan='4'></th><th colspan='3' class='borders'>Where to Buy</th></tr>
+<tr class='border-top borders'><th colspan='4'></th><th colspan='3' class='borders'>Where to Get Yours</th></tr>
 <tr  style='background-color:white;' class='col-border ' ><th>Pass</th><th>For</th><th>Valid For</th><th>Price</th><th>Rec.gov</th><th>Entrance Station</th><th>Visitor Center</th></tr>
 
 <tr><td colspan=7  style='font-weight:bold;text-align:left;' class='bg-orange'><b>Passes for Joshua Tree National Park</b></td></tr>
