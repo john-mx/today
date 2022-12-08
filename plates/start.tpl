@@ -80,7 +80,11 @@
 </head>
 <body <?=$scbody?>>
 <table style='width:100%;border-collapse:collapse;'>
-<tr style='background-color:black;text-align:right;color:white;'><td style='background-color:black;text-align:right;color:white;'>
+<tr style='background-color:black;text-align:right;color:white;'>
+<td style='width:80px;'>
+<!-- to balance space  -->
+</td>
+<td style='background-color:black;text-align:right;color:white;'>
 Department of the Interior<br>
 Joshua Tree National Park
 <?=$myversion?>

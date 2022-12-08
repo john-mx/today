@@ -36,7 +36,7 @@ if (isset($_POST['pw']) ) {// is login
 
 $Login->check_pw(1);
 
-u\echor($_POST,'post');
+//u\echor($_POST,'post');
 
 if (!empty($_POST) && !isset($_POST['pw'])) {
 		post_data ($_POST,$Today);
