@@ -22,7 +22,7 @@ ini_set('display_errors', 1);
 #u\echor($c);
 
 	$calendar = $Cal->filter_calendar($c,4);
-u\echor($calendar,'filtered cal');
+//u\echor($calendar,'filtered cal');
 	$platedata = array('calendar'=>$calendar);
 	echo $Plates->render('calendar',$platedata);
 	exit;
