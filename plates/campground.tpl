@@ -42,6 +42,4 @@ $asof =  date('M d g:i a', $camps['asof']);
 <li>Reservations are made ONLY using the recreation.gov web site or call at 1-877-444-6777. They cannot be made by park rangers.
 </ul>
 
-
-
 </div>

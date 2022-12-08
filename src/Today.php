@@ -303,17 +303,8 @@ public function load_cache ($section) {
 
 		}
 
-		$lock_count = 0;
-		while (file_exists($this->cache_lock)){
-			++$lock_count;
-			if ($lock_count > 3){
-				Log::error("Cannot read cache $section due to lock");
-				return [];
-			}
-			sleep (2);
-		}
 
-		$y = json_decode (file_get_contents(CACHE[$section]), true);
+		$y = json_decode ($this->file_get_contents_locking(CACHE[$section]), true);
 
 		//u\echor($y,$section,STOP) . BR;
 		return $y;
@@ -473,7 +464,7 @@ public function build_topic_general() {
 			$z['fire']['level'] = $fire_level;
 			$z['fire']['color'] = Defs::get_firecolor($fire_level);
 
-			$z['version'] = file_get_contents(REPO_PATH . "/data/version") ;
+			$z['version'] = $this->file_get_contents_locking(REPO_PATH . "/data/version") ;
 			$z['target'] = date('l M j, Y');
 
 			$z['advice'] = $this->clean_text($y['advice']);
@@ -682,7 +673,6 @@ https://www.airnowapi.org/aq/observation/latLong/current/?format=application/jso
 		$url = "https://www.airnowapi.org/aq/observation/latLong/current/?format=application/json&latitude=$lat&longitude=$lon&distance=25&API_KEY=" . $this->Defs->getKey('airnow');
 				$expected = 'AQI'; #field to test for good result
 		$loginfo = "$src:$loc";
-		$this->lock_cache();
 		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) return false;
 		$x[$loc] = $aresp;
 	} # next loc
@@ -765,6 +755,46 @@ public function rebuild_cache_galerts () {
 //u\echor($y,'from external  alerts', NOSTOP);
 	return $y;
 }
+
+public function rebuildCGopen($cycle) {
+	/* reset cgopen in evening
+		Retrieve data from rec.gov in morning
+		call with cycle = am or pm
+		return true if data updated; false if unchanged.
+	*/
+		if (!$opens = $this->load_cache('cgopen')) {
+			Log::error('Rebuild cgopen failed; cannot open cache');
+			return false;
+		}
+
+		if ($cycle == 'am') {
+			if (!0 &&  $new_opens = $this->loadRecData() ){
+				Log::info("Cannot retrieve opens from rec.gov");
+				// do leave for another time.
+				return false;
+			}
+			// update opens from fretried data
+			$this->write_cache('cgopens',$new_opens);
+			return true;
+		} elseif ($cycle == 'pm'){
+			// set all camp data to uknown
+			$new_opens = [];
+			foreach (array_keys(self::$empty_opens) as $cg){
+				$new_opens[$cg] = '?'; // now unknown
+			}
+			$this->write_cache('cgopens',$new_opens);
+			return true;
+		} else {
+			Log::error ("Called rebuild cgopen with invalid cycle: $cycle");
+			return false;
+		}
+}
+
+private function loadRecData(){
+	//tbd
+}
+
+
 
 
 private function rebuild_cache_wgalerts() {
@@ -898,7 +928,7 @@ public function filter_calendar() {
 
 	$z=[];
 
-		$y = json_decode (file_get_contents(CACHE['calendar']), true);;
+		$y = json_decode ($this->file_get_contents_locking(CACHE['calendar']), true);;
 
 //  	u\echor($y,'cal loaded');
 
@@ -1246,19 +1276,6 @@ private function curl_options () {
 	return $options;
 }
 
-private function lock_cache(){
-		touch ($this->cache_lock) ;
-}
-private function unlock_cache($section = ''){
-	// Log::info ("keeping cahce lock $section");
-// 	return [];
-		if (file_exists($this->cache_lock) ){
-				unlink ($this->cache_lock);
-		} else {
-			Log::error("cache_lock does not exist: $section.");
-		}
-}
-
 
 
 private function uv_data($uv) {
@@ -1280,6 +1297,31 @@ private function fire_data($fire_level) {
 		);
 
 	return $fire;
+}
+
+private function file_put_contents_locking($filename, $string)
+{
+    return file_put_contents($filename, $string, LOCK_EX);
+}
+
+private function file_get_contents_locking($filename)
+{
+    $file = fopen($filename, 'rb');
+    if ($file === false) {
+        return false;
+    }
+    $lock = flock($file, LOCK_SH);
+    if (!$lock) {
+        fclose($file);
+        return false;
+    }
+    $string = '';
+    while (!feof($file)) {
+        $string .= fread($file, 8192);
+    }
+    flock($file, LOCK_UN);
+    fclose($file);
+    return $string;
 }
 
 
@@ -1319,11 +1361,13 @@ private function str_to_ts($edt) {
 public function write_cache(string $section,array $z) {
 	if (empty($z)){
 	trigger_error("Writing empty array to $section", E_USER_WARNING) ;
-
 	}
-
-	file_put_contents(CACHE[$section],json_encode($z));
-	Log::info("Writing cache $section");
+	if($this->file_put_contents_locking (CACHE[$section],json_encode($z))){
+		Log::info("Writing cache $section");
+	} else {
+		Log::error("Cannot write cache $section due to lock");
+		die("Error: cannot write $section due to lock file");
+	}
 }
 
 private function getMtime($section){
@@ -1344,7 +1388,7 @@ function get_external ($src, $url,string $expected='',array $header=[]) {
 			for expected result if supplied.
 			returns result array on success
 			returns false on erro.
-			$src is just for TLog info
+			$src is just for Log info
 		*/
 		$curl = curl_init();
 		$curl_options = $this->curl_options();
@@ -1354,14 +1398,13 @@ function get_external ($src, $url,string $expected='',array $header=[]) {
 				curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
 		$aresp = [];
 		$success=0;
-		$this->lock_cache();
+	// No .. dont need to lock out reads while getting data; only when writing
 		$fail = '';	$tries = 0;
 		while (!$success) {
 			//u\echor($aresp,"Here's what I got for $src:");
 			if ($tries > 2){
 					//echo "Can't get valid data from ext source  $src";
 				Log::notice("Curl failed for $src: $fail.");
-				$this->unlock_cache($src);
 				return [];
 			}
 			if (! $response = curl_exec($curl)) {
@@ -1385,7 +1428,6 @@ function get_external ($src, $url,string $expected='',array $header=[]) {
 					sleep (10);
 
 			} else {
-				$this->unlock_cache($src);
 				curl_close($curl);
 				return $aresp;
 			}
@@ -1802,6 +1844,39 @@ public function Xupdate_section(string $section,array $u) {
 	}
 
 
+private function XlockCache(){
+	/* use lock_cache and unlock_cache to
+	/ set and remove file.
+	// use to prevent writing to file while it is beeing read
+	before reading file, set lock; remove when done.
+	before writing file, look for lock and wait for it to go away.
 
+	*/
+		touch ($this->cache_lock) ;
+
+
+}
+private function XunlockCache($section = ''){
+	// Log::info ("keeping cahce lock $section");
+// 	return [];
+		if (file_exists($this->cache_lock) ){
+				unlink ($this->cache_lock);
+		} else {
+			Log::notice("cannot unlock,,. cache_lock does not exist: $section.");
+		}
+}
+
+private function XtestLock(){
+	$lock_count = 0;
+		while (file_exists($this->cache_lock)){
+			++$lock_count;
+			if ($lock_count > 3){
+				return false;
+			}
+			sleep (2);
+		}
+		return true;
+
+}
 
 } #end class

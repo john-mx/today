@@ -21,25 +21,20 @@ ini_set('display_errors', 1);
 echo $Plates->render('start',['title'=>'Calender Admin']);
 
 
-
 if (isset($_POST['pw']) ) {// is login
 	$Login->set_pwl($_POST['pw']);
-	exit;
 }
+
 $Login->check_pw(1);
 
 
 
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset ($_POST['pw']) ){
-	#u\echor ($_POST,'Post',false);
+if (!empty($_POST) && !isset($_POST['pw'])) {	#u\echor ($_POST,'Post',false);
 	$z = $Cal->prepare_calendar($_POST['calendar']);
 	#u\echor ($z,'prepared');
 
 	$Cal->write_cache('calendar',$z);
-
-	$z=$Cal->filter_calendar($z,4);
-	#u\echor($z,'4 day events');
+		//echo "<script>window.location.href='/calendar.php';</script>";
 
 }
 
