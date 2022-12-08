@@ -34,32 +34,19 @@ switch ($pcode) {
 	$this->insert('conditions',$conditions);
 ?>
 
-<div class='clear'></div>
-<?php
-	$this->insert('advice',['advice' => $data['advice']]);
-?>
-</div> <!-- end page-->
-<div id="page2" style="display: <?=$divvis?>;">
+<?php $this->insert('advice',['advice' => $data['advice']]); ?>
 
+
+</div> <!-- end page-->
+<div id="page2" class='break' style="display: <?=$divvis?>;">
 
 <?php $this->insert('weather_brief',['weather' => $data['weather'] ]); ?>
 
-</div> <!-- end page-->
-
-<div id="page3" class='break' style="display: <?=$divvis?>;">
 <?php $this->insert('calendar',['calendar' => $data['calendar']])?>
 
-
-</div> <!-- end page-->
-<div id="page4"  style="display: <?=$divvis?>;">
-
-
-
-
-
-<!-- ############################## -->
-
-
+<!-- end page-->
+</div>
+<div id="page3" class='break' style="display: <?=$divvis?>;">
 
 
 <?php $this->insert('campground',['camps' => $data['camps'] ]); ?>

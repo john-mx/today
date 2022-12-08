@@ -83,7 +83,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 The page "today.php" can be printed from a web browser.
 </p>
  <p>
- Printing will change the margins to 0.5" on 8.5x11 pages and reduce the type size.  It will fit on two pages each with room for expanding content (alerts on page 1; calendar on page 2).
+ Printing will <ul>
+ <li>change the margins to 0.5" on 8.5x11 pages
+ <li> reduce the type size,
+ <li> removed the "Current temperature" entry.
+ </ul>
+It should fit on three pages each with room for expanding content (alerts on page 1; calendar and weather on page 2; campgrounds on page 3; fees on page 4). Note that Fees doesn't change.
 </p>
 <p>If printed to a PDF, then the pdf can easily be distributed electronically</p>
 

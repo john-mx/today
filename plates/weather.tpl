@@ -40,8 +40,8 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 				?>
 					<td>
 							<?php if (count($days[$i]) == 2) : ?>
-								<?=$p['shortForecast']?>.
-								<?= $p['highlow']?>. <br />
+								<?=$p['shortForecast']?> <br />
+								<?= $p['highlow']?>.
 								Wind <?=$p['windSpeed']?>;
 							<?php endif; ?>
 
@@ -61,8 +61,8 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 				?>
 					<td class='bg-black white'>
 					<div >
-								<?=$p['shortForecast']?>.
-								<?= $p['highlow']?>. <br />
+								<?=$p['shortForecast']?>  <br />
+								<?= $p['highlow']?>.
 								Wind <?=$p['windSpeed']?>;
 
 					</div>
