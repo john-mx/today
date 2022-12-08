@@ -24,7 +24,7 @@ $twolocs = ['jr','hq'];
 
 // what function?
 
-$f = weather();
+$f = tprint();
 
 function refresh($force=false){
 		global $Today,$Plates,$Defs;
@@ -143,37 +143,10 @@ function temail ($Plates,$Today) {
 	echo $Plates->render('email2',$z);
 }
 
-function tprint ($Plates,$Today){
-
-	// echo $Today->start_page('test page','p');
-// 	$z = $Today -> prepare_today();
-// 	$out =  $Plates->render('today-print',$z);
-// 	file_put_contents(REPO_PATH . '/public/pages/print.html' , $out);
-
-	$headers = array();
-	$headers[] = 'project: OSyxsT8B8RC83MDi';
-	$headers[] = 'token:0gaZ43q1NHn9Wj8NdCL7WetJvKj7vIv8bAHQpn8JPqz909nPOzU5eetM8u0v';
-	$headears[] = "Content-Type: text/html";
-
-#	$data = "@pages/print.html";
-	$data = file_get_contents('pages/print.html');
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL,"https://api.typeset.sh");
-	curl_setopt($ch, CURLOPT_POST, 1);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_HTTPHEADER,$headers);
-	curl_setopt($ch, CURLOPT_POSTFIELDS,$data);
-
-
-	$resp = curl_exec($ch);
-
-	curl_close ($ch);
-	file_put_contents('pages/print.pdf',$resp);
-
-//$output = `curl -d @pages/print.html -H 'project: OSyxsT8B8RC83MDi' -H 'token: 0gaZ43q1NHn9Wj8NdCL7WetJvKj7vIv8bAHQpn8JPqz909nPOzU5eetM8u0v' -X POST https://api.typeset.sh/ > pages/print.pdf 2>&1"`;
-
-
-
+function tprint (){
+global $Today,$Plates,$Defs;
+	$Today->buildPDF();
+	exit;
 
 }
 function t4 ($Plates,$Today) {

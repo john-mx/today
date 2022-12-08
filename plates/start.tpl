@@ -45,9 +45,9 @@
 
 		case 'print':
 			$added_headers .= "<link rel='stylesheet' media='print' href = '/css/media.css' >";
-				u\echoAlert ("Not implemented yet: $pcode");
-				echo "<script>window.location.href='/today.php';</script>";
-				exit;
+				//u\echoAlert ("Not implemented yet: $pcode");
+				//echo "<script>window.location.href='/today.php';</script>";
+				//exit;
 			break;
 
 		default:
@@ -66,6 +66,7 @@
    <meta charset="utf-8" />
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
    <meta http-equiv="refresh" content="900" >
+	<base href='<?=SITE_URL?>'>
 
 	<title><?=$titlex?></title>
 

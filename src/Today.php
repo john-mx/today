@@ -345,15 +345,35 @@ public function post_admin ($post) {
 	}
 	$this->write_cache('cgopen',$cgo);
 
-//rebuild the pages
-	#$this->rebuild();
-
-
 
 
 }
 
+public function buildPDF(){
+	$y = $this->prepare_topics ();
+//u\echor($y,'y',STOP);
 
+// using "Today' as title prevents it from re-appearing on the today page.
+$meta=array(
+	'pcode' => 'print',
+	'title'=>'Today',
+	'target'=> $y['target']?? '',
+	'pithy'=> $y['pithy'] ?? '',
+
+	);
+
+	$html = $this->Plates->render ('start',$meta);
+
+//	echo $Today->start_page('Today in the Park',$qs);
+	$html .= $this->Plates -> render('today',['data'=>$y]) ;
+	file_put_contents( SITE_PATH . '/pages/print.html', $html);
+	$this_day = date('m-d-y');
+	// make a pdf version if none exists.  This limits to 1 per day.
+	$pdf = '/pages/' . "${this_day}.pdf";
+	if (!file_exists(SITE_PATH . $pdf)){
+		$this->print_pdf($html,$pdf);
+	}
+}
 /*----------------- BUILD TOPICS ------------------*/
 
 public function build_topic_calendar() {
@@ -473,8 +493,6 @@ public function build_topic_general() {
 	return $z;
 
 }
-
-
 
 
 
@@ -949,42 +967,6 @@ public function filter_calendar() {
 
 
 
-########   LOAD ###############
-#-----------------  LOAD today --------------------
-
-// private function load_today() {
-// 		$refresh = false;
-// 		$section = 'today';
-// 		if (! file_exists (CACHE[$section])) {
-//
-// 			$refresh = true;
-// 		}
-//
-// 		if ($refresh) {
-// 			$this->refresh_cache($section);
-// 		}
-//
-// 		$y = json_decode (file_get_contents(CACHE[$section]), true);
-// 		if (empty($y['camps'])){ #test fpr local stuff there
-// // need to send an alert iuf this happens
-// 			$y = self::$dummy_today;
-// 		}
-// // 	u\echor($y,'loaded today');
-//
-//
-//
-// // u\echor($y,'today after clean', STOP);
-//
-// 		$target_date = date('l, d M Y');
-// 		$y['target'] = $target_date;
-// 		$y['updated'] = date ('d M H:i');
-//
-// 		return $y;
-//
-//
-//
-//
-// }
 
 #-----------------  LOAD EXTERNASL --------------------
 
@@ -1472,9 +1454,6 @@ if (empty($html)) die ("no html to print_pdf");
 
 //$output = `curl -d @pages/print.html -H 'project: OSyxsT8B8RC83MDi' -H 'token: 0gaZ43q1NHn9Wj8NdCL7WetJvKj7vIv8bAHQpn8JPqz909nPOzU5eetM8u0v' -X POST https://api.typeset.sh/ > pages/print.pdf 2>&1"`;
 
-
-
-
 }
 
 ####################OBSOLETE ###########################
@@ -1878,5 +1857,42 @@ private function XtestLock(){
 		return true;
 
 }
+
+########   LOAD ###############
+#-----------------  LOAD today --------------------
+
+// private function Xload_today() {
+// 		$refresh = false;
+// 		$section = 'today';
+// 		if (! file_exists (CACHE[$section])) {
+//
+// 			$refresh = true;
+// 		}
+//
+// 		if ($refresh) {
+// 			$this->refresh_cache($section);
+// 		}
+//
+// 		$y = json_decode (file_get_contents(CACHE[$section]), true);
+// 		if (empty($y['camps'])){ #test fpr local stuff there
+// // need to send an alert iuf this happens
+// 			$y = self::$dummy_today;
+// 		}
+// // 	u\echor($y,'loaded today');
+//
+//
+//
+// // u\echor($y,'today after clean', STOP);
+//
+// 		$target_date = date('l, d M Y');
+// 		$y['target'] = $target_date;
+// 		$y['updated'] = date ('d M H:i');
+//
+// 		return $y;
+//
+//
+//
+//
+// }
 
 } #end class
