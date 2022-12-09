@@ -37,7 +37,7 @@ $uv = $data['light']['uv'];
 			<br />
 			<b>UV Exposure:</b>
 <?= $uv['uv'] ?>
-			<span style='background-color:<?=$uv[' uvcolor']?>;'>
+			<span style='background-color:<?=$uv['uvcolor']?>;'>
 <?=$uv['uvscale']?>
 			</span> <br />
 			</td>

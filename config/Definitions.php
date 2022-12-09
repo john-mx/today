@@ -258,14 +258,14 @@ public static $coordinates = [
 // the admin screen.  No outside retrieval.
 	public static $cache_times  = array (
 
-				'calendar' => 60*12,
+				'calendar' => 0,
 				'admin' => 0,
 				'properties' => 0, // not using this
-				'wgov' => 240,
+				'wgov' => 50,
 				'wapi' => 60,
-				'airq' => 240,
+				'airq' => 0,
 				'airnow' => 240,
-				'airowm' => 240,
+				'airowm' => 0,
 				'alerts' => 0,
 				'galerts' => 120,
 				'cgopen' =>0,
