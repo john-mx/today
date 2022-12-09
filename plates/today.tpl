@@ -40,7 +40,7 @@ switch ($pcode) {
 </div> <!-- end page-->
 <div id="page2" class='break' style="display: <?=$divvis?>;">
 
-<?php $this->insert('weather_brief',['weather' => $data['weather'] ]); ?>
+<?php $this->insert('weather',['weather' => $data['weather'] ]); ?>
 
 <?php $this->insert('calendar',['calendar' => $data['calendar']])?>
 

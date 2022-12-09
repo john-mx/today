@@ -72,15 +72,22 @@ $uv = $data['light']['uv'];
 	</div>
 	<div id="page2" style="display: <?=$divvis?>;">
 
-<?php
-  $this->insert('calendar',['calendar' => $data['calendar']])
-?>
+	<?php $this->insert('advice',['advice' => $data['advice']]); ?>
 
 <!-- end page-->
 	</div>
 	<div id="page4" style="display: <?=$divvis?>;">
 
 <?php $this->insert('weather',['weather' => $data['weather'] ]); ?>
+
+<!-- end page-->
+	</div>
+	<div id="page3" style="display: <?=$divvis?>;">
+
+<?php
+  $this->insert('calendar',['calendar' => $data['calendar']])
+?>
+
 
 <!-- end page-->
 	</div>

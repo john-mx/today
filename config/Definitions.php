@@ -158,10 +158,10 @@ public static $coordinates = [
 	public static $uvwarn_min = array (
 
 		'Low' => ' No protection needed.',
-		'Moderate' => 'Protection needed. Use SPF-15 sunscreen, a wide-brimmed hat, and sunglasses outside.',
-		'High' => 'Protection needed. Seek shade during late morning through mid-afternoon.  Use SPF-15 sunscreen, a wide-brimmed hat, and sunglasses outside.',
-		'Very High' => 'Extra protection needed. If your shadow is shorter than you, seek shade.  Use SPF-15 sunscreen, a wide-brimmed hat, and sunglasses outside.',
-		'Extreme' => 'Extra protection needed. Avoid being outside late morning through mid-afternoon. If your shadow is shorter than you, seek shade. Use SPF-15 sunscreen, a wide-brimmed hat, and sunglasses outside.',
+		'Moderate' => 'Use SPF-15 sunscreen, a wide-brimmed hat, and sunglasses outside.',
+		'High' => 'Seek shade during late morning through mid-afternoon.  Use SPF-15 sunscreen, a wide-brimmed hat, and sunglasses outside.',
+		'Very High' => 'If your shadow is shorter than you, seek shade.  Use SPF-15 sunscreen, a wide-brimmed hat, and sunglasses outside.',
+		'Extreme' => 'Extra protection needed. Avoid being outside late morning through mid-afternoon. If your shadow is shorter than you, seek shade. Use SPF-15 sunscreen, a wide-brimmed hat, and sunglasses.',
 
 
 	);

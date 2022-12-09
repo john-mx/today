@@ -17,8 +17,9 @@ $uv = $light['uv'];
 <tr><td style='width:45%;' class = ' center' >
 
 <p><b>Today</b></p>
-	Sunrise <?=$lightd['sunrise']?>&nbsp;&nbsp;&nbsp;
+	<b>Sunrise <?=$lightd['sunrise']?>&nbsp;&nbsp;&nbsp;
 	Sunset <?=$lightd['sunset']?>  <br /><br />
+	</b>
 	<b>UV Exposure:</b> <?= $uv['uv'] ?>
 	<span style = 'background-color:<?=$uv['uvcolor']?>;'><?=$uv['uvscale']?></span> <br />
 
@@ -27,7 +28,7 @@ $uv = $light['uv'];
 <td  class = 'border  center bg-black white' >
 
 <p><b>Tonight</b></p>
-	Moonrise <?=$lightd['moonrise']?>&nbsp;&nbsp;&nbsp;
+<b>	Moonrise <?=$lightd['moonrise']?>&nbsp;&nbsp;&nbsp;
 	Moonset <?=$lightd['moonset']?>
 
 

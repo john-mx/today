@@ -6,10 +6,10 @@
       color: #000;
       background: #fff;
 
-      font: 9.0pt "Times New Roman", Times, serif;
+      font: 10pt "Times New Roman", Times, serif;
 line-height: 1.1;
       }
-
+	.red {color:#AA0000;}
 	div.break {page-break-before: always;}
 /*
 	use this class for diviison to be omitted when printed.
@@ -21,18 +21,20 @@ line-height: 1.1;
 
 @page {
        size: 8.5in 11in;
-      margin: 0.4in;
+      margin: 0.3in;
    }
 
 @media screen {
-	body { width: 90vw;}
+	body { width: 100vw;}
+	font: 12pt "Times New Roman", Times, serif;
 }
 
 
 
 body {
-	max-width:1800px;
+	max-width:1200px;
 	font-family:'Times New Roman',times,serif;
+	/* font-size: 12pt; */
 	padding:1em;
 
 

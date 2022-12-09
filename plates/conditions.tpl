@@ -21,11 +21,11 @@
 &nbsp;
 	<div class='float no-print'>
 	<!-- display:none when printed -->
-	<b>Temperature at Jumbo Rocks: </b>
+	<b>Temperature at Twentynine Palms: </b>
 	<?php
 		echo
-		$current['temp_f'] ." &deg;F"
-		. "<br /><small>at "
+		$current['temp_f'] ." &deg;F/" . $current['temp_c'] . "&deg;C"
+		. "<br /><small>&nbsp;&nbsp;&nbsp; at "
 		. date('m/d g:i a',$current['last_updated_epoch'])
 		." </small>"
 		. NL;
