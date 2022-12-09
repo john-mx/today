@@ -499,6 +499,7 @@ public function build_topic_general() {
 
 ########  CACHES #############
 public function refresh_caches($force=false) {
+Log::info ("Starting cache refresh cycle");
 
 // refreshes all the external caches, if they are due
 	#$caches = ['wapi','airq','airowm','wgov','airnow','galerts'];
