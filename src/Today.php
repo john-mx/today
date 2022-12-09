@@ -525,8 +525,8 @@ Log::info ("Starting cache refresh cycle");
 		}
 
 			#	$this -> rebuild_properties('jr');
-
-	}
+Log::info ("Completed cache refresh cycle");
+}
 
 
 private function rebuild_cache_wapi($locs=[] ) {
