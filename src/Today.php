@@ -294,15 +294,14 @@ public function load_cache ($section) {
 
 #echo "loading cache $section" . BR;
 		if (!file_exists (CACHE[$section])) {
-			$refresh = true;
 			Log::notice ("Cache $section does not exist. Refreshing.");
 			die ("Attempt to read non-existent cache $section");
 		}
-		if ($this->over_cache_time($section)) {
-			Log::warning("Cache $section is out of date");
+		$ot = $this->over_cache_time($section);
+		if ( $ot > 0) {
+			Log::warning("Loading cache $section is out of date: $ot secs");
 
 		}
-
 
 		$y = json_decode ($this->file_get_contents_locking(CACHE[$section]), true);
 
@@ -500,27 +499,27 @@ public function build_topic_general() {
 
 ########  CACHES #############
 public function refresh_caches($force=false) {
-$v=true; #verbose
+
 // refreshes all the external caches, if they are due
 	#$caches = ['wapi','airq','airowm','wgov','airnow','galerts'];
-		if ($this->over_cache_time('wapi') || $force) {
+		if ($this->over_cache_time('wapi') > 0 || $force) {
 				$this->rebuild_cache_wapi();
 
 		}
-		if ($this->over_cache_time('airq') || $force) {
+		if ($this->over_cache_time('airq') > 0|| $force) {
 			$this->rebuild_cache_airq();
 
 		}
-		if ($this->over_cache_time('airowm') || $force) {
+		if ($this->over_cache_time('airowm')> 0 || $force) {
 			$this->rebuild_cache_airowm();
 		}
-		if ($this->over_cache_time('wgov') || $force) {
+		if ($this->over_cache_time('wgov')> 0 || $force) {
 				$this->rebuild_cache_wgov();
 		}
-		if ($this->over_cache_time('airnow') || $force) {
+		if ($this->over_cache_time('airnow')> 0 || $force) {
 				$this->rebuild_cache_airnow();
 		}
-		if ($this->over_cache_time('galerts') || $force) {
+		if ($this->over_cache_time('galerts')> 0 || $force) {
 				$this->rebuild_cache_galerts();
 		}
 
@@ -1317,14 +1316,19 @@ private function split_coord ($loc) {
 
 private function over_cache_time($section) {
 	//global $Defs;
-	if (!file_exists(CACHE[$section])){ return true;}
+	/* dies if file not exists
+		0 if mtime is under the limit
+		diff if mtime is over the limit by diff
+	*/
+
+	if (!file_exists(CACHE[$section])){ die ("No cache file for $section");}
 
 	$filetime = filemtime (CACHE[$section]);
 	$limit = $this->Defs->getMaxTime($section);
 	$diff = time() - $filetime;
-	if ($limit && ($diff > $limit)) return true;
+	if ($limit && ($diff > $limit)) return $limit;
 //	echo "$section: limit $limit; diff $diff;" . BR;
-	return false;
+	return 0;
 }
 
 private function str_to_ts($edt) {

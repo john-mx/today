@@ -268,7 +268,7 @@ public static $coordinates = [
 				'airowm' => 240,
 				'alerts' => 0,
 				'galerts' => 120,
-				'cgopen' =>240,
+				'cgopen' =>0,
 				'camp' => 0,
 
 
