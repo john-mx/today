@@ -40,7 +40,6 @@
 		?>
 <?=$aqi?>
  - <?=$aq_scale ?><br />
-<br />
 (Test example for unhealthy) <?= $aq_warn ?>
 	</div>
 &nbsp;
