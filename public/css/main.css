@@ -133,7 +133,7 @@ button {
 .bg-orange {background-color:#F3984D;}
 .bg-midnight {background-color:#011993 ;}
 .width50 {width:50%;}
-
+.width45 {width:45%;}
 .bg-black{
 	background-color:black;
 	padding:6px;
@@ -154,6 +154,9 @@ button {
 
 div.float {float:left; margin-right:1em;;}
 div.clear {clear:left;}
+
+.inlineblock {display:inline-block;}
+.inline {display:inline;}
 
 
 table {
@@ -308,9 +311,6 @@ table .alt-gray tr:nth-child(even)  {
 	width:90%;
 	}
 
-.inline {
-	display:inline;
-}
 
 .today
 {

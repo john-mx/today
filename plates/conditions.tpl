@@ -8,39 +8,38 @@
 <h4>Park Conditions</h4>
 <div class='in2'>
 
-	<div class='float '>
+	<div class='width45 inlineblock float'>
 		<b>Fire Danger:</b><br />
 &nbsp;&nbsp;&nbsp;<?=$fire['level']?>
 	</div>
 
-
-	<div class='float no-print'>
+	<div class='no-print  inlineblock float'  >
 	<!-- display:none when printed -->
-	<b>Temperature at Twentynine Palms: </b>
-	<small> at
-		<?php echo date('m/d g:i a',$current['last_updated_epoch']) ?>
-	</small><br>
-	&nbsp;&nbsp;&nbsp; <?php
-		echo
-		$current['temp_f'] ." &deg;F/" . $current['temp_c'] . "&deg;C"
-		. "<br />"
-		. NL;
+	<b>Temperature at Twentynine Palms: </b><br />
+	&nbsp;&nbsp;&nbsp;
+	<?php echo
+		$current['temp_f'] ." &deg;F (" . $current['temp_c'] . "&deg;C) at ";
+		echo date('g:i a',$current['last_updated_epoch']);
 	?>
+
 	</div>
 
 <div class='clear'><br /></div>
+
+	<b>Air Quality: </b><br />
 	<div >
-		<b>Air Quality: </b><small>At Black Rock <?php echo date ('m/d g:i a',$air['br']['observed_dt']);?></small><br />
+		<small>At Black Rock <?php echo date ('m/d g:i a',$air['br']['observed_dt']);?></small><br />
+
 		<?php
 			$aqi = $air['br']['aqi'];
 			$aq_scale = $air['br']['aqi_scale'];
 			$aq_warn = Defs::$airwarn[$aq_scale];
 			$aq_warn = Defs::$airwarn['Unhealthy'];
-
 		?>
-<?=$aqi?>
- - <?=$aq_scale ?><br />
-(Test example for unhealthy) <?= $aq_warn ?>
+	<?=$aqi?> - <?=$aq_scale ?>
+ 	</div>
+ 	<div class='in2'>
+	(Test example for unhealthy) <?= $aq_warn ?>
 	</div>
-&nbsp;
+	<div class='clear'></div>
 </div>
