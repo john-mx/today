@@ -19,7 +19,8 @@ namespace DigitalMx\jotr;
 
 $tablestyle = <<<EOT
 <style>
-table.index tr td {text-align:left;}
+table.index {border:2px solid black;}
+table.index tr td {text-align:left;border:1px solid black;}
 </style>
 EOT;
 
