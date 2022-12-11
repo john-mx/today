@@ -6,7 +6,7 @@
 ?>
 
 <h4>Park Conditions</h4>
-<div class='in2'>
+<div class='left2'>
 
 	<div class='width45 inlineblock float'>
 		<b>Fire Danger:</b><br />
@@ -26,10 +26,10 @@
 
 <div class='clear'><br /></div>
 
-	<b>Air Quality: </b><br />
-	<div >
-		<small>At Black Rock <?php echo date ('m/d g:i a',$air['br']['observed_dt']);?></small><br />
-
+	<b>Air Quality:</b> <br />
+	<div class='left2'>
+	<div class='inlineblock float '>
+	<small>At Black Rock <?php echo date ('m/d g:i a',$air['br']['observed_dt']);?></small><br />
 		<?php
 			$aqi = $air['br']['aqi'];
 			$aq_scale = $air['br']['aqi_scale'];
@@ -38,8 +38,10 @@
 		?>
 	<?=$aqi?> - <?=$aq_scale ?>
  	</div>
- 	<div class='in2'>
+ 	<div class='float inlineblock ' style='width:60%'>
 	(Test example for unhealthy) <?= $aq_warn ?>
 	</div>
+
 	<div class='clear'></div>
+	</div>
 </div>
