@@ -21,6 +21,7 @@
 	$title ??= 'Today in the Park';
 	$titlex = $title . ":$pcode" . " (" .PLATFORM . ") ";
 	$extra ??='';
+	$pithy ??='';
 
 	$scbody = '';
 	$added_headers = $extra;
@@ -98,7 +99,7 @@ Joshua Tree National Park
 <div>
 <?php if (substr($title,0,5) == 'Today'): ?>
 	<h2 style='margin-bottom:6px;'><?=$target?></h2>
-	<p class='pithy'><?=$pithy ?></p><br />
+<!-- 	<p class='pithy'><?=$pithy ?></p><br /> -->
 <?php else: ?>
 	<h2><?=$title?></h2>
 <?php endif; ?>

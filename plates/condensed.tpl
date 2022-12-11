@@ -49,7 +49,7 @@ $uv = $data['light']['uv'];
 <?=$lightd['moonrise']?>
 			&nbsp;&nbsp;&nbsp; Moonset:
 <?=$lightd['moonset']?>
-			<div style=' align-items:center;width:100%;margin-top:1em;'>
+			<div class='bg-black' style=' align-items:center;margin-top:1em;'>
 				<span><?=$lightd['moonphase']?>
 				</span> <img src="/images/moon/<?=$lightd['moonpic'] ?>" style='vertical-align:middle;' />
 			</div>

@@ -50,7 +50,7 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 		</tr>
 		<tr >
 
-			<td class='bg-black white'>Night</td>
+			<td class='bg-midnight white'>Night</td>
 			<?php
 			for ($i=1;$i<4;++$i) : //for 3 days
 				if (count($days[$i]) == 2) :
@@ -59,7 +59,7 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 					$p = $days[$i][0] ;
 				endif;
 				?>
-					<td class='bg-black white'>
+					<td class='bg-midnight white'>
 					<div >
 								<?=$p['shortForecast']?>  <br />
 								<?= $p['highlow']?>.
