@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 <tr><td colspan='2' class='bg-yellow'>Developer Functions</td></tr>
 <tr><td ><a href='/set_properties.php' target='_blank'>Reset properties.json</a> </td><td >gets coordinates, zones, and other data from weather.gov for significant sites. (only used for reference, not live).</td></tr>
-<tr><td ><a href='/cron_update.php' target='_blank'>Manually run crontab</a></td><td > Updates all the external data (weather, airq, alerts); should run automatically every few hours.</td></tr>
+<tr><td ><a href='/cron_update.php' target='logs'>Refresh all caches</a></td><td > Updates all the external data (weather, airq, alerts); should run automatically every few hours.</td></tr>
 
 <tr><td ><a href='/logview.php' target='_blank'>View Logs.</td>
 	<td>Displays list of log records.</td></tr>

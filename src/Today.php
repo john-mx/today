@@ -303,8 +303,10 @@ public function load_cache ($section) {
 
 		}
 
-		$y = json_decode ($this->file_get_contents_locking(CACHE[$section]), true);
-
+		if (!$y = json_decode ($this->file_get_contents_locking(CACHE[$section]), true)) {
+			Log::error("Failed to load and decode $section cache");
+			return [];
+		}
 		//u\echor($y,$section,STOP) . BR;
 		return $y;
 }
@@ -484,7 +486,7 @@ public function build_topic_general() {
 			$z['fire']['color'] = Defs::get_firecolor($fire_level);
 
 			$z['version'] = $this->file_get_contents_locking(REPO_PATH . "/data/version") ;
-			$z['target'] = date('l M j, Y');
+			$z['target'] = date('l F j, Y');
 
 			$z['advice'] = $this->clean_text($y['advice']);
 
@@ -528,6 +530,11 @@ Log::info ("Starting cache refresh cycle");
 Log::info ("Completed cache refresh cycle");
 }
 
+// Rebuild caches goes to external and downloads data for each location
+// if any location fails, the rebuild is aborted and new cache is not written,
+// so old cache is retained.
+// Could try to merge old and new, so only mssing location gets retained, but
+// seems to complex right now.
 
 private function rebuild_cache_wapi($locs=[] ) {
 	$x=[];
@@ -542,8 +549,8 @@ private function rebuild_cache_wapi($locs=[] ) {
 		$expected = '';
 		$loginfo = "$src:$loc";
 		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
-			$aresp = [];
-		}
+			Log::notice("Failed $loginfo.  Rebuild aborted."); return [];
+		} //if one loc fails, fail the whole thing
 
 		$x[$loc] = $aresp;
 	} # next loc
@@ -567,8 +574,9 @@ private function rebuild_cache_airq() {
 		$url = "https://air-quality.p.rapidapi.com/current/airquality?lon=$lon&lat=$lat";
 
 		$loginfo = "$src:$loc";
-		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) return false;
-
+		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
+			Log::notice("Failed $loginfo.  Rebuild aborted."); return [];
+		} //if one loc fails, fail the whole thing
 		$x[$loc] = $aresp;
 	} # next loc
 
@@ -591,7 +599,10 @@ private function rebuild_cache_airowm() {
 		$expected = '';
 
 		$loginfo = "$src:$loc";
-		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) return false;
+		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
+			Log::notice("Failed $loginfo.  Rebuild aborted."); return [];
+		} //if one loc fails, fail the whole thing
+
 		$x[$loc] = $aresp;
 	} # next loc
 
@@ -656,7 +667,9 @@ coord: 34.0714,-116.3906,
 		$expected = 'properties';
 
 		$loginfo = "$src:$loc";
-		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) return false;
+		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
+			Log::notice("Failed $loginfo.  Rebuild aborted."); return [];
+		} //if one loc fails, fail the whole thing
 
 		$x[$loc] = $aresp;
 	} # next loc
@@ -691,7 +704,10 @@ https://www.airnowapi.org/aq/observation/latLong/current/?format=application/jso
 		$url = "https://www.airnowapi.org/aq/observation/latLong/current/?format=application/json&latitude=$lat&longitude=$lon&distance=25&API_KEY=" . $this->Defs->getKey('airnow');
 				$expected = 'AQI'; #field to test for good result
 		$loginfo = "$src:$loc";
-		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) return false;
+		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
+			Log::notice("Failed $loginfo.  Rebuild aborted."); return [];
+		} //if one loc fails, fail the whole thing
+
 		$x[$loc] = $aresp;
 	} # next loc
 
@@ -1091,6 +1107,7 @@ public function format_wapi ($r) {
 
 	$x = [];
 	$x['update'] = time();// will end up with $y[$src] = $x;
+//u\echor($r,'R',STOP);
 
 	foreach ($r as $loc => $ldata){
 		 $forecast = $ldata['forecast']['forecastday'];
@@ -1203,13 +1220,14 @@ public function format_wgov ($r) {
 	// set day (key) to datestamp for day, not hours
 			$sttime = $p['startTime'];
 			$highlow = $p['isDaytime']? 'High':'Low';
+			$tempc = round(($p['temperature'] -32 )* 5/9,0);
 			$daytext = date('l, M d',strtotime($sttime));
 			if ($daytext != $lastday){
 				++$day;
 				$lastday = $daytext;
 			}
 			$p['daytext'] = $daytext;
-			$p['highlow'] = "$highlow ". $p['temperature'] . '&deg; F' ;
+			$p['highlow'] = "$highlow ". $p['temperature'] . '&deg; F (' .$tempc . "&deg; C)" ;
 
 			$x[$loc][$day][] = $p;
 
@@ -1391,7 +1409,7 @@ function get_external ($src, $url,string $expected='',array $header=[]) {
 			//u\echor($aresp,"Here's what I got for $src:");
 			if ($tries > 2){
 					//echo "Can't get valid data from ext source  $src";
-				Log::notice("Curl failed for $src: $fail.");
+				Log::notice("Curl failed for $src: $fail.",$aresp);
 				return [];
 			}
 			if (! $response = curl_exec($curl)) {
@@ -1416,6 +1434,7 @@ function get_external ($src, $url,string $expected='',array $header=[]) {
 
 			} else {
 				curl_close($curl);
+				Log::info ("External received for $src.  Tries $tries.");
 				return $aresp;
 			}
 

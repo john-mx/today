@@ -39,9 +39,12 @@ Purchase Your Pass Before You Get To The Entrance</b>
 
 <ul style='font-size:16px;'>
 <li>On-line passes available at recreation.gov (or 'rec.gov')
+<li>Entrance stations are credit card only — no cash.
+<!--
 <li>Vehicle includes private vehicle and up to 15 passengers. Interagency includes holder and 3 others.
 <li>Visitors under 16 years of age do not need passes.
 <li>Passes are non-refundable, non-transferable, and not replaceable if lost or stolen.
+ -->
 <li>Documentation required for special passes.<br>
 4th grade pass admits student and 3 others; requires printed voucher from school or https://everykidoutdoors.gov/
 </ul>

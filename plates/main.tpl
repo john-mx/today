@@ -77,7 +77,7 @@ use DigitalMx as u;
 
 
 <?php if(0 || empty($air)): echo "<p>No Data</p>"; else:
-// echo "Retrieved at  " . date ('M j h:i a',$air['jr']['dt']);
+// echo "Retrieved at  " . date ('F j h:i a',$air['jr']['dt']);
 ?>
 <h3>Air Quality </h3>
 <table class='in2' >
@@ -86,7 +86,7 @@ use DigitalMx as u;
 	if (! in_array($loc,array_keys(Defs::$sitenames))) continue;
 	// not a valid locaiton
 
-	$rdt = date ('M j H:ia',$dat['dt']);
+	$rdt = date ('F j H:ia',$dat['dt']);
 ?>
 <tr>
 	<td class='left border-bottom'><?= Defs::$sitenames[$loc] ?></td>

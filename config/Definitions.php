@@ -291,8 +291,8 @@ public static $coordinates = [
 		return self::$uvwarn_min[$uvd] ?? 'not defined';
 	}
 
-	public static function air_warn($uvd) {
-		return self::$airwarn[$uvd] ?? 'not defined';
+	public static function getAirWarn($x) {
+		return self::$airwarn[$x] ?? 'not defined';
 	}
 
 	public static function scale_color($uvd){

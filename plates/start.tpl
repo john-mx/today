@@ -25,7 +25,7 @@
 	$scbody = '';
 	$added_headers = $extra;
 
-	$myversion = "<br /><span class='red'>ALPHA VERSION " . exec("git tag |sort -V | tail -1") . "</span>";
+	$myversion = "<br /><span class='red'>TRIAL VERSION </span>";
 
 	switch ($pcode) {
 		case '';
@@ -85,9 +85,11 @@
 <!-- to balance space  -->
 </td>
 <td style='background-color:black;text-align:right;color:white;'>
+<!--
 Department of the Interior<br>
 Joshua Tree National Park
 <?=$myversion?>
+ -->
 <h1 style='margin:0'>Today in Joshua Tree National Park</h1>
 </td><td style='width:80px;'>
 <!-- <img src='/images/Shield-7599-alpha.png' alt="NPS Shield" /> -->

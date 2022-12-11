@@ -154,7 +154,7 @@ if(empty($weather)): echo "<p>No Data</p>"; else: ?>
 	if (! in_array($loc,array_keys(Defs::$sitenames))) continue;
 	// not a valid locaiton
 
-	$rdt = date ('M j H:ia',$dat['dt']);
+	$rdt = date ('F j H:ia',$dat['dt']);
 ?>
 <tr>
 	<td class='left border-bottom'><?= Defs::$sitenames[$loc] ?></td>

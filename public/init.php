@@ -94,7 +94,11 @@ if (REPO == 'live'){
 
 date_default_timezone_set('America/Los_Angeles');
 
-Log::info("Init started from " . $_SERVER['REMOTE_ADDR'] . " (" .  $_SERVER['REMOTE_HOST'] . ")" );
+$log_info = [
+	'HOST' => $_SERVER['REMOTE_HOST'] ?? '?',
+  'REQUEST' => $_SERVER['REQUEST_URI'],
+];
+Log::info("Init started from " . $_SERVER['REMOTE_ADDR'],$log_info );
  define ('INIT',1);
 
 //EOF

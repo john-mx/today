@@ -10,7 +10,7 @@ use DigitalMx as u;
 
 	 	<?=$fire['level']?>
 	 	</p>
-
+	<p>Fires are permitted only in established campsites with fire rings</p>
 			<!--
 <div class='left'>
 				<?=Defs::$firewarn[$fire['level']]?>

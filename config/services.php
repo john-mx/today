@@ -56,10 +56,3 @@ $container['CgOpens'] = function ($c) {
 
 
 
-$container['TLog'] = function ($c) {
-	$pl = new \DigitalMx\jotr\TLog($c);
-
-	return $pl;
-};
-
-

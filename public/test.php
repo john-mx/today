@@ -3,9 +3,13 @@ namespace DigitalMx\jotr;
 
 ini_set('display_errors', 1);
 
+
 //BEGIN START
-	require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
-	use DigitalMx as u;
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
+
+	use DigitalMx\jotr\Utilities as U;
+	use DigitalMx\jotr\Refresh;
+	use DigitalMx\jotr\Definitions as Defs;
 
 
 	$Plates = $container['Plates'];
@@ -24,11 +28,11 @@ $twolocs = ['jr','hq'];
 
 // what function?
 
-$f = tprint();
+$f = refresh();
 
 function refresh($force=false){
-		global $Today,$Plates,$Defs;
-	$z=$Today->refresh_caches($force);
+	$U = new Utilities();
+	echo $U->over_cache_time('wgov');
 	exit;
 }
 
