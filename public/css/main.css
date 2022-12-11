@@ -166,12 +166,18 @@ table {
 	font-size:0.8em;
 }
 
-table tr th {border-bottom: 2px solid black;}
-
 table tr td
 {
 	border: 1px solid black;
+	text-align: center;
+	padding: 6px;
+	vertical-align:top;
 
+}
+
+table tr th
+{
+	border: 2px solid black;
 	text-align: center;
 	padding: 6px;
 	vertical-align:top;
@@ -215,46 +221,25 @@ table tr.heads td {
 	text-align:center;
 }
 
-table tr.border-top td
+
+table tr.border-top td, table tr.border-top th
 {
-	border-bottom: 0;
 	border-top: 1px solid black;
 }
-table tr.border-top th
-{
-	border-bottom: 0;
-	border-top: 1px solid black;
-}
-table tr.border-bottom td
-{
 
-	border-top: 0;
-	border-bottom: 1px solid black;
-
-}
-table tr.border-bottom th
+table tr.border-bottom th, table tr.border-bottom td
 {
-	border-top: 0;
 	border-bottom: 1px solid black;
 }
- table tr.borders td {
+
+table  tr.borders th , table tr.borders td {
  	border-left: 1px solid black;
  	border-right: 1px solid black;
  	border-top: 1px solid black;
  	border-bottom: 1px solid black;
  }
 
-table  tr.borders th {
- 	border-left: 1px solid black;
- 	border-right: 1px solid black;
- 	border-top: 1px solid black;
- 	border-bottom: 1px solid black;
- }
-
-table  tr.no-bottom  td {
- 	border-left: 0;
-	border-right: 0;
-	border-top: 0;
+table tr.no-bottom th, table tr.no-bottom td {
 	border-bottom: 0;
 }
 
@@ -264,11 +249,9 @@ table  tr.no-border  td {
 	border-top: 0;
 	border-bottom:0;
 }
-table.col-border td, table.col-border th {
+table.col-border tr td, table.col-border tr th {
 		border-left: 1px solid gray;
 		border-right: 1px solid gray;
-		border-top: 0;
-		border-bottom: 0;
 	}
 table tr.col-border  th {
 	border-left: 1px solid gray;
@@ -306,12 +289,12 @@ table .alt-gray tr:nth-child(even)  {
 	margin-bottom:0;
 }
 
-.in2 { margin-left: 2em;
+.in2 , .indent2 { margin-left: 2em;
 	margin-right: 0;
 	width:90%;
 	}
 
-.left2 {margin-left:2em;}
+.inleft2 {margin-left:2em;}
 
 .today
 {

@@ -1,9 +1,9 @@
 <?php
 namespace DigitalMx\jotr;
 
-class LogProcessor
+class LoglineProcessor
 {
-// used for setting up log record
+// used for adding file and line to log record
     /**
      * @param  array $record
      * @return array

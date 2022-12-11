@@ -6,7 +6,7 @@
 ?>
 
 <h4>Park Conditions</h4>
-<div class='left2'>
+<div class='inleft2'>
 
 	<div class='width45 inlineblock float'>
 		<b>Fire Danger:</b><br />
@@ -26,10 +26,12 @@
 
 <div class='clear'><br /></div>
 
-	<b>Air Quality:</b> <br />
-	<div class='left2'>
+	<b>Air Quality:</b> <small>At Black Rock
+		<?php echo date ('g:i a',$air['br']['observed_dt']);?>
+		</small><br />
+	<div class='inleft2'>
 	<div class='inlineblock float '>
-	<small>At Black Rock <?php echo date ('m/d g:i a',$air['br']['observed_dt']);?></small><br />
+
 		<?php
 			$aqi = $air['br']['aqi'];
 			$aq_scale = $air['br']['aqi_scale'];

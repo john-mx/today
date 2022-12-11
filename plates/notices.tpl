@@ -10,7 +10,7 @@ use DigitalMx as u;
 ?>
 
   <h4>Announcements and Alerts</h4>
-  <div class='in2'>
+  <div class='inleft2'>
     <?php if ($d):?>
     <div class='float warn red' style='width:45%;'>
         <?php

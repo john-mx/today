@@ -7,7 +7,7 @@ use DigitalMx as u;
 
 <h4>Weather Forecast</h4>
 <?php if (!empty($admin['weather_warn'])) : ?>
-	<p class='in2 inline'><b>Local Warning</b></p> Updated <?=$admin['updated']?>
+	<p class='indent2 inline'><b>Local Warning</b></p> Updated <?=$admin['updated']?>
 	<div class='warn'><?=$admin['weather_warn']?></div>
 <?php endif; ?>
 
@@ -16,7 +16,8 @@ use DigitalMx as u;
 if(empty($weather)): echo "<p>No Data</p>"; else:
 	$weather_updated =  date('M d g:i a',$weather['update']);
 	?>
-	<table class = 'in2 col-border'>
+	<table class = 'col-border' style='margin:auto'>
+
 	<tr class='border-bottom'><td colspan='5' class='left'>
 	<small>Weather.gov forcast updated at <?=$weather_updated?></small>
 	</td></tr>

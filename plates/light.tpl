@@ -9,7 +9,7 @@ $lightd = $light['light'];
 $uv = $light['uv'];
 ?>
 
-<table class = 'in2'>
+<table class = 'inleft2'>
 <colgroup>
 	<col style='width:50%;'>
 	<col style='width:50%;'>

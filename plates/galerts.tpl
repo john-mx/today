@@ -14,7 +14,7 @@ use DigitalMx as u;
 	<hr style="height:4px;background-color:green;">
 <h2><?= $sourcename ?></h2>
 		<?php foreach ($alertset as $alert) : ?>
-			<div class='in2' border-top=1px solid black;'>
+			<div class='indent2' border-top=1px solid black;'>
 			<h3><?=$alert['category'] ?? '' ?> <?=$alert['event']?></h3>
 			<p>Description: <?=$alert['description']?></p>
 			<p>Instructions: <br>

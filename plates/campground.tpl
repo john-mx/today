@@ -13,9 +13,9 @@ $asof =  date('M d g:i a', $camps['asof']);
 	<span class='red'><b>ALL CAMPGROUNDS ARE FULL!</b></span>
 <?php endif; ?>
 </h4>
-<table  class='in2 alt-gray border-bottom'>
-<tr><th>Campground</th><th>Sites</th>
-<th>Open Sites<br />as of <?= $asof ?></th><th>Note</th></tr>
+<table  class='inleft2 alt-gray border'>
+<tr ><th>Campground</th><th>Sites</th>
+<th>Open Sites<br />as of <?= $asof ?></th><th style='border-right:2px solid black;'>Note</th></tr>
 <?php
 	$cgs = array_keys(Defs::$campsites);
 	sort ($cgs);

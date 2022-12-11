@@ -8,7 +8,7 @@ use DigitalMx as u;
 if(empty($weather)): echo "<p>No Data</p>"; else:
 	$weather_updated =  date('M d g:i a',$weather['update']);
 	?>
-	<table class = 'in2 col-border'>
+	<table class = 'inleft2 col-border'>
 	<tr class='border-bottom'><td colspan='5' class='left'>
 	<small>Weather.gov forcast updated at <?=$weather_updated?></small>
 	</td></tr>

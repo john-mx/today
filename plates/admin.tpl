@@ -35,7 +35,7 @@ function setopen(){
 	<b><?= $sourcename ?></b><br>
 	<?php if (empty($alertset)): echo "No alerts"; else:
 		foreach ($alertset as $alert) : ?>
-		<div class='in2' border-top=1px solid black;'>
+		<div class='inleft2' border-top=1px solid black;'>
 			<p><?=$alert['category'] ?? '' ?> <?=$alert['event']?></p>
 			<p>Description: <?=$alert['description']?></p>
 			<p>Instructions: <br>

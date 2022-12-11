@@ -22,7 +22,7 @@ switch ($pcode) {
 $lightd = $data['light']['light'];;
 $uv = $data['light']['uv'];
 ?>
-	<table class='in2'>
+	<table class='indent2'>
 		<colgroup> <col style='width:50%;' class='center border'> <col style='width:50%;' class='center border'> </colgroup>
 		<tr>
 			<td style='font-weight:bold;'>

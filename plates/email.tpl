@@ -6,128 +6,185 @@ use DigitalMx as u;
 <?php
 	$site_path = SITE_PATH;
 	$site_url = SITE_URL;
-?>
-<html>
-<style>
-	table tr td {border:0;border-collapse:collapse;}
-	h4 {text-align:left;font-size:1.2em;font-weight:bold;margin-bottom:0.2em;margin-top:0.8em;}
 
-</style>
+	// set up styles
+	$fsan = 'font-family:arial,helvetica,sanserif;';
+	$fser = "font-family:'Times New Roman',times,serif;";
+	$fb = 'font-weight:bold;';
+	$tc = 'text-align:center;';
+	$tl = 'text-align:left;';
+	$tsb = 'font-size:1.2em;';
+	$tu = 'text-decoration:underline;';
+	$b0 = 'border:0;';
+	$bbg = 'border-bottom:1px solid gray;';
+	$bc = 'border-collapse:collapse;';
+	$mgh = 'margin-top:1em;margin-bottom:0.2em;';
+	$ml = 'margin-left:2em;';
+	$tvt = 'vertical-align:top;';
 
-<table style='max-width:600px;border:1px solid black'>
-<tr><td style='border:0 text-align:center;'>
-<p><b><u>Today in Joshua Tree National Park</u></b></p>
-<?=$target ?>
-<br />
-<?php if(!empty($admin['pithy'])): ?>
-<p class='pithy'><i><?=$admin['pithy'] ?></i></p>
-<?php endif; ?>
+	$sgtitle = "$fsan $fb $tc $tsb $tu"; // for main title
+	$sgsub="$fsan $tc $fb";	// for subtitle
+	$sgsh = "$fsan $fb $tl "; // for section heads
+	$sgtd	= "$fsan $tl ";
+	$sgtdc = "$fsan $tc";
+	$sgtdb	= "$fsan $tl $bbg";
+	$sgtdcb	= "$fsan $tc $bbg";
 
-</td></tr>
+	$sitenames = Defs::$sitenames;
 
-<?php if (!empty($admin['alerts'])) : ?>
-	<tr><td style='text-align:left;'>
-	<h4>Active Alerts </h4>
+
+echo <<<EOT
+
+<table border:0; margin:6px;max-width:90vw'>
+<tr><td style="$sgtitle">
+Today in Joshua Tree National Park</td></tr>
+<tr><td style="$sgsub">
+$target</td></tr>
+EOT;
+
+if(!empty($admin['pithy'])):
+	echo <<<EOT
+	<tr><td style="$fser $tc"><i>${admin['pithy']}</i></td></tr>
+EOT;
+endif;
+
+if (!empty($admin['alerts'])) :
+	echo <<<EOT
+	<tr><td style="$tl">
+	<p style="$sgsh">Active Alerts </p>
 	<ul>
-	<?php $anlist = explode("\n",$admin['alerts']);
+EOT;
+	$anlist = explode("\n",$admin['alerts']);
 		foreach ($anlist as $item) :
 			if (!empty(trim($item))):
 				echo "<li style='color:red;'>$item</li>";
 			endif;
-		endforeach ?>
+		endforeach;
+		echo <<<EOT
 		</ul>
 		<br />
 	</td></tr>
-<?php endif; ?>
+EOT;
+endif;
+?>
 
 
 
-<?php if(!empty($admin['announcements'])) : ?>
-<tr><td style='text-align:left;'>
-	<h4>Announcements</h4>
+<?php if(!empty($admin['announcements'])) :
+	echo <<<EOT
+<tr><td style="$tl">
+	<p style="$sgsh">Announcements</p>
 	<ul>
-	<?php $anlist = explode("\n",$admin['announcements']);
+EOT;
+	$anlist = explode("\n",$admin['announcements']);
 		foreach ($anlist as $item) :
 			if (!empty(trim($item))):
 				echo "<li>$item</li>";
 			endif;
-		 endforeach ?>
+		 endforeach;
+
+echo <<<EOT
 	</ul>
 	<br />
 	</td>
 	</tr>
-<?php endif; ?>
+EOT;
 
-<tr><td style='text-align:left;'>
-<h4>Light and Dark</h4/>
-	Sunrise <?=$light['sunrise']?> Set <?=$light['sunset']?><br />
-Moonrise <?=$light['moonrise']?> Set <?=$light['moonset']?> <?=$light['moonphase']?>
+endif;
+?>
+
+<?php
+echo <<<EOT
+<tr><td style="$tl">
+<p style="$sgsh">Light and Dark</p>
+	<div style="$ml">
+	Sunrise ${light['sunrise']} Set ${light['sunset']}<br />
+Moonrise ${light['moonrise']} Set ${light['moonset']} ${light['moonphase']}
+</div>
 </td></tr>
 
-<tr><td style='text-align:left;'>
-	<h4>UV Exposure:</h4>
-	<p style = 'background-color:<?=$uv['uvcolor']?>;'> <b><?= $uv['uv'] ?></b>  <?=$uv['uvscale']?></p>
-	<b>For UV = <?=$uv['uvscale']?></b><br><?=$uv['uvwarn']?>
-<br />
+<tr><td style="$tl">
+	<p style="$sgsh">UV Exposure:</p>
+
+	<p style = "$fsan background-color:${uv['uvcolor']};"> <b>${uv['uv']}</b>  ${uv['uvscale']}</p>
+	<div style="$ml">
+	<b>For UV = ${uv['uvscale']}</b><br />${uv['uvwarn']}
+
+	</div>
 </td></tr>
 
-<tr><td style='text-align:left;'>
-<h4>Fire Danger: </h4>
-	 	<p  Current Level: <span style="background-color:<?=$fire['color']?>">
-	 	<b><?=$fire['level']?></b> </span></p>
-
-	<?=Defs::$firewarn[$fire['level']]?>
+<tr><td style="$tl">
+<p style="$sgsh">Fire Danger: </p>
+	 	<p  Current Level: <span style='background-color:${fire['color']}'>
+	 	<b>${fire['level']}</b> </span></p>
+EOT;
+	$fl = $fire['level'];
+	$fw = Defs::$firewarn[$fl];
+	echo "<div style='$ml'>$fw</div>
 </td></tr>
+";
 
-<tr><td style='text-align:left;'>
-<h4>Air Quality</h4>
-<table style='margin-left:2em; border:0'>
-<tr><th>Location</th><th>Air Quality</th><th>Particulates (PM10)</th><th>Ozone</th></tr>
-<?php foreach ($air as $loc => $dat) :
-	if (! in_array($loc,array_keys(Defs::$sitenames))) continue;
+
+?>
+
+<?php
+echo <<<EOT
+<tr><td style="$tl">
+<p style="$sgsh">Air Quality</p>
+<table style="$ml $b0">
+<tr><th>Location</th><th>Air Quality</th><th>Particulates<br> (PM10)</th><th>Ozone</th></tr>
+EOT;
+foreach ($air as $loc => $dat) :
+	if (! in_array($loc,array_keys($sitenames))) continue;
 	// not a valid locaiton
 
 	$rdt = date ('M j H:ia',$dat['dt']);
-?>
-<tr style="border-bottom:1px solid gray;">
-	<td style='text-align:left;'><?= Defs::$sitenames[$loc] ?></td>
-	<td><?=$dat['aqi']?>
-		<span style="background-color: <?=$dat['aqi_color']?>">
-		<?=$dat['aqi_scale'] ?></span>
+echo <<<EOT
+<tr style="$bbg">
+	<td style="$tl">${sitenames[$loc]} </td>
+	<td style="$tc">${dat['aqi']}
+		<span style="background-color: ${dat['aqi_color']}">
+		${dat['aqi_scale']}</span>
 		</td>
-	<td><?=$dat['pm10']?></td>
-	<td><?=$dat['o3']?></td>
-
+	<td style="$tc">${dat['pm10']}</td>
+	<td style="$tc">${dat['o3']}</td>
 </tr>
-<?php endforeach; ?>
+EOT;
+endforeach;
+echo <<<EOT
 </table>
 <br />
 </td></tr>
+EOT;
+?>
 
-<tr><td style='text-align:left;'>
-
-<h4>Weather</h4>
 <?php
+echo <<<EOT
+<tr><td style='text-align:left;'>
+<p style="$fsan $fb $mgh $tl">Weather</p>
+EOT;
 	$weather = $wapi['fc'];
 	$periods = [0,1,2];
-?>
-	<table style='margin-left:2em;'>
+echo <<<EOT
+	<table style="$ml $bc width:90%; ">
 			<tr><th></th>
-<?php
+EOT;
+
 		foreach ($periods as $p) :
 			echo "<th>{$weather['forecast']['jr'][$p]['date']}</th>";
 		endforeach;
-?>
-		</tr>
-<?php
+
+		echo "</tr>";
+
 	foreach ($weather['forecast'] as $loc => $x ) : //x period array
-			if (! $locname = Defs::$sitenames[$loc] ) : continue; endif;
-	?>
-			<tr style='border-bottom:1px solid gray;'>
-			<td  style='border-bottom:1px solid gray;' ><b><?=$locname?></b></td>
-	<?php
+			if (! $locname = $sitenames[$loc] ) : continue; endif;
+	echo <<<EOT
+			<tr style="$bbg">
+			<td  style=$bbg"><b>$locname</b></td>
+EOT;
+
 				foreach ($periods as $p) :
-					echo  "<td style='border-bottom:1px solid gray;'><p>";
+					echo  "<td style='$bbg'><p>";
 
 						$v = $x[$p]['skies'] ;
 						echo "$v<br />";
@@ -147,78 +204,95 @@ Moonrise <?=$light['moonrise']?> Set <?=$light['moonset']?> <?=$light['moonphase
 
 					echo 	"</p></td>\n" ;
 				endforeach;
-	?>
-	</tr>
-	<?php endforeach ?>
+			echo "</tr>";
+	 endforeach;
+	 echo "
 	</table>
 	<br />
-</td></tr>
-
-
-<tr><td style='text-align:left;'>
-<h4>Campgrounds</h4>
-
-<?php if (!empty($campgroundadivse)) : ?>
-	<div class='warn'><?=$campgroundadvise?></div>
-<?php endif; ?>
-
-<?php if(empty($camps)): echo "No Data"; else: ?>
-<table style='margin-left:2em;border:2px solid black;'>
-<tr><th></th><th>Availability</th><th>Status</th></tr>
-<?php foreach (['ic','jr','sp','hv','be','wt','ry','br','cw'] as $cg) : ?>
-
-	<tr>
-		<td style='text-align:left; border-bottom:1px solid gray;'>  <?=Defs::$sitenames [$cg] ?>  </td>
-	 <td  style='text-align:center;border-bottom:1px solid gray;'> <?= $camps['cgavail'][$cg] ?> </td>
-	<td style='text-align:center;border-bottom:1px solid gray;'> <?= $camps['cgstatus'][$cg] ?>  </td>
-	</tr>
-	<?php endforeach;?>
-
-</table>
-<?php endif; ?>
-<br />
-</td></tr>
-
-<tr><td style='text-align:left;'>
-
-<h4>Events</h4>
-<?php if(empty($calendar)) : echo "No Data"; else:
+</td></tr>";
 ?>
 
-<table style='border:0'>
+<?php echo <<<EOT
+<tr><td style="$tl">
+<p style="$sgsh">Campgrounds</p>
+EOT;
+
+if (!empty($campgroundadivse)) :
+	echo "<div $campgroundadvise</div> ";
+endif;
+
+if(empty($camps)): echo "No Data"; else:
+echo <<<EOT
+<table style="$ml $bc width:90%; ">
+<tr><th></th><th>Availability</th><th>Status</th></tr>
+EOT;
+foreach (['ic','jr','sp','hv','be','wt','ry','br','cw'] as $cg) :
+echo <<<EOT
+
+	<tr>
+	<td style="$sgtdb">  {$sitenames [$cg]}  </td>
+	 <td  style="$sgtdb"> {$camps['cgavail'][$cg]}  </td>
+	<td style="$sgtdb"> {$camps['cgstatus'][$cg]}  </td>
+	</tr>
+EOT;
+	endforeach;
+echo <<<EOT
+</table>
+
+<br />
+EOT;
+endif;
+echo "</td></tr>";
+?>
+
+
+<?php
+echo <<<EOT
+<tr><td style='text-align:left;'>
+<p style="$sgsh">Events</p>
+EOT;
+if(empty($calendar)) : echo "No Data"; else:
+echo <<<EOT
+<table style="$ml $bc width:90%; ">
 <!-- <tr><th>Date and Time</th><th>Location</th><th>Type</th><th>Title</th></tr> -->
 <tbody>
-<?php $calempty = 1;
+EOT;
+
+	$calempty = 1;
 	foreach ($calendar as $cal) :
 	// stop looking if more than 3 days out
-if (($cal['dt'] < time() ) || ($cal['dt'] > (time() + 3600*24*3 ))) continue;
+if ( ($cal['dt'] < time() ) || ($cal['dt'] > (time() + 3600*24*3 ) ) ) :
+	continue;
+	endif;
 	$calempty = 0;
 	$datetime = date('l M j g:i a', $cal['dt']);
-	?>
-	<tr style='border-bottom:1px solid gray;' >
-	<td style='vertical-align:top;border-bottom:1px solid gray;'><?=$datetime ?> <br />&nbsp;&nbsp;(<?=$cal['duration']?>) </td>
+	echo <<<EOT
 
- 	<td style='text-align:left; border-bottom:1px solid gray;'>
- 	<b><?=$cal['title']?></b><br />
- 	<?=$cal['type'] ?>  at <?=$cal['location']?>  <br />
+	<tr >
+	<td style="$sgtdb">$datetime  <br />
+	&nbsp;&nbsp;(${cal['duration']}) </td>
 
-	<?php if (!empty($cal['note'])) : ?>
-		<p><?=$cal['note'] ?></p>
-	<?php endif; ?>
-	</td>
- </tr>
+ 	<td style="$sgtdb">
+ 	<b>${cal['title']}</b><br />
+ 	${cal['type']} at ${cal['location']} <br />
+EOT;
+	if (!empty($cal['note'])) :
+		echo "${cal['note']} </p>";
+	endif;
+	echo "</td>
+ </tr>";
 
-<?php endforeach; ?>
-<?php if($calempty): echo "No Events in next 3 days"; endif; ?>
-</tbody>
+ endforeach;
+if($calempty): echo "No Events in next 3 days"; endif;
+echo "</tbody></table>";
+endif;
+?>
 
-</table>
 
-<?php endif; ?>
 
+<?php echo "
 </td></tr>
 </table>
+";
+?>
 
-<hr>
-<p id='bottom' class='right'><?=$version ?>
-<br>build <?php echo date('dHi'); ?></p>
