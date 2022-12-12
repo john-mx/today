@@ -137,7 +137,7 @@ public static $coordinates = [
 	}
 
 	public static $airwarn = array (
-		'Good' => '',
+		'Good' => 'Safe for everyone.',
 		'Moderate' => 'Unusually sensitive people should consider reducing prolonged or heavy exertion outdoors.',
 		'Unhealthy for Sensitive Groups' => 'Active children and adults, and people with lung disease, such as asthma, should reduce prolonged or heavy exertion outdoors.',
 		'Unhealthy' => 'Active children and adults, and people with lung disease, such as asthma, should avoid prolonged or heavy exertion outdoors. Everyone else, especially children, should reduce prolonged or heavy exertion outdoors.',

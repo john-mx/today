@@ -63,7 +63,7 @@ $uv = $data['light']['uv'];
 	$conditions = array(
 		'fire'=>$data['fire'],
 		'air'=>$data['air'],
-		'current' => $data['current'],
+		'current' => $data['wapi']['current'],
 		);
 	$this->insert('conditions',$conditions);
 ?>
@@ -78,7 +78,7 @@ $uv = $data['light']['uv'];
 	</div>
 	<div id="page4" style="display: <?=$divvis?>;">
 
-<?php $this->insert('weather',['weather' => $data['weather'] ]); ?>
+<?php $this->insert('weather',['weather' => $data['wgov'] ]); ?>
 
 <!-- end page-->
 	</div>

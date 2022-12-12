@@ -20,7 +20,7 @@ namespace DigitalMx\jotr;
 $tablestyle = <<<EOT
 <style>
 table.index {border:2px solid black; border-collapse:collapse;}
-table.index tr td {text-align:left;border:1px solid black;padding:3px;}
+table.index tr td {text-align:left;border:1px solid black;padding:6px;}
 </style>
 EOT;
 
@@ -59,6 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <tr><td ><a href="/today.php" target='today'>/today.php</a>
 </td><td >Regular web page with all data.  See note about printing.</td></tr>
 <tr><td><a href="/condensed.php" target='condensed'>/condensed.php</a><td>Large type version with minimal information. Designed for snap animation on tv monitor. </td></tr>
+<tr><td ><a href="/summary.php" target='summary'>/summary.php</a>
+</td><td >One page summary of today's conditions. </td></tr>
 
 
 <tr><td colspan='2'>--------- animated -----------</td></tr>

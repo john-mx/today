@@ -132,13 +132,15 @@ button {
 .bg-yellow {background-color: yellow; }
 .bg-orange {background-color:#F3984D;}
 .bg-midnight {background-color:#011993 ;}
-.width50 {width:50%;}
-.width45 {width:45%;}
+
 .bg-black{
 	background-color:black;
 	padding:6px;
 
 }
+
+.width50 {width:50%;}
+.width45 {width:45%;}
 
 .sectionhead {
 	text-align:left;
@@ -243,7 +245,11 @@ table  tr.borders th , table tr.borders td {
 table tr.no-bottom th, table tr.no-bottom td {
 	border-bottom: 0;
 }
+table tr.no-top th, table tr.no-top td {
+	border-top: 0;
+}
 
+.no-bottom {border-bottom:0;border-top:0;}
 table  tr.no-border  td {
  	border-left: 0;
 	border-right: 0;
@@ -261,6 +267,7 @@ table tr.col-border  th {
 table .alt-gray tr:nth-child(even)  {
 	background: #CCC;
 }
+table.no-cells tr td {border:0;}
 
 .hidden {
 	display:none;

@@ -240,6 +240,7 @@ public function prepare_topics(){
 
 
 
+
 		);
 
 
@@ -394,6 +395,7 @@ public function build_topic_air() {
 	 	return [];
 	 }
 	$y = $this->format_airnow($z);
+
 	return ['air' => $y];
 
 }
@@ -427,13 +429,14 @@ public function build_topic_weather() {
 	 	Log::error ("Could not load cache wgov");
 	 	return [];
 	 }
-	$z = $this->format_wgov($w);
+	$z['wgov'] = $this->format_wgov($w);
 #u\echor($z,'formatted wgov');
 
 	//get current temp
-	$y = $this->load_cache('wapi');
-	$z['current'] = $y['jr']['current'];
-	//u\echor($z['current'],'z',STOP);
+	$w = $this->load_cache('wapi');
+	$z['wapi'] = $this->format_wapi($w);
+
+//	u\echor($z,'weather topic');
 	return $z;
 }
 
@@ -1091,6 +1094,7 @@ Array
 			$y['aqi_color'] = $aqi_color;
 			$y['observed_dt'] = strtotime($d[0]['DateObserved'] . ' ' . $d[0]['HourObserved'] . ':00') ;
 			$y['reporting'] = $d[0]['ReportingArea'];
+			$y['airwarn'] = $this->Defs->getAirWarn($aqi_scale);
 
 			$x[$loc] = $y;
 		}
@@ -1124,12 +1128,16 @@ public function format_wapi ($r) {
 
 			$w[$loc][$i] = array(
 				'epoch' => $daily['date_epoch'],
-				'date' => $fdate->format('l, M j'),
-				'High' => round($daily['day']['maxtemp_f']) ?? 'n/a',
+				'date' => $fdate->format('l, F j'),
+				'High' => round($daily['day']['maxtemp_f']) ,
+				'HighC' => round($daily['day']['maxtemp_c']) ,
 				'Low' => round($daily['day']['mintemp_f']) ?? 'n/a' ,
+				'LowC' => round($daily['day']['mintemp_c']) ?? 'n/a' ,
 			//	'winddir' => $daily['day']['winddir'],
 				'avghumidity' => $daily['day']['avghumidity'],
 				'maxwind' => round($daily['day']['maxwind_mph']),
+				'maxwindM' => round($daily['day']['maxwind_kph']),
+
 				'skies' => $daily['day']['condition']['text'],
 				'rain' => $daily['day']['daily_chance_of_rain'],
 				'visibility' => $daily['day']['avgvis_miles'],
@@ -1138,13 +1146,13 @@ public function format_wapi ($r) {
 				);
 		} #end for day
 
-	$x['forecast'] = $w;
+		$x['forecast'] = $w;
 
 	// add airquality current
-	 $current_aq = $r[$loc]['current']['air_quality'];
-	 $current_aq['updated_ts'] = $r[$loc]['current']['last_updated_epoch'];
+		 $current_aq = $r[$loc]['current']['air_quality'];
+		 $current_aq['updated_ts'] = $r[$loc]['current']['last_updated_epoch'];
 
-	 $x['aq'][$loc] =  $current_aq ;
+		 $x['aq'][$loc] =  $current_aq ;
 	} #end location
 
 	// add astro and alerts for jr today
@@ -1162,8 +1170,8 @@ public function format_wapi ($r) {
 		);
 
 	$x['light'] = $light;
-
-
+	$x['current'] = $r['jr']['current']; // is atually for 29palms
+//u\echor($x,'x',STOP);
 	return $x;
 }
 
@@ -1235,8 +1243,8 @@ public function format_wgov ($r) {
 
 	} #end foreach location
 
-	$weather['weather'] = $x;
-	return $weather;
+	 $x;
+	return $x;
 }
 
 

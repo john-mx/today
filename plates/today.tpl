@@ -29,7 +29,7 @@ switch ($pcode) {
 	$conditions = array(
 		'fire'=>$data['fire'],
 		'air'=>$data['air'],
-		'current' =>  $data['current'],
+		'current' =>  $data['wapi']['current'],
 		);
 	$this->insert('conditions',$conditions);
 ?>
@@ -40,7 +40,7 @@ switch ($pcode) {
 </div> <!-- end page-->
 <div id="page2" class='break' style="display: <?=$divvis?>;">
 
-<?php $this->insert('weather',['weather' => $data['weather'] ]); ?>
+<?php $this->insert('weather',['weather' => $data['wgov'] ]); ?>
 
 <?php $this->insert('calendar',['calendar' => $data['calendar']])?>
 
