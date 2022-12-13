@@ -5,15 +5,6 @@ use DigitalMx as u;
 //supply this with weather['wapi']
 ?>
 
-
-
-
-<?php if (!empty($admin['weather_warn'])) : ?>
-	<p class='indent2 inline'><b>Local Warning</b></p> Updated <?=$admin['updated']?>
-	<div class='warn'><?=$admin['weather_warn']?></div>
-<?php endif; ?>
-
-
 <?php
 $gupdated = '';
 $wupdated = '';
@@ -52,20 +43,19 @@ $wday = $wapi['forecast']['jr'][0];
 ?>
 
 
-
 <table style='width:100%' >
 <tr class='no-bottom' ><td >
-	<p  style='font-size:1.6em;'><b>Sunrise: </b><?= $light['sunrise'] ?>
-	<b>Sunset: </b><?= $light['sunset'] ?><br />
+	<p  style='font-size:1.6em;'>
 	<b><?= $gday[0]['shortForecast'] ?></b>.<br />
-	<b><?=$gday[0]['highlow']?></b></p>
+	<b><?=$gday[0]['highlow']?></b><br />
+	<b>Sunrise: </b><?= $light['sunrise'] ?> <b>Sunset: </b><?= $light['sunset'] ?><br />
+	</p>
+</td><td>
 
-<td>
 	<p style='font-size:1.6em;'>
-<b>Moonrise: </b> <?= $light['moonrise'] ?>
-	<b>Moonset: </b><?= $wapi['light']['moonset'] ?><br />
-		<b><?= $gday[1]['shortForecast'] ?></b>.<br />
-	<b><?=$gday[1]['highlow']?></b>
+	<b><?= $gday[1]['shortForecast'] ?></b>.<br />
+	<b><?=$gday[1]['highlow']?></b><br />
+	<b>Moonrise: </b> <?= $light['moonrise'] ?>  <b>Moonset: </b><?= $light['moonset'] ?><br />
 	</p>
 </td>
 </tr>
