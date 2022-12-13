@@ -27,7 +27,7 @@ $meta=array(
 	'title'=>'Today Summary',
 	'target'=> $y['target']?? '',
 	'pithy'=> $y['pithy'] ?? '',
-
+'extra' =>'<style>body {max-width:800px;}</style>',
 	);
 
 	echo $Plates->render ('start',$meta);
