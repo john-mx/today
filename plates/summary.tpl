@@ -44,18 +44,18 @@ $wday = $wapi['forecast']['jr'][0];
 
 
 <table style='width:100%' >
-<tr class='no-bottom' ><td >
-	<p  style='font-size:1.6em;'>
-	<b><?= $gday[0]['shortForecast'] ?></b>.<br />
-	<b><?=$gday[0]['highlow']?></b><br />
-	<b>Sunrise: </b><?= $light['sunrise'] ?> <b>Sunset: </b><?= $light['sunset'] ?><br />
+<tr class='no-bottom' ><td style='font-size:1.5em;font-weight:bold;'>
+	<h3><u>Today</u></h3>
+	<p><?= $gday[0]['shortForecast'] ?>.<br />
+	<?=$gday[0]['highlow']?><br />
+	Sunrise: <?= $light['sunrise'] ?> Sunset: <?= $light['sunset'] ?>
 	</p>
-</td><td>
+</td><td style='font-size:1.5em;font-weight:bold;'>
 
-	<p style='font-size:1.6em;'>
-	<b><?= $gday[1]['shortForecast'] ?></b>.<br />
-	<b><?=$gday[1]['highlow']?></b><br />
-	<b>Moonrise: </b> <?= $light['moonrise'] ?>  <b>Moonset: </b><?= $light['moonset'] ?><br />
+	<h3><u>Tonight</u></h3>
+	<p><?= $gday[1]['shortForecast'] ?>.<br />
+	<?=$gday[1]['highlow']?><br />
+	Moonrise: <?= $light['moonrise'] ?>  Moonset: <?= $light['moonset'] ?><br />
 	</p>
 </td>
 </tr>
@@ -79,9 +79,6 @@ $wday = $wapi['forecast']['jr'][0];
 
 </td></tr>
 </table>
-<?php
-	$this->insert('notices',['notices' => $data['notices']]);
-?>
 
 <hr>
 <h4>Forecast</h4>
@@ -112,6 +109,10 @@ $wday = $wapi['forecast']['jr'][0];
 				<div class='clear'></div>
 
 			<?php endfor; //end day ?>
+<hr>
+<?php
+	$this->insert('notices',['notices' => $data['notices']]);
+?>
 <hr>
 <?php
 	$this->insert('advice',['advice' => $data['advice']]);
