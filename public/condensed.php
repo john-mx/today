@@ -26,7 +26,7 @@ $meta=array(
 	'title'=>'Today Condensed',
 	'target'=> $y['target']?? '',
 //	'pithy'=> $y['pithy'] ?? '',
-	'extra' => "<style>body{font-size:18pt;}</style>",
+	'extra' => "<style>body{font-size:24pt;auto}</style>",
 
 	);
 
