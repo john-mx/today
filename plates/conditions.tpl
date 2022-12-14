@@ -41,7 +41,7 @@
 	<?=$aqi?> - <?=$aq_scale ?>
  	</div>
  	<div class='float inlineblock ' style='width:60%'>
-	(Test example for unhealthy) <?= $aq_warn ?>
+ <?= $aq_warn ?>
 	</div>
 
 	<div class='clear'></div>
