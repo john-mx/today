@@ -90,11 +90,14 @@ $uv = $data['light']['uv'];
 
 
 <!-- end page-->
+<!--
 	</div>
 	<div id="page5" style="display: <?=$divvis?>;">
+
 <?php $this->insert('campground',['camps' => $data['camps'] ]); ?>
 		<div style='clear:left;'>
 		</div>
+ -->
 
 <!-- end page-->
 	</div>
