@@ -19,7 +19,7 @@ ini_set('display_errors', 1);
 
 
 	$c = $Cal->load_cache();
-#u\echor($c);
+//u\echor($c,'c.json',STOP);
 
 	$calendar = $Cal->filter_calendar($c,4);
 //u\echor($calendar,'filtered cal');

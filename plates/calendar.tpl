@@ -1,9 +1,10 @@
 
 
-<?php
-if(empty($calendar)) : echo "No Calendar (calendar.tpl)"; else:
-?>
+
 <h4>Upcoming Events</h4>
+<?php
+if(empty($calendar)) : echo "No Events Scheduled"; else:
+?>
 <table class='caltable'>
 <colgroup>
         <col style="width: 15%;">

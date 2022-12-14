@@ -10,8 +10,8 @@ vendor
 public/pages/
 
 #data files
-data/*.json
-logs
+data/
+logs/
 
 *.bbprojectd/
 

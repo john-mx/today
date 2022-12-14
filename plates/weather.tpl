@@ -25,11 +25,12 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 
 <?php	foreach ($weather as $loc=>$days) :
 		if ($loc == 'update') continue;
+		if ($loc !== 'jr') continue; // only show jr
 		$locname = Defs::$sitenames[$loc];
 
 		?>
 
-		<tr class='bg-orange'><td colspan=4'><b><?=$locname?></b></td></tr>
+		<tr class='bg-orange left'><td colspan=4'><b><?=$locname?></b></td></tr>
 
 		<tr>
 		<td>Day</td>
