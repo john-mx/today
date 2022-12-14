@@ -22,6 +22,7 @@
 	$titlex = $title . ":$pcode" . " (" .PLATFORM . ") ";
 	$extra ??='';
 	$pithy ??='';
+	$target ??='';
 
 	$scbody = '';
 	$added_headers = $extra;

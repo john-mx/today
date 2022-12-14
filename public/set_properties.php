@@ -16,7 +16,7 @@ namespace DigitalMx\jotr;
 
 //END START
 
-echo $Plates->render('start',['meta'=>['title'=>'Rebuild Properties']]);
+echo $Plates->render('start',['title'=>'Rebuild Properties']);
 
 ?>
 <p>This page rebuilds the properties (coordinates, zones, etc.) for the sites used for weather forcasts.  Data is stored in properties.json,  It should not normally change and the stored data is not used for anything except reference.</p>
