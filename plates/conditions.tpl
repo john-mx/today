@@ -36,7 +36,7 @@
 			$aqi = $air['br']['aqi'];
 			$aq_scale = $air['br']['aqi_scale'];
 			$aq_warn = Defs::$airwarn[$aq_scale];
-			$aq_warn = Defs::$airwarn['Unhealthy'];
+			#$aq_warn = Defs::$airwarn['Unhealthy'];
 		?>
 	<?=$aqi?> - <?=$aq_scale ?>
  	</div>
