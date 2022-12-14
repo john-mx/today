@@ -107,6 +107,7 @@ public function add_types ($cal) {
 	'Guided Hike',
 	'Guided Tour',
 	'Short Program',
+	'Social Event',
 	);
 	foreach ($cal as $event){
 		$event['typeoptions']  = u\buildOptions($eventtypes,$event['type']);
