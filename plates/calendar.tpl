@@ -3,7 +3,7 @@
 
 <h4>Upcoming Events</h4>
 <?php
-if(empty($calendar)) : echo "No Events Scheduled"; else:
+if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 ?>
 <table class='caltable'>
 <colgroup>

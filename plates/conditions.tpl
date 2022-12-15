@@ -15,7 +15,7 @@
 
 	<div class='no-print  inlineblock float'  >
 	<!-- display:none when printed -->
-	<b>Temperature at Twentynine Palms: </b><br />
+	<b>Temperature at Jumbo Rock: </b><br />
 	&nbsp;&nbsp;&nbsp;
 	<?php echo
 		$current['temp_f'] ." &deg;F (" . $current['temp_c'] . "&deg;C) at ";
