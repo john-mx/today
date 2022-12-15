@@ -8,8 +8,9 @@ if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 <table class='caltable'>
 <colgroup>
         <col style="width: 15%;">
-        <col style="width: 40%;">
-        <col >
+        <col style="width: 30%;">
+        <col style="width: 20%;">
+         <col >
 </colgroup>
 <tr><th>Time </th><th>Program</th><th> Location</th><th>Information</th></tr>
 <tbody>
