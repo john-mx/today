@@ -150,7 +150,7 @@ public function __construct($c){
 
 	$this -> max_age = Defs::$cache_times;
 	//$this -> properties = $this->load_cache('properties');
-	$this->cache_lock = REPO_PATH . "/data/cache.lock";
+	$this->cache_lock = REPO_PATH . "/var/cache.lock";
 
 
 
@@ -488,7 +488,7 @@ public function build_topic_general() {
 			$z['fire']['level'] = $fire_level;
 			$z['fire']['color'] = Defs::get_firecolor($fire_level);
 
-			$z['version'] = $this->file_get_contents_locking(REPO_PATH . "/data/version") ;
+			$z['version'] = $this->file_get_contents_locking(REPO_PATH . "/var/version") ;
 			$z['target'] = date('l F j, Y');
 
 			$z['advice'] = $this->clean_text($y['advice']);

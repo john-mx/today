@@ -239,18 +239,18 @@ public static $coordinates = [
 	];
 
 		public static $caches  = array (
-				'admin' => REPO_PATH . "/data/admin.json",
-				'airnow' => REPO_PATH . "/data/airnow.json",
-				'airowm' => REPO_PATH . "/data/airowm.json",
-				'airq' => REPO_PATH . "/data/airq.json",
-				'alerts' => REPO_PATH . "/data/alerts.json",
-				'calendar' => REPO_PATH . "/data/calendar.json",
-				'properties' => REPO_PATH . "/data/properties.json",
-				'wapi' => REPO_PATH . "/data/wapi.json",
-				'wgov' => REPO_PATH . "/data/wgov.json",
-				'galerts' => REPO_PATH . "/data/galerts.json",
-				'cgopen' => REPO_PATH . "/data/cgopen.json",
-				'camp' => REPO_PATH . "/data/camp.json",
+				'admin' => REPO_PATH . "/var/admin.json",
+				'airnow' => REPO_PATH . "/var/airnow.json",
+				'airowm' => REPO_PATH . "/var/airowm.json",
+				'airq' => REPO_PATH . "/var/airq.json",
+				'alerts' => REPO_PATH . "/var/alerts.json",
+				'calendar' => REPO_PATH . "/var/calendar.json",
+				'properties' => REPO_PATH . "/var/properties.json",
+				'wapi' => REPO_PATH . "/var/wapi.json",
+				'wgov' => REPO_PATH . "/var/wgov.json",
+				'galerts' => REPO_PATH . "/var/galerts.json",
+				'cgopen' => REPO_PATH . "/var/cgopen.json",
+				'camp' => REPO_PATH . "/var/camp.json",
 			);
 
 // time before refresh in minutes.  0 means

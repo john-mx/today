@@ -10,9 +10,9 @@ vendor
 public/pages/
 
 #data files
-data/
 logs/
 
+var/
 *.bbprojectd/
 
 tests/
