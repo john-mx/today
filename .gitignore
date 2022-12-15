@@ -12,7 +12,7 @@ public/pages/
 #data files
 logs/
 data/*
-var/
+var/*
 *.bbprojectd/
 
 tests/
