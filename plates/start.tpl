@@ -80,27 +80,22 @@
 	<?=$added_headers?>
 
 </head>
-<body <?=$scbody?>>
-<table style='width:100%;border-collapse:collapse;'>
-<tr style='background-color:black;text-align:right;color:white;'>
-<td style='width:80px;'>
-<!-- to balance space  -->
-</td>
-<td style='background-color:black;text-align:right;color:white;'>
-<!--
-Department of the Interior<br>
-Joshua Tree National Park
-<?=$myversion?>
- -->
-<h1 style='margin:0'>Today in Joshua Tree National Park</h1>
-</td><td style='width:80px;'>
-<!-- <img src='/images/Shield-7599-alpha.png' alt="NPS Shield" /> -->
-<p class='red'><b>In Development</b></p>
-</td></tr>
-</table>
-<div>
-<?php if (substr($title,0,5) == 'Today'): ?>
-	<h2 style='margin-bottom:6px;'><?=$target?></h2>
+<body <?=$scbody?> >
+<div style='
+	width:100%;
+	text-align:center;
+	background-color:black;t
+	color:white;
+	margin-top:0;
+	padding:0.5em;
+	'>
+
+<h2 class='white' style='margin-top:0;'>Today in Joshua Tree National Park</h2>
+<p class='white' style='margin:0.5em;font-size:1.2em;font-weight:bold;' ><?=$target?></p>
+
+</div>
+<?php if (substr($title,0,5) == 'Today'): ?>.
+	<!-- <h2 style='margin-bottom:6px;'><?=$target?></h2> -->
 <!-- 	<p class='pithy'><?=$pithy ?></p><br /> -->
 <?php else: ?>
 	<h2><?=$title?></h2>

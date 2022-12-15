@@ -3,9 +3,12 @@ use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
 ?>
 
-<?php if (!empty ($d= $advice)) : ?>
+
 
 <h4 class='black'>Ranger Recommendations</h4>
+<?php if (empty ($d= $advice)) :
+	echo "<p class='in2'>No Recommendations</p>";
+	else:?>
 <div class='indent2 warn'>
 
 <?php

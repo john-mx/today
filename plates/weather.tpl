@@ -30,7 +30,7 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 
 		?>
 
-		<tr class='bg-orange left'><td colspan=4'><b><?=$locname?></b></td></tr>
+		<tr class='bg-orange left'><td colspan='4'><b><?=$locname?></b></td></tr>
 
 		<tr>
 		<td>Day</td>

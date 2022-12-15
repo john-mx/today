@@ -90,20 +90,22 @@ $uv = $data['light']['uv'];
 
 
 <!-- end page-->
-<!--
 	</div>
 	<div id="page5" style="display: <?=$divvis?>;">
 
-<?php $this->insert('campground',['camps' => $data['camps'] ]); ?>
-		<div style='clear:left;'>
-		</div>
- -->
+<?php $this->insert('campground-wide',['camps' => $data['camps'] ]); ?>
+
 
 <!-- end page-->
 	</div>
 	<div id="page6" style="display: <?=$divvis?>;">
-<?php $this->insert('fees'); ?>
+<?php $this->insert('feesA'); ?>
 
+
+<!-- end page-->
+	</div>
+	<div id="page7" style="display: <?=$divvis?>;">
+<?php $this->insert('feesB'); ?>
 
 
 

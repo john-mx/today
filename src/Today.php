@@ -483,6 +483,7 @@ public function build_topic_general() {
 
 				$t = $this->clean_text($y['announcements']);
 			$z['notices']['announcements'] = trim($t);
+			//u\echor ($z['notices'],'build topic general',STOP);
 
 			$fire_level = $y['fire_level'];
 			$z['fire']['level'] = $fire_level;
@@ -1571,7 +1572,7 @@ public function Xprepare_today($force=false) {
 
 //	echo 'Version: ' . $v . BRNL; exit;
 $z=[];
-	$z['version'] = file_get_contents(REPO_PATH . "/data/version") ;
+	$z['version'] = file_get_contents(REPO_PATH . "/var/version") ;
 	$z['target'] = date('l M j, Y');
 
 	$z['admin'] = $y['admin'];
