@@ -489,7 +489,7 @@ public function build_topic_general() {
 			$z['fire']['level'] = $fire_level;
 			$z['fire']['color'] = Defs::get_firecolor($fire_level);
 
-			$z['version'] = $this->file_get_contents_locking(REPO_PATH . "/var/version") ;
+			$z['version'] = $this->file_get_contents_locking(REPO_PATH . "/data/version") ;
 			$z['target'] = date('l F j, Y');
 
 			$z['advice'] = $this->clean_text($y['advice']);
@@ -1572,7 +1572,7 @@ public function Xprepare_today($force=false) {
 
 //	echo 'Version: ' . $v . BRNL; exit;
 $z=[];
-	$z['version'] = file_get_contents(REPO_PATH . "/var/version") ;
+	$z['version'] = file_get_contents(REPO_PATH . "/data/version") ;
 	$z['target'] = date('l M j, Y');
 
 	$z['admin'] = $y['admin'];

@@ -11,8 +11,10 @@ public/pages/
 
 #data files
 logs/
-data/*
 var/*
 *.bbprojectd/
 
 tests/
+
+#except
+
