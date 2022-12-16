@@ -13,9 +13,10 @@ $asof =  date('M d g:i a', $camps['asof']);
 	<span class='red'><b>ALL CAMPGROUNDS ARE FULL!</b></span>
 <?php endif; ?>
 </h4>
+Open Sites as of <?= $asof ?>
 <table  class='inleft2 alt-gray border'>
-<tr ><th>Campground</th><th>Sites</th>
-<th>Open Sites<br />as of <?= $asof ?></th><th style='border-right:2px solid black;'>Note</th></tr>
+<tr ><th>Campground</th><th>Sites</th><th>Fee</th>
+<th>Open Sites</th><th style='border-right:2px solid black;'>Note</th></tr>
 <?php
 	$cgs = array_keys(Defs::$campsites);
 	sort ($cgs);
@@ -38,6 +39,7 @@ $asof =  date('M d g:i a', $camps['asof']);
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
+				<td>$ <?= Defs::$campfees[$cg] ?> </td>
 				<td><?= $camps['cg_open'][$cg] ?> </td>
 				<td> <?= $camps['cg_notes'][$cg] ?>  </td>
 				</tr>

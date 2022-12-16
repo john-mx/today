@@ -21,7 +21,7 @@
 	$extra ??='';
 	$pithy ??='';
 
-	$page ??= 'page';
+	$page ??= 'page?';
 
 	$scbody = '';
 	$titlex = $page . ":$qs" . " (" .PLATFORM . ") ";
