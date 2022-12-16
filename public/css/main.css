@@ -159,6 +159,10 @@ table tr th
 }
 
 
+table.index {border:2px solid black; border-collapse:collapse;}
+table.index tr td {text-align:left;border:1px solid black;padding:6px;}
+
+
 table.caltable td {
 	text-align:left;
 }

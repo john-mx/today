@@ -17,14 +17,10 @@ namespace DigitalMx\jotr;
 //END START
 
 
-$tablestyle = <<<EOT
-<style>
-table.index {border:2px solid black; border-collapse:collapse;}
-table.index tr td {text-align:left;border:1px solid black;padding:6px;}
-</style>
-EOT;
 
-echo $Plates->render('start',['title'=>'Index','extra'=>$tablestyle]);
+
+echo $Plates->render('head',['title'=>'Index']);
+echo $Plates->render('title',['subtitle'=>'Site Index']);
 ;
 
 //Log::error('starting index' . __FILE__ . __LINE__);

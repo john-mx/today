@@ -47,26 +47,32 @@ $wday = $wapi['forecast']['jr'][0];
 <tr class='no-bottom' >
 <td class='width50 center;'>
 	<h3><u>Today</u></h3>
+	<p><b><?= $gday[0]['shortForecast'] ?></b></p>
 	<img src="<?=$wgov['jr'][1][0]['icon']?>" >
-	<br />
-	<p><b><?= $gday[0]['shortForecast'] ?></b</p>
+
+
+</td><td class='width50 center;'>
+
+	<h3><u>Tonight</u></h3>
+	<p ><b><?= $gday[1]['shortForecast'] ?></b></p>
+	<img src="/images/moon/<?= $light['moonpic'] ?>" style='width:76px' ><br />
+	<?=$light['moonphase'] ?>
+
+</td>
+</tr>
+<tr class='no-top'><td>
+
 	<p  style='font-size:1rem;'>
 		<?=$gday[0]['highlow']?><br />
 		Sunrise: <?= $light['sunrise'] ?> Sunset: <?= $light['sunset'] ?>
 	</p>
-</td><td class='width50 center;'>
+</td><td>
 
-	<h3><u>Tonight</u></h3>
-	<img src="/images/moon/<?= $light['moonpic'] ?>" style='width:76px' ><br />
-	<?=$light['moonphase'] ?>
-	<p ><b><?= $gday[1]['shortForecast'] ?>.</p>
 	<p  style='font-size:1rem;'>
 	<?=$gday[1]['highlow']?><br />
 	Moonrise: <?= $light['moonrise'] ?>  Moonset: <?= $light['moonset'] ?><br />
 	</p>
-</td>
-</tr>
-
+</td></tr>
 
 
 </table>
