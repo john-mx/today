@@ -18,7 +18,7 @@ function setopen(){
 <form method='post'>
 <input type='hidden' name='type' value='update'>
 <h4>Say something pithy</h4>
-	<textarea name='pithy' rows='2' cols='80'><?=$this->e($admin['pithy'])?></textarea>
+	<input name='pithy' type='text' size='80' value='<?=$this->e($admin['pithy'])?>'>
 </p>
 
 
