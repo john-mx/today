@@ -38,8 +38,15 @@ $aqday = <<<EOT
 				&mdash; {$air['jr']['airwarn']}
 			<br />
 EOT;
-$gday = $wgov['jr'][1];
+
+$gday = $wgov['jr'][1]; #first day
+if (!isset($gday[1])){ #no day, only night;
+	$gday[1] = $gday[0];
+	$gday[0] = [];
+}
 $wday = $wapi['forecast']['jr'][0];
+
+
 ?>
 
 
@@ -47,10 +54,11 @@ $wday = $wapi['forecast']['jr'][0];
 <tr class='no-bottom' >
 <td class='width50 center;'>
 	<h3><u>Today</u></h3>
+	<?php if ($gday[0] ): ?>
 	<p><b><?= $gday[0]['shortForecast'] ?></b></p>
 	<img src="<?=$wgov['jr'][1][0]['icon']?>" >
 
-
+	<?php endif; ?>
 </td><td class='width50 center;'>
 
 	<h3><u>Tonight</u></h3>
@@ -61,11 +69,14 @@ $wday = $wapi['forecast']['jr'][0];
 </td>
 </tr>
 <tr class='no-top'><td>
-
+<?php if ($gday[0] ): ?>
 	<p  style='font-size:1rem;'>
 		<?=$gday[0]['highlow']?><br />
 		Sunrise: <?= $light['sunrise'] ?> Sunset: <?= $light['sunset'] ?>
 	</p>
+<?php else: ?>
+	N/A
+<?php endif; ?>
 </td><td>
 
 	<p  style='font-size:1rem;'>
