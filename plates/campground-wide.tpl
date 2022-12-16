@@ -21,12 +21,12 @@ sort ($cgs);
 ?>
 
 <table class='alt-gray border inlineblock width45'>
-<tr ><th>Campground</th><th>Sites</th><th>Fee</th>
+<tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th>
 <th>Open Sites</th>
 </tr>
 	<?php foreach (['Reservation'] as $status):
 		if ($status == 'Reservation') : ?>
-		<tr class='bg-orange left'><td colspan='5' ><b>Reserved Campgrounds</b><br /> Make reservations at rec.gov or call 1-877-444-6777. </td></tr>
+		<tr class='bg-orange left'><td colspan='5' ><b>Reserved Campgrounds</b><br /> Make reservations at rec.gov <br />or call 1-877-444-6777. </td></tr>
 		<?php elseif ($status=='First') : ?>
 		<tr class='bg-orange left'><td colspan='5' ><b>First Come, First Served Campgrounds</b> <br />Find an empty site and claim it. Pay ranger or at entrance station.</td></tr>
 		<?php elseif ($status=='Closed') : ?>
@@ -58,12 +58,12 @@ sort ($cgs);
 
 
 	<table  class='alt-gray border inlineblock  width45' style='vertical-align:top;' >
-<tr ><th>Campground</th><th>Sites</th><th>Fee</th>
+<tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th>
 <th>Open Sites</th></tr>
 
 	<?php foreach (['First','Closed'] as $status):
 		if ($status == 'Reservation') : ?>
-		<tr class='bg-orange left'><td colspan='5' ><b>Reserved Campgrounds</b> <br />Make reservations at rec.gov or call 1-877-444-6777. </td></tr>
+		<tr class='bg-orange left'><td colspan='5' ><b>Reserved Campgrounds</b> <br />Make reservations at rec.gov <br />or call 1-877-444-6777. </td></tr>
 	`	<?php elseif ($status=='First') : ?>
 		<tr class='bg-orange left'><td colspan='5' ><b>First Come, First Served Campgrounds</b> <br />Find an empty site and claim it. Pay ranger or at entrance station.</td></tr>
 		<?php elseif ($status=='Closed') : ?>

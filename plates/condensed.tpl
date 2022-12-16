@@ -78,7 +78,7 @@ $uv = $data['light']['uv'];
 	</div>
 	<div id="page4" style="display: <?=$divvis?>;">
 
-<?php $this->insert('weather',['weather' => $data['wgov'] ]); ?>
+<?php $this->insert('weather-jr',['weather' => $data['wgov'] ]); ?>
 
 <!-- end page-->
 	</div>

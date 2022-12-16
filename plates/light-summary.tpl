@@ -73,4 +73,10 @@ $wday = $wapi['forecast']['jr'][0];
  <br />
 
 </td></tr>
+<tr><td>
+
+</td><td>
+
+
+</td></tr>
 </table>

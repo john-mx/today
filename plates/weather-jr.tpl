@@ -4,6 +4,7 @@ use DigitalMx as u;
 ?>
 <h4>Weather</h4>
 <?php
+// uses wgov data
 //u\echor($weather,'weather',STOP);
 if(empty($weather)): echo "<p>No Data</p>"; else:
 	$weather_updated =  date('M d g:i a',$weather['update']);
@@ -32,7 +33,7 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 
 <?php	foreach ($weather as $loc=>$days) :
 		if ($loc == 'update') continue;
-		//if ($loc !== 'jr') continue; // only show jr
+		if ($loc !== 'jr') continue; // only show jr
 		$locname = Defs::$sitenames[$loc];
 
 		?>

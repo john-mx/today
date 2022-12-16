@@ -20,17 +20,14 @@ $wday = $wapi['forecast']['jr'][0];
 <td class='width50 center;'>
 	<h3><u>Today</u></h3>
 	<img src="<?=$wgov['jr'][1][0]['icon']?>" >
-
-
 </td><td class='width50 center;'>
-
 	<h3><u>Tonight</u></h3>
 	<img src="/images/moon/<?= $lightd['moonpic'] ?>" style='width:76px' ><br />
 	<?=$lightd['moonphase'] ?>
 
 </td>
 </tr>
-<tr>
+<tr class='no-top'>
 <td class='center'>
 	<p><b><?= $gday[0]['shortForecast'] ?></b</p>
 	<p  style='font-size:1rem;'>

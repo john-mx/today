@@ -223,9 +223,9 @@ public static $coordinates = [
 	];
 
 public static $campfees = [
-		'ic' => 15,
+		'ic' => 20,
 		'jr' => 20,
-		'sp' => 15,
+		'sp' => '',
 		'hv' => 15,
 		'be' => 15,
 		'wt' => 15,
