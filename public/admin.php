@@ -58,6 +58,7 @@ echo $Plates->render('title',$meta);
 		$y = $Today-> prepare_admin();
 		echo $Plates->render('admin',$y);
 
+exit;
 // get calendar
 echo "<p class='red'>Calender admin below is new and may have bugs!  Please report problems to <a href='mailto:john@digitalmx.com'>john@digitalmx.com</a> </p>";
 		$c = $Cal->load_cache();
