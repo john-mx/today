@@ -23,6 +23,7 @@ namespace DigitalMx\jotr;
 	$Defs = $container['Defs'];
 	$Today = $container['Today'];
 	$Login = $container['Login'];
+	$Cal = $container['Calendar'];
 
 
 //END START
@@ -56,6 +57,26 @@ echo $Plates->render('title',$meta);
 
 		$y = $Today-> prepare_admin();
 		echo $Plates->render('admin',$y);
+
+// get calendar
+echo "<p class='red'>Calender admin below is new and may have bugs!  Please report problems to <a href='mailto:john@digitalmx.com'>john@digitalmx.com</a> </p>";
+		$c = $Cal->load_cache();
+#u\echor($c);
+
+$calendar = $Cal->filter_calendar($c,0);
+#u\echor($calendar,'cal',true);
+
+#add 3 blank recordsw
+	for ($i=0;$i<3;++$i) {
+		$calendar[] = $Cal::$empty_cal;
+	}
+
+$calendar = $Cal->add_types($calendar);
+
+
+
+$platedata = array('calendar'=>$calendar);
+echo $Plates->render('caladmin',$platedata);
 	exit;
 }
 

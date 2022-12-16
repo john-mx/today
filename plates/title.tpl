@@ -1,5 +1,5 @@
 <?php
-	$trial = "<p>TRIAL VERSION </p>";
+	$trial = "<p>Software in Development</p>";
 	$title = 'Today in Joshua Tree National Park';
 	$subtitle ??= date('l, F d, Y');
 

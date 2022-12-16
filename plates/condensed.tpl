@@ -18,6 +18,10 @@ switch ($pcode) {
 <div class='content'>
 <!-- ############################## -->
 <div id="page1" style="display: block;">
+<?php if ($data['pithy']): ?>
+	<p><i><?=$data['pithy']?></i></p>
+<?php endif; ?>
+
 <?php
 $lightd = $data['light']['light'];;
 $uv = $data['light']['uv'];

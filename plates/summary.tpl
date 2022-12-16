@@ -2,7 +2,7 @@
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
 
-//supply this with weather['wapi']
+
 ?>
 
 <?php
@@ -49,6 +49,9 @@ $wday = $wapi['forecast']['jr'][0];
 
 ?>
 
+<?php if ($data['pithy']): ?>
+	<p class='center'><i><?=$data['pithy']?></i></p>
+<?php endif; ?>
 
 <table style='width:100%;font-size:1.2rem;' >
 <tr class='no-bottom' >

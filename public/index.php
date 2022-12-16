@@ -19,7 +19,7 @@ namespace DigitalMx\jotr;
 $meta=array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
 	'page' => basename(__FILE__),
-	'subtitle' => 'Site UIndex',
+	'subtitle' => 'Today Project Index',
 	'extra' => "",
 
 	);
@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 ?>
 
 <p>This project generates the "Today in the Park" report in a variety of formats.</p>
+<p>Project is under development.  Report errors and request changes to <a href='mailto:john@digitalmx.com'>John Springer &lt;john@digitalmx.com&gt;</a></p>
 
 
 <ol>

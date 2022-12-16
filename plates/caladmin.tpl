@@ -3,6 +3,7 @@ use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
 
 
+
 	function dayset(int $i,string $days) {
 		// i is the calendar line
 		// days is a string of '' or up to 7 digits, for day nuymbers 0..6
