@@ -25,9 +25,8 @@ $y = $Today->prepare_topics ();
 
 $meta=array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
-
-	'pithy'=> $y['pithy'] ?? '',
 	'page' => basename(__FILE__),
+	'subtitle' => '',
 	'extra' => "<link rel='stylesheet' href='/css/tv.css'>",
 
 	);

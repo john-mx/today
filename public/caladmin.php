@@ -18,7 +18,15 @@ ini_set('display_errors', 1);
 
 //END START
 
-echo $Plates->render('start',['title'=>'Calender Admin']);
+meta=array(
+	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
+	'page' => basename(__FILE__),
+	'subtitle' => 'Calendaar admin',
+	'extra' => "",
+
+	);
+echo $Plates->render('head',$meta);
+echo $Plates->render('title',$meta);;
 
 
 if (isset($_POST['pw']) ) {// is login

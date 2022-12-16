@@ -27,7 +27,13 @@ namespace DigitalMx\jotr;
 
 //END START
 
+meta=array(
+	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
+	'page' => basename(__FILE__),
+	'subtitle' => 'Site Admin',
+	'extra' => "",
 
+	);
 
 if (isset($_POST['pw']) ) {// is login
 	$Login->set_pwl($_POST['pw']);
@@ -45,7 +51,9 @@ if (!empty($_POST) && !isset($_POST['pw'])) {
 
 } else {
 
-	echo $Plates->render('start',['title'=>'Admin Page']);
+	echo $Plates->render('head',$meta);
+echo $Plates->render('title',$meta);
+
 		$y = $Today-> prepare_admin();
 		echo $Plates->render('admin',$y);
 	exit;

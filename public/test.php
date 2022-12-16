@@ -17,7 +17,12 @@ ini_set('display_errors', 1);
 	$Today = $container['Today'];
 	$Cal = $container['Calendar'];
 
-	echo $Plates->render('start',['title'=>'Test Page']);
+	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
+	'page' => basename(__FILE__),
+	'subtitle' => 'Test page',
+	'extra' => "",
+
+	);
 
 //END START
 

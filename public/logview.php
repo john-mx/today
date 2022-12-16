@@ -19,7 +19,15 @@ ini_set('display_errors', 1);
 
 use DigitalMx\jotr\LogView as View;
 
-echo $Plates->render('start',['title'=>'View Logs']);
+meta=array(
+	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
+	'page' => basename(__FILE__),
+	'subtitle' => 'Log View',
+	'extra' => "",
+
+	);
+echo $Plates->render('head',$meta);
+echo $Plates->render('title',$meta);
 
 $dir = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'logs';
 $view = new View($dir);

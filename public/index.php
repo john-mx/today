@@ -16,12 +16,17 @@ namespace DigitalMx\jotr;
 
 //END START
 
+$meta=array(
+	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
+	'page' => basename(__FILE__),
+	'subtitle' => 'Site UIndex',
+	'extra' => "",
+
+	);
+echo $Plates->render('head',$meta);
+echo $Plates->render('title',$meta);
 
 
-
-echo $Plates->render('head',['title'=>'Index']);
-echo $Plates->render('title',['subtitle'=>'Site Index']);
-;
 
 //Log::error('starting index' . __FILE__ . __LINE__);
 //Log::info('Index page');

@@ -15,6 +15,12 @@ ini_set('display_errors', 1);
 
 
 //END START
-echo $Plates->render('start',['title' => 'Entrance Passes']);
-echo $Plates->render('fees');
+meta=array(
+	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
+	'page' => basename(__FILE__),
+	'subtitle' => 'Entrance Passes',
+	'extra' => "",
 
+	);
+echo $Plates->render('head',$meta);
+echo $Plates->render('title',$meta);

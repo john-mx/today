@@ -13,7 +13,15 @@ ini_set('display_errors', 1);
 	$Today = $container['Today'];
 	$Cal = $container['Calendar'];
 
-	echo $Plates->render('start',['title'=>'Calendar']);
+meta=array(
+	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
+	'page' => basename(__FILE__),
+	'subtitle' => 'Calendar',
+	'extra' => "",
+
+	);
+echo $Plates->render('head',$meta);
+echo $Plates->render('title',$meta);
 
 //END START
 

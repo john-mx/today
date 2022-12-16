@@ -24,11 +24,10 @@ $y = $Today->prepare_topics ();
 
 // using "Today' as title prevents it from re-appearing on the today page.
 $meta=array(
-	'pcode' => $qs,
-	'title'=>'Today',
-	'target'=> $y['target']?? '',
+	'qs' => $qs,
+	'page' => basename(__FILE__),
+	'subtitle' => '',
 	'pithy'=> $y['pithy'] ?? '',
-
 	);
 
 	echo $Plates->render ('head',$meta);
