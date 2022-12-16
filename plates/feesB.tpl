@@ -1,9 +1,9 @@
 <h4>Entrance Fees</h4>
-<div class='inleft2 red'>
+<div class=' red'>
 <b>Help Keep The Line Moving –
 Purchase Your Pass Before You Get To The Entrance</b>
 </div>
-<table  class='inleft2 alt-gray '>
+<table  class=' alt-gray '>
 
 <tr style='col-border;' ><th colspan='4' class='no-bottom'></th><th colspan='3' style='border-bottom:1px solid black;'>Where to Get Yours</th></tr>
 <tr  style='background-color:white;' class='no-borders col-border ' ><th>Pass</th><th>For</th><th>Valid For</th><th>Price</th><th>Rec.gov</th><th>Entrance Station</th><th>Visitor Center</th></tr>

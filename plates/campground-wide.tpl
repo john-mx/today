@@ -13,20 +13,22 @@ $asof =  date('M d g:i a', $camps['asof']);
 	<span class='red'><b>ALL CAMPGROUNDS ARE FULL!</b></span>
 <?php endif; ?>
 </h4>
-<div>
+<div class='width100'>
+<p>Open Sites as of <?= $asof ?></p>
 <?php
 $cgs = array_keys(Defs::$campsites);
 sort ($cgs);
 ?>
-<div class='inleft2 float width45'>
-<table class='alt-gray border'>
-<tr ><th>Campground</th><th>Sites</th>
-<th>Open Sites<br />as of <?= $asof ?></th><th style='border-right:2px solid black;'>Note</th></tr>
+
+<table class='alt-gray border inlineblock width45'>
+<tr ><th>Campground</th><th>Sites</th><th>Fee</th>
+<th>Open Sites</th>
+</tr>
 	<?php foreach (['Reservation'] as $status):
 		if ($status == 'Reservation') : ?>
-		<tr class='bg-orange left'><td colspan='5' ><b>Reserved Campgrounds</b> Make reservations at rec.gov or call 1-877-444-6777. </td></tr>
+		<tr class='bg-orange left'><td colspan='5' ><b>Reserved Campgrounds</b><br /> Make reservations at rec.gov or call 1-877-444-6777. </td></tr>
 		<?php elseif ($status=='First') : ?>
-		<tr class='bg-orange left'><td colspan='5' ><b>First Come, First Served Campgrounds</b> Find an empty site and claim it. Pay ranger or at entrance station.</td></tr>
+		<tr class='bg-orange left'><td colspan='5' ><b>First Come, First Served Campgrounds</b> <br />Find an empty site and claim it. Pay ranger or at entrance station.</td></tr>
 		<?php elseif ($status=='Closed') : ?>
 			<tr class='bg-orange left'><td colspan='5' ><b>Closed Campgrounds</b></td></tr>
 		<?php endif;?>
@@ -39,8 +41,10 @@ sort ($cgs);
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
+				<td>$ <?= Defs::$campfees[$cg] ?> </td>
+
 				<td><?= $camps['cg_open'][$cg] ?> </td>
-				<td> <?= $camps['cg_notes'][$cg] ?>  </td>
+
 				</tr>
 			<?php  endif; ?>
 		<?php endforeach;?>
@@ -49,19 +53,19 @@ sort ($cgs);
 		<?php endif; ?>
 	<?php endforeach; ?>
 	</table>
-</div>
+
+	<div style='width:2em;' class='inlineblock'> </div>
 
 
-<div class='float width45' >
-	<table  class='alt-gray border ' >
-<tr ><th>Campground</th><th>Sites</th>
-<th>Open Sites<br />as of <?= $asof ?></th><th style='border-right:2px solid black;'>Note</th></tr>
+	<table  class='alt-gray border inlineblock  width45' style='vertical-align:top;' >
+<tr ><th>Campground</th><th>Sites</th><th>Fee</th>
+<th>Open Sites</th></tr>
 
 	<?php foreach (['First','Closed'] as $status):
 		if ($status == 'Reservation') : ?>
-		<tr class='bg-orange left'><td colspan='5' ><b>Reserved Campgrounds</b> Make reservations at rec.gov or call 1-877-444-6777. </td></tr>
+		<tr class='bg-orange left'><td colspan='5' ><b>Reserved Campgrounds</b> <br />Make reservations at rec.gov or call 1-877-444-6777. </td></tr>
 	`	<?php elseif ($status=='First') : ?>
-		<tr class='bg-orange left'><td colspan='5' ><b>First Come, First Served Campgrounds</b> Find an empty site and claim it. Pay ranger or at entrance station.</td></tr>
+		<tr class='bg-orange left'><td colspan='5' ><b>First Come, First Served Campgrounds</b> <br />Find an empty site and claim it. Pay ranger or at entrance station.</td></tr>
 		<?php elseif ($status=='Closed') : ?>
 			<tr class='bg-orange left'><td colspan='5' ><b>Closed Campgrounds</b></td></tr>
 		<?php endif;?>
@@ -74,8 +78,9 @@ sort ($cgs);
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
+				<td>$ <?= Defs::$campfees[$cg] ?> </td>
 				<td><?= $camps['cg_open'][$cg] ?> </td>
-				<td> <?= $camps['cg_notes'][$cg] ?>  </td>
+
 				</tr>
 			<?php  endif; ?>
 		<?php endforeach;?>

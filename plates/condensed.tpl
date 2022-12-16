@@ -15,7 +15,7 @@ switch ($pcode) {
 
 ?>
 
-
+<div class='content'>
 <!-- ############################## -->
 <div id="page1" style="display: block;">
 <?php
@@ -113,6 +113,6 @@ $uv = $data['light']['uv'];
 
 <!-- end page-->
 	</div>
-
+</div>
 
 <?php #echo '<hr>';u\echor($data,'data'); ?>

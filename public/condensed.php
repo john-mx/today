@@ -16,22 +16,26 @@ ini_set('display_errors', 1);
 
 //END START
 
-$qs = $_SERVER['QUERY_STRING'] ?? '';
+
 
 
 $y = $Today->prepare_topics ();
 //u\echor($y,'y',STOP);
+
+
 $meta=array(
-	'pcode' => $qs,
-	'title'=>'Today Condensed',
-	'target'=> $y['target']?? '',
-//	'pithy'=> $y['pithy'] ?? '',
-	'extra' => "<style>body{font-size:24pt;auto;width:100%}table{font-size:22pt;}</style>",
+	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
+
+	'pithy'=> $y['pithy'] ?? '',
+	'page' => basename(__FILE__),
+	'extra' => "<link rel='stylesheet' href='/css/tv.css'>",
 
 	);
 
-	echo $Plates->render ('start',$meta);
+	echo $Plates->render ('head',$meta);
+	echo $Plates->render('title',$meta);
+
 ;
 // using "Today' as title prevents it from re-appearing on the today page.
 
-	echo $Plates -> render('condensed',['data'=>$y,'pcode'=>$qs]) ;
+	echo $Plates -> render('condensed',['data'=>$y,$meta]) ;

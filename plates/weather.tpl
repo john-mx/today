@@ -8,7 +8,14 @@ use DigitalMx as u;
 if(empty($weather)): echo "<p>No Data</p>"; else:
 	$weather_updated =  date('M d g:i a',$weather['update']);
 	?>
-	<table class = 'inleft2 col-border'>
+	<table class = 'width100 col-border'>
+	<colgroup>
+	<col style='width:10%'>
+	<col style='width:30%'>
+	<col style='width:30%'>
+	<col style='width:30%'>
+	</colgroup>
+
 	<tr class='border-bottom'><td colspan='5' class='left'>
 	<small>Weather.gov forcast updated at <?=$weather_updated?></small>
 	</td></tr>
@@ -42,7 +49,7 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 					<td>
 							<?php if (count($days[$i]) == 2) : ?>
 								<?=$p['shortForecast']?> <br />
-								<?= $p['highlow']?>.
+								<?= $p['highlow']?>.<br />
 								Wind <?=$p['windSpeed']?>;
 							<?php endif; ?>
 
@@ -63,7 +70,7 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 					<td class='bg-midnight white'>
 					<div >
 								<?=$p['shortForecast']?>  <br />
-								<?= $p['highlow']?>.
+								<?= $p['highlow']?>.<br />
 								Wind <?=$p['windSpeed']?>;
 
 					</div>

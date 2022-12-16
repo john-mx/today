@@ -1,74 +1,42 @@
-@media print {
-	/*
-		use smaller type, larger lin spacing.
-	*/
-   body {
-      color: #000;
-      background: #fff;
-	padding-top:0;
-      font: 10pt "Times New Roman", Times, serif;
-line-height: 1.1;
-      }
-	.red {color:#AA0000;}
-	div.break {page-break-before: always;}
-/*
-	use this class for diviison to be omitted when printed.
-	(e.g., for time-sensitive that would be wrong on printed item)
- */
-	.no-print {display:none;}
-}
-
-
-@page {
-       size: 8.5in 11in;
-      margin: 0.3in;
-   }
-
-@media screen {
-	body { width: 100vw;}
-	font: 12pt "Times New Roman", Times, serif;
-}
-
-
-
-body {
-
+html {
 	font-family:'Times New Roman',times,serif;
-	/* font-size: 12pt; */
-	padding:1em;
+	font-size: 12pt;
+}
+body {
+	padding:1rem;
 	margin-left:auto;margin-right:auto;
 	padding-top:0;
-
-
+	max-width:960px;
 	}
 
 h5
 {
 	margin-bottom: 3px;
-	font-size: 1em;
+	font-size: 1rem;
 	text-decoration:underline;
 
 }
 h4
 {
 	margin-bottom: 3px;
-	margin-top:0.5em;
-	font-size: 1.2em;
+	margin-top:1rem;
+	font-size: 1.2rem;
 
 	font-weight:bold;
 }
 
-h3 { font-size: 1.3em;
+h3 { font-size: 1.3rem;
 	font-weight:bold;
 	text-decoration:underline;
+	margin-top:1rem;
 	}
 
-h2 { font-size: 1.5em;
+h2 { font-size: 1.5rem;
 	font-weight:bold;
 	text-align:center;
 	}
 
-h1 { font-size: 2em;
+h1 { font-size: 2rem;
 	font-weight:bold;
 	text-align:center;}
 
@@ -88,9 +56,9 @@ input:invalid {
 textarea {
 	background-color:#FFC;
 	border: 1px solid #CC9;
-	width: 40em;
+	width: 40rem;
 	max-width: 85%;
-	height:8em;
+	height:8rem;
 	}
 
 button {
@@ -143,6 +111,7 @@ button {
 
 .width50 {width:50%;}
 .width45 {width:45%;}
+.width100 {width:100%;}
 
 .sectionhead {
 	text-align:left;
@@ -156,7 +125,7 @@ button {
 	color:white;
 }
 
-div.float {float:left; margin-right:1em;;}
+div.float {float:left; margin-right:1rem;;}
 div.clear {clear:left;}
 
 .inlineblock {display:inline-block;}
@@ -167,7 +136,7 @@ table {
 	border-collapse: collapse;
 	border: 2px solid black;
 	font-family: arial,san-serif;
-	font-size:1em;
+	font-size:1rem;
 }
 
 table tr td
@@ -188,12 +157,7 @@ table tr th
 	vertical-align:top;
 
 }
-table.caltable {
-	margin-left:2em;
-	text-align:left;
 
-
-}
 
 table.caltable td {
 	text-align:left;
@@ -219,10 +183,10 @@ table tr.left td {text-align:left;}
 table tr td.center {text-align:center;}
 table tr.center td {text-align:center;}
 
-table tr.heads {line-height:0.8em;}
+table tr.heads {line-height:0.8rem;}
 table tr.heads td {
 	font-weight:bold;
-	font-size:.8em;
+	font-size:.8rem;
 	text-align:center;
 }
 
@@ -284,14 +248,14 @@ table.no-cells tr td {border:0;}
 	text-align: left;
 
 	padding: 3px;
-	/* margin-bottom: 1em; */
-	/* margin-left:2em; */
-	margin-right:2em;
+	/* margin-bottom: 1rem; */
+	/* margin-left:2rem; */
+	margin-right:2rem;
 
 
 }
 .warn li {
-	margin-bottom:0.4em;
+	margin-bottom:0.4rem;
 }
 
 .warn ul {
@@ -299,18 +263,18 @@ table.no-cells tr td {border:0;}
 	margin-bottom:0;
 }
 
-.in2 , .indent2 { margin-left: 2em;
+.in2 , .indent2 { margin-left: 2rem;
 	margin-right: 0;
 	width:90%;
 	}
 
-.inleft2 {margin-left:2em;}
+.inleft2 {margin-left:2rem;}
 
 .today
 {
 	font-weight: bold;
 	text-align: center;
-	font-size: 1.5em;
+	font-size: 1.5rem;
 }
 
 
@@ -320,7 +284,7 @@ table.no-cells tr td {border:0;}
 	display: inline-block;
 	font-weight: bold;
 	margin-bottom: 6px;
-	padding-left: 3em;
-	padding-right: 3em;
+	padding-left: 3rem;
+	padding-right: 3rem;
 }
 

@@ -17,21 +17,24 @@ ini_set('display_errors', 1);
 
 //END START
 
-$y = $Today->prepare_topics ();
-//u\echor($y,'y');
 
-$qs = '';
+
 // using "Today' as title prevents it from re-appearing on the today page.
 $meta=array(
-	'pcode' => $qs,
-	'title'=>'Marc\'s Page',
-	'target'=> $y['target']?? '',
+	'qs' =>  $_SERVER['QUERY_STRING'],
+	'subtitle'=>'Marc\'s Page',
 	'pithy'=> $y['pithy'] ?? '',
+	'page' => basename(__FILE__),
 
 	);
 
-	echo $Plates->render ('start',$meta);
+	echo $Plates->render ('head',$meta);
+	echo $Plates->render('title',$meta);
 
-//	echo $Today->start_page('Today in the Park',$qs);
-	echo $Plates -> render('weather_2day',['data'=>$y,'pcode'=>$qs]) ;
+
+
+$y = $Today->prepare_topics ();
+//u\echor($y,'y');
+
+echo $Plates -> render('weather',['weather' => $y['wgov'] ]) ;
 

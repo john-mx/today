@@ -30,7 +30,8 @@ $meta=array(
 'extra' =>'<style>body {max-width:800px;}</style>',
 	);
 
-	echo $Plates->render ('start',$meta);
+	echo $Plates->render ('head',$meta);
+		echo $Plates->render ('title',$meta);
 
 //	echo $Today->start_page('Today in the Park',$qs);
 	echo $Plates -> render('summary',['data'=>$y,'pcode'=>$qs]) ;

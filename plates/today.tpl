@@ -19,7 +19,8 @@ switch ($pcode) {
 <div id="page1" style="display: block;">
 
 <?php
-	$this->insert('light_condensed',['light' => $data['light']]);
+//u\echor($data,'data');
+	$this->insert('light_condensed',$data);
 ?>
 <?php
 	$this->insert('notices',['notices' => $data['notices']]);

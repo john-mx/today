@@ -17,19 +17,18 @@
 	extra is additinal codee to put in head (e.g., <style> section)
 	*/
 
-	$pcode ??= '';
-	$title ??= 'Today in the Park';
-	$titlex = $title . ":$pcode" . " (" .PLATFORM . ") ";
+	$qs ??= '';
 	$extra ??='';
 	$pithy ??='';
-	$target ??='';
+
+	$page ??= 'page';
 
 	$scbody = '';
+	$titlex = $page . ":$qs" . " (" .PLATFORM . ") ";
 	$added_headers = $extra;
 
-	$myversion = "<br /><span class='red'>TRIAL VERSION </span>";
 
-	switch ($pcode) {
+	switch ($qs) {
 		case '';
 
 			break;
@@ -44,13 +43,6 @@
 			$added_headers .= "	<script src='/js/snap.js'></script>";
 			break;
 
-
-		case 'print':
-			$added_headers .= "<link rel='stylesheet' media='print' href = '/css/print.css' >";
-				//u\echoAlert ("Not implemented yet: $pcode");
-				//echo "<script>window.location.href='/today.php';</script>";
-				//exit;
-			break;
 
 		default:
 			u\echoAlert ("Undefined option: $pcode");
@@ -76,6 +68,7 @@
 	<script src='/js/hide.js'></script>
 
 	<link rel='stylesheet' href = '/css/main.css' />
+	<link rel='stylesheet' href = '/css/print.css' />
 
 	<?=$added_headers?>
 

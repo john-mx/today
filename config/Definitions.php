@@ -222,6 +222,17 @@ public static $coordinates = [
 		'cw' => 'D,W,',
 	];
 
+public static $campfees = [
+		'ic' => 15,
+		'jr' => 20,
+		'sp' => 15,
+		'hv' => 15,
+		'be' => 15,
+		'wt' => 15,
+		'ry' => 20,
+		'br' => 20,
+		'cw' => 20,
+	];
 	public static $cgstatus = [
 		'First',
 		'Reservation',

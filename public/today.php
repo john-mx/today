@@ -31,7 +31,8 @@ $meta=array(
 
 	);
 
-	echo $Plates->render ('start',$meta);
+	echo $Plates->render ('head',$meta);
+	echo $Plates->render('title',$meta);
 
 //	echo $Today->start_page('Today in the Park',$qs);
 	echo $Plates -> render('today',['data'=>$y,'pcode'=>$qs]) ;

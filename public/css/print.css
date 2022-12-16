@@ -1,0 +1,26 @@
+@media print {
+	/*
+		use smaller type, larger lin spacing.
+	*/
+   body {
+      color: #000;
+      background: #fff;
+	padding-top:0;
+      font: 10pt "Times New Roman", Times, serif;
+line-height: 1.1;
+      }
+	.red {color:#AA0000;}
+	div.break {page-break-before: always;}
+/*
+	use this class for diviison to be omitted when printed.
+	(e.g., for time-sensitive that would be wrong on printed item)
+ */
+	.no-print {display:none;}
+}
+
+
+@page {
+       size: 8.5in 11in;
+      margin: 0.3in;
+   }
+

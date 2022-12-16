@@ -7,36 +7,39 @@ use DigitalMx as u;
 //u\echor($light,'in tpl', NOSTOP);
 $lightd = $light['light'];
 $uv = $light['uv'];
+$gday = $wgov['jr'][1];
+$wday = $wapi['forecast']['jr'][0];
+
+$gday = $wgov['jr'][1];
+$wday = $wapi['forecast']['jr'][0];
 ?>
-<table class='inleft2'>
-<colgroup>
-	<col style='width:50%'>
-	<col style='width:50%'>
-</colgroup>
 
-<tr><td style='width:45%;' class = ' center' >
 
-<p><b>Today</b></p>
-	<b>Sunrise <?=$lightd['sunrise']?>&nbsp;&nbsp;&nbsp;
-	Sunset <?=$lightd['sunset']?>  <br /><br />
-	</b>
-	<b>UV Exposure:</b> <?= $uv['uv'] ?>
-	<span style = 'background-color:<?=$uv['uvcolor']?>;'><?=$uv['uvscale']?></span> <br />
+<table style='width:100%;font-size:1.2rem;' >
+<tr class='no-bottom' >
+<td class='width50 center;'>
+	<h3><u>Today</u></h3>
+	<img src="<?=$wgov['jr'][1][0]['icon']?>" >
+	<br />
+	<p><b><?= $gday[0]['shortForecast'] ?></b</p>
+	<p  style='font-size:1rem;'>
+		<?=$gday[0]['highlow']?><br />
+		Sunrise: <?= $lightd['sunrise'] ?> Sunset: <?= $lightd['sunset'] ?>
+	</p>
+</td><td class='width50 center;'>
 
-	<?=$uv['uvwarn']?>
+	<h3><u>Tonight</u></h3>
+	<img src="/images/moon/<?= $lightd['moonpic'] ?>" style='width:76px' ><br />
+	<?=$lightd['moonphase'] ?>
+	<p ><b><?= $gday[1]['shortForecast'] ?>.</p>
+	<p  style='font-size:1rem;'>
+	<?=$gday[1]['highlow']?><br />
+	Moonrise: <?= $lightd['moonrise'] ?>  Moonset: <?= $lightd['moonset'] ?><br />
+	</p>
 </td>
-<td  class = 'border  center bg-black white' >
-
-<p><b>Tonight</b></p>
-<b>	Moonrise <?=$lightd['moonrise']?>&nbsp;&nbsp;&nbsp;
-	Moonset <?=$lightd['moonset']?>
-
-
-	<div style=' align-items:center;width:100%;margin-top:1em;'>
-
-	<span><?=$lightd['moonphase']?></span>
-	<img src= "/images/moon/<?=$lightd['moonpic'] ?>" style='vertical-align:middle;' /></div>
-</td></tr>
+</tr>
 </table>
-
 <?php endif; ?>
+
+
+</table>

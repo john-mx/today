@@ -21,7 +21,7 @@ $light = $data['light']['light'];
 $uv = $data['light']['uv'];
 $air = $data['air'];
 $uvday = <<<EOT
-	<b>UV: </b>${uv['uv']}
+	UV: ${uv['uv']}
 			<div class='inlineblock' style="padding-left:2em;padding-right:2em;background-color:${uv['uvcolor']};">
 				 ${uv['uvscale']}
 			</div>
@@ -30,7 +30,7 @@ $uvday = <<<EOT
 EOT;
 		$aircolor = $air['jr']['aqi_color'];
 $aqday = <<<EOT
-		<b>Air Quality: </b>
+		Air Quality:
 			{$air['jr']['aqi']}
 			<div class='inlineblock' style="padding-left:2em;padding-right:2em;background-color:$aircolor;">
 			 {$air['jr']['aqi_scale']}
@@ -43,42 +43,38 @@ $wday = $wapi['forecast']['jr'][0];
 ?>
 
 
-<table style='width:100%' >
-<tr class='no-bottom' ><td style='font-size:1.5em;font-weight:bold;'>
+<table style='width:100%;font-size:1.2rem;' >
+<tr class='no-bottom' >
+<td class='width50 center;'>
 	<h3><u>Today</u></h3>
-	<p><?= $gday[0]['shortForecast'] ?>.<br />
-	<?=$gday[0]['highlow']?><br />
-	Sunrise: <?= $light['sunrise'] ?> Sunset: <?= $light['sunset'] ?>
+	<img src="<?=$wgov['jr'][1][0]['icon']?>" >
+	<br />
+	<p><b><?= $gday[0]['shortForecast'] ?></b</p>
+	<p  style='font-size:1rem;'>
+		<?=$gday[0]['highlow']?><br />
+		Sunrise: <?= $light['sunrise'] ?> Sunset: <?= $light['sunset'] ?>
 	</p>
-</td><td style='font-size:1.5em;font-weight:bold;'>
+</td><td class='width50 center;'>
 
 	<h3><u>Tonight</u></h3>
-	<p><?= $gday[1]['shortForecast'] ?>.<br />
+	<img src="/images/moon/<?= $light['moonpic'] ?>" style='width:76px' ><br />
+	<?=$light['moonphase'] ?>
+	<p ><b><?= $gday[1]['shortForecast'] ?>.</p>
+	<p  style='font-size:1rem;'>
 	<?=$gday[1]['highlow']?><br />
 	Moonrise: <?= $light['moonrise'] ?>  Moonset: <?= $light['moonset'] ?><br />
 	</p>
 </td>
 </tr>
 
-<tr class='no-bottom no-top'>
-<td class='center'>
-<img src="<?=$wgov['jr'][1][0]['icon']?>" >
-</td>
-<td align='center'>
-	<img src="/images/moon/<?= $light['moonpic'] ?>" style='width:76px' ><br />
-	<?=$light['moonphase'] ?>
 
-</td>
-</tr>
-<tr class='no-top'><td  class='left' style='font-size:1.2em;'>
+
+</table>
+<h4>Conditions</h4>
+
 						<?=$aqday ?>
 						<?=$uvday ?>
-					<b>Wind up to: </b> <?= $wday['maxwind']?> mph (<?= $wday['maxwindM'] ?> kph) (higher gusts possible) <br>
-</td><td  class='left'  style='font-size:1.2em;'>
- <br />
-
-</td></tr>
-</table>
+					Wind: up to <?= $wday['maxwind']?> mph (<?= $wday['maxwindM'] ?> kph) (higher gusts possible) <br>
 
 <hr>
 <h4>Forecast</h4>
@@ -100,7 +96,7 @@ $wday = $wapi['forecast']['jr'][0];
 						<?php endif; ?>
 
 
-					<b>Wind up to: </b> <?= $wday['maxwind']?> mph (<?= $wday['maxwindM'] ?> kph) (higher gusts possible) <br>
+					<b>Wind: </b> up to <?= $wday['maxwind']?> mph (<?= $wday['maxwindM'] ?> kph) (higher gusts possible) <br>
 				</div>
 				<div class='float'>
 				<b>Night: </b> <?= $gday[1]['shortForecast'] ?>.
