@@ -12,13 +12,14 @@ namespace DigitalMx\jotr;
 
 
 //END START
-exit;
-// echo	$Today->refresh_caches ();
-// echo "Done";
+Log::info ("Starting cache refresh cycle");
+echo	$Today->refresh_caches ();
+echo "Done";
 
+exit;
 
 function refresh_caches($force=false) {
-Log::info ("Starting cache refresh cycle");
+
 
 // refreshes all the external caches, if they are due
 	#$caches = ['wapi','airq','airowm','wgov','airnow','galerts'];

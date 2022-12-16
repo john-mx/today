@@ -13,8 +13,8 @@ ini_set('display_errors', 1);
 	$Today = $container['Today'];
 	$Cal = $container['Calendar'];
 
-meta=array(
-	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
+$meta=array(
+//	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
 	'page' => basename(__FILE__),
 	'subtitle' => 'Calendar',
 	'extra' => "",

@@ -27,7 +27,7 @@ namespace DigitalMx\jotr;
 
 //END START
 
-meta=array(
+$meta=array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
 	'page' => basename(__FILE__),
 	'subtitle' => 'Site Admin',

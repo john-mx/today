@@ -15,8 +15,8 @@ namespace DigitalMx\jotr;
 
 
 //END START
-meta=array(
-	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
+$meta=array(
+	//'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
 	'page' => basename(__FILE__),
 	'subtitle' => 'Rebuild Properties',
 	'extra' => "",

@@ -18,8 +18,8 @@ ini_set('display_errors', 1);
 
 //END START
 
-meta=array(
-	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
+$meta=array(
+	//'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
 	'page' => basename(__FILE__),
 	'subtitle' => 'Calendaar admin',
 	'extra' => "",

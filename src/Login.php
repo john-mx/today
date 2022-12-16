@@ -34,7 +34,11 @@ class Login
 
 	public function check_pw (int $min_pwl = 0) {
 		$pwl  = $this->get_pwlevel();
-		if ($pwl >= $min_pwl) return true;
+		if ($pwl >= $min_pwl) {
+			Log::info('Successful Login');
+			return true;
+		}
+		Log::warning ('Failed Login');
 		$this->show_login();
 
 	}
