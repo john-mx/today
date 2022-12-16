@@ -456,12 +456,18 @@ public function build_topic_campgrounds() {
 	 }
 	 $w['camps']['cg_open'] = $opens;
 	$w['camps']['asof'] = $this->getMtime('cgopen');
-
+	$old_open = (time() - $w['camps']['asof'] > 24*60*60);
+	//$old_open = true;
 
 	$w['camps']['cgfull'] = !array_filter($w['camps']['cg_open']);
 
-#	u\echor($w);
 
+	foreach ($w['camps']['cg_open'] as $cg => $open){
+		if ($w['camps']['cgfull']){$open = 0;}
+		if ($old_open) $open = '?';
+		$w['camps']['cg_open'][$cg]=$open;
+	}
+//	u\echor($w, 'camps post prepare', STOP);
 	return $w;
 }
 
