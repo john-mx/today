@@ -1351,7 +1351,7 @@ private function over_cache_time($section) {
 	$filetime = filemtime (CACHE[$section]);
 	$limit = $this->Defs->getMaxTime($section);
 	$diff = time() - $filetime;
-	if ($limit && ($diff > $limit)) return $limit;
+	if ($limit && ($diff > $limit)) return $diff;
 //	echo "$section: limit $limit; diff $diff;" . BR;
 	return 0;
 }

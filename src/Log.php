@@ -49,19 +49,22 @@ class Log {
 		$logger = new Logger('Today');
 #		$logger->reset();
 
+		$rotateHandler = new RotatingFileHandler($log,5,Level::Debug);
+
+
 			$outputFormat = "[%datetime%] %level_name% > %message% %context% %extra%\n";
 
 			$dateFormat = 'Y-m-d H:i';
 		$line_format = new LineFormatter($outputFormat, $dateFormat);
 		$stream = new StreamHandler($log, Level::Debug);
-			$stream->setFormatter($line_format);
+		$stream->setFormatter($line_format);
 		//	u\echor($stream,'stream',STOP);
-		$logger -> pushHandler($stream);
+		$rotateHandler->setFormatter($line_format);
+		$logger->pushHandler($rotateHandler);
+		//$logger -> pushHandler($stream);
 
-		$fileHandler = new RotatingFileHandler($log,5);
-		$logger->pushHandler($fileHandler);
 
-		$errhandler = new StreamHandler('php://stderr');
+		//$errhandler = new StreamHandler('php://stderr');
 	//	$logger->pushHandler($errhandler);
 
 

@@ -19,8 +19,8 @@ ini_set('display_errors', 1);
 
 use DigitalMx\jotr\LogView as View;
 
-meta=array(
-	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
+$meta=array(
+	//'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
 	'page' => basename(__FILE__),
 	'subtitle' => 'Log View',
 	'extra' => "",
