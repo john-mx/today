@@ -73,7 +73,8 @@ One announcement per line.(<cr>)  They will be listed as bullets<br />
 <?php if($admin['cgfull']): ?>
 	<p class='red'><b>ALL CAMPGROUNDS ARE FULL. </b></p>
 <?php endif; ?>
-<button type='button' onClick='setopen()'> All Sites Full</button>
+Click to set <button type='button' onClick='setopen()'> All Sites Full</button><br />
+Put number or '?' into open sites field. All sites go to ? after 24 hours.
 <table>
 <tr><th>Campground</th><th>Status</th><th>Open Sites</th><th>Notes</th></tr>
 <?php foreach (array_keys(Defs::$campsites) as $scode): ?>

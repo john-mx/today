@@ -465,6 +465,8 @@ public function build_topic_campgrounds() {
 	foreach ($w['camps']['cg_open'] as $cg => $open){
 		if ($w['camps']['cgfull']){$open = 0;}
 		if ($old_open) $open = '?';
+		if ($w['camps']['cg_status'] == 'Closed'){$open = 0;}
+		if ($open !== '?') $open = intval( $open);
 		$w['camps']['cg_open'][$cg]=$open;
 	}
 //	u\echor($w, 'camps post prepare', STOP);
