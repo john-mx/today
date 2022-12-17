@@ -46,11 +46,16 @@ switch ($qs) {
 <?php $this->insert('weather-jr',['weather' => $data['wgov'] ]); ?>
 </div>
 <!-- end page-->
+<?php if ($data['calendar']): ?>
 <div id="page3" style="display: <?=$divvis?>;">
 
-<?php $this->insert('calendar',['calendar' => $data['calendar']]) ?>
+<?php
+
+		$this->insert('calendar',['calendar' => $data['calendar']]) ?>
 </div>
 <!-- end page-->
+<?php endif; ?>
+
 <!--
 <div id="page5" style="display: <?=$divvis?>;">
 
