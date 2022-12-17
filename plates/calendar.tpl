@@ -34,7 +34,7 @@ if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 	<td><?=$eventtime?><br />
 
 	</td>
-	</td><td class='left'>
+	<td class='left'>
  	<b><?=$cal['title']?></b>
  	( <?=$cal['duration']?>)<br />
  	<?=$cal['type']?>

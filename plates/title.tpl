@@ -1,7 +1,7 @@
 <?php
 	$trial = "<p>Software in Development</p>";
 	$title = 'Today in Joshua Tree National Park';
-	$subtitle ??= date('l, F d, Y');
+	if(empty($subtitle)) $subtitle = date('l, F d, Y');
 
 	?>
 

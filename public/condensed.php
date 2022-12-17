@@ -37,4 +37,4 @@ $meta=array(
 ;
 // using "Today' as title prevents it from re-appearing on the today page.
 
-	echo $Plates -> render('condensed',['data'=>$y,$meta]) ;
+	echo $Plates -> render('condensed',['data'=>array_merge($y,$meta)]) ;

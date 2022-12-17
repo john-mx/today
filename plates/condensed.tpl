@@ -2,9 +2,9 @@
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
 
-$pcode ??= '';
+$qs = $data['qs'] ?? '';
 
-switch ($pcode) {
+switch ($qs) {
 	case 'snap':
 		$divvis='none';
 		break;
@@ -15,108 +15,60 @@ switch ($pcode) {
 
 ?>
 
-<div class='content'>
+<div class='content center'>
 <!-- ############################## -->
 <div id="page1" style="display: block;">
 <?php if ($data['pithy']): ?>
 	<p><i><?=$data['pithy']?></i></p>
 <?php endif; ?>
 
-<?php
-$lightd = $data['light']['light'];;
-$uv = $data['light']['uv'];
-?>
-	<table class='indent2'>
-		<colgroup> <col style='width:50%;' class='center border'> <col style='width:50%;' class='center border'> </colgroup>
-		<tr>
-			<td style='font-weight:bold;'>
-			<p>
-				<u>Today</u>
-			</p>
-			Sunrise:
-<?=$lightd['sunrise']?>
-			&nbsp;&nbsp;&nbsp; Sunset:
-<?=$lightd['sunset']?>
-			<br />
-			<br />
-			<b>UV Exposure:</b>
-<?= $uv['uv'] ?>
-			<span style='background-color:<?=$uv['uvcolor']?>;'>
-<?=$uv['uvscale']?>
-			</span> <br />
-			</td>
-			<td style='font-weight:bold;' class=' bg-black white'>
-			<p>
-				<u>Tonight</u>
-			</p>
-			Moonrise:
-<?=$lightd['moonrise']?>
-			&nbsp;&nbsp;&nbsp; Moonset:
-<?=$lightd['moonset']?>
-			<div class='bg-black' style=' align-items:center;margin-top:1em;'>
-				<span><?=$lightd['moonphase']?>
-				</span> <img src="/images/moon/<?=$lightd['moonpic'] ?>" style='vertical-align:middle;' />
-			</div>
-			</td>
-		</tr>
-	</table>
 
+
+<?php $this->insert('light',['data'=>$data]); ?>
 <?php $this->insert('notices',['notices' => $data['notices']]); ?>
 
-<?php
-	$conditions = array(
-		'fire'=>$data['fire'],
-		'air'=>$data['air'],
-		'current' => $data['wapi']['current'],
-		);
-	$this->insert('conditions',$conditions);
-?>
+<?php	$this->insert('conditions',$data);?>
 
 <!-- end page-->
-	</div>
-	<div id="page2" style="display: <?=$divvis?>;">
+</div>
+<div id="page2" style="display: <?=$divvis?>;">
 
 	<?php $this->insert('advice',['advice' => $data['advice']]); ?>
 
 <!-- end page-->
-	</div>
-	<div id="page4" style="display: <?=$divvis?>;">
+</div>
+<div id="page4" style="display: <?=$divvis?>;">
 
 <?php $this->insert('weather-jr',['weather' => $data['wgov'] ]); ?>
 
 <!-- end page-->
-	</div>
-	<div id="page3" style="display: <?=$divvis?>;">
+</div>
+<div id="page3" style="display: <?=$divvis?>;">
 
-<?php
-  $this->insert('calendar',['calendar' => $data['calendar']])
-?>
-
+<?php $this->insert('calendar',['calendar' => $data['calendar']]) ?>
 
 <!-- end page-->
-	</div>
-	<div id="page5" style="display: <?=$divvis?>;">
+</div>
+<div id="page5" style="display: <?=$divvis?>;">
 
 <?php $this->insert('campground-wide',['camps' => $data['camps'] ]); ?>
 
 
 <!-- end page-->
-	</div>
-	<div id="page6" style="display: <?=$divvis?>;">
+</div>
+<div id="page6" style="display: <?=$divvis?>;">
 <?php $this->insert('feesA'); ?>
 
-
 <!-- end page-->
-	</div>
-	<div id="page7" style="display: <?=$divvis?>;">
+</div>
+<div id="page7" style="display: <?=$divvis?>;">
 <?php $this->insert('feesB'); ?>
-
-
 
 <?php $this->insert('end'); ?>
 
 <!-- end page-->
-	</div>
 </div>
 
-<?php #echo '<hr>';u\echor($data,'data'); ?>
+</div> <!-- end content -->
+
+

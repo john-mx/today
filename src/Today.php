@@ -12,51 +12,81 @@ namespace DigitalMx\jotr;
 
 //END START
 
-
-
-// parse_str($_SERVER["QUERY_STRING"], $params);
-// //u\echor ($params);
-// echo "Syntax: r2.php?Force&Index&Data;\nForce to force updates; Index to xfer result to index.php; Data to show data arrays" . BRNL;
-//
-// u\echor ($params,'Parameters:') . BRNL;
-// $Force = (isset($params['Force']))? 1:0 ; #1 = force updates now. 0 = use regular timing.
-// if ($Force) echo "Forcing updates" .BRNL;
-// $only = $params['only'] ?? ''; // only=section
-
-
-
-
-
-
 // u\echor (CACHE); exit;
 
-/* SECTIONS
-data is divided into sections. Each section has its own update
-process and cached data file.
+/* TOPICS
 
-info	Contains latest update time, current date being displayed
+This system collects data from a number of sources and stores it
+in a series of caches, one for each data source.  The data is
+stored in json files in directory var/.
 
-weather	contains forecasts for today and next 2 days (3 days) for each designated location: geneally jumbo, 29, cottonwood and black rock.
+Various output reports present the ddata in different forms,
+typically by retrieving the data from cache, reformatting it,
+and the echoing it through a template. (Plates is the chosen t
+emplate system.)
 
+A Definitiions file includes many static parameters,
+including a list of the acceptable age for each cache file.
+Periodically (say every 4 hours) a routine is run which tests each
+cache for being out of date, and if so, refreshes it.
+
+Caches are gfenerally filled by a curl command to an api with a key.
+
+One cache is admin data, which is created from a web form on the
+admin page.  This includes alerts, closures, campground status, etc.
+
+Once cache is the calendar, which is also maintained through the admin
+page, but might at some point be derived from the park calendar on
+the NPS site.
+
+Other ccaches are for weather.gov, weatherapi.com, airnow.com,
+
+Campsite open sites can be entered manually on the admin page, but
+is intended to be filled automatically from recreation.gov  Campsite opens
+are sotred in their own cache to facilitate updating through a script.
+
+CACHES
+admin	Contains notices, alerts, a pithy statement
+
+wgov	contains forecasts for today and next 2 days (3 days) for each designated location: geneally jumbo, 29, cottonwood and black rock.
+
+wapi is similar, but from a different source. 9weatherapi.com)
 air	air quality info for jumbo rocks
 
-fire	fire danger and messages (derived from local and defs)
+camps status for each campground.
 
-camps	availability and status for each campground.
+cgopen conatins open sites at each campground
 
-local	manual weather notice, fire notice, current fire danger, pithy statement, announcements.  General campground announcement
+light	containx sunrise, moon phase, etc.  Derivedd from weatherapi.com
+astro data
+
+Display is generally by retrieving a cache, manipulating the data (format_wgov, e.g.,) then displaying through Plates template.
+
+The sytstem was originally designed to support rotating TV displays in
+visitor ceneters.  It does that by assign page divs in the html,
+and using a javascript to successively enable and disable display of
+the divs.  So the apparent rotation is just enabling adn disabling display
+or successive divs in the code.  The page does not need to be reaccessed
+for this.  However the pages have a meta refresh tag for 15 minutes, to
+cause a refresh from server every 15 minutes. This will pick up any new
+data stored in caches, such as an alert or a change in weather forecast.
+
+The TV page also adds a new style setting the base font size (html {} )
+to 24 pt and line height to 1.1em.
+
+A refresh_cache function checks each cache for age as defined in Defs, and
+if it is out of date reloads it from source,  (Caches that aren't
+auto refreshed have age limit in Defs set to 0).  refresh_cache is run from
+cron, typically ever 4 hours.  When caches are reloaded, sometimes the
+load failsk especially on weather.gov.  If there's a failure, there are two
+retries with 2 second delays, and if 3rd attempt fails the refresh is
+abandoned and the cache is not changed.  For weather, each location
+(jumbo rocks, cottonwood, black rock, etc) is a separate request. If one
+fails, they are all abandoned,
 
 
-light	sunrise, moon phase, etc
-
-calendar data from park calendar assembled into a json file
 
 */
-
-// model for building and reading the local array
-
-
-
 class Today {
 
 public static $dummy_today = array
@@ -156,64 +186,7 @@ public function __construct($c){
 
 }
 
-public function rebuild_pages ()  {
-	// rebuilds caches and regenerates today pages
 
-	$y = $this->prepare_today ($force);
-	// set forecee to true to force all cahces to rebuild now, instead of on schedule
-
-
-
-	$page_body = $this->Plates -> render('main',$y);
-
-	$wapi_page = $this->start_page('Today in the Park (wapi)')
-		. $page_body;
-	file_put_contents (SITE_PATH . '/pages/wapi.html',$wapi_page);
-
-	$scroll_page = $this->start_page('Today in the Park (scrolling)','s')
-		. $page_body . self::$scroll_script;
-	file_put_contents( SITE_PATH . '/pages/scroll.html', $scroll_page);
-
-	$snap_page = $this->start_page('Today in the Park (snap)','z')
-		. $page_body  . self::$snap_script;
-	file_put_contents( SITE_PATH . '/pages/snap.html', $snap_page);
-
-
-// 	$page_body_wgov = $this->Plates -> render ('today2',$y);
-// 	$new_page = $this->start_page('Today in the Park (weather.gov)')
-// 		. $page_body_wgov;
-// 	file_put_contents (SITE_PATH . '/pages/wgov.html',$new_page);
-
-	// $page_body_con = $this->Plates -> render ('today3',$y);
-// 	$new_page = $this->start_page('Today in the Park (condensed)')
-// 		. $page_body_con;
-// 	file_put_contents (SITE_PATH . '/pages/today3.html',$new_page);
-
-	$page_body_txt = $this->Plates -> render ('ptext',$y);
-	$new_page = $this->start_page('Today in the Park (text only)')
-		. $page_body_txt ;
-	file_put_contents (SITE_PATH . '/pages/ptext.html',$new_page);
-
-	$page_body_em = $this->Plates -> render ('email2',$y);
-	$new_page = "<html><head><title>Today in the Park (for email)
-		</title></head><body style='width:700px'>";
-		$new_page .= $page_body_em ;
-	file_put_contents (SITE_PATH . '/pages/email.html',$new_page);
-
-$page_body_print = $this->Plates -> render ('print',$y);
-	$print_page = $this->start_page('Today in the Park (print)','p')
-		. $page_body_print ;
-	file_put_contents( SITE_PATH . '/pages/print.html', $print_page);
-	$this_day = date('Y-d-m');
-	// make a pdf version if none exists.  This limits to 1 per day.
-	$pdf = '/pages/' . "${this_day}.pdf";
-	if (!file_exists(SITE_PATH . $pdf)){
-		$this->print_pdf($print_page,$pdf);
-	}
-
-
-	Log::info( "Pages updated" );
-}
 public function prepare_topics(){
 	/*
 		build topic arrays from caches and defs.
@@ -388,6 +361,18 @@ public function build_topic_calendar() {
 	$y=$this->Cal->filter_calendar($z,2);
 	return ['calendar' => $y];
 }
+
+public function build_admin_calendar() {
+	if (!$z=$this->load_cache('calendar')) {
+	 	Log::error ("Could not load cache calendar");
+	 	return [];
+	 }
+
+#	u\echor($z,'calendar',STOP);
+	$y=$this->Cal->filter_calendar($z,0);
+	return ['calendar' => $y];
+}
+
 public function build_topic_air() {
 	$z=[];
 	if(!$z=$this->load_cache('airnow')){
@@ -960,35 +945,6 @@ public function format_galert($galerts){
 
 ######### END CACHES ############
 
-public function Xfilter_calendar() {
-	/*
-		removes expired events from calendar and sort by date
-		calenar = array (
-			0 = array (dt,type,title,location,note),
-			1 = ...
-			);
-	*/
-
-	$z=[];
-
-		$y = json_decode ($this->file_get_contents_locking(CACHE['calendar']), true);;
-
-//  	u\echor($y,'cal loaded');
-
-	// ignore invalid dt or dt older than now
-	// set first term in if to 1 to prevent filtering
-	foreach ($y as $cal){
-		if ( 0 || (is_numeric($cal['dt']) && (time() < $cal['dt']) )){
-			$z[] = $cal;
-		}
-	}
-//  		u\echor($z,'cal filtered', STOP);
-	if (!empty($z)){
-		$z = u\element_sort($z, 'dt');
-	}
-	return $z;
-
-}
 
 
 
@@ -1495,442 +1451,6 @@ if (empty($html)) die ("no html to print_pdf");
 }
 
 ####################OBSOLETE ###########################
-public function Xstart_page ($title = 'Today in the Park',$pcode='') {
-	$scbody = '';
-	$added_headers = "";
-	if ($pcode=='s') {
-		$scbody='onLoad="pageScroll()"';
-		$added_headers = "<style>html {scroll-behavior: smooth;}</style>";
-	}
-	elseif ($pcode=='p'){
-		$scbody = "onLoad='startRotation(10)'";
-	}
-	elseif ($pcode=='b'){
-		$added_headers = <<<EOT
-<!-- Latest compiled and minified CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Latest compiled JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-EOT;
-}
-	elseif ($pcode=='p'){ #print
-		$added_headers = "<link rel='stylesheet' media='print' href = '/css/media.css' >";
-	}
-	$site_url = SITE_URL;
-	$platform = '(' . PLATFORM .')';
-	$text = <<<EOF
-<!DOCTYPE html>
-<html lang="en">
-<head>
-   <meta charset="utf-8" />
-   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-	<title>$title $platform</title>
-	<script src='/js/snap.js'></script>
-	<script src='/js/hide.js'></script>
-
-	<link rel='stylesheet' href = '/css/main.css' />
-
-	$added_headers
-
-</head>
-<body $scbody>
-<table style='width:100%;border-collapse:collapse;'>
-<tr style='background-color:black;text-align:right;color:white;'><td style='background-color:black;text-align:right;color:white;'>
-Department of the Interior<br>
-Joshua Tree National Park
-<h1 style='margin:0'>Today in Joshua Tree National Park</h1>
-</td><td style='width:80px;'>
-<img src="$site_url/images/Shield-7599-alpha.png" alt="NPS Shield" />
-</td></tr>
-</table>
-
-
-EOF;
-	return $text;
-}
-
-public function Xprepare_today($force=false) {
- /*set force true or false to force cache updates
-  get sections needed and assemble inito data array y
-  which is ready for the template to use.
-
-  all the raw data is read into the y array from caches.
-  Then the information is transferred into the z array, which is what will actually be used to generate the pages.
-  The transformation involves choosing which parameters will be used
-  and compiling some computed things like colors for levels and
-  text for levels.
-
-
-
-  */
-
-
-	foreach (['wgov','airowm','airnow','calendar','admin','wgova','camp','cgopen'] as $section) {
-		if (!$y[$section] = $this -> load_cache ($section, $force)){
-	 	Log::error("Could not load cache $section");
-	 	return [];
-	 }
-	}
- 	u\echor ($y, 'y array into today',STOP);
-
-//	echo 'Version: ' . $v . BRNL; exit;
-$z=[];
-	$z['version'] = file_get_contents(REPO_PATH . "/data/version") ;
-	$z['target'] = date('l M j, Y');
-
-	$z['admin'] = $y['admin'];
-		//clean text for display (spec chars, nl2br) but don't change stored info.
-	foreach(['pithy','fire_warn','weather_warn','announcements','alerts'] as $txt){
-		if (!empty ($y['admin'][$txt])) {
-			$z['admin'][$txt] = $this->clean_text($y['admin'][$txt]);
-		}
-	}
-
-	$z['wapi']['fc'] = $this->format_wapi($y['wapi']);
-	$z['wgov']['fc'] = $this->format_wgov($y['wgov']);
-
-	$z['light']= $z['wapi']['fc']['light'];
-	$z['light']['moonpic'] = $this->Defs->getMoonPic($z['light']['moonphase']);
-
-	$z['uv'] = $this->uv_data($z['wapi']['fc']['forecast']['jr'][0]['uv']);
-
-	$z['fire'] = $this->fire_data($y['admin']['fire_level']);
-
-	$z['air'] = $this->format_airowm($y['airowm']);
-
-	$z['camps']['info'] = $y['camps'];
-	$z['camps']['cgopen'] = $y['cgopen'];
-	$z['camps']['asof'] = $this->getMtime('cgopen');
-
-	$z['calendar'] = $this->Cal->filter_calendar($y['calendar'],4);
-
-
-	Log::info('formed today array');
-u\echor($z, 'z array for today',STOP);
-	return $z;
-}
-// OBSOLETE??
-public function Xrefresh_cache (string $cache ) {
-	/* loads data from all source fgiles and rebuilds the cache fie compoetely.
-	init is array of data to be set as inital conditions.
-	= either default init or latest today array.
-	*/
-
-
-	// creates or updates the section's cache file
-	//$v = array ('updated' => time());
-
-	//echo " Refreshing $cache" . BRNL;
-
-	// external $w
-			switch ($cache) {
-				case 'wapi':
-					if (! $r = $this->get_external ($cache,$this->wlocs) ){
-						// failed to get update.  Warn and go on
-						// "Warning: attempt to reload $cache failed.";
-						Log::notice("attempt to refresh $cache failed");
-						return false;
-					}
-						Log::info("Cache $cache refreshed.");
-				//	if (!$w = $this -> format_wapi($r) ){
-				// 		echo "Warning: failed to parse data returned from $cache";
-// 						return false;
-// 					}
-					$this->write_cache ($cache,$r);
-					break;
-				case 'airowm':
-					if (! $r = $this->get_external ($cache,$this->airlocs) ){
-						// failed to get update.  Warn and go on
-						//echo "Warning: attempt to reload $src failed.";
-						Log::notice("attempt to refresh $cache failed");
-						return false;
-					}
-Log::info("Cache $cache refreshed.");
-				//	if (!$w = $this -> format_airowm($r) ){
-// 						echo "Warning: failed to parse data returned from $cache";
-// 						return false;
-// 					}
-					$this->write_cache ($cache,$r);
-
-
-					break;
-
-
-				case 'properties':
-					$plocs = ['jr','cw','hq','br','kv'];
-					$w = $this->set_properties($plocs);
-					if (!$w)die ("no properties");
-					break;
-
-				case 'wgova': // alerts
-					if (! $r = $this->get_external ($cache,['hq']) ){
-					//echo  "Warning: attempt to reload $cache failed.";
-						return false;
-					}
-					Log::info("Cache $cache refreshed.");
-					$this->write_cache ($cache,$r);
-					break;
-
-				case 'wgov': //weather
-					if (! $r = $this->get_external ($cache,$this->wlocs) ){
-						// failed to get update.  Warn and go on
-	//					u\echor ($r,'in refresh cache');
-// 						echo "Warning: attempt to reload $cache failed.";
-		Log::notice("attempt to refresh $cache failed");
-						return false;
-					}
-					Log::info("Cache $cache refreshed.");
-				//	if (!$w = $this -> format_wgov($r) ){
-// 						echo "Warning: failed to parse data returned from $cache";
-// 						return false;
-// 					}
-					$this->write_cache ($cache,$r);
-					break;
-				case 'admin':
-						$w = self::$dummy_today;
-						$this->write_cache($cache,$w);
-						break;
-
-				case 'alerts':
-						$w= $this->get_alerts();
-						Log::info("Cache $cache refreshed.");
-						$this -> write_cache($cache,$w);
-						break;
-
-				case 'airnow':
-					if (! $r = $this->get_external ($cache,$this->airlocs) ){
-						// failed to get update.  Warn and go on
-// 						echo "Warning: attempt to reload $cache failed.";
-					Log::notice("attempt to refresh $cache failed");
-						return false;
-					}
-					Log::info("Cache $cache refreshed.");
-					//if (!$w = $this -> format_airnow($r) ){
-// 						echo "Warning: failed to parse data returned from $cache";
-// 						return false;
-// 					}
-					$this->write_cache ($cache,$r);
-
-					break;
-
-				case 'airq':
-					if (! $r = $this->get_external ($cache,$this->airlocs) ){
-						// failed to get update.  Warn and go on
-// 						echo "Warning: attempt to reload $cache failed.";
-						Log::notice("attempt to refresh $cache failed");
-						return false;
-					}
-					Log::info("Cache $cache refreshed.");
-					//if (!$w = $this -> format_airq($r) ){
-// 						echo "Warning: failed to parse data returned from $cache";
-// 						return false;
-// 					}
-						$this -> write_cache($cache,$r);
-						break;
-
-
-
-				case 'admin':
-
-					return true;
-					break;
-
-				case 'cgopen':
-					return false;
-
-					break;
-
-				default: return false;
-		}
-
-	return true;
-}
-
-public function Xget_external (string $src,array $locs=['hq']) {
-	/*
-		supply one of the source codes ('wapi') and an array
-		of at least one valid location (even if not used)
-
-		will return array of key data from source urls for each locatrion
-		[
-			updated => time
-			sourve => code
-			data = [
-				loc => response array,
-				loc => response array,
-			]
-		]
-
-		Routine retrieves data, retries if failure, and checks for
-		one key array value that must be present at some level of the result.
-		Set name of required field in "expected" in the location switch.
-		If blank, no test will be made.
-	*/
-
-
-	$x=[];
-	$src_name = $this->Defs->getSourceName($src);
-//echo "src: $src_name" . BRNL;
-
-
-	foreach ($locs as $loc) {
-		[$lat,$lon] = $this -> split_coord($loc);
-		$curl_header = [];
-		switch ($src) {
-			case 'airq' :
-
-
-				$expected = 'aqi'; #field to test for good result
-				$curl_header = [
-			"X-RapidAPI-Host: air-quality.p.rapidapi.com",
-			"X-RapidAPI-Key: 3265344ed7msha201cc19c90311ap10b167jsn4cb2a9e0710e"
-				];
-
-				$url = "https://air-quality.p.rapidapi.com/current/airquality?lon=$lon&lat=$lat";
-				$expected = '';
-
-				break;
-
-			case 'airowm':
-				$url = "http://api.openweathermap.org/data/2.5/air_pollution?lat={$lat}&lon={$lon}&appid=" . $this->Defs->getKey('openweathermap');
-				$expected = ''; #field to test for good result
-				break;
-
-			case 'airnow':
-				$url = "https://www.airnowapi.org/aq/observation/latLong/current/?format=application/json&latitude=$lat&longitude=$lon&distance=25&API_KEY=" . $this->Defs->getKey('airnow');
-				$expected = 'AQI'; #field to test for good result
-				break;
-
-			case 'wapi':
-				$url = 'http://api.weatherapi.com/v1/forecast.json?key=' . $this->Defs->getKey('weatherapi') . '&q='. $this->Defs->getCoords($loc) . '&days=3&aqi=yes&alerts=yes';
-					$expected = '';
-
-					break;
-			case 'wgov':
-				$url = "https://api.weather.gov/gridpoints/" . $this->Defs->getGridpoints($loc) ."/forecast";
-					$expected = 'properties';
-				break;
-
-			case 'props':
-				$url = "https://api.weather.gov/points/$lat,$lon";
-				//(https://api.weather.gov/points/{lat},{lon}).
-				$expected = 'properties';
-				break;
-
-			case 'wgova':
-				$url = 'https://api.weather.gov/alerts/active/zone/CAZ230';
-				$expected = '';
-
-				break;
-
-			default: die ("Unknown source requested for external data: $src");
-
-		}
-
-
-// attempt to get data.  3 retries.
-	if (!$aresp = $this->get_external($src,$url, $expected, $curl_header) )
-	{
-		#Log::info("get_external failed on $src, $url, $expected");
-		return false;
-	}
-	$x[$loc] = $aresp;
-	} # next loc
-
-	return $x;
-}
-
-public function Xupdate_section(string $section,array $u) {
-		// reads section cache
-		// merges in $u
-		// saves to cache
-
-
-		if (file_exists(CACHE[$section])){
-			$y = json_decode(file_get_contents(CACHE[$section]), true);
-		} else {
-			$y = [];
-		}
-
-		$z = array_merge($y, $u);
-//  		u\echor ($z,"Merged in Update $section", );
-		$this->write_cache($section, $z);
-		return true;
-	}
-
-
-private function XlockCache(){
-	/* use lock_cache and unlock_cache to
-	/ set and remove file.
-	// use to prevent writing to file while it is beeing read
-	before reading file, set lock; remove when done.
-	before writing file, look for lock and wait for it to go away.
-
-	*/
-		touch ($this->cache_lock) ;
-
-
-}
-private function XunlockCache($section = ''){
-	// Log::info ("keeping cahce lock $section");
-// 	return [];
-		if (file_exists($this->cache_lock) ){
-				unlink ($this->cache_lock);
-		} else {
-			Log::notice("cannot unlock,,. cache_lock does not exist: $section.");
-		}
-}
-
-private function XtestLock(){
-	$lock_count = 0;
-		while (file_exists($this->cache_lock)){
-			++$lock_count;
-			if ($lock_count > 3){
-				return false;
-			}
-			sleep (2);
-		}
-		return true;
-
-}
-
-########   LOAD ###############
-#-----------------  LOAD today --------------------
-
-// private function Xload_today() {
-// 		$refresh = false;
-// 		$section = 'today';
-// 		if (! file_exists (CACHE[$section])) {
-//
-// 			$refresh = true;
-// 		}
-//
-// 		if ($refresh) {
-// 			$this->refresh_cache($section);
-// 		}
-//
-// 		$y = json_decode (file_get_contents(CACHE[$section]), true);
-// 		if (empty($y['camps'])){ #test fpr local stuff there
-// // need to send an alert iuf this happens
-// 			$y = self::$dummy_today;
-// 		}
-// // 	u\echor($y,'loaded today');
-//
-//
-//
-// // u\echor($y,'today after clean', STOP);
-//
-// 		$target_date = date('l, d M Y');
-// 		$y['target'] = $target_date;
-// 		$y['updated'] = date ('d M H:i');
-//
-// 		return $y;
-//
-//
-//
-//
-// }
 
 } #end class

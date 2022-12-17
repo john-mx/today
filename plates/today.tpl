@@ -20,19 +20,15 @@ switch ($pcode) {
 
 <?php
 //u\echor($data,'data');
-	$this->insert('light_condensed',$data);
+	$this->insert('light',['data' =>$data]);
 ?>
 <?php
 	$this->insert('notices',['notices' => $data['notices']]);
 ?>
 
 <?php
-	$conditions = array(
-		'fire'=>$data['fire'],
-		'air'=>$data['air'],
-		'current' =>  $data['wapi']['current'],
-		);
-	$this->insert('conditions',$conditions);
+
+	$this->insert('conditions',$data);
 ?>
 
 <?php $this->insert('advice',['advice' => $data['advice']]); ?>

@@ -3,7 +3,8 @@
 <b>Help Keep The Line Moving –
 Purchase Your Pass Before You Get To The Entrance</b>
 </div>
-<table  class=' alt-gray '>
+
+<table  class=' alt-gray auto '>
 
 <tr style='col-border;' ><th colspan='4' class='no-bottom'></th><th colspan='3' style='border-bottom:1px solid black;'>Where to Get Yours</th></tr>
 <tr  style='background-color:white;' class='no-borders col-border ' ><th>Pass</th><th>For</th><th>Valid For</th><th>Price</th><th>Rec.gov</th><th>Entrance Station</th><th>Visitor Center</th></tr>
@@ -21,6 +22,7 @@ Purchase Your Pass Before You Get To The Entrance</b>
 
 
 </table>
+
 <div class='inleft2'><b>On-line passes available at recreation.gov. Entrance stations take credit card only — no cash.</b><br />
 * Documentation required for special passes.<br>
 4th grade pass requires printed voucher from school or https://everykidoutdoors.gov/

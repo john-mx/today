@@ -7,7 +7,8 @@ ini_set('display_errors', 1);
 //BEGIN START
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 
-	use DigitalMx\jotr\Utilities as U;
+//	use DigitalMx\jotr\Utilities as U;
+	use DigitalMx as u;
 	use DigitalMx\jotr\Refresh;
 	use DigitalMx\jotr\Definitions as Defs;
 
@@ -17,13 +18,16 @@ ini_set('display_errors', 1);
 	$Today = $container['Today'];
 	$Cal = $container['Calendar'];
 
+$meta = array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
 	'page' => basename(__FILE__),
 	'subtitle' => 'Test page',
-	'extra' => "",
+	'extra' => "<script src='/js/show_time.js'></script>",
 
-	);
+);
 
+echo $Plates->render('head',$meta);
+echo $Plates->render('title',$meta);
 //END START
 
 $wlocs = ['jr','cw','kv','hq','br'];
@@ -33,8 +37,15 @@ $twolocs = ['jr','hq'];
 
 // what function?
 
-$f = refresh();
+$f = dtime();
 
+function dtime(){
+echo "time is ";
+echo
+"<script>document.write(show_time())</script>"
+;
+
+}
 function refresh($force=false){
 	$U = new Utilities();
 	echo $U->over_cache_time('wgov');
@@ -67,9 +78,11 @@ function today(){
 function light(){
 	global $Today,$Plates,$Defs;
 
-	$z=$Today->build_topic_light ();
-	echo $Plates->render('light',['data'=>$z]);
-	u\echor($z,'prepared liught');
+	$z=$Today->prepare_topics();
+	echo $Plates->render('light-summary',['data'=>$z]);
+	echo $Plates->render('conditions',$z);
+	echo "<hr>";
+//	u\echor($z,'data');
 	exit;
 }
 
@@ -164,7 +177,7 @@ function t4 ($Plates,$Today) {
 	//echo $data; exit;
 	$Today->print_pdf($data,'pages/test2.pdf');
 }
-echo "Done" . BRNL;
+echo BR . "Done" . BRNL;
 
 
 exit;

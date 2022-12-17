@@ -53,49 +53,9 @@ $wday = $wapi['forecast']['jr'][0];
 	<p class='center'><i><?=$data['pithy']?></i></p>
 <?php endif; ?>
 
-<table style='width:100%;font-size:1.2rem;' >
-<tr class='no-bottom' >
-<td class='width50 center;'>
-	<h3><u>Today</u></h3>
-	<?php if ($gday[0] ): ?>
-	<p><b><?= $gday[0]['shortForecast'] ?></b></p>
-	<img src="<?=$wgov['jr'][1][0]['icon']?>" >
+<?php $this->insert('light',['data' => $data]); ?>
 
-	<?php endif; ?>
-</td><td class='width50 center;'>
-
-	<h3><u>Tonight</u></h3>
-	<p ><b><?= $gday[1]['shortForecast'] ?></b></p>
-	<img src="/images/moon/<?= $light['moonpic'] ?>" style='width:76px' ><br />
-	<?=$light['moonphase'] ?>
-
-</td>
-</tr>
-<tr class='no-top'><td>
-<?php if ($gday[0] ): ?>
-	<p  style='font-size:1rem;'>
-		<?=$gday[0]['highlow']?><br />
-		Sunrise: <?= $light['sunrise'] ?> Sunset: <?= $light['sunset'] ?>
-	</p>
-<?php else: ?>
-	N/A
-<?php endif; ?>
-</td><td>
-
-	<p  style='font-size:1rem;'>
-	<?=$gday[1]['highlow']?><br />
-	Moonrise: <?= $light['moonrise'] ?>  Moonset: <?= $light['moonset'] ?><br />
-	</p>
-</td></tr>
-
-
-</table>
-<h4>Conditions</h4>
-
-						<?=$aqday ?>
-						<?=$uvday ?>
-					Wind: up to <?= $wday['maxwind']?> mph (<?= $wday['maxwindM'] ?> kph) (higher gusts possible) <br>
-
+<?php $this->insert('conditions',$data); ?>
 <hr>
 <h4>Forecast</h4>
 		<?php

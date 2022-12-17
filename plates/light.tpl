@@ -1,38 +1,54 @@
 <?php
-use DigitalMx\jotr\Definitions as Defs;
-use DigitalMx as u;
+
+$gupdated = '';
+$wupdated = '';
+if(empty($wgov = $data['wgov'])): echo "<p>No wgov Data</p>"; exit;
+	else:
+	$gupdated =  date('M d g:i a',$wgov['update']);
+	endif;
+
+if(empty($wapi=$data['wapi'])): echo "<p>No wapi Data</p>"; exit;
+	else:
+	$wupdated =  date('M d g:i a',$wapi['update']);
+	endif;
+
+$light = $data['light']['light'];
+$uv = $data['light']['uv'];
+$air = $data['air'];
+$gday = $wgov['jr'][1];
+$wday = $wapi['forecast']['jr'][0];
+
+
 ?>
 
-<?php if(empty($light)): echo "<p>No Data</p>"; else:
-//u\echor($light,'in tpl', NOSTOP);
-$lightd = $light['light'];
-$uv = $light['uv'];
-?>
 
-<table class = 'inleft2'>
-<colgroup>
-	<col style='width:50%;'>
-	<col style='width:50%;'>
-
-</colgroup>
-
-<tr class='no-border'><td ><b>Today</b></td><td class='bg-black white'><b>Tonight</b></td></tr>
-<tr class='no-border'>
-	<td>Sunrise <?=$lightd['sunrise']?> Set <?=$lightd['sunset']?> </td>
-<td class='bg-black white' >Moonrise <?=$lightd['moonrise']?> Set <?=$lightd['moonset']?></td>
-</tr>
-
-<tr class='no-border'>
-	<td ><p style='width:100%'><b>UV Exposure:</b> <?= $uv['uv'] ?>
-	<span style = 'background-color:<?=$uv['uvcolor']?>;'>   <?=$uv['uvscale']?></span></p>
-	<p><?=$uv['uvwarn']?></p>
-
-	</td>
-	<td class='bg-black' ><p class='white'><?=$lightd['moonphase']?></p>
-	<img src= "/images/moon/<?=$lightd['moonpic'] ?>" /></td>
-</tr>
+<div class ='center' style='vertical-align:top' >
+<div class='border center inlineblock' style=' font-weight:bold; width:40%; vertical-align:top; height:35ex;' >
+	<h3><u>Today</u></h3>
+	<p><?= $gday[0]['shortForecast'] ?></p>
+	<p><?=$gday[0]['highlow']?><br />
+	Sunrise: <?= $light['sunrise'] ?> Sunset: <?= $light['sunset'] ?>
+	</p>
+	<img src="<?=$wgov['jr'][1][0]['icon']?>" ><br />
 
 
+</div>
 
-</table>
-<?php endif; ?>
+<div class='inlineblock' style='width:2em;'></div>
+
+<div class='border center inlineblock' style='font-weight:bold; width:40%; vertical-align:top; height:35ex;'>
+	<h3><u>Tonight</u></h3>
+	<p><?= $gday[1]['shortForecast'] ?></p>
+	<p><?=$gday[1]['highlow']?><br />
+	Moonrise: <?= $light['moonrise'] ?>  Moonset: <?= $light['moonset'] ?><br />
+	</p>
+		<img src="/images/moon/<?= $light['moonpic'] ?>" style='width:76px' ><br />
+	<p>
+		<?=$light['moonphase'] ?>
+	</p>
+</div>
+
+</div>
+
+
+
