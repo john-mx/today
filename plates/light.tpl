@@ -46,7 +46,7 @@ $wday = $wapi['forecast']['jr'][0];
 	<div class='border center inlineblock' style='font-weight:bold; width:40%; vertical-align:top; height:22ex;'>
 	<h3><u>Tonight</u></h3>
 		<div class=' inlineblock center' style='vertical-align:top;'>
-		<img src="/images/moon/<?= $light['moonpic'] ?>" style='width:76px' ><br />
+		<img src="/images/moon/<?= $light['moonpic'] ?>" style='width:76px' class='auto' ><br />
 	<?= $gday[1]['shortForecast'] ?>
 		</div>
 		<div class=' center inlineblock' style='float:right;vertical-align:top;'>
