@@ -31,43 +31,45 @@ switch ($qs) {
 
 <!-- end page-->
 </div>
+
+<!--
 <div id="page2" style="display: <?=$divvis?>;">
 
 	<?php $this->insert('advice',['advice' => $data['advice']]); ?>
 
-<!-- end page-->
+<!~~ end page~~>
 </div>
+ -->
+
 <div id="page4" style="display: <?=$divvis?>;">
 
 <?php $this->insert('weather-jr',['weather' => $data['wgov'] ]); ?>
-
-<!-- end page-->
 </div>
+<!-- end page-->
 <div id="page3" style="display: <?=$divvis?>;">
 
 <?php $this->insert('calendar',['calendar' => $data['calendar']]) ?>
-
-<!-- end page-->
 </div>
+<!-- end page-->
+<!--
 <div id="page5" style="display: <?=$divvis?>;">
 
 <?php $this->insert('campground-wide',['camps' => $data['camps'] ]); ?>
-
-
-<!-- end page-->
 </div>
+ -->
+<!-- end page-->
 <div id="page6" style="display: <?=$divvis?>;">
-<?php $this->insert('feesA'); ?>
 
-<!-- end page-->
+<?php $this->insert('feesA'); ?>
 </div>
+<!-- end page-->
 <div id="page7" style="display: <?=$divvis?>;">
 <?php $this->insert('feesB'); ?>
 
 <?php $this->insert('end'); ?>
-
-<!-- end page-->
 </div>
+<!-- end page-->
+
 
 </div> <!-- end content -->
 
