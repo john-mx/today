@@ -23,32 +23,44 @@ $wday = $wapi['forecast']['jr'][0];
 
 
 <div class ='center' style='vertical-align:top' >
-<div class='border center inlineblock' style=' font-weight:bold; width:40%; vertical-align:top; height:35ex;' >
+
+	<div class='border center inlineblock' style=' font-weight:bold; width:40%; vertical-align:top; height:22ex;' >
 	<h3><u>Today</u></h3>
-	<p><?= $gday[0]['shortForecast'] ?></p>
-	<p><?=$gday[0]['highlow']?><br />
-	Sunrise: <?= $light['sunrise'] ?> Sunset: <?= $light['sunset'] ?>
-	</p>
-	<img src="<?=$wgov['jr'][1][0]['icon']?>" ><br />
+		<div class=' inlineblock center' style='vertical-align:top;'>
+		<img src="<?= $wgov['jr'][1][0]['icon'] ?>" class='auto' ><br />
+		<?= $gday[0]['shortForecast'] ?>
+		</div >
+		<div class=' center inlineblock' style='float:right;vertical-align:top;'>
 
+		<p><?=$gday[0]['highlow']?><br />
+		<br />
+		Sunrise: <?= $light['sunrise'] ?> Sunset: <?= $light['sunset'] ?>
+		</p>
+		</div>
 
-</div>
+	</div>
 
-<div class='inlineblock' style='width:2em;'></div>
+	<div class='inlineblock' style='width:2em;'></div>
 
-<div class='border center inlineblock' style='font-weight:bold; width:40%; vertical-align:top; height:35ex;'>
+	<div class='border center inlineblock' style='font-weight:bold; width:40%; vertical-align:top; height:22ex;'>
 	<h3><u>Tonight</u></h3>
-	<p><?= $gday[1]['shortForecast'] ?></p>
-	<p><?=$gday[1]['highlow']?><br />
-	Moonrise: <?= $light['moonrise'] ?>  Moonset: <?= $light['moonset'] ?><br />
-	</p>
+		<div class=' inlineblock center' style='vertical-align:top;'>
 		<img src="/images/moon/<?= $light['moonpic'] ?>" style='width:76px' ><br />
-	<p>
-		<?=$light['moonphase'] ?>
+	<?= $gday[1]['shortForecast'] ?>
+		</div>
+		<div class=' center inlineblock' style='float:right;vertical-align:top;'>
+	<p><?=$gday[1]['highlow']?><br />
+	<br />
+	Moonrise: <?= $light['moonrise'] ?>  Moonset: <?= $light['moonset'] ?><br />
+	<?=$light['moonphase'] ?><br />
 	</p>
-</div>
+		</div>
+		<br />
+	</div>
 
 </div>
+
+
 
 
 
