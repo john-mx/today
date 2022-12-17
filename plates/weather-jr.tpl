@@ -33,7 +33,7 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 
 <?php	foreach ($weather as $loc=>$days) :
 		if ($loc == 'update') continue;
-		if ($loc !== 'jr') continue; // only show jr
+		if (! in_array($loc,[ 'jr','cw'])) continue; // only show jr
 		$locname = Defs::$sitenames[$loc];
 
 		?>
