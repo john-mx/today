@@ -37,6 +37,7 @@ $wday = $wapi['forecast']['jr'][0];
 		Sunrise: <?= $light['sunrise'] ?> Sunset: <?= $light['sunset'] ?>
 		</p>
 		</div>
+		<div class='clear'></div>
 
 	</div>
 
@@ -55,6 +56,7 @@ $wday = $wapi['forecast']['jr'][0];
 	<?=$light['moonphase'] ?><br />
 	</p>
 		</div>
+	<div class='clear'></div>
 		<br />
 	</div>
 
