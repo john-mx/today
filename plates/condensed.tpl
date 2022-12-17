@@ -56,12 +56,11 @@ switch ($qs) {
 <!-- end page-->
 <?php endif; ?>
 
-<!--
 <div id="page5" style="display: <?=$divvis?>;">
 
 <?php $this->insert('campground-wide',['camps' => $data['camps'] ]); ?>
 </div>
- -->
+
 <!-- end page-->
 <div id="page6" style="display: <?=$divvis?>;">
 

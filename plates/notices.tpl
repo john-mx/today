@@ -12,7 +12,7 @@ use DigitalMx as u;
   <h4>Announcements and Alerts</h4>
   <div class='inleft2'>
     <?php if ($d):?>
-    <div class='float warn red' style='width:45%;'>
+    <div class=' warn red' >
         <?php
                 echo "<ul>";
                 $anlist = explode("\n",$d);
@@ -26,7 +26,7 @@ use DigitalMx as u;
     <?php endif; ?>
 
     <?php if($e) : ?>
-    <div class='float warn' style='width:45%;'>
+    <div class=' warn' >
 
         <?php
                 echo "<ul>";
@@ -40,6 +40,6 @@ use DigitalMx as u;
 
     </div>
     <?php endif; ?>
- 	 <div class='clear'></div>
+
   </div>
 <?php endif; ?>
