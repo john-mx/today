@@ -370,9 +370,9 @@ public function build_topic_current() {
 
 	$y=$z['lhrs']['properties'];
 	$y['updatets'] = strtotime($z['lhrs']['properties']['timestamp']);
-	$y['temp_c']= round($y['temperature']['value'],1);
+	$y['temp_c']= round($y['temperature']['value']??0,1);
 	$y['temp_f'] =round( ($y['temp_c'] * 9/5) + 32);
-	$y['wind_kph'] = round($y['windSpeed']['value']);
+	$y['wind_kph'] = round($y['windSpeed']['value']?? 0);
 	$y['wind_mph'] = round($y['wind_kph'] /2.2) . " " . $this->degToDir($y['windDirection']);
 // u\echor($y,'current', NOSTOP);
 	return ['current' => $y];
