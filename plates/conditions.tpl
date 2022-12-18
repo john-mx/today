@@ -66,7 +66,7 @@ EOT;
 $currentwind = <<<EOT
 <div class='conditions'>
 <b>Wind:</b>
-		${current['wind_mph']} mph ( ${current['wind_kph']} kph)
+		${current['wind_mph']} mph ( ${current['wind_kph']} kph) ${current['wind_direction']}
 
 </div>
 EOT;
@@ -76,17 +76,17 @@ EOT;
 
 <h4>Park Conditions</h4>
 <div class='inleft2'>
-
+<div class='floatl width45 left'>
+	<h5>In the Park</h5>
 	<?=$fireday?>
 
 
 	<?=$aqday?>
 	<?=$uvday?>
-<br />
-	<div class='conditions'>
-	<b>Near Hidden Valley at <?=$current_asof?>: </b>
-	</div>
+</div>
+<div class='floatr width45 left'>
 
+	<h5>Near Hidden Valley at <?=$current_asof?>: </h5>
 	<?=$currentday?>
 
 	<?=$currentwind?>
@@ -94,3 +94,4 @@ EOT;
 
 </div>
 <div class='clear'></div>
+</div>

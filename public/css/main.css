@@ -14,6 +14,7 @@ h5
 	margin-bottom: 3px;
 	font-size: 1rem;
 	text-decoration:underline;
+	margin-top:3px;
 
 }
 h4
@@ -130,8 +131,14 @@ button {
 	color:white;
 }
 
-div.float {float:left; margin-right:1rem;;}
-div.clear {clear:left;}
+div.float, div.floatl {float:left; margin-right:1rem;;}
+div.floatr {float:right; margin-left:1rem;;}
+div.clear {clear:both;}
+div.clearafter::after{
+    content: '';
+    display: block;
+    clear: both;
+}
 
 div.conditions {
 	margin-bottom:1em;

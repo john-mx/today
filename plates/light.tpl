@@ -22,11 +22,9 @@ $wday = $wapi['forecast']['jr'][0];
 //u\echor($gday,'gday',NOSTOP);
 
 ?>
+<div class ='center clearafter' style='vertical-align:top' >
 
-
-<div class ='center' style='vertical-align:top' >
-
-	<div class='border center inlineblock' style=' font-weight:bold; width:40%; vertical-align:top; height:24ex;' >
+	<div class='border center floatl' style=' font-weight:bold; width:48%; vertical-align:top; height:24ex;' >
 	<h3><u>Today</u></h3>
 	<?php $i=1; if (!isset($gday[$i])): $i=0; ?>
 		The Day is Done!
@@ -35,41 +33,38 @@ $wday = $wapi['forecast']['jr'][0];
 		<img src="<?= $wgov['jr'][1][0]['icon'] ?>" class='auto' ><br />
 		<?= $gday[0]['shortForecast'] ?>
 		</div >
-		<div class=' center inlineblock' style='float:right;vertical-align:top;width:60%'>
+
+		<div class=' center inlineblock' style='vertical-align:top;width:55%'>
 
 		<p style='margin-top:0'><?=$gday[0]['highlow']?><br />
 		<br />
-		Sunrise: <?= $light['sunrise'] ?> Sunset: <?= $light['sunset'] ?>
+		Sunrise:&nbsp;<?= $light['sunrise'] ?> Sunset:&nbsp;<?= $light['sunset'] ?>
 		</p>
 		</div>
-		<div class='clear'></div>
-
 	<?php endif; ?>
 	</div>
 
-	<div class='inlineblock' style='width:2em;'></div>
 
-	<div class='border center inlineblock' style=' font-weight:bold; width:40%; vertical-align:top; height:24ex;' >
+
+	<div class='border center floatr' style=' font-weight:bold; width:45%; vertical-align:top; height:24ex; ' >
 
 	<h3><u>Tonight</u></h3>
 		<div class=' inlineblock center' style='vertical-align:top;width:40%;'>
 		<img src="/images/moon/<?= $light['moonpic'] ?>" style='width:76px' class='auto' ><br />
 	<?= $gday[$i]['shortForecast'] ?>
 		</div>
-		<div class=' center inlineblock' style='float:right;vertical-align:top;width:60%'>
+		<div class=' center inlineblock' style='vertical-align:top;width:55%'>
 	<p style='margin-top:0' ><?=$gday[$i]['highlow']?><br />
 	<br />
-	Moonrise: <?= $light['moonrise'] ?>  Moonset: <?= $light['moonset'] ?><br />
-	<?=$light['moonphase'] ?><br />
+	Moonrise:&nbsp;<?= $light['moonrise'] ?>  Moonset:&nbsp;<?= $light['moonset'] ?><br />
+	<?=$light['moonphase'] ?> (<?=$light['moonillumination']?>%&nbsp;illum)
 	</p>
 		</div>
 
-		<br />
-		<div class='clear'></div>
+
 	</div>
 
 </div>
-
 
 
 

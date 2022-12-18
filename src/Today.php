@@ -370,10 +370,12 @@ public function build_topic_current() {
 
 	$y=$z['lhrs']['properties'];
 	$y['updatets'] = strtotime($z['lhrs']['properties']['timestamp']);
-	$y['temp_c']= round($y['temperature']['value']??0,1);
-	$y['temp_f'] =round( ($y['temp_c'] * 9/5) + 32);
-	$y['wind_kph'] = round($y['windSpeed']['value']?? 0);
-	$y['wind_mph'] = round($y['wind_kph'] /2.2) . " " . $this->degToDir($y['windDirection']);
+	$y['temp_c']= is_null($y['temperature']['value']) ? '?' : round($y['temperature']['value'],1);
+	$y['temp_f'] = is_null($y['temperature']['value']) ? '?' :round( ($y['temp_c'] * 9/5) + 32);
+	$y['wind_kph'] = is_null($y['windSpeed']['value'])? '?':round($y['windSpeed']['value']);
+	$y['wind_mph'] =  is_null($y['windSpeed']['value'])? '?':round($y['wind_kph'] /2.2) ;
+	$y['wind_direction'] = $this->degToDir($y['windDirection']['value']??0);
+
 // u\echor($y,'current', NOSTOP);
 	return ['current' => $y];
 }
@@ -1277,6 +1279,8 @@ private function time_format($time) {
 	if (substr($time,0,1) == '0'){
 		$time = substr ($time, 1);
 	}
+	$time=str_replace(' AM','&nbsp;AM',$time);
+	$time=str_replace(' PM','&nbsp;PM',$time);
 
 	return $time;
 }
