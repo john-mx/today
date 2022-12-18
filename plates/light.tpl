@@ -22,9 +22,9 @@ $wday = $wapi['forecast']['jr'][0];
 //u\echor($gday,'gday',NOSTOP);
 
 ?>
-<div class ='center clearafter' style='vertical-align:top' >
+<div class ='center clearafter flex-container' style='vertical-align:top' >
 
-	<div class='border center floatl' style=' font-weight:bold; width:48%; vertical-align:top; height:24ex;' >
+	<div class='border center floatl' style=' font-weight:bold; width:48%; vertical-align:top; ' >
 	<h3><u>Today</u></h3>
 	<?php $i=1; if (!isset($gday[$i])): $i=0; ?>
 		The Day is Done!
@@ -40,13 +40,14 @@ $wday = $wapi['forecast']['jr'][0];
 		<br />
 		Sunrise:&nbsp;<?= $light['sunrise'] ?> Sunset:&nbsp;<?= $light['sunset'] ?>
 		</p>
+		<br />
 		</div>
 	<?php endif; ?>
 	</div>
 
 
 
-	<div class='border center floatr' style=' font-weight:bold; width:45%; vertical-align:top; height:24ex; ' >
+	<div class='border center floatr' style=' font-weight:bold; width:45%; vertical-align:top;' >
 
 	<h3><u>Tonight</u></h3>
 		<div class=' inlineblock center' style='vertical-align:top;width:40%;'>
@@ -59,6 +60,7 @@ $wday = $wapi['forecast']['jr'][0];
 	Moonrise:&nbsp;<?= $light['moonrise'] ?>  Moonset:&nbsp;<?= $light['moonset'] ?><br />
 	<?=$light['moonphase'] ?> (<?=$light['moonillumination']?>%&nbsp;illum)
 	</p>
+		<br />
 		</div>
 
 

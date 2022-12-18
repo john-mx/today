@@ -140,6 +140,16 @@ div.clearafter::after{
     clear: both;
 }
 
+div.flex-container{
+    display: -webkit-flex; /* Safari */
+    display: flex; /* Standard syntax */
+}
+div.flex-container > div{
+    -webkit-flex: 1; /* Safari */
+    -ms-flex: 1; /* IE 10 */
+    flex: 1; /* Standard syntax */
+}
+
 div.conditions {
 	margin-bottom:1em;
 	vertical-align:top;
