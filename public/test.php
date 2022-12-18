@@ -37,7 +37,7 @@ $twolocs = ['jr','hq'];
 
 // what function?
 
-$f = dtime();
+$f = wapi(['jr']);
 
 function dtime(){
 echo "time is ";
@@ -130,6 +130,14 @@ global $Today,$Plates,$Defs;
 	exit
 	;
 	}
+
+function wapi(array $loc) {
+	global $Today,$Plates,$Defs;
+
+	$z = $Today->rebuild_cache_wgov($loc);
+	u\echor($z);
+}
+
 function props (){
 	global $Today,$Plates,$Defs;
 

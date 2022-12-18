@@ -109,6 +109,7 @@ public static $coordinates = [
 	'pdx' => '45.5152,-122.6784',
 	'shasta' => '41.3099,-122.3106',
 	'denver' => '39.7392,-104.9903',
+	'lh' => '34.01779,-116.18857',
 ];
 
 	public static $api_keys = array (
@@ -196,6 +197,7 @@ public static $coordinates = [
 		'hq'	=> 'Twentynine Palms',
 		'kv' => 'Keys View',
 		'pdx' => 'Portland, OR',
+		'lh' => 'Lost Horse Ranger Station',
 	];
 
 	public static $campsites = [
@@ -262,6 +264,7 @@ public static $campfees = [
 				'galerts' => REPO_PATH . "/var/galerts.json",
 				'cgopen' => REPO_PATH . "/var/cgopen.json",
 				'camp' => REPO_PATH . "/var/camp.json",
+				'current' => REPO_PATH . "/var/current.json",
 			);
 
 // time before refresh in minutes.  0 means
@@ -273,7 +276,7 @@ public static $campfees = [
 				'admin' => 0,
 				'properties' => 0, // not using this
 				'wgov' => 50,
-				'wapi' => 60,
+				'wapi' => 120,
 				'airq' => 0,
 				'airnow' => 240,
 				'airowm' => 0,
@@ -281,6 +284,7 @@ public static $campfees = [
 				'galerts' => 120,
 				'cgopen' =>0,
 				'camp' => 0,
+				'current' => 60,
 
 
 

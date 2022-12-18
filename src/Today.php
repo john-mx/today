@@ -210,6 +210,7 @@ public function prepare_topics(){
 			$this->build_topic_light(),
 			$this->build_topic_air(),
 			$this->build_topic_calendar(),
+			$this->build_topic_current(),
 
 
 
@@ -361,7 +362,33 @@ public function build_topic_calendar() {
 	$y=$this->Cal->filter_calendar($z,2);
 	return ['calendar' => $y];
 }
+public function build_topic_current() {
+	if (!$z=$this->load_cache('current')) {
+	 	Log::error ("Could not load cache current");
+	 	return [];
+	 }
 
+	$y=$z['lhrs']['properties'];
+	$y['updatets'] = strtotime($z['lhrs']['properties']['timestamp']);
+	$y['temp_c']= round($y['temperature']['value'],1);
+	$y['temp_f'] =round( ($y['temp_c'] * 9/5) + 32);
+	$y['wind_kph'] = round($y['windSpeed']['value']);
+	$y['wind_mph'] = round($y['wind_kph'] /2.2) . " " . $this->degToDir($y['windDirection']);
+// u\echor($y,'current', NOSTOP);
+	return ['current' => $y];
+}
+
+public function degToDir($deg) {
+	if ($deg <= 22.5) return 'N';
+	if ($deg <= 67.5) return 'NE';
+	if ($deg <= 112.5) return 'E';
+	if ($deg <= 157.5) return 'SE';
+	if ($deg <= 202.5) return 'S';
+	if ($deg <= 247.5) return 'SW';
+	if ($deg <= 292.5) return 'W';
+	if ($deg <= 337.5) return 'NW';
+	if ($deg <= 382.5) return 'N';
+}
 public function build_admin_calendar() {
 	if (!$z=$this->load_cache('calendar')) {
 	 	Log::error ("Could not load cache calendar");
@@ -395,7 +422,7 @@ public function build_topic_light() {
 	 }
 	$zz = $this->format_wapi($y);
 
-	#u\echor($zz,'formatted light', NOSTOP);
+//	u\echor($zz,'formatted wapi', STOP);
 
 	$z['light']= $zz['light'];
 	$z['light']['moonpic'] = $this->Defs->getMoonPic($z['light']['moonphase']);
@@ -519,6 +546,9 @@ Log::info ("Starting cache refresh cycle");
 		if ($this->over_cache_time('galerts')> 0 || $force) {
 				$this->rebuild_cache_galerts();
 		}
+		if ($this->over_cache_time('current') > 0 || $force) {
+			$this->rebuild_cache_current();
+		}
 
 			#	$this -> rebuild_properties('jr');
 Log::info ("Completed cache refresh cycle");
@@ -530,7 +560,7 @@ Log::info ("Completed cache refresh cycle");
 // Could try to merge old and new, so only mssing location gets retained, but
 // seems to complex right now.
 
-private function rebuild_cache_wapi($locs=[] ) {
+public function rebuild_cache_wapi(array $locs=[] ) {
 	$x=[];
 	$src = 'wapi';
 	if (empty($locs)){$locs = $this->wlocs;}
@@ -540,6 +570,7 @@ private function rebuild_cache_wapi($locs=[] ) {
 		$curl_header = [];
 
 		$url = 'http://api.weatherapi.com/v1/forecast.json?key=' . $this->Defs->getKey('weatherapi') . '&q='. $this->Defs->getCoords($loc) . '&days=3&aqi=yes&alerts=yes';
+	echo "url: $url". BRNL;
 		$expected = '';
 		$loginfo = "$src:$loc";
 		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
@@ -605,7 +636,32 @@ private function rebuild_cache_airowm() {
 
 }
 
-public function rebuild_cache_wgov() {
+public function rebuild_cache_current () {
+	/* latest data from LHRS
+	curl -X GET "https://api.weather.gov/stations/LTHC1/observations/latest" -H "accept: application/geo+json"
+	*/
+	$src = 'current';
+	$loc = 'lhrs';
+	$curl_header = [];
+
+		$url = "https://api.weather.gov/stations/LTHC1/observations/latest" ;
+		#$url = "https://api.weather.gov/points/$lat,$lon";
+		$expected = 'properties';
+
+		$loginfo = "$src current";
+		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
+			Log::notice("Failed $loginfo.  Rebuild aborted."); return [];
+		} //if one loc fails, fail the whole thing
+
+		$x[$loc] = $aresp;
+
+	Log::info("Saved updated cache $src");
+	$this->write_cache($src,$x);
+	return $x;
+}
+
+
+public function rebuild_cache_wgov(array $loc = []) {
 /*
 https://api.weather.gov/gridpoints/{office}/{grid X},{grid Y}/forecast
 
@@ -649,14 +705,14 @@ coord: 34.0714,-116.3906,
 
 	$x=[];
 	$src = 'wgov';
-	$locs = $this->wlocs;
+	$locs ??= $this->wlocs;
 	#$locs = ['br'];
 
 	foreach ($locs as $loc) {
 		[$lat,$lon] = $this -> split_coord($loc);
 		$curl_header = [];
 
-		$url = "https://api.weather.gov/gridpoints/" . $this->Defs->getGridpoints($loc) ."/forecast";
+		$url = "https://api.weather.gov/gridpoints/" . $this->Defs->getGridpoints($loc) . '/forecast' ; #./forecast
 		#$url = "https://api.weather.gov/points/$lat,$lon";
 		$expected = 'properties';
 
@@ -669,7 +725,7 @@ coord: 34.0714,-116.3906,
 	} # next loc
 	Log::info("Saved updated cache $src");
 	$this->write_cache($src,$x);
-
+	return $x;
 }
 
 private function rebuild_cache_airnow() {

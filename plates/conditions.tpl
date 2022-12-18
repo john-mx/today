@@ -9,7 +9,8 @@ $uv = $light['uv'];
 $air = $air;
 $gday = $wgov['jr'][1];
 $wday = $wapi['forecast']['jr'][0];
-$current = $wapi['current'];
+
+//u\echor ($current);
 
 $uvday = <<<EOT
 <div class= 'conditions'>
@@ -51,31 +52,44 @@ $fireday = <<<EOT
 </div>
 EOT;
 
-$currenttempdt = date('g:i a',$current['last_updated_epoch']);
+
+//u\echor($current,'curr',STOP);
+$current_asof = date('g:i a',$current['updatets']);
 $currentday = <<<EOT
 <div class= 'conditions'>
-<b>Temperature: </b> <small>at Jumbo Rock</small><br />
-	&nbsp;&nbsp;&nbsp;
-		${current['temp_f']}  &deg;F ( ${current['temp_c']} &deg;C) at $currenttempdt
-		<br>
+<b>Temperature: </b>
+		${current['temp_f']}  &deg;F ( ${current['temp_c']} &deg;C)
+
 		</div>
 EOT;
 
+$currentwind = <<<EOT
+<div class='conditions'>
+<b>Wind:</b>
+		${current['wind_mph']} mph ( ${current['wind_kph']} kph)
+
+</div>
+EOT;
 ?>
 
 
 
 <h4>Park Conditions</h4>
-<div class='center'>
+<div class='inleft2'>
 
 	<?=$fireday?>
 
 
 	<?=$aqday?>
 	<?=$uvday?>
+<br />
+	<div class='conditions'>
+	<b>Near Hidden Valley at <?=$current_asof?>: </b>
+	</div>
 
-	<?=$windday?>
+	<?=$currentday?>
 
+	<?=$currentwind?>
 
 
 </div>
