@@ -7,11 +7,11 @@ ini_set('display_errors', 1);
 	require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 	use DigitalMx as u;
 	use DigitalMx\jotr\Definitions as Defs;
-	use DigitalMx\jotr\Today;
+
 
 	$Plates = $container['Plates'];
-	$Defs = $container['Defs'];
-	$Today = $container['Today'];
+=
+
 	$Cal = $container['Calendar'];
 	$Login = $container['Login'];
 
@@ -21,7 +21,7 @@ ini_set('display_errors', 1);
 $meta=array(
 	//'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
 	'page' => basename(__FILE__),
-	'subtitle' => 'Calendaar admin',
+	'subtitle' => 'Calendar admin',
 	'extra' => "",
 
 	);
@@ -31,6 +31,7 @@ echo $Plates->render('title',$meta);;
 
 if (isset($_POST['pw']) ) {// is login
 	$Login->set_pwl($_POST['pw']);
+
 }
 
 $Login->check_pw(1);

@@ -370,10 +370,10 @@ public function build_topic_current() {
 
 	$y=$z['lhrs']['properties'];
 	$y['updatets'] = strtotime($z['lhrs']['properties']['timestamp']);
-	$y['temp_c']= is_null($y['temperature']['value']) ? '?' : round($y['temperature']['value'],1);
-	$y['temp_f'] = is_null($y['temperature']['value']) ? '?' :round( ($y['temp_c'] * 9/5) + 32);
-	$y['wind_kph'] = is_null($y['windSpeed']['value'])? '?':round($y['windSpeed']['value']);
-	$y['wind_mph'] =  is_null($y['windSpeed']['value'])? '?':round($y['wind_kph'] /2.2) ;
+	$y['temp_c']= is_null($y['temperature']['value']) ? 'n/a' : round($y['temperature']['value'],1);
+	$y['temp_f'] = is_null($y['temperature']['value']) ? 'n/a' :round( ($y['temp_c'] * 9/5) + 32);
+	$y['wind_kph'] = is_null($y['windSpeed']['value'])? 'n/a':round($y['windSpeed']['value']);
+	$y['wind_mph'] =  is_null($y['windSpeed']['value'])? 'n/a':round($y['wind_kph'] /2.2) ;
 	$y['wind_direction'] = $this->degToDir($y['windDirection']['value']??0);
 
 // u\echor($y,'current', NOSTOP);
@@ -572,7 +572,7 @@ public function rebuild_cache_wapi(array $locs=[] ) {
 		$curl_header = [];
 
 		$url = 'http://api.weatherapi.com/v1/forecast.json?key=' . $this->Defs->getKey('weatherapi') . '&q='. $this->Defs->getCoords($loc) . '&days=3&aqi=yes&alerts=yes';
-	echo "url: $url". BRNL;
+	//echo "url: $url". BRNL;
 		$expected = '';
 		$loginfo = "$src:$loc";
 		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
@@ -638,25 +638,30 @@ private function rebuild_cache_airowm() {
 
 }
 
-public function rebuild_cache_current () {
+public function rebuild_cache_current ($locs=[]) {
 	/* latest data from LHRS
 	curl -X GET "https://api.weather.gov/stations/LTHC1/observations/latest" -H "accept: application/geo+json"
 	*/
 	$src = 'current';
-	$loc = 'lhrs';
-	$curl_header = [];
+	if (!$locs) $locs = Defs::$clocs;
 
+	$curl_header = [];
+	foreach ($locs as $loc) {
 		$url = "https://api.weather.gov/stations/LTHC1/observations/latest" ;
 		#$url = "https://api.weather.gov/points/$lat,$lon";
 		$expected = 'properties';
 
-		$loginfo = "$src current";
+		$loginfo = "$src $loc";
 		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
 			Log::notice("Failed $loginfo.  Rebuild aborted."); return [];
+			if (is_null($aresp['properties']['temperature']['value'] )) {
+				Log::warning ("Received null temp for $loginfo",$aresp['properties']['temperature']);
+				return [];
+			}
 		} //if one loc fails, fail the whole thing
 
 		$x[$loc] = $aresp;
-
+	} #next loc
 	Log::info("Saved updated cache $src");
 	$this->write_cache($src,$x);
 	return $x;

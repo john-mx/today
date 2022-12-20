@@ -36,8 +36,8 @@ $wday = $wapi['forecast']['jr'][0];
 
 		<div class=' center inlineblock' style='vertical-align:top;width:55%'>
 
-		<p style='margin-top:0'><?=$gday[0]['highlow']?><br />
-		<br />
+		<p style='margin-top:0;font-size:1.2rem;'><?=$gday[0]['highlow']?></p>
+		<p>
 		Sunrise:&nbsp;<?= $light['sunrise'] ?> Sunset:&nbsp;<?= $light['sunset'] ?>
 		</p>
 		<br />
@@ -55,8 +55,8 @@ $wday = $wapi['forecast']['jr'][0];
 	<?= $gday[$i]['shortForecast'] ?>
 		</div>
 		<div class=' center inlineblock' style='vertical-align:top;width:55%'>
-	<p style='margin-top:0' ><?=$gday[$i]['highlow']?><br />
-	<br />
+	<p style='margin-top:0;font-size:1.2rem;' ><?=$gday[$i]['highlow']?></p>
+	<p>
 	Moonrise:&nbsp;<?= $light['moonrise'] ?>  Moonset:&nbsp;<?= $light['moonset'] ?><br />
 	<?=$light['moonphase'] ?> (<?=$light['moonillumination']?>%&nbsp;illum)
 	</p>

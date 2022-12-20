@@ -13,14 +13,14 @@ $asof =  date('M d g:i a', $camps['asof']);
 	<span class='red'><b>ALL CAMPGROUNDS ARE FULL!</b></span>
 <?php endif; ?>
 </h4>
-<div class='width100'>
+<div class='width100 center clearafter'>
 <p>Open Sites as of <?= $asof ?></p>
 <?php
 $cgs = array_keys(Defs::$campsites);
 sort ($cgs);
 ?>
 
-<table class='alt-gray  inlineblock'>
+<table class='alt-gray width45 floatl'>
 <tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th>
 <th>Open Sites</th>
 </tr>
@@ -54,10 +54,10 @@ sort ($cgs);
 	<?php endforeach; ?>
 	</table>
 
-	<div style='width:2em;' class='inlineblock'> </div>
 
 
-	<table  class='alt-gray  inlineblock ' style='vertical-align:top;' >
+
+	<table  class='alt-gray width45 floatr ' style='vertical-align:top;' >
 <tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th>
 <th>Open Sites</th></tr>
 

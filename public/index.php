@@ -76,6 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 <tr><td ><a href='/admin.php' target='admin'>Admin page</a> </td><td >Ranger sets things like alerts, closures, campground status, calendar events, etc.  (password 'abcd')</td></tr>
 
+<tr><td ><a href='/caladmin.php' target='admin'>Calendar Admin page</a> </td><td >Ranger sets calendar events,  (password 'abcd')</td></tr>
+
 <tr><td colspan='2' class='bg-yellow'>Developer Functions</td></tr>
 <tr><td ><a href='/set_properties.php' target='_blank'>Reset properties.json</a> </td><td >gets coordinates, zones, and other data from weather.gov for significant sites. (only used for reference, not live).</td></tr>
 <tr><td ><a href='/cron_update.php' target='logs'>Refresh all caches</a></td><td > Updates all the external data (weather, airq, alerts); should run automatically every few hours.</td></tr>

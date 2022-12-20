@@ -18,7 +18,10 @@ class Definitions {
 		'passwords' => 'passwords.ini',
 	];
 
-
+// stations for current weather
+public static $clocs = array (
+	'lhrs',
+);
 public static $scale_color = [
 
 		'Low' => 'green',

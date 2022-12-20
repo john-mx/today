@@ -100,8 +100,8 @@ Put number or '?' into open sites field. All sites go to ? after 24 hours.
 
 </form>
 <h4>Calendar</h4>
-Calendar is on a different page.
-<a href='/caladmin.php'>Click here to update the Calendar</a>
+Calendar admin is on a different page.
+<a href='/caladmin.php'>Click here</a> to update the Calendar
 
 
 </body>

@@ -1,6 +1,6 @@
 html {
 	font-family:'Times New Roman',times,serif;
-	font-size: 12pt;
+	font-size: 14pt;
 }
 body {
 	padding:1rem;
@@ -131,10 +131,10 @@ button {
 	color:white;
 }
 
-div.float, div.floatl {float:left; margin-right:1rem;;}
-div.floatr {float:right; margin-left:1rem;;}
+.float, .floatl {float:left; margin-right:1rem;;}
+.floatr {float:right; margin-left:1rem;;}
 div.clear {clear:both;}
-div.clearafter::after{
+.clearafter::after{
     content: '';
     display: block;
     clear: both;
