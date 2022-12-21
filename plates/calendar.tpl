@@ -6,13 +6,8 @@
 if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 ?>
 <table class='caltable width100'>
-<colgroup>
-        <col style="width: 15%;">
-        <col style="width: 30%;">
-        <col style="width: 20%;">
-         <col >
-</colgroup>
-<tr><th>Time </th><th>Program</th><th> Location</th><th>Information</th></tr>
+
+<tr><th>Time </th><th>Program</th><th> Location</th></tr>
 <tbody>
 
 <?php
@@ -24,13 +19,12 @@ if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 		$rowclass = (empty($cal['note'])) ? 'border-bottom' : 'no-bottom';
 	?>
 	<?php if ($eventdate != $lasteventdate) :?>
-	<tr class="border-bottom" style='background-color:#F3984D; '>
-	<td colspan=4
-	style='font-size:0.8em;padding-bottom:3px;padding-top:3px;'>
+	<tr class='daterow '>
+	<td colspan=3>
 	<b><?=$eventdate ?> </b></td>
 </tr>
 	<?php endif; ?>
-	<tr>
+	<tr class='eventrow'>
 	<td><?=$eventtime?><br />
 
 	</td>
@@ -44,10 +38,11 @@ if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 	<td class='left'>
 	at <?=$cal['location']?>
 	</td>
- 	<td class='left'>
-
- 	<?php if (!empty($cal['note'])) : ?>
+	</tr>
+	<?php if (!empty($cal['note'])) : ?>
+	<tr class='noterow'><td></td><td colspan='2' >
 			<?=$cal['note'] ?? '' ?>
+			</td></tr>
  	<?php endif; ?>
 
 

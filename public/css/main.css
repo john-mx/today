@@ -241,6 +241,21 @@ table.index tr td {text-align:left;border:1px solid black;padding:6px;}
 table.caltable td {
 	text-align:left;
 }
+table.caltable tr.eventrow, table.caltable tr.eventrow td {
+	border-top:1px solid blue;
+	border-bottom:0;
+}
+table.caltable tr.noterow, table.caltable tr.noterow td {
+	border-top:0;
+}
+table.caltable .daterow {
+	border-top:1px solid black;
+	border-bottom:1px solid black;
+	background-color:#F39840;
+	padding-bottom:3px;
+	padding-top:3px;
+
+}
 table.header {
 	background-color:black;
 	width:85%;
