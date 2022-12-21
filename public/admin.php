@@ -47,7 +47,7 @@ $Login->check_pw(1);
 
 if (!empty($_POST) && !isset($_POST['pw'])) {
 		post_data ($_POST,$Today);
-		echo "<script>window.location.href='/today.php';</script>";
+		echo "<script>window.location.href='/admin.php';</script>";
 		exit;
 
 } else {
