@@ -32,7 +32,7 @@ $meta=array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
 	'page' => basename(__FILE__),
 	'subtitle' => '',
-'extra' =>'<style>body {max-width:800px;}</style>',
+'extra' =>',
 
 );
 

@@ -39,8 +39,7 @@ use DigitalMx as u;
 
     </div>
     <?php endif; ?>
-
-<?php else: ?>
+	<?php else: ?>
 	None at this time.
-<?php endif; ?>
+	<?php endif; ?>
 </div>
