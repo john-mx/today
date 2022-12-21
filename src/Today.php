@@ -1262,7 +1262,7 @@ public function format_wgov ($r) {
 				$lastday = $daytext;
 			}
 			$p['daytext'] = $daytext;
-			$p['highlow'] = "$highlow ". $p['temperature'] . '&deg; F (' .$tempc . "&deg; C)" ;
+			$p['highlow'] = "$highlow ". $p['temperature']. "&nbsp;&deg; F (" .$tempc . "&nbsp;&deg; C)" ;
 
 			$x[$loc][$day][] = $p;
 
