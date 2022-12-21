@@ -35,10 +35,15 @@ switch ($pcode) {
 
 <?php $this->insert('weather',['weather' => $data['wgov'] ]); ?>
 
+</div>
+<!-- end page-->
+<div id="page8" class='break' style="display: <?=$divvis?>;">
+
+
 <?php $this->insert('calendar',['calendar' => $data['calendar']])?>
 
-<!-- end page-->
 </div>
+<!-- end page-->
 <div id="page3" class='break' style="display: <?=$divvis?>;">
 
 
