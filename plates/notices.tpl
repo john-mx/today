@@ -40,7 +40,6 @@ use DigitalMx as u;
     </div>
     <?php endif; ?>
 
-  </div>
 <?php else: ?>
 	None at this time.
 <?php endif; ?>
