@@ -228,15 +228,15 @@ public static $coordinates = [
 	];
 
 public static $campfees = [
-		'ic' => 20,
+		'ic' => 25,
 		'jr' => 20,
-		'sp' => '',
+		'sp' => '50',
 		'hv' => 15,
 		'be' => 15,
 		'wt' => 15,
 		'ry' => 20,
-		'br' => 20,
-		'cw' => 20,
+		'br' => 25,
+		'cw' => 25,
 	];
 	public static $cgstatus = [
 		'First',
