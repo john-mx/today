@@ -272,14 +272,14 @@ public function load_cache ($section) {
 			Log::notice ("Cache $section does not exist. Refreshing.");
 			die ("Attempt to read non-existent cache $section");
 		}
-		$ot = $this->over_cache_time($section);
-		if ( $ot > 0) {
-			Log::warning("Loading cache $section is out of date: $ot secs");
+		$ot = round($this->over_cache_time($section)/60); //in minute
+		if ( $ot > 90) {
+			Log::info("Loading stale cache $section: $ot minutes");
 
 		}
 
 		if (!$y = json_decode ($this->file_get_contents_locking(CACHE[$section]), true)) {
-			Log::error("Failed to load and decode $section cache");
+			Log::error("Failed to load $section cache");
 			return [];
 		}
 		//u\echor($y,$section,STOP) . BR;
@@ -431,9 +431,6 @@ public function build_topic_light() {
 
 	$z['uv'] = $this->uv_data($z['light']['uv']);
 
-
-#	$z['air'] = $this->format_airowm($y['airowm']) ?? [];
-
 	return ['light' => $z];
 }
 
@@ -526,8 +523,11 @@ public function build_topic_general() {
 public function refresh_caches($force=false) {
 Log::info ("Starting cache refresh cycle");
 
-// refreshes all the external caches, if they are due
-	#$caches = ['wapi','airq','airowm','wgov','airnow','galerts'];
+/* refreshes all the external caches, if they are due
+	over-cache_time returns 5 minutes less than time set in defs,
+	so caches refresh on a 1 hour interval
+*/
+
 		if ($this->over_cache_time('wapi') > 0 || $force) {
 				$this->rebuild_cache_wapi();
 
@@ -537,6 +537,7 @@ Log::info ("Starting cache refresh cycle");
 
 		}
 		if ($this->over_cache_time('airowm')> 0 || $force) {
+			Log::error("airowm updating because " . $this->over_cache_time('airowm') );
 			$this->rebuild_cache_airowm();
 		}
 		if ($this->over_cache_time('wgov')> 0 || $force) {
@@ -654,11 +655,12 @@ public function rebuild_cache_current ($locs=[]) {
 		$loginfo = "$src $loc";
 		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
 			Log::notice("Failed $loginfo.  Rebuild aborted."); return [];
-			if (is_null($aresp['properties']['temperature']['value'] )) {
+		}
+		//u\echor($aresp,'current aresp');
+		if (is_null($aresp['properties']['temperature']['value'] )) {
 				Log::warning ("Received null temp for $loginfo",$aresp['properties']['temperature']);
 				return [];
-			}
-		} //if one loc fails, fail the whole thing
+		}
 
 		$x[$loc] = $aresp;
 	} #next loc
@@ -1374,13 +1376,14 @@ private function over_cache_time($section) {
 		0 if mtime is under the limit
 		diff if mtime is over the limit by diff
 	*/
-
 	if (!file_exists(CACHE[$section])){ die ("No cache file for $section");}
-
-	$filetime = filemtime (CACHE[$section]);
-	$limit = $this->Defs->getMaxTime($section);
-	$diff = time() - $filetime;
-	if ($limit && ($diff > $limit)) return $diff;
+	$limit = $this->Defs->getMaxTime($section) ; #in seconds
+	if ($limit){
+		$filetime = filemtime (CACHE[$section]);
+		// is filetime within an hour of limit
+		$age = time() - $filetime;
+		if ( $age > ($limit - 3500) ) return $age; #in seconds
+	}
 //	echo "$section: limit $limit; diff $diff;" . BR;
 	return 0;
 }
@@ -1400,10 +1403,10 @@ private function str_to_ts($edt) {
 
 public function write_cache(string $section,array $z) {
 	if (empty($z)){
-	trigger_error("Writing empty array to $section", E_USER_WARNING) ;
+	Log::error("Writing empty array to $section") ;
 	}
 	if($this->file_put_contents_locking (CACHE[$section],json_encode($z))){
-		Log::info("Writing cache $section");
+		//Log::info("Writing cache $section");
 	} else {
 		Log::error("Cannot write cache $section due to lock");
 		die("Error: cannot write $section due to lock file");

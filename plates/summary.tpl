@@ -4,6 +4,14 @@ use DigitalMx as u;
 
 
 ?>
+<style>
+body {
+	font-size:1.1rem;
+}
+
+
+</style>
+
 
 <?php
 $gupdated = '';
@@ -46,7 +54,6 @@ if (!isset($gday[1])){ #no day, only night;
 }
 $wday = $wapi['forecast']['jr'][0];
 
-
 ?>
 
 <?php if ($data['pithy']): ?>
@@ -55,9 +62,12 @@ $wday = $wapi['forecast']['jr'][0];
 
 <?php $this->insert('light',['data' => $data]); ?>
 
-<?php $this->insert('conditions',$data); ?>
-<hr>
-<h4>Forecast</h4>
+<!--
+<h4>Today's Conditions</h4>
+<?php $this->insert('conditions-summary',$data); ?>
+
+ -->
+<h4>Tomorrow</h4>
 		<?php
 
 			for ($i=2;$i<3;++$i) : //for 2 days
@@ -65,8 +75,8 @@ $wday = $wapi['forecast']['jr'][0];
 				$wday = $wapi['forecast']['jr'][$i-1];
 		?>
 
-				<b><u><?= $wday['date'] ?></u></b><br />
-				<div class='inleft2 float width45'>
+
+				<div class='inleft2  '>
 
 					<b>Day: </b> <?= $gday[0]['shortForecast'] ?>.
 						<?=$gday[0]['highlow']?><br />
@@ -76,26 +86,40 @@ $wday = $wapi['forecast']['jr'][0];
 						<?php endif; ?>
 
 
-					<b>Wind: </b> up to <?= $wday['maxwind']?> mph (<?= $wday['maxwindM'] ?> kph) (higher gusts possible) <br>
-				</div>
-				<div class='float'>
+				<b>Wind: </b> up to <?= $wday['maxwind']?> mph (<?= $wday['maxwindM'] ?> kph) (higher gusts possible) <br>
+
 				<b>Night: </b> <?= $gday[1]['shortForecast'] ?>.
 						<?=$gday[1]['highlow']?><br />
-				</div>
-				<div class='clear'></div>
 
+			</div>
 			<?php endfor; //end day ?>
-<hr>
+
+
 <?php
 	$this->insert('notices',['notices' => $data['notices']]);
 ?>
-<hr>
+
+<h4>Today's Events</h4>
 <?php
-	$this->insert('advice',['advice' => $data['advice']]);
+if(empty($calendar = $data['calendar'])) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
+//u\echor($calendar,'data-calendar',NOSTOP);
 ?>
-	<p><hr>
-<small>Weather.gov updated at <?=$gupdated ?> <br />
-Wapi updated at <?=$wupdated?></small>
-</p>
 
 
+<?php foreach ($calendar as $cal) :
+		if ($cal['suspended']){continue;} // dont display
+		$eventdate = date('l, F j',$cal['dt']);
+		$eventtime = date('g:i a', $cal['dt']);
+	?>
+	<div class='inleft2'>
+	<b><?=$eventtime?> </b>:
+	<b><?=$cal['title']?></b>
+ 	(<?=$cal['duration']?>)
+  at <?=$cal['location']?>
+</div>
+
+<?php endforeach; ?>
+
+<?php endif; ?>
+
+<?php $this->insert('end'); ?>

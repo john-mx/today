@@ -37,7 +37,7 @@ $twolocs = ['jr','hq'];
 
 // what function?
 
-$f = wapi(['jr']);
+$f = current();
 
 function dtime(){
 echo "time is ";
@@ -50,6 +50,11 @@ function refresh($force=false){
 	$U = new Utilities();
 	echo $U->over_cache_time('wgov');
 	exit;
+}
+
+function current() {
+	global $Today,$Plates,$Defs,$Cal;
+	$Today->rebuild_cache_current();
 }
 
 function calendar(){

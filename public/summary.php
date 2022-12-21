@@ -9,16 +9,22 @@ ini_set('display_errors', 1);
 	use DigitalMx as u;
 	use DigitalMx\jotr\Definitions as Defs;
 	use DigitalMx\jotr\Today;
+	use DigitalMx\jotr\Calendar;
 
 	$Plates = $container['Plates'];
 	$Defs = $container['Defs'];
 	$Today = $container['Today'];
+	$Cal = new Calendar();
 
 
 //END START
 
 $y = $Today->prepare_topics ();
 //u\echor($y,'y');
+$c = $Cal->load_cache();
+$calendar = $Cal->filter_calendar($c,1);
+
+$y['calendar'] = $calendar;
 
 $qs = '';
 // using "Today' as title prevents it from re-appearing on the today page.
@@ -36,4 +42,3 @@ $meta=array(
 
 //	echo $Today->start_page('Today in the Park',$qs);
 	echo $Plates -> render('summary',['data'=>$y,'pcode'=>$qs]) ;
-

@@ -22,14 +22,10 @@ switch ($pcode) {
 //u\echor($data,'data');
 	$this->insert('light',['data' =>$data]);
 ?>
-<?php
-	$this->insert('notices',['notices' => $data['notices']]);
-?>
 
-<?php
+<?php $this->insert('notices',['notices' => $data['notices']]); ?>
 
-	$this->insert('conditions',$data);
-?>
+<?php	$this->insert('conditions',$data); ?>
 
 <?php $this->insert('advice',['advice' => $data['advice']]); ?>
 

@@ -270,15 +270,18 @@ public static $campfees = [
 				'current' => REPO_PATH . "/var/current.json",
 			);
 
-// time before refresh in minutes.  0 means
+/* time before refresh in minutes.  0 means
 // cache is static except for update by
-// the admin screen.  No outside retrieval.
+// the admin screen.  Caches checked every 60
+mins, getMaxTime returns 5 minutes less than
+number below, to catch refresh cycle.
+*/
 	public static $cache_times  = array (
 
 				'calendar' => 0,
 				'admin' => 0,
-				'properties' => 0, // not using this
-				'wgov' => 50,
+				'properties' => 0, // manual only
+				'wgov' => 120,
 				'wapi' => 120,
 				'airq' => 0,
 				'airnow' => 240,
@@ -287,7 +290,7 @@ public static $campfees = [
 				'galerts' => 120,
 				'cgopen' =>0,
 				'camp' => 0,
-				'current' => 60,
+				'current' => 5,
 
 
 
@@ -341,7 +344,8 @@ public static $campfees = [
 
 
 	public static function getMaxtime($section) {
-		return (60 * self::$cache_times[$section] );
+
+		return (60 * self::$cache_times[$section]);
 	}
 
 	public static function getMoonPic($phase) {

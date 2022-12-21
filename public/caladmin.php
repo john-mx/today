@@ -10,7 +10,6 @@ ini_set('display_errors', 1);
 
 
 	$Plates = $container['Plates'];
-=
 
 	$Cal = $container['Calendar'];
 	$Login = $container['Login'];
