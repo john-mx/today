@@ -76,7 +76,7 @@ EOT;
 
 <h4>Park Conditions</h4>
 <div class='inleft2'>
-<div class='floatl width45 left border'>
+<div class='clearafter left '>
 	<h5>In the Park</h5>
 	<?=$fireday?>
 
@@ -84,7 +84,7 @@ EOT;
 	<?=$aqday?>
 	<?=$uvday?>
 </div>
-<div class='floatr width45 left border'>
+<div class='clearafter  left '>
 
 	<h5>Near Hidden Valley at <?=$current_asof?>: </h5>
 	<?=$currentday?>

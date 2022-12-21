@@ -26,13 +26,14 @@ switch ($qs) {
 
 <!-- start light -->
 <?php $this->insert('light',['data'=>$data]); ?>
-<!-- start notices -->
-<?php $this->insert('notices',['notices' => $data['notices']]); ?>
+
 <!-- start conditions -->
 <?php	$this->insert('conditions',$data);?>
 
 </div><!-- end page-->
 <div id="page2" style="display: <?=$divvis?>;">
+<!-- start notices -->
+<?php $this->insert('notices',['notices' => $data['notices']]); ?>
 
 <?php $this->insert('advice',['advice' => $data['advice']]); ?>
 
