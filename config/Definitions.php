@@ -308,6 +308,19 @@ number below, to catch refresh cycle.
 			'Last Quarter' => '6.gif'
 		);
 
+// list of pages for rotation in the tv page
+// key is id of the page in condensed.tpl
+	public static $rpages = array (
+		'today' => 'Today and Tonight, Park conditions',
+		'notices' => 'Notices and recommendations',
+		'weather' => 'Weather next 3 days',
+		'events' => 'Calendar next 3 days',
+		'camps' => 'Campgrounds',
+		'feesA' => 'fees (JTNP)',
+		'feesB' => 'fees (Interagency)',
+
+
+	);
 	public static function uv_warn($uvd) {
 		return self::$uvwarn_min[$uvd] ?? 'not defined';
 	}

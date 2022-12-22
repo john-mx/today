@@ -27,7 +27,18 @@
 	$titlex = $page . ":$qs" . " (" .PLATFORM . ") ";
 	$added_headers = $extra;
 
+	$rotate ??= [];
+	$pagelist = '';
+	if ($rotate){
+	$pagelist = '[';
+		foreach ($rotate as $pid){
+			$pagelist .= "'#page-$pid',";
+		}
+	$pagelist .= "]";
+	$rdelay = '15'; #delay on rotation
 
+	}
+//echo ($pagelist);
 	switch ($qs) {
 		case '';
 
@@ -38,11 +49,16 @@
 			$added_headers .= "<script src='/js/scroll_scripts.js'></script>";
 			break;
 
-		case 'snap':
+		case 'Xsnap':
 			$scbody = "onLoad='startRotation(15)'";
 			$added_headers .= "	<script src='/js/snap.js'></script>";
 			break;
 
+		case 'snap':
+			$pagelist =
+			$scbody = "onLoad=startRotation($rdelay,$pagelist)";
+			$added_headers .= "	<script src='/js/snap2.js'></script>";
+			break;
 
 		default:
 			u\echoAlert ("Undefined option: $pcode");

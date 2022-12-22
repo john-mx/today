@@ -187,7 +187,7 @@ public function __construct($c){
 }
 
 
-public function prepare_topics(){
+public function build_topics(){
 	/*
 		build topic arrays from caches and defs.
 		Each topic goes to a display template.
@@ -204,7 +204,7 @@ public function prepare_topics(){
 	#	foreach (['general','weather','campgrounds','sun','calendar'] as $topic) {
 
 		$topics = array_merge(
-			$this->build_topic_general(),
+			$this->build_topic_admin(),
 			$this->build_topic_weather(),
 			$this->build_topic_campgrounds(),
 			$this->build_topic_light(),
@@ -218,7 +218,7 @@ public function prepare_topics(){
 		);
 
 
-//	u\echor($topics,'topics',NOSTOP);
+	u\echor($topics,'topics',STOP);
 
 		return $topics;
 }
@@ -244,9 +244,13 @@ public function prepare_admin() {
 		$notes[$cgcode] = $y['admin']['cgnotes'][$cgcode] ?? '';
 
 	}
+	$rchecked = [];
+	foreach (array_keys(Defs::$rpages) as $pid){
+		if (in_array($pid,$y['admin']['rotate'])){$rchecked[$pid] = 'checked';}
+	}
 	$y['admin']['cg_options'] = $opts;
 	$y['admin']['cg_notes'] = $notes;
-
+	$y['admin']['rchecked'] = $rchecked;
 	$y['admin']['cgopen'] = $this->load_cache('cgopen') ?? [];
 	$y['admin']['cgfull'] =  (!array_filter($y['admin']['cgopen'])) ? 1:0;
 
@@ -259,6 +263,7 @@ public function prepare_admin() {
 	 	Log::error ("Could not load cache galerts");
 	 	return [];
 	 }
+
 
 
 // u\echor ($y, 'Y to admin',NOSTOP);
@@ -311,7 +316,8 @@ public function post_admin ($post) {
 	$y['cgstatus'] = $post['cgstatus']; // array
 // 	u\echor ($y,'to write admin cache',STOP);
 	$y['cgnotes']  =$post['cgnotes'] ; //array
-
+	$y['rotate'] = $post['rotate']; //array
+//u\echor($y,'y',STOP);
 	$this -> write_cache('admin',$y);
 
 	$cgo = $post['cgopen'];
@@ -319,6 +325,7 @@ public function post_admin ($post) {
 	foreach ($y['cgstatus'] as $cg=>$status){
 		if ($status == 'Closed'){$cgo[$cg] = 0;}
 	}
+
 	$this->write_cache('cgopen',$cgo);
 
 
@@ -484,7 +491,7 @@ public function build_topic_campgrounds() {
 	return $w;
 }
 
-public function build_topic_general() {
+public function build_topic_admin() {
 	/* load date from admin cache, then reformat for display */
 
 	if (!$y = $this->load_cache('admin') ){
@@ -512,6 +519,7 @@ public function build_topic_general() {
 			$z['target'] = date('l F j, Y');
 
 			$z['advice'] = $this->clean_text($y['advice']);
+			$z['rotate'] = $y['rotate'];
 
 	//u\echor($z,'topic general', NOSTOP);
 	return $z;

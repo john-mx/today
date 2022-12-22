@@ -37,7 +37,7 @@ $twolocs = ['jr','hq'];
 
 // what function?
 
-$f = current();
+$f = today();
 
 function dtime(){
 echo "time is ";
@@ -74,9 +74,9 @@ function calendar(){
 function today(){
 	global $Today,$Plates,$Defs;
 
-	$z=$Today->prepare_topics();
+	$z=$Today->build_topics();
 	echo $Plates->render('today',['data'=>$z]);
-	u\echor($z,'prepared topics');
+	//u\echor($z,' topics');
 	exit;
 }
 

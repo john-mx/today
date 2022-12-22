@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 <tr><td ><a href="/today.php" target='today'>/today.php</a>
 </td><td >Regular web page with all data.  See note about printing.</td></tr>
-<tr><td><a href="/condensed.php" target='condensed'>/condensed.php</a><td>Large type version with minimal information. Designed for snap animation on tv monitor. </td></tr>
+
 <tr><td ><a href="/summary.php" target='summary'>/summary.php</a>
 </td><td >One page summary of today's conditions. </td></tr>
 
@@ -68,9 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <tr><td colspan='2'>--------- animated -----------</td></tr>
 <tr><td ><a href="/today.php?scroll" target='scroll'>/today.php?scroll</a>
 </td><td >(not recommended) Page slowly scrolls to the bottom, then restarts</td></tr>
-<tr><td ><a href="/today.php?snap" target='snap'>/today.php?snap</a>
-</td><td >Page displays a section for 10 seconds, then next section, and so on, before starting over.</td></tr>
-<tr><td><a href="/condensed.php?snap" target='snap'>/condensed.php?snap</a><td> (reommended) Large type version with minimal information</td></tr>
+<tr><td><a href="/rotate.php" target='snap'>/rotate.php</a><td> (reommended) Large type version with minimal information.  Choose which pages appear in the rotation on the admin page.</td></tr>
 
 <tr><td colspan='2' class='bg-yellow'>Ranger Admin Pages</td></tr>
 
