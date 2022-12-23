@@ -3,19 +3,19 @@ use DigitalMx as u;
 
 $gupdated = '';
 $wupdated = '';
-if(empty($wgov = $data['wgov'])): echo "<p>No wgov Data</p>"; exit;
+if(empty($wgov)): echo "<p>No wgov Data</p>"; exit;
 	else:
 	$gupdated =  date('M d g:i a',$wgov['update']);
 	endif;
 
-if(empty($wapi=$data['wapi'])): echo "<p>No wapi Data</p>"; exit;
+if(empty($wapi)): echo "<p>No wapi Data</p>"; exit;
 	else:
 	$wupdated =  date('M d g:i a',$wapi['update']);
 	endif;
 
-$light = $data['light']['light'];
-$uv = $data['light']['uv'];
-$air = $data['air'];
+$light = $light['light'];
+$uv = $light['uv'];
+$air = $air;
 $gday = $wgov['jr'][1];
 $wday = $wapi['forecast']['jr'][0];
 

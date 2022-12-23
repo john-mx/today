@@ -5,9 +5,9 @@ use DigitalMx as u;
 <h4>Announcements and Alerts</h4>
 <div class='inleft2'>
 <?php
-	//u\echor($notices,'notices');
-	$d= $notices['alerts'] ??'';
-	$e = $notices['announcements'] ?? '';
+
+	$d= $admin['notices']['alerts'] ??'';
+	$e = $admin['notices']['announcements'] ?? '';
 	if ( $d || $e) :
 ?>
     <?php if ($d):?>

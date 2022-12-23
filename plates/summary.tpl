@@ -1,8 +1,10 @@
 <?php
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
+use DigitalMx\jotr\Calendar;
 
-
+$Cal = new Calendar();
+$calendar = $Cal->filter_calendar($calendar,1); #one day
 ?>
 <style>
 body {
@@ -16,18 +18,19 @@ body {
 <?php
 $gupdated = '';
 $wupdated = '';
-if(empty($wgov = $data['wgov'])): echo "<p>No wgov Data</p>"; exit;
+if(empty($wgov )): echo "<p>No wgov Data</p>"; exit;
 	else:
 	$gupdated =  date('M d g:i a',$wgov['update']);
 	endif;
 
-if(empty($wapi=$data['wapi'])): echo "<p>No wapi Data</p>"; exit;
+if(empty($wapi)): echo "<p>No wapi Data</p>"; exit;
 	else:
 	$wupdated =  date('M d g:i a',$wapi['update']);
 	endif;
-$light = $data['light']['light'];
-$uv = $data['light']['uv'];
-$air = $data['air'];
+	//u\echor($light);exit;
+$daylight = $light['light'];
+$uv = $light['uv'];
+$air = $air;
 $uvday = <<<EOT
 	UV: ${uv['uv']}
 			<div class='inlineblock' style="padding-left:2em;padding-right:2em;background-color:${uv['uvcolor']};">
@@ -56,17 +59,12 @@ $wday = $wapi['forecast']['jr'][0];
 
 ?>
 
-<?php if ($data['pithy']): ?>
-	<p class='center'><i><?=$data['pithy']?></i></p>
+<?php if ($admin['pithy']): ?>
+	<p class='center'><i><?=$admin['pithy']?></i></p>
 <?php endif; ?>
 
-<?php $this->insert('light',['data' => $data]); ?>
+<?php $this->insert('light',[$light]); ?>
 
-<!--
-<h4>Today's Conditions</h4>
-<?php $this->insert('conditions-summary',$data); ?>
-
- -->
 <h4>Tomorrow</h4>
 		<?php
 
@@ -96,12 +94,12 @@ $wday = $wapi['forecast']['jr'][0];
 
 
 <?php
-	$this->insert('notices',['notices' => $data['notices']]);
+	$this->insert('notices',['notices' => $admin['notices']]);
 ?>
 
 <h4>Today's Events</h4>
 <?php
-if(empty($calendar = $data['calendar'])) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
+if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 //u\echor($calendar,'data-calendar',NOSTOP);
 ?>
 

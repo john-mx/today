@@ -47,7 +47,7 @@ EOT;
 
 $fireday = <<<EOT
 <div class= 'conditions'>
-<b>Fire Danger: </b> ${fire['level']}
+<b>Fire Danger: </b> {$admin['fire']['level']}
 <br />
 </div>
 EOT;

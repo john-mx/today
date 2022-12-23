@@ -273,12 +273,11 @@ public static $campfees = [
 /* time before refresh in minutes.  0 means
 // cache is static except for update by
 // the admin screen.  Caches checked every 60
-mins, getMaxTime returns 5 minutes less than
-number below, to catch refresh cycle.
+mins,
 */
 	public static $cache_times  = array (
 
-				'calendar' => 0,
+				'calendar' => 60*6,
 				'admin' => 0,
 				'properties' => 0, // manual only
 				'wgov' => 120,
@@ -308,16 +307,19 @@ number below, to catch refresh cycle.
 			'Last Quarter' => '6.gif'
 		);
 
-// list of pages for rotation in the tv page
-// key is id of the page in condensed.tpl
+/* list of pages for rotation in the tv page
+// key is suffix of id of the page in condensed.tpl
+	e.g, "<div id='page-suffix' ..."
+
+*/
 	public static $rpages = array (
 		'today' => 'Today and Tonight, Park conditions',
 		'notices' => 'Notices and recommendations',
 		'weather' => 'Weather next 3 days',
 		'events' => 'Calendar next 3 days',
 		'camps' => 'Campgrounds',
-		'feesA' => 'fees (JTNP)',
-		'feesB' => 'fees (Interagency)',
+		'fees' => 'Fees (condensed)',
+
 
 
 	);

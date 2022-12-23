@@ -19,12 +19,8 @@ ini_set('display_errors', 1);
 
 //END START
 
-$y = $Today->prepare_topics ();
-//u\echor($y,'y');
-$c = $Cal->load_cache();
-$calendar = $Cal->filter_calendar($c,1);
 
-$y['calendar'] = $calendar;
+
 
 $qs = '';
 // using "Today' as title prevents it from re-appearing on the today page.
@@ -32,7 +28,7 @@ $meta=array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
 	'page' => basename(__FILE__),
 	'subtitle' => '',
-'extra' =>',
+	'extra' =>'',
 
 );
 
@@ -41,4 +37,4 @@ $meta=array(
 		echo $Plates->render ('title',$meta);
 
 //	echo $Today->start_page('Today in the Park',$qs);
-	echo $Plates -> render('summary',['data'=>$y,'pcode'=>$qs]) ;
+	echo $Plates -> render('summary',['pcode'=>$qs]) ;

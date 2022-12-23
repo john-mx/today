@@ -10,6 +10,7 @@ namespace DigitalMx\jotr;
 	use DigitalMx\jotr\Log;
 
 
+
 //END START
 
 // u\echor (CACHE); exit;
@@ -218,7 +219,7 @@ public function build_topics(){
 		);
 
 
-	u\echor($topics,'topics',STOP);
+//	u\echor($topics,'topics',STOP);
 
 		return $topics;
 }
@@ -226,6 +227,8 @@ public function build_topics(){
 
 public function prepare_admin() {
 // get sections needed for the admin form
+
+
 	if (!$y['admin'] = $this->load_cache('admin')){
 	 	Log::error ("Could not load cache admin");
 	 	exit;
@@ -255,7 +258,17 @@ public function prepare_admin() {
 	$y['admin']['cgfull'] =  (!array_filter($y['admin']['cgopen'])) ? 1:0;
 
 
-	//$y['calendar'] = $this->filter_calendar($this->load_cache('calendar'));
+	$calendar = $this->Cal->filter_calendar($this->load_cache('calendar'),0);
+
+#add 3 blank recordsw
+	for ($i=0;$i<3;++$i) {
+		$calendar[] = $this->Cal::$empty_cal;
+	}
+
+$calendar = $this->Cal->add_types($calendar);
+$y['calendar'] = $calendar;
+
+
 	// if (! $galerts = $this->rebuild_cache_galerts() ){
 // 	}
 
@@ -325,9 +338,17 @@ public function post_admin ($post) {
 	foreach ($y['cgstatus'] as $cg=>$status){
 		if ($status == 'Closed'){$cgo[$cg] = 0;}
 	}
-
 	$this->write_cache('cgopen',$cgo);
 
+	$this->Cal->post_calendar($post['calendar']);
+
+	// trying to use one entry for both fees pages, but too complicated
+	// $rotate = $post['rotate'];
+// 	if (isset ($rotate['fees'])) {
+// 		$rotate['feesA'] = 'on';
+// 		$rotate['feesB'] = 'on';
+// 		unset ($rotate['fees']);
+// 	}
 
 
 }
@@ -366,8 +387,8 @@ public function build_topic_calendar() {
 	 }
 
 #	u\echor($z,'calendar',STOP);
-	$y=$this->Cal->filter_calendar($z,2);
-	return ['calendar' => $y];
+//	$y=$this->Cal->filter_calendar($z,0);
+	return ['calendar' => $z];
 }
 public function build_topic_current() {
 	if (!$z=$this->load_cache('current')) {
@@ -522,7 +543,7 @@ public function build_topic_admin() {
 			$z['rotate'] = $y['rotate'];
 
 	//u\echor($z,'topic general', NOSTOP);
-	return $z;
+	return ['admin'=>$z];
 
 }
 
@@ -560,6 +581,9 @@ Log::info ("Starting cache refresh cycle");
 		if ($this->over_cache_time('current') > 0 || $force) {
 			$this->rebuild_cache_current();
 		}
+		if ($this->over_cache_time('calendar') > 0 || $force) {
+			$this->rebuild_cache_calendar(); #filter out old stuff
+		}
 
 			#	$this -> rebuild_properties('jr');
 Log::info ("Completed cache refresh cycle");
@@ -594,6 +618,13 @@ public function rebuild_cache_wapi(array $locs=[] ) {
 	$this->write_cache($src,$x);
 	Log::info("Saved updated cache $src");
 	return $x;
+}
+
+private function rebuild_cache_calendar () {
+	$x = $this->load_cache('calendar');
+	$x = $this->Cal -> filter_calendar($x,0);
+	$this->write_cache('calendar',$x);
+	Log::info('rebuilt calendar cache');
 }
 
 private function rebuild_cache_airq() {
@@ -1383,6 +1414,7 @@ private function over_cache_time($section) {
 	/* dies if file not exists
 		0 if mtime is under the limit
 		diff if mtime is over the limit by diff
+		Returns true if time is within 5 minutes of limit
 	*/
 	if (!file_exists(CACHE[$section])){ die ("No cache file for $section");}
 	$limit = $this->Defs->getMaxTime($section) ; #in seconds

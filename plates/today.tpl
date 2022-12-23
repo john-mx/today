@@ -1,6 +1,7 @@
 <?php
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
+use DigitalMx\jotr\Calendar as Cal;
 
 $pcode ??= '';
 
@@ -13,6 +14,7 @@ switch ($pcode) {
 		$divvis='block';
 }
 
+$Cal = new Cal();
 ?>
 
 <!-- ############################## -->
@@ -20,34 +22,38 @@ switch ($pcode) {
 
 <?php
 //u\echor($data,'data');
-	$this->insert('light',['data' =>$data]);
+	$this->insert('light');
 ?>
 
-<?php $this->insert('notices',['notices' => $data['notices']]); ?>
+<?php $this->insert('notices') ?>
 
-<?php	$this->insert('conditions',$data); ?>
+<?php	$this->insert('conditions')?>
 
-<?php $this->insert('advice',['advice' => $data['advice']]); ?>
+<?php $this->insert('advice')?>
 
 
 </div> <!-- end page-->
 <div id="page2" class='break' style="display: <?=$divvis?>;">
 
-<?php $this->insert('weather',['weather' => $data['wgov'] ]); ?>
+<?php $this->insert('weather') ?>
 
 </div>
 <!-- end page-->
 <div id="page8" class='break' style="display: <?=$divvis?>;">
 
 
-<?php $this->insert('calendar',['calendar' => $data['calendar']])?>
+
+<?php
+$tcalendar = $Cal->filter_calendar($calendar,2);
+$this->insert('calendar',['calendar'=>$tcalendar])
+?>
 
 </div>
 <!-- end page-->
 <div id="page3" class='break' style="display: <?=$divvis?>;">
 
 
-<?php $this->insert('campground',['camps' => $data['camps'] ]); ?>
+<?php $this->insert('campground'); ?>
 
 </div> <!-- end page-->
 <div id="page5"  class='break' style="display: <?=$divvis?>;">

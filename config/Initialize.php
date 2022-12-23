@@ -40,8 +40,6 @@ class Initialize
 			$this->loadRequires($this->paths['repo']);
         $this->setConstants($this->paths );
       #  $this->startLogger();
-
-
     }
 
     private function setPath()

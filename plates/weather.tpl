@@ -4,11 +4,12 @@ use DigitalMx as u;
 ?>
 <h4>Weather</h4>
 <?php
-//u\echor($weather,'weather',STOP);
-if(empty($weather)): echo "<p>No Data</p>"; else:
-	$weather_updated =  date('M d g:i a',$weather['update']);
+
+//u\echor($wgov,'weather',STOP);
+if(empty($wgov)): echo "<p>No Data</p>"; else:
+	$weather_updated =  date('M d g:i a',$wgov['update']);
 	?>
-	<table class = 'width100 col-border'>
+	<table class = 'width100 col-border inleft2'>
 	<colgroup>
 	<col style='width:10%'>
 	<col style='width:30%'>
@@ -23,14 +24,14 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 <tr><th></th>
 		<?php
 			for ($i=1;$i<4;++$i) : //for 3 days
-				$day = $weather['jr'][$i];
+				$day = $wgov['jr'][$i];
 		//u\echor ($day ,'day',STOP);
 				echo "<th>{$day[0]['daytext']}</th>";
 			endfor;
 		?>
 		</tr>
 
-<?php	foreach ($weather as $loc=>$days) :
+<?php	foreach ($wgov as $loc=>$days) :
 		if ($loc == 'update') continue;
 		//if ($loc !== 'jr') continue; // only show jr
 		$locname = Defs::$sitenames[$loc];

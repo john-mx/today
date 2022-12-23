@@ -105,6 +105,18 @@ define ('REMOTE', $loginfo);
 $loginfo ['url'] = $_SERVER['REQUEST_URI'];
 Log::info("Init started" ,$loginfo);
 
+//load all the topic data into $y, and
+// pass it to all the listed templates
+
+$y = $container['Today']->build_topics();
+$container['Plates']->addData($y,
+[
+	'today','light','notices','conditions','advice','weather',
+	'campground', 'summary', 'condensed','campground-wide',
+]
+);
+
+// u\echor($y);
 
  define ('INIT',1);
 
