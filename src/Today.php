@@ -254,8 +254,9 @@ public function prepare_admin() {
 	$y['admin']['cg_options'] = $opts;
 	$y['admin']['cg_notes'] = $notes;
 	$y['admin']['rchecked'] = $rchecked;
-	$y['admin']['cgopen'] = $this->load_cache('cgopen') ?? [];
-	$y['admin']['cgfull'] =  (!array_filter($y['admin']['cgopen'])) ? 1:0;
+	$y['admin']['cgsites'] = array_merge($this->load_cache('cgopen'), $this->load_cache('cgres'));
+	//$y['admin']['cgfull'] =  (!array_filter($y['admin']['cgopen'])) ? 1:0;
+	//$y['admin']['cgres'] = $this->load_cache('cgres') ?? [];
 
 
 	$calendar = $this->Cal->filter_calendar($this->load_cache('calendar'),0);
@@ -310,7 +311,7 @@ public function post_admin ($post) {
 
 
 */
-// u\echor ($post, 'Posted');
+ u\echor ($post, 'Posted');
 
 //  admin cache
 	$y=[];
@@ -329,29 +330,50 @@ public function post_admin ($post) {
 	$y['cgstatus'] = $post['cgstatus']; // array
 // 	u\echor ($y,'to write admin cache',STOP);
 	$y['cgnotes']  =$post['cgnotes'] ; //array
+	$y['uncertainty'] = $post['uncertainty']; #hours to keep site avail
 	$y['rotate'] = $post['rotate']; //array
 //u\echor($y,'y',STOP);
 	$this -> write_cache('admin',$y);
 
-	$cgo = $post['cgopen'];
-	// set opens based on status
-	foreach ($y['cgstatus'] as $cg=>$status){
-		if ($status == 'Closed'){$cgo[$cg] = 0;}
+	$cgo = $post['cgupdate'];
+	u\echor ($cgo,'cgupdate from post');
+	// remove any enbtries with blank avlues
+	$cgo = array_filter($cgo,function ($val) {return ($val !== '' );});
+	//u\echor ($cgo,'cgupdate after filter');
+	$cgopen = [];
+	$cgres = [];
+
+
+	foreach ($cgo as $cg=>$open){
+		if ($post['cgstatus'][$cg] == 'Reservation'){
+			$cgres[$cg] = $open;
+		} elseif ($post['cgstatus'][$cg] == 'First'){
+			$cgopen[$cg] = $open;
+		}
 	}
-	$this->write_cache('cgopen',$cgo);
+	// overwrite existing data with updates
+	$this->mergeCache('cgopen',$cgopen);
+	$this->mergeCache('cgres',$cgres);
+
+
 
 	$this->Cal->post_calendar($post['calendar']);
 
-	// trying to use one entry for both fees pages, but too complicated
-	// $rotate = $post['rotate'];
-// 	if (isset ($rotate['fees'])) {
-// 		$rotate['feesA'] = 'on';
-// 		$rotate['feesB'] = 'on';
-// 		unset ($rotate['fees']);
-// 	}
-
 
 }
+
+public function mergeCache($cache,$merge){
+// merges data into cache, unless data is empty
+		$x = $this->load_cache($cache) ;
+//		u\echor ($x, "merge: Loaded cache $cache");
+//		u\echor ($merge,'merge: Data to merge');
+		if (! empty ($merge)){ #if empty you're done
+			$y = array_merge($x,$merge);
+// 		u\echor ($y,'merged cache');
+			$this->write_cache($cache,$y);
+		}
+	}
+
 
 public function buildPDF(){
 	$y = $this->prepare_topics ();
@@ -480,37 +502,65 @@ public function build_topic_weather() {
 }
 
 public function build_topic_campgrounds() {
+/* reads the res and open caches for available
+	sites at each campgrund.  Prepares a display
+	for each site based on campground status
+	(.e., closed) and age of cache (changes to
+	'?' if cache is too old.
+*/
+
+// admin cache contains status and notes for each cg
 	if (!$y = $this->load_cache('admin') ){
 	 	Log::error ("Could not load cache admin");
 	 	return [];
 	 }
+//u\echor($y, 'loaded admin cache');
 
 	$w['camps']['cg_notes'] = $y['cgnotes'];
 	$w['camps']['cg_status'] = $y['cgstatus'];
+	$w['camps']['cgfull'] = $cgfull = $y['cgfull'] ?? false;
 
 
-	if (!$opens = $this->load_cache('cgopen')){
-	 	Log::error ("Could not load cache cg_open");
-	 	$opens = self::$empty_opens;
+// get age of each cache.
+	$cgopen_age = $this->getMtime('cgopen');
+	$cgres_age = $this->getMtime('cgres');
+	$w['camps']['cgopen_age'] = $cgopen_age;
+	 $w['camps']['cgres_age'] = $cgres_age;
+	//$cg_uncertain = 0; // hours until display changes to ? (0 disables test)
+	$uncertainty = $y['uncertainty'];
+
+	// load the two caches and set display
+	if (! $cgsites = array_merge($this->load_cache('cgopen'),$this->load_cache('cgres'))){
+	 	Log::error ("Could not load cache cgopen or cgres");
+	 	die();
 	 }
-	 $w['camps']['cg_open'] = $opens;
-	$w['camps']['asof'] = $this->getMtime('cgopen');
-	$old_open = (time() - $w['camps']['asof'] > 24*60*60);
-	//$old_open = true;
-
-	$w['camps']['cgfull'] = !array_filter($w['camps']['cg_open']);
-
-
-	foreach ($w['camps']['cg_open'] as $cg => $open){
-		if ($w['camps']['cgfull']){$open = 0;}
-		if ($old_open) $open = '?';
-		if ($w['camps']['cg_status'] == 'Closed'){$open = 0;}
-		if ($open !== '?') $open = intval( $open);
-		$w['camps']['cg_open'][$cg]=$open;
+	//set display based on status and age
+	 foreach ($cgsites as $cg=>$open){ // ic => 7
+	 	$status = $w['camps']['cg_status'][$cg];
+		$display = $this->getCgDisplay($status,$open,$cgfull,$cgopen_age,$cgres_age,$uncertainty);
+		$w['camps']['sites'][$cg] = $display;
 	}
-//	u\echor($w, 'camps post prepare', STOP);
+
+
+
+//u\echor($w['camps'], 'camps', NOSTOP);
 	return $w;
 }
+
+
+private function getCgDisplay($status,$open,$cgfull,$cgopen_age,$cgres_age,$cg_uncertain) {
+		if ($status == 'Closed'){return 'n/a';}
+		if ($cgfull) {return '0';}
+		if ($status == 'Reservation'){
+			if ($cg_uncertain && (time() - $cgres_age > $cg_uncertain * 60 * 60)){return '?';}
+			return $open;
+		} elseif ($status == 'First') {
+			if ($cg_uncertain && (time() - $cgopen_age > $cg_uncertain  * 60 * 60)){return '?';}
+			return $open;
+		} else {
+			die ("Unknown cg status $status");
+		}
+	}
 
 public function build_topic_admin() {
 	/* load date from admin cache, then reformat for display */
@@ -584,6 +634,11 @@ Log::info ("Starting cache refresh cycle");
 		if ($this->over_cache_time('calendar') > 0 || $force) {
 			$this->rebuild_cache_calendar(); #filter out old stuff
 		}
+		if ($this->over_cache_time('cgopen') > 0 || $force) {
+
+			//$this->rebuildCGopen(); #filter out old stuff
+		}
+
 
 			#	$this -> rebuild_properties('jr');
 Log::info ("Completed cache refresh cycle");
@@ -1449,7 +1504,7 @@ public function write_cache(string $section,array $z) {
 		//Log::info("Writing cache $section");
 	} else {
 		Log::error("Cannot write cache $section due to lock");
-		die("Error: cannot write $section due to lock file");
+		//die("Error: cannot write $section due to lock file");
 	}
 }
 

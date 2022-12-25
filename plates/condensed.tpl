@@ -22,7 +22,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 
 <div class='content center'>
 <!-- ############################## -->
-<div id="page-today" style="display: <?=$divvis?>;">
+<div id="page-today" style="display: <?=$divvis?>">
 
 <?php if ($admin['pithy']): ?>
 	<p><i><?=$admin['pithy']?></i></p>

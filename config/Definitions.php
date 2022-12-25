@@ -268,6 +268,7 @@ public static $campfees = [
 				'cgopen' => REPO_PATH . "/var/cgopen.json",
 				'camp' => REPO_PATH . "/var/camp.json",
 				'current' => REPO_PATH . "/var/current.json",
+				'cgres' => REPO_PATH . '/var/cgres.json',
 			);
 
 /* time before refresh in minutes.  0 means
@@ -289,7 +290,8 @@ mins,
 				'galerts' => 120,
 				'cgopen' =>0,
 				'camp' => 0,
-				'current' => 5,
+				'current' => 60,
+				'cgres' => 60,
 
 
 

@@ -2,18 +2,10 @@
 
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
+$open_options = u\buildOptions(['','0','a few','around 10','10 +','?'],'',true);
+
+
 ?>
-<script>
-function setopen(){
-    var tObj = document.getElementsByClassName('cgo');
-    for(var i = 0; i < tObj.length; i++){
-        tObj[i].value='0';
-    }
-}
-
-</script>
-
-
 
 <form method='post'>
 <input type='hidden' name='type' value='update'>
@@ -70,22 +62,35 @@ One announcement per line.(<cr>)  They will be listed as bullets<br />
 
 
 <h4>Campground status</h4>
-<?php if($admin['cgfull']): ?>
-	<p class='red'><b>ALL CAMPGROUNDS ARE FULL. </b></p>
-<?php endif; ?>
-Click to set <button type='button' onClick='setopen()'> All Sites Full</button><br />
-Put number or '?' into open sites field. All sites go to ? after 24 hours.
+
+
+<!--
+<p><input type='checkbox' name='cgfull'
+> Check to force all campgrounds full until unset.</p>
+ -->
+<p>
+Enter update to available sites.  No entry means keep current value.
+Reservation sites updated (not implemented yet) from rec.gov hourly.
+</p>
+
+<p>
+Uncertainty.  <input type='number' name='uncertainty' size='4' value="<?=$admin['uncertainty'] ?? 0 ?>" min=0 max=12 > Enter number of hours the new site vacancy setting is valid.  Will be displayed to users  as '?' after the time has lapsed.
+</p>
+
 <table>
-<tr><th>Campground</th><th>Status</th><th>Open Sites</th><th>Notes</th></tr>
+<tr><th>Campground</th><th>Status</th><th>Open Sites</th><th>Update</th><th>Notes</th></tr>
 <?php foreach (array_keys(Defs::$campsites) as $scode): ?>
 	<tr><td><?= Defs::$sitenames[$scode] ?></td>
 
 		<td><select name="cgstatus[<?=$scode?>]"><?=$admin['cg_options'][$scode]?></select></td>
-		<td><input type='text' name="cgopen[<?=$scode?>]"
-			value='<?=$admin['cgopen'][$scode]?>' size='8' class ='cgo'>
-		<td>
+		<td><?=$admin['cgsites'][$scode]?> </td>
+		<td> <!--
+<input type='text' name="cgopen[<?=$scode?>]"
+			 size='8' class ='cgo'>
+ -->
+			 <select name="cgupdate[<?=$scode?>]" class='cgo'><?=$open_options?></select></td>
 
-		<input type='text' name="cgnotes[<?=$scode?>]>"
+		<td><input type='text' name="cgnotes[<?=$scode?>]>"
 		<?php if (isset($admin['cgnotes'])) : ?>
 		value='<?=$admin['cgnotes'][$scode]?>' <?php endif; ?>
 		size=40>
@@ -93,6 +98,7 @@ Put number or '?' into open sites field. All sites go to ? after 24 hours.
 	</tr>
 <?php endforeach; ?>
 </table>
+Click to <button type='button' onClick='clearopen()'> clear all site updates</button> (clear = no change) <br />
 <?php $this->insert('cal-admin',['calendar'=>$calendar]); ?>
 
 <hr>

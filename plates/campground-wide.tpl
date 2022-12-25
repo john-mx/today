@@ -2,96 +2,107 @@
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
 
-$asof =  date('M d g:i a', $camps['asof']);
+if(empty($camps)): echo "No Campground Data"; exit;
+endif;
+
+$cgopen_asof =  date('M d g:i a', $camps['cgopen_age']);
+$cgres_asof =  date('M d g:i a', $camps['cgres_age']);
 ?>
 
-
-
-<?php if(empty($camps)): echo "No Campground Data"; else: ?>
 <h4>Campgrounds
 <?php if (!empty($camps['cgfull'])) : ?>
 	<span class='red'><b>ALL CAMPGROUNDS ARE FULL!</b></span>
 <?php endif; ?>
 </h4>
-<div class='width100 center clearafter'>
-<p>Open Sites as of <?= $asof ?></p>
 <?php
-$cgs = array_keys(Defs::$campsites);
-sort ($cgs);
+	$cgs = array_keys(Defs::$campsites);
+	sort ($cgs);
 ?>
+Open Sites updated when known.  ? = Information is stale and may not be reliable.
+<div class='width100 center clearafter'>
 
+
+
+<?php $status = 'Reservation';
+$no_entries = true; ?>
 <table class='alt-gray width45 floatl'>
-<tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th>
-<th>Open Sites</th>
-</tr>
-	<?php foreach (['Reservation'] as $status):
-		if ($status == 'Reservation') : ?>
-		<tr class='bg-orange left'><td colspan='4' ><b>Reserved Campgrounds</b><br /> Make reservations at rec.gov or call 1-877-444-6777. </td></tr>
-		<?php elseif ($status=='First') : ?>
-		<tr class='bg-orange left'><td colspan='4' ><b>First Come, First Served Campgrounds</b> <br />Find an empty site and claim it. Pay ranger or at entrance station.</td></tr>
-		<?php elseif ($status=='Closed') : ?>
-			<tr class='bg-orange left'><td colspan='4' ><b>Closed Campgrounds</b></td></tr>
-		<?php endif;?>
-
-		<?php
-		$nada=true;
-		foreach ($cgs as $cg) : ?>
-			<?php if ($camps['cg_status'][$cg] == $status):
-				$nada=false;?>
+	<tr class='bg-orange left'><td colspan='4' ><b>Reserved Campsites</b></td></tr>
+		<tr><td colspan='4' class='left'>Reserve site at rec.gov or call (877) 444-6777 or from outside US +1 (606) 515-6777.<br />
+		Open sites as of <?=$cgres_asof?>
+		</td></tr>
+	<tr ><th>Campground</th>
+		<th>Sites</th>
+		<th style='width:4em;'>Fee</th>
+		<th>Open Sites</th></tr>
+	<?php foreach ($cgs as $cg) :
+		if ($camps['cg_status'][$cg] == $status): ?>
+				<?php $no_entries =false;?>
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
 				<td>$ <?= Defs::$campfees[$cg] ?> </td>
 
-				<td><?= $camps['cg_open'][$cg] ?> </td>
+				<td><?= $camps['sites'][$cg] ?> </td>
 
 				</tr>
-			<?php  endif; ?>
-		<?php endforeach;?>
-		<?php if ($nada):?>
+		<?php  endif; ?>
+	<?php endforeach;?>
+	<?php if ($no_entries):?>
 			<tr><td colspan='4' class='left'>None</td></tr>
-		<?php endif; ?>
-	<?php endforeach; ?>
-	</table>
+	<?php endif; ?>
+</table>
 
 
-
-
-	<table  class='alt-gray width45 floatr ' style='vertical-align:top;' >
-<tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th>
-<th>Open Sites</th></tr>
-
-	<?php foreach (['First','Closed'] as $status):
-		if ($status == 'Reservation') : ?>
-		<tr class='bg-orange left'><td colspan='4' ><b>Reserved Campgrounds</b> <br />Make reservations at rec.gov or call 1-877-444-6777. </td></tr>
-	`	<?php elseif ($status=='First') : ?>
-		<tr class='bg-orange left'><td colspan='4' ><b>First Come, First Served Campgrounds</b> <br />Find an empty site and claim it. Pay ranger or at entrance station.</td></tr>
-		<?php elseif ($status=='Closed') : ?>
-			<tr class='bg-orange left'><td colspan='4' ><b>Closed Campgrounds</b></td></tr>
-		<?php endif;?>
-
-		<?php
-		$nada=true;
-		foreach ($cgs as $cg) : ?>
-			<?php if ($camps['cg_status'][$cg] == $status):
-				$nada=false;?>
+<?php $status = 'First';
+$no_entries = true; ?>
+<table class='alt-gray width45 floatl'>
+<tr class='bg-orange left'><td colspan='4' ><b>First Come, First Served Campgrounds</b></td></tr>
+		<tr><td colspan='4'  class='left'>Find a site and claim it.  Pay ranger or at entrance station.<br />
+		Open sites as of <?=$cgopen_asof?>
+		</td></tr>
+	<tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th><th>Open Sites</th></tr>
+	<?php foreach ($cgs as $cg) :
+			if ($camps['cg_status'][$cg] == $status): ?>
+				<?php $no_entries =false;?>
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
 				<td>$ <?= Defs::$campfees[$cg] ?> </td>
-				<td><?= $camps['cg_open'][$cg] ?> </td>
+
+				<td><?= $camps['sites'][$cg] ?> </td>
 
 				</tr>
 			<?php  endif; ?>
 		<?php endforeach;?>
-		<?php if ($nada):?>
+		<?php if ($no_entries):?>
 			<tr><td colspan='4' class='left'>None</td></tr>
 		<?php endif; ?>
-	<?php endforeach;  ?>
-	</table>
+</table>
+
+<?php $status = 'Closed';
+$no_entries = true; ?>
+<table class='alt-gray width45 floatl'>
+<tr class='bg-orange left'><td colspan='4' ><b>Closed Campgrounds</b></td></tr>
+
+<tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th><th>Open SItes</th></tr>
+	<?php foreach ($cgs as $cg) :
+			if ($camps['cg_status'][$cg] == $status):
+				$no_entries =false;?>
+				<tr class='border-bottom'>
+				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
+				<td> <?= Defs::$campsites[$cg] ?> </td>
+				<td>$ <?= Defs::$campfees[$cg] ?> </td>
+
+				<td><?= $camps['sites'][$cg] ?> </td>
+
+				</tr>
+			<?php  endif; ?>
+		<?php endforeach;?>
+		<?php if ($no_entries):?>
+			<tr><td colspan='4' class='left'>None</td></tr>
+		<?php endif; ?>
+</table>
+
 </div>
 
-
-
-<?php endif; ?>
 

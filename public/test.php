@@ -37,7 +37,7 @@ $twolocs = ['jr','hq'];
 
 // what function?
 
-$f = today();
+$f = camps();
 
 function dtime(){
 echo "time is ";
@@ -106,7 +106,8 @@ function weather_b(){
 function camps(){
 	global $Today,$Plates,$Defs;
 	$z=$Today->build_topic_campgrounds();
-
+	u\echor($z,'topic');
+	echo $Plates->render('campground',$z);
 	exit;
 }
 
