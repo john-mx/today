@@ -248,8 +248,10 @@ public function prepare_admin() {
 
 	}
 	$rchecked = [];
+	$rotators = $y['admin']['rotate'] ?? [];
 	foreach (array_keys(Defs::$rpages) as $pid){
-		if (in_array($pid,$y['admin']['rotate'])){$rchecked[$pid] = 'checked';}
+
+		if (in_array($pid,$rotators)){$rchecked[$pid] = 'checked';}
 	}
 	$y['admin']['cg_options'] = $opts;
 	$y['admin']['cg_notes'] = $notes;
