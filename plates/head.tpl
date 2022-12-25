@@ -30,11 +30,16 @@
 	$rotate ??= [];
 	$pagelist = [];
 	if ($rotate){
-	$pagelist = '[';
-		foreach ($rotate as $pid){
-			$pagelist .= "'#page-$pid',";
-		}
-	$pagelist .="]";
+	// $pagelist = '[';
+// 		foreach ($rotate as $pid){
+// 			$pagelist .= "'#page-$pid',";
+// 		}
+// 	$pagelist .="]";
+	foreach ($rotate as $pid){
+		$pagel[] = "#page-$pid";
+	}
+	$pagelist = json_encode($pagel);
+
 	$rdelay = 15; #delay on rotation
 
 	}
