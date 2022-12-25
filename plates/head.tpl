@@ -28,7 +28,7 @@
 	$added_headers = $extra;
 
 	$rotate ??= [];
-	$pagelist = [];
+	$pagelist = [''];
 	if ($rotate){
 	$pagelist = '[';
 		foreach ($rotate as $pid){
@@ -55,7 +55,6 @@
 			break;
 
 		case 'snap':
-			$pagelist =
 			$scbody = "onLoad=startRotation($rdelay,$pagelist)";
 			$added_headers .= "	<script src='/js/snap2.js'></script>";
 			break;
