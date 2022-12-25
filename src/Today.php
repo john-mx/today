@@ -590,7 +590,7 @@ public function build_topic_admin() {
 			$z['target'] = date('l F j, Y');
 
 			$z['advice'] = $this->clean_text($y['advice']);
-			$z['rotate'] = $y['rotate'];
+			$z['rotate'] = $y['rotate'] ?? [];
 
 	//u\echor($z,'topic general', NOSTOP);
 	return ['admin'=>$z];
