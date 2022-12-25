@@ -527,7 +527,7 @@ public function build_topic_campgrounds() {
 	$w['camps']['cgopen_age'] = $cgopen_age;
 	 $w['camps']['cgres_age'] = $cgres_age;
 	//$cg_uncertain = 0; // hours until display changes to ? (0 disables test)
-	$uncertainty = $y['uncertainty'];
+	$uncertainty = $y['uncertainty'] ?? 0;
 
 	// load the two caches and set display
 	if (! $cgsites = array_merge($this->load_cache('cgopen'),$this->load_cache('cgres'))){
