@@ -28,7 +28,7 @@
 	$added_headers = $extra;
 
 	$rotate ??= [];
-	$pagelist = '';
+	$pagelist = [];
 	if ($rotate){
 	$pagelist = '[';
 		foreach ($rotate as $pid){
