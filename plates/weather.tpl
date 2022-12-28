@@ -4,6 +4,7 @@ use DigitalMx as u;
 ?>
 <h4>Weather</h4>
 <?php
+// weather supplies both formatted wgov and formatted wapi.
 
 //u\echor($wgov,'weather',STOP);
 if(! isset($wgov['jr'])): echo "<p>No Data</p>"; else:

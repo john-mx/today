@@ -300,8 +300,10 @@ public function load_cache ($section,$refresh=true) {
 		if ($refresh ){
 
 			$ot = $this->over_cache_time($section);
-			if ($ot){
-				Log::notice("Loading $section needs refresh. OT:$ot");
+			$limit = $this->Defs->getMaxTime($section);
+			$otm = round($ot/60);
+			if ($ot>2*$limit){
+				Log::notice("Loading $section is stale. $otm minutes");
 				//echo ("$section limit $limit ot $ot").BR;
 				//$this -> refreshCache($section);
 			}
@@ -489,7 +491,7 @@ public function build_topic_light() {
 	 }
 	$wapi = $this->format_wapi($y);
 
-	u\echor($wapi,'formatted wapi', NOSTOP);
+	//u\echor($wapi,'formatted wapi', NOSTOP);
 
 	$z['astro']= $wapi['light'];
 	$z['astro']['moonpic'] = $this->Defs->getMoonPic($z['astro']['moonphase']);
@@ -1112,6 +1114,7 @@ public function rebuildCGres() {
 // 		}
 		// update opens from fretried data
 		//$this->write_cache('cgres',$current_res);
+		Log::info("Touched cgres");
 		return true;
 
 }
@@ -1481,6 +1484,7 @@ public function format_wgov ($wgov) {
 	}
 	$wupdated = strtotime($wgov['jr']['properties']['updated']) ;
 	$x['update'] = $wupdated;
+
 
 	foreach ($wgov as $loc => $ldata){	//uses weather.gov api directly
 	//u\echor($ldata, "ldata for $loc");

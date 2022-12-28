@@ -22,14 +22,16 @@ endif;
 
 $gday = $wgov['jr'][1];
 $wday = $wapi['forecast']['jr'][0] ?? [];
-u\echor($wday,'wday');
+//u\echor($wday,'wday');
 
 //u\echor($gday,'gday',NOSTOP);
 
 ?>
 <div class ='center clearafter flex-container' style='vertical-align:top' >
 
-<?php if (0): #use wgov
+<?php if (
+	isset ($gday) && (time() - $wgov['update'] < 24*60*60)
+	): #use wgov
 ?>
 	<div class='border center floatl' style=' font-weight:bold; width:48%; vertical-align:top; ' >
 		<h3><u>Today</u></h3>
@@ -73,12 +75,16 @@ u\echor($wday,'wday');
 				</p>
 		</div>
 	</div>
+	<small>Weather data at Jumbo Rocks from weather.gov</small>
 </div>
 
 
+
+		<?php
 	///////////////////////
-		<?php else: #use wapi?>
+		else: #use wapi
 	////////////////////////
+	?>
 	<div class='border center floatl' style=' font-weight:bold; width:48%; vertical-align:top; ' >
 		<h3><u>Today</u></h3>
 		<?php
@@ -126,7 +132,9 @@ u\echor($wday,'wday');
 
 		<?php endif; ?>
 		</div>
+		<small>weather data at 29 Palms from weatherapi.com</small>
 	</div>
+
 <?php endif ?>
 
 

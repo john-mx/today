@@ -281,19 +281,17 @@ mins,
 				'calendar' => 60*6,
 				'admin' => 0,
 				'properties' => 0, // manual only
-				'wgov' => 120,
-				'wapi' => 120,
+				'wgov' => 235,
+				'wapi' => 110,
 				'airq' => 0,
-				'airnow' => 240,
+				'airnow' => 235,
 				'airowm' => 0,
 				'alerts' => 0,
-				'galerts' => 120,
+				'galerts' => 110,
 				'cgopen' =>0,
 				'camp' => 0,
-				'current' => 60,
-				'cgres' => 60,
-
-
+				'current' => 55,
+				'cgres' => 25,
 
 			);
 
