@@ -22,7 +22,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 
 <div class='content center'>
 <!-- ############################## -->
-<div id="page-today" style="display: <?=$divvis?>">
+<div id="page-today" style="display: block">
 
 <?php if ($admin['pithy']): ?>
 	<p><i><?=$admin['pithy']?></i></p>
@@ -52,8 +52,6 @@ $Cal = new DigitalMx\jotr\Calendar();
 
 <?php
 		$this->insert('calendar',['calendar' => $calendar]) ?>
-
-
 
 </div><!-- end page-->
 <div id="page-camps" style="display: <?=$divvis?>;">
