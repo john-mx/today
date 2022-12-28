@@ -45,7 +45,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 </div><!-- end page-->
 <div id="page-weather" style="display: <?=$divvis?>;">
 
-<?php $this->insert('weather-jr',['weather' => $wgov ]); ?>
+<?php $this->insert('weather-wapi',['wapi'=>$wapi]); ?>
 
 </div><!-- end page-->
 <div id="page-events" style="display: <?=$divvis?>;">

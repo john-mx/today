@@ -37,7 +37,7 @@ $twolocs = ['jr','hq'];
 
 // what function?
 
-$f = wgov(['jr','cw']);
+$f = weather_b();
 
 function dtime(){
 echo "time is ";
@@ -98,7 +98,7 @@ function weather_b(){
 #	$Today->rebuild_cache_wgov();
 
 	$z=$Today->build_topic_weather();
-	echo $Plates->render('weather_brief',$z);
+	echo $Plates->render('weather-wapi',$z);
 	exit;
 }
 
@@ -132,7 +132,7 @@ global $Today,$Plates,$Defs;
 
 	echo "Testing " . 'weather ' . BR;
 	$z = $Today->prepare_topics();
-	echo $Plates->render('weather',$z);
+	echo $Plates->render('weather-wapi',$z);
 	exit
 	;
 	}

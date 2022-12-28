@@ -29,7 +29,7 @@ $wday = $wapi['forecast']['jr'][0] ?? [];
 ?>
 <div class ='center clearafter flex-container' style='vertical-align:top' >
 
-<?php if (
+<?php if (0 &&
 	isset ($gday) && (time() - $wgov['update'] < 24*60*60)
 	): #use wgov
 ?>
@@ -83,6 +83,7 @@ $wday = $wapi['forecast']['jr'][0] ?? [];
 		<?php
 	///////////////////////
 		else: #use wapi
+
 	////////////////////////
 	?>
 	<div class='border center floatl' style=' font-weight:bold; width:48%; vertical-align:top; ' >
