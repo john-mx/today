@@ -46,7 +46,7 @@ $open_options = u\buildOptions(['','0','a few','around 10','10 +','?'],'',true);
 
 
 <h4>Enter closures/announcements</h4>
-One announcement per line.(<cr>)  They will be listed as bullets<br />
+One announcement per line. They will be listed as bullets<br />
 <textarea name='announcements' ><?=$admin['announcements'] ?></textarea>
 
 

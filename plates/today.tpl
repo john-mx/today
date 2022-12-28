@@ -22,7 +22,11 @@ $Cal = new Cal();
 
 <?php
 //u\echor($data,'data');
-	$this->insert('light');
+	try {$this->insert('light');}
+	catch (exception $e) {
+		$einfo = ['src' => 'light','info'=>$e];
+		$this->insert('error',$einfo);
+	}
 ?>
 
 <?php $this->insert('notices') ?>

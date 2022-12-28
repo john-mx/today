@@ -28,11 +28,11 @@ $meta=array(
 	);
 echo $Plates->render('head',$meta);
 echo $Plates->render('title',$meta);
-
+//
 $dir = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'logs';
-$view = new View($dir);
-// view log index
-
+ $view = new View($dir);
+// // view log index
+//
 if (!empty($log=urldecode($_SERVER['QUERY_STRING']))){
 	$view->show_log($log);
 }

@@ -5,7 +5,7 @@ use DigitalMx as u;
 <h4>Weather</h4>
 <?php
 // uses wgov data
-//u\echor($weather,'weather',STOP);
+//u\echor($weather,'weather',NOSTOP);
 if(empty($weather)): echo "<p>No Data</p>"; else:
 	$weather_updated =  date('M d g:i a',$weather['update']);
 	?>

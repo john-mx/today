@@ -88,6 +88,7 @@ fails, they are all abandoned,
 
 
 */
+
 class Today {
 
 public static $dummy_today = array
@@ -214,8 +215,6 @@ public function build_topics(){
 			$this->build_topic_current(),
 
 
-
-
 		);
 
 
@@ -286,24 +285,38 @@ $y['calendar'] = $calendar;
 	return $y;
 }
 
-public function load_cache ($section) {
+public function load_cache ($section,$refresh=true) {
+	// normally checks for out of date cacghe and rebuilds it.
+	// prevent refresh check by setting refresh - false.
+	// This is need to prevent endless loop if rebuild includes another load.
 
 #echo "loading cache $section" . BR;
+
+	// check validity
 		if (!file_exists (CACHE[$section])) {
-			Log::notice ("Cache $section does not exist. Refreshing.");
 			die ("Attempt to read non-existent cache $section");
 		}
-		$ot = round($this->over_cache_time($section)/60); //in minute
-		if ( $ot > 90) {
-			Log::info("Loading stale cache $section: $ot minutes");
 
+		if ($refresh ){
+
+			$ot = $this->over_cache_time($section);
+			if ($ot){
+				Log::notice("Loading $section needs refresh. OT:$ot");
+				//echo ("$section limit $limit ot $ot").BR;
+				//$this -> refreshCache($section);
+			}
 		}
 
 		if (!$y = json_decode ($this->file_get_contents_locking(CACHE[$section]), true)) {
-			Log::error("Failed to load $section cache");
+			Log::error("Failed to json decode cache $section.  ");
+
+		}
+
+		if (empty($y)) {
+			Log::error("Failed to load cache $section.  Returning empty.");
 			return [];
 		}
-		//u\echor($y,$section,STOP) . BR;
+		//u\echor($y,$section,NOSTOP) . BR;
 		return $y;
 }
 
@@ -366,7 +379,7 @@ public function post_admin ($post) {
 
 public function mergeCache($cache,$merge){
 // merges data into cache, unless data is empty
-		$x = $this->load_cache($cache) ;
+		$x = $this->load_cache($cache,false) ; #don't refresh it	Log::info("Merged updated cache $loginfo");
 //		u\echor ($x, "merge: Loaded cache $cache");
 //		u\echor ($merge,'merge: Data to merge');
 		if (! empty ($merge)){ #if empty you're done
@@ -415,7 +428,7 @@ public function build_topic_calendar() {
 	return ['calendar' => $z];
 }
 public function build_topic_current() {
-	if (!$z=$this->load_cache('current')) {
+	if (!$z=$this->load_cache('current',false)) {
 	 	Log::error ("Could not load cache current");
 	 	return [];
 	 }
@@ -470,30 +483,68 @@ public function build_topic_air() {
 public function build_topic_light() {
 	$z = [];
 	#$light['x'] = 'x';
-	if (!$y = $this->load_cache('wapi') ){
+	if (!$y =  $this->load_cache('wapi') ){
 	 	Log::error ("Could not load cache wapi");
-	 	return [];
+	 	return ['light' => $z];
 	 }
-	$zz = $this->format_wapi($y);
+	$wapi = $this->format_wapi($y);
 
-//	u\echor($zz,'formatted wapi', STOP);
+	u\echor($wapi,'formatted wapi', NOSTOP);
 
-	$z['light']= $zz['light'];
-	$z['light']['moonpic'] = $this->Defs->getMoonPic($z['light']['moonphase']);
+	$z['astro']= $wapi['light'];
+	$z['astro']['moonpic'] = $this->Defs->getMoonPic($z['astro']['moonphase']);
 
-	$z['uv'] = $this->uv_data($z['light']['uv']);
+	$z['uv'] = $this->uv_data($z['astro']['uv']);
 
+// add in todays weather
+
+	$wgov = $this->load_cache('wgov');
+	if (! isset($wgov['jr']['properties']['updated'] )){
+		return ['light' => $z];
+	}
+	$wupdated = strtotime($wgov['jr']['properties']['updated']) ;
+
+	$gday = ['day' => [],'night'=>[],'updated'=>$wupdated];
+	foreach ($wgov['jr']['properties']['periods'] as $period) {
+		if (strtotime($period['endTime']) < time()){ #already ended
+			continue;
+		}
+		if ($period['isDaytime']) {
+			#got day interval
+			$gday['day'] = $period;
+
+			$temperature = $period['temperature'];
+			$tempc = round(($temperature -32 )* 5/9,0);
+			$gday['day']['highlow'] = "High: $temperature &deg;F ($tempc &deg;C)";
+			continue;
+		} else {#got night time
+			$gday['night'] = $period;
+			$temperature = $period['temperature'];
+			$tempc = round(($temperature -32 )* 5/9,0);
+			$gday['night']['highlow'] = "Low: $temperature &deg;F ($tempc &deg;C)";
+
+			break;
+		}
+	}
+	// gday may be empty if no data for today
+
+
+
+	$z['gday'] = $gday;
+//	u\echor($z,'light prepared');
 	return ['light' => $z];
 }
 
 
 public function build_topic_weather() {
-	if (!$w = $this->load_cache('wgov') ){
+	if (!$wgov = $this->load_cache('wgov') ){
 	 	Log::error ("Could not load cache wgov");
+	 	echo "No wgov";
 	 	return [];
 	 }
-	$z['wgov'] = $this->format_wgov($w);
-#u\echor($z,'formatted wgov');
+
+	$z['wgov'] = $this->format_wgov($wgov);
+// u\echor($z,'formatted wgov',STOP);
 
 	//get current temp
 	$w = $this->load_cache('wapi');
@@ -601,56 +652,148 @@ public function build_topic_admin() {
 
 
 ########  CACHES #############
+/*
+	Caches contain all the data retrievedd or stored
+	from various sources, both internal and external.
+	There is one cache for each source, so minimal re-formatting
+	of the raw source.  Caches are all json arrays.
+
+	Caches need to be refreshed periodically.  The refresh
+	time for each cache is stored in Defs::$cache_times,
+		Refresh time is 0 for caches that are manually updated,
+	like admin.  So refresh =
+	$limit && (time() - $limit > 0)
+
+	Tried two alternatives:
+	Refresh all caches periodically with cron (refresh_caches()).
+	Refresh each cache on loading it (refreshCache($cache)).
+
+	Former is bertter because it does the refresh in the background,
+	so is invisible to the user.  Otherwise user can get 'hung'
+	becausee of possible delays or issues with the refresh.
+
+	*/
+
 public function refresh_caches($force=false) {
-Log::info ("Starting cache refresh cycle");
+	Log::info ("Starting all cache refresh cycle");
 
 /* refreshes all the external caches, if they are due
-	over-cache_time returns 5 minutes less than time set in defs,
-	so caches refresh on a 1 hour interval
+
 */
 
-		if ($this->over_cache_time('wapi') > 0 || $force) {
-				$this->rebuild_cache_wapi();
+	if ($this->over_cache_time('wapi') > 0 || $force) {
+			$this->rebuild_cache_wapi();
+			echo "wapi done" . BR;
 
-		}
-		if ($this->over_cache_time('airq') > 0|| $force) {
-			$this->rebuild_cache_airq();
+	}
+	if ($this->over_cache_time('airq') > 0|| $force) {
+		$this->rebuild_cache_airq();
+			echo "airq done" . BR;
+	}
+	if ($this->over_cache_time('airowm')> 0 || $force) {
+		Log::error("airowm updating because " . $this->over_cache_time('airowm') );
+		$this->rebuild_cache_airowm();
+		echo "airown done" . BR;
 
-		}
-		if ($this->over_cache_time('airowm')> 0 || $force) {
-			Log::error("airowm updating because " . $this->over_cache_time('airowm') );
-			$this->rebuild_cache_airowm();
-		}
-		if ($this->over_cache_time('wgov')> 0 || $force) {
-				$this->rebuild_cache_wgov();
-		}
-		if ($this->over_cache_time('airnow')> 0 || $force) {
-				$this->rebuild_cache_airnow();
-		}
-		if ($this->over_cache_time('galerts')> 0 || $force) {
-				$this->rebuild_cache_galerts();
-		}
-		if ($this->over_cache_time('current') > 0 || $force) {
-			$this->rebuild_cache_current();
-		}
-		if ($this->over_cache_time('calendar') > 0 || $force) {
-			$this->rebuild_cache_calendar(); #filter out old stuff
-		}
-		if ($this->over_cache_time('cgopen') > 0 || $force) {
+	}
+	if ($this->over_cache_time('wgov')> 0 || $force) {
+			$this->rebuild_cache_wgov();
+			echo "wgov done" . BR;
+	}
+	if ($this->over_cache_time('airnow')> 0 || $force) {
+			$this->rebuild_cache_airnow();
+			echo "airnow done" . BR;
+	}
+	if ($this->over_cache_time('galerts')> 0 || $force) {
+			$this->rebuild_cache_galerts();
+			echo "galerts done" . BR;
+	}
+	if ($this->over_cache_time('current') > 0 || $force) {
+		$this->rebuild_cache_current();
+		echo "current done" . BR;
+	}
+	if ($this->over_cache_time('calendar') > 0 || $force) {
+		$this->rebuild_cache_calendar(); #filter out old stuff
+		echo "calendar done" . BR;
+	}
 
-			//$this->rebuildCGopen(); #filter out old stuff
-		}
+	if ($this->over_cache_time('cgres') > 0 || $force) {
+		$this->rebuildCGres(); #filter out old stuff
+		echo "cgres done" . BR;
+	}
 
 
-			#	$this -> rebuild_properties('jr');
-Log::info ("Completed cache refresh cycle");
+
+	#	$this -> rebuild_properties('jr');
+	Log::info ("Completed cache refresh cycle");
+
 }
 
-// Rebuild caches goes to external and downloads data for each location
-// if any location fails, the rebuild is aborted and new cache is not written,
-// so old cache is retained.
-// Could try to merge old and new, so only mssing location gets retained, but
-// seems to complex right now.
+private function refreshCache($cache) {
+	// refresh individual cache on demand.
+	/* back and forth over refresh all via cron
+	vs refrewsh on deman when loaded.  Problem with
+	doing it on demand is that it may tie up script
+	for a while due to sleep cycles for failed curl
+	attempts.  Better to run refresgh as a background
+	job by cron.  So use 'refresh_caches' instead of this
+
+	*/
+	$ot = $this->over_cache_time($cache);
+	switch ($cache) {
+		case 'wapi':
+			$this->rebuild_cache_wapi();
+			Log::info ("Refreshed cache $cache. Overtime = $ot.");
+			break;
+
+		case 'airq':
+			$this->rebuild_cache_airq();
+			Log::info ("Refreshed cache $cache. Overtime = $ot.");
+
+			break;
+
+		case 'airowm':
+			$this->rebuild_cache_airowm();
+			Log::info ("Refreshed cache $cache. Overtime = $ot.");
+			break;
+
+		case 'wgov':
+			$this->rebuild_cache_wgov();
+			Log::info ("Refreshed cache $cache. Overtime = $ot.");
+			break;
+
+		case 'airnow':
+			$this->rebuild_cache_airnow();
+			Log::info ("Refreshed cache $cache. Overtime = $ot.");
+			break;
+
+		case 'galerts':
+			$this->rebuild_cache_galerts();
+			Log::info ("Refreshed cache $cache. Overtime = $ot.");
+			break;
+
+		case 'current':
+			$this->rebuild_cache_current();
+			Log::info ("Refreshed cache $cache. Overtime = $ot.");
+			break;
+
+		case 'calendar':
+			$this->rebuild_cache_calendar(); #filter out old stuff
+			Log::info ("Refreshed cache $cache. Overtime = $ot.");
+			break;
+
+		case 'cgres':
+			$this->rebuildCGres(); #rebuild from rec.gov
+			Log::info ("Refreshed cache $cache. Overtime = $ot.");
+			break;
+
+		default:
+			die ("Attempt to refresh unknown cache $cache");
+
+	}
+
+}
+
 
 public function rebuild_cache_wapi(array $locs=[] ) {
 	$x=[];
@@ -678,7 +821,7 @@ public function rebuild_cache_wapi(array $locs=[] ) {
 }
 
 private function rebuild_cache_calendar () {
-	$x = $this->load_cache('calendar');
+	$x = $this->load_cache('calendar',false);
 	$x = $this->Cal -> filter_calendar($x,0);
 	$this->write_cache('calendar',$x);
 	Log::info('rebuilt calendar cache');
@@ -814,22 +957,30 @@ coord: 34.0714,-116.3906,
 	#$locs = ['br'];
 
 	foreach ($locs as $loc) {
-		[$lat,$lon] = $this -> split_coord($loc);
+		$loginfo = "$src:$loc";
+		//[$lat,$lon] = $this -> split_coord($loc);
 		$curl_header = [];
 
 		$url = "https://api.weather.gov/gridpoints/" . $this->Defs->getGridpoints($loc) . '/forecast' ; #./forecast
 		#$url = "https://api.weather.gov/points/$lat,$lon";
 		$expected = 'properties';
 
-		$loginfo = "$src:$loc";
+
 		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
-			Log::notice("Failed $loginfo.  Rebuild aborted."); return [];
-		} //if one loc fails, fail the whole thing
+			Log::notice("Failed expected '$expected' for $loginfo. Skipped.");
+			continue;
+		} //if one loc fails, skip and get next
 
 		$x[$loc] = $aresp;
 	} # next loc
-	Log::info("Saved updated cache $src");
-	$this->write_cache($src,$x);
+
+	// using merge instead of write because some sites may have failed.
+	if (empty($x)){
+		Log::notice("No results for wgov. Not updating cache.");
+	} else {
+		$this->mergeCache($src,$x);
+		Log::info("Merged data into cache wgov");
+	}
 	return $x;
 }
 
@@ -887,7 +1038,7 @@ public function rebuild_cache_galerts () {
 
 	$src = 'wapi';
 
-	 if (!$r = $this->load_cache('wapi') ) {
+	 if (!$r = $this->load_cache('wapi',false) ) {
 	 	Log::error ("Could not load cache wapi");
 	 	return [];
 	 }
@@ -945,38 +1096,24 @@ public function rebuild_cache_galerts () {
 	return $y;
 }
 
-public function rebuildCGopen($cycle) {
-	/* reset cgopen in evening
-		Retrieve data from rec.gov in morning
-		call with cycle = am or pm
-		return true if data updated; false if unchanged.
+public function rebuildCGres() {
+	/* rebuild the cgres cache
 	*/
-		if (!$opens = $this->load_cache('cgopen')) {
-			Log::error('Rebuild cgopen failed; cannot open cache');
-			return false;
-		}
 
-		if ($cycle == 'am') {
-			if (!0 &&  $new_opens = $this->loadRecData() ){
-				Log::info("Cannot retrieve opens from rec.gov");
-				// do leave for another time.
-				return false;
-			}
-			// update opens from fretried data
-			$this->write_cache('cgopens',$new_opens);
-			return true;
-		} elseif ($cycle == 'pm'){
-			// set all camp data to uknown
-			$new_opens = [];
-			foreach (array_keys(self::$empty_opens) as $cg){
-				$new_opens[$cg] = '?'; // now unknown
-			}
-			$this->write_cache('cgopens',$new_opens);
-			return true;
-		} else {
-			Log::error ("Called rebuild cgopen with invalid cycle: $cycle");
-			return false;
-		}
+		// for now just:
+		touch (CACHE['cgres']);
+
+
+		// if (! 1 #||  load rec.gov data
+// 		){
+// 			Log::info("Cannot retrieve opens from rec.gov");
+// 			// do leave for another time.
+// 			return false;
+// 		}
+		// update opens from fretried data
+		//$this->write_cache('cgres',$current_res);
+		return true;
+
 }
 
 private function loadRecData(){
@@ -1025,7 +1162,7 @@ PDX ORZ006
 }
 
 public function rebuild_properties() {
-	$locs=['br','cw','jr','pdx','shasta'];
+	$locs=['br','cw','jr','kv','lhrs','pdx','shasta'];
 	$x=[];
 	$x['update'] = time();
 	$src = 'properties';
@@ -1264,7 +1401,8 @@ public function format_wapi ($r) {
 				'skies' => $daily['day']['condition']['text'],
 				'rain' => $daily['day']['daily_chance_of_rain'],
 				'visibility' => $daily['day']['avgvis_miles'],
-				'uv' => $daily['day']['uv']
+				'uv' => $daily['day']['uv'],
+				'icon' => $daily['day']['condition']['icon'],
 
 				);
 		} #end for day
@@ -1332,19 +1470,30 @@ private function format_alerts($r){
 	return $t;
 }
 
-public function format_wgov ($r) {
+public function format_wgov ($wgov) {
 
 	$x=[];
+	//u\echor ($wgov, 'wgov into format');
 
-	foreach ($r as $loc => $ldata){	//uses weather.gov api directly
-		if (empty($x['update'])){
-			$x['update'] = strtotime($ldata['properties']['updated']);
-		}
+	if (! isset($wgov['jr']['properties']['updated'] )){
+		echo "no jr properties";
+		return $x;
+	}
+	$wupdated = strtotime($wgov['jr']['properties']['updated']) ;
+	$x['update'] = $wupdated;
+
+	foreach ($wgov as $loc => $ldata){	//uses weather.gov api directly
+	//u\echor($ldata, "ldata for $loc");
+
+		if (! $ldata){continue;}
+
+		//$x['update'] = strtotime($ldata['properties']['updated'] ?? 0);
+
 		$periods = $ldata['properties']['periods'] ?? '';
 
 		$day = 0;
 		$lastday = '';
-		foreach ($periods as $p){ // period array]	d
+foreach ($periods as $p){ // period array]	d
 			// two periods per day, for day and night
 			// put into one array
 // u\echor($p,'period',NOSTOP);
@@ -1358,15 +1507,15 @@ public function format_wgov ($r) {
 				$lastday = $daytext;
 			}
 			$p['daytext'] = $daytext;
-			$p['highlow'] = "$highlow&nbsp;". $p['temperature']. "&deg;F (" .$tempc . "&deg;C)" ;
+			$p['highlow'] = $highlow . "&nbsp;" . $p['temperature'] . "&deg;F (" .$tempc . "&deg;C)" ;
+
 
 			$x[$loc][$day][] = $p;
 
 		} #end foreach period
-
 	} #end foreach location
 
-	 $x;
+//	u\echor($x,"foramtted wgov", STOP);
 	return $x;
 }
 
@@ -1471,16 +1620,17 @@ private function over_cache_time($section) {
 	/* dies if file not exists
 		0 if mtime is under the limit
 		diff if mtime is over the limit by diff
-		Returns true if time is within 5 minutes of limit
+		XXX Returns true if time is within 5 minutes of limit
 	*/
 	if (!file_exists(CACHE[$section])){ die ("No cache file for $section");}
 	$limit = $this->Defs->getMaxTime($section) ; #in seconds
-	if ($limit){
-		$filetime = filemtime (CACHE[$section]);
-		// is filetime within an hour of limit
-		$age = time() - $filetime;
-		if ( $age > ($limit - 3500) ) return $age; #in seconds
-	}
+	if (!$limit){ return 0;}
+
+	$filetime = filemtime (CACHE[$section]);
+	$age = time() - $filetime;
+	$margin = 0;
+	if ( $age > ($limit - $margin) ) return $age; #in seconds
+
 //	echo "$section: limit $limit; diff $diff;" . BR;
 	return 0;
 }
@@ -1523,12 +1673,12 @@ public function clean_text( $text = '') {
 	return trim($t);
 }
 
-function get_external ($src, $url,string $expected='',array $header=[]) {
+function get_external ($loginfo, $url,string $expected='',array $header=[]) {
 		/* tries to geet the url, tests for suc cess and
 			for expected result if supplied.
 			returns result array on success
 			returns false on erro.
-			$src is just for Log info
+			$loginfo is just for Log info
 		*/
 		$curl = curl_init();
 		$curl_options = $this->curl_options();
@@ -1538,38 +1688,39 @@ function get_external ($src, $url,string $expected='',array $header=[]) {
 				curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
 		$aresp = [];
 		$success=0;
-	// No .. dont need to lock out reads while getting data; only when writing
-		$fail = '';	$tries = 0;
+		$fail = '';
+		$tries = 0;
+
 		while (!$success) {
-			//u\echor($aresp,"Here's what I got for $src:");
+			//u\echor($aresp,"Here's what I got for $loginfo:");
 			if ($tries > 2){
-					//echo "Can't get valid data from ext source  $src";
-				Log::notice("Curl failed for $src: $fail.",$aresp);
+					//echo "Can't get valid data from ext source  $loginfo";
+				Log::notice("External failed for $loginfo: $fail.",$aresp);
 				return [];
 			}
 			if (! $response = curl_exec($curl)) {
 				$success = 0;
-				$fail = "No curl responce on $src";
-			}else { $success = 1;}
+				$fail = "No response on $loginfo";
+			} else { $success = 1;}
 
 
 			if ($success && !$aresp = json_decode($response, true) ){
 				$success = 0;
-				$fail = " failed JSON decode ";
-			}else { $success = 1;}
+				$fail = " Failed JSON decode ";
+			} else { $success = 1;}
 
 			if ($success &&  $expected && !u\inMultiArray($expected,$aresp)) {
 				$success = 0;
-				$fail = "failed expected result $expected";
+				$fail = "Failed expected result $expected";
 			}else { $success = 1;}
 
 			if (! $success) {
 					++$tries;
-					sleep (10);
+					sleep (5);
 
 			} else {
 				curl_close($curl);
-				Log::info ("External received for $src.  Tries $tries.");
+				Log::info ("External succeeded for $loginfo.  Tries $tries.");
 				return $aresp;
 			}
 

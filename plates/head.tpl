@@ -52,16 +52,14 @@
 			$scbody='onLoad="pageScroll()"';
 			$added_headers .= "<style>html {scroll-behavior: smooth;}</style>";
 			$added_headers .= "<script src='/js/scroll_scripts.js'></script>";
+			$added_headers .= '<meta http-equiv="refresh" content="900" >';
 			break;
 
-		case 'Xsnap':
-			$scbody = "onLoad='startRotation(15)'";
-			$added_headers .= "	<script src='/js/snap.js'></script>";
-			break;
 
 		case 'snap':
 			$scbody = "onLoad=startRotation(15,$pagelist)";
 			$added_headers .= "	<script src='/js/snap2.js'></script>";
+			$added_headers .= '<meta http-equiv="refresh" content="900" >';
 			break;
 
 		default:
@@ -79,7 +77,7 @@
 <head>
    <meta charset="utf-8" />
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <meta http-equiv="refresh" content="900" >
+
 	<base href='<?=SITE_URL?>'>
 
 	<title><?=$titlex?></title>

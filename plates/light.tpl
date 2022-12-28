@@ -1,67 +1,133 @@
 <?php
 use DigitalMx as u;
 
-$gupdated = '';
-$wupdated = '';
-if(empty($wgov)): echo "<p>No wgov Data</p>"; exit;
-	else:
-	$gupdated =  date('M d g:i a',$wgov['update']);
-	endif;
 
-if(empty($wapi)): echo "<p>No wapi Data</p>"; exit;
-	else:
-	$wupdated =  date('M d g:i a',$wapi['update']);
-	endif;
 
-$light = $light['light'];
-$uv = $light['uv'];
+if (!$light || ! $wapi ){
+	echo "No Data Available (light)";
+	return;
+}
+//u\echor($light,'light in tpl');
+
+$astro = $light['astro'] ?? [];
+$uv = $light['uv'] ?? [];
 $air = $air;
+// get today's daily data
+if (! $gday = $light['gday'] ?? []):
+	echo "No data available (weather.gov day)";
+	return;
+endif;
+
+
+
 $gday = $wgov['jr'][1];
-$wday = $wapi['forecast']['jr'][0];
+$wday = $wapi['forecast']['jr'][0] ?? [];
+u\echor($wday,'wday');
 
 //u\echor($gday,'gday',NOSTOP);
 
 ?>
 <div class ='center clearafter flex-container' style='vertical-align:top' >
 
+<?php if (0): #use wgov
+?>
 	<div class='border center floatl' style=' font-weight:bold; width:48%; vertical-align:top; ' >
 		<h3><u>Today</u></h3>
-		<?php $i=1; if (!isset($gday[$i])): $i=0;
+		<?php
+			if (!isset($gday)): echo "Data not available";
+			elseif (!isset($gday['day'])): echo "Day has ended";
+			else :
 		?>
-			The Day is Done!
-		<?php else: ?>
+
 		<div class=' inlineblock center' style='vertical-align:top; width:40%;'>
-			<img src="<?= $wgov['jr'][1][0]['icon'] ?>" class='auto' ><br />
-			<?= $gday[0]['shortForecast'] ?>
+			<img src="<?= $gday['day']['icon'] ?>" class='auto' ><br />
+			<?= $gday['day']['shortForecast'] ?><br />
+			<b>Wind: </b> up to <?= $wday['maxwind']?>&nbsp;mph (<?= $wday['maxwindM'] ?>&nbsp;kph)
 		</div >
 
 		<div class=' center inlineblock' style='vertical-align:top;width:55%'>
-			<p style='margin-top:0;font-size:1.2rem;'><?=$gday[0]['highlow']?></p>
+			<p style='margin-top:0;font-size:1.2rem;'><?=$gday['day']['highlow']?></p>
 			<p>
-			Sunrise:&nbsp;<?= $light['sunrise'] ?> Sunset:&nbsp;<?= $light['sunset'] ?>
+			Sunrise:&nbsp;<?= $astro['sunrise'] ?> Sunset:&nbsp;<?= $astro['sunset'] ?>
 			</p>
-
-			<p><b>Wind: </b> up to <?= $wday['maxwind']?>&nbsp;mph (<?= $wday['maxwindM'] ?>&nbsp;kph) </p>
 		</div>
 		<?php endif; ?>
 	</div>
 
+
 	<div class='border center floatr' style=' font-weight:bold; width:45%; vertical-align:top;' >
 		<h3><u>Tonight</u></h3>
+
 		<div class=' inlineblock center' style='vertical-align:top;width:40%;'>
-			<img src="/images/moon/<?= $light['moonpic'] ?>" style='width:76px' class='auto' >
+			<img src="/images/moon/<?= $astro['moonpic'] ?>" style='width:76px' class='auto' >
 			<br />
-			<?= $gday[$i]['shortForecast'] ?>
-			</div>
-			<div class=' center inlineblock' style='vertical-align:top;width:55%'>
-				<p style='margin-top:0;font-size:1.2rem;' ><?=$gday[$i]['highlow']?></p>
-				<p>Moonrise:&nbsp;<?= $light['moonrise'] ?>  Moonset:&nbsp;<?= $light['moonset'] ?><br /><br />
-				<?=$light['moonphase'] ?> (<?=$light['moonillumination']?>%&nbsp;illum)
+
+		</div>
+		<div class=' center inlineblock' style='vertical-align:top;width:55%'>
+				<p style='margin-top:0;font-size:1.2rem;'>Low:
+			<?=$wday['Low']?> &deg;F
+			(<?=$wday['LowC']?> &deg;C)
+			</p>
+				<p>Moonrise:&nbsp;<?= $astro['moonrise'] ?>  Moonset:&nbsp;<?= $astro['moonset'] ?><br /><br />
+				<?=$astro['moonphase'] ?> (<?=$astro['moonillumination']?>%&nbsp;illum)
 				</p>
-			</div>
+		</div>
+	</div>
+</div>
+
+
+	///////////////////////
+		<?php else: #use wapi?>
+	////////////////////////
+	<div class='border center floatl' style=' font-weight:bold; width:48%; vertical-align:top; ' >
+		<h3><u>Today</u></h3>
+		<?php
+			if (!isset($wapi)): echo "Data not available";
+			else :
+		?>
+
+		<div class=' inlineblock center' style='vertical-align:top; width:40%;'>
+			<img src="https:<?= $wday['icon'] ?>" class='auto' ><br />
+			<?= $wday['skies'] ?><br />
+			<b>Wind: </b> up to <?= $wday['maxwind']?>&nbsp;mph (<?= $wday['maxwindM'] ?>&nbsp;kph)
+		</div >
+
+		<div class=' center inlineblock' style='vertical-align:top;width:55%'>
+			<p style='margin-top:0;font-size:1.2rem;'>High:
+			<?=$wday['High']?> &deg;F
+			(<?=$wday['HighC']?> &deg;C)
+			</p>
+			<p>
+			Sunrise:&nbsp;<?= $astro['sunrise'] ?> Sunset:&nbsp;<?= $astro['sunset'] ?>
+			</p>
 		</div>
 	</div>
 
+	<div class='border center floatr' style=' font-weight:bold; width:45%; vertical-align:top;' >
+
+		<h3><u>Tonight</u></h3>
+
+			<div class=' inlineblock center' style='vertical-align:top;width:40%;'>
+				<img src="/images/moon/<?= $astro['moonpic'] ?>" style='width:76px' class='auto' >
+				<br />
+
+			</div>
+			<div class=' center inlineblock' style='vertical-align:top;width:55%'>
+					<p style='margin-top:0;font-size:1.2rem;'>Low:
+				<?=$wday['Low']?> &deg;F
+				(<?=$wday['LowC']?> &deg;C)
+				</p>
+					<p>Moonrise:&nbsp;<?= $astro['moonrise'] ?>  Moonset:&nbsp;<?= $astro['moonset'] ?><br /><br />
+					<?=$astro['moonphase'] ?> (<?=$astro['moonillumination']?>%&nbsp;illum)
+					</p>
+			</div>
+	</div>
+
+
+		<?php endif; ?>
+		</div>
+	</div>
+<?php endif ?>
 
 
 

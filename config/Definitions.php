@@ -112,7 +112,7 @@ public static $coordinates = [
 	'pdx' => '45.5152,-122.6784',
 	'shasta' => '41.3099,-122.3106',
 	'denver' => '39.7392,-104.9903',
-	'lh' => '34.01779,-116.18857',
+	'lhrs' => '34.01779,-116.18857',
 ];
 
 	public static $api_keys = array (

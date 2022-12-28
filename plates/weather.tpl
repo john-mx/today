@@ -6,7 +6,7 @@ use DigitalMx as u;
 <?php
 
 //u\echor($wgov,'weather',STOP);
-if(empty($wgov)): echo "<p>No Data</p>"; else:
+if(! isset($wgov['jr'])): echo "<p>No Data</p>"; else:
 	$weather_updated =  date('M d g:i a',$wgov['update']);
 	?>
 	<table class = 'width100 col-border inleft2'>

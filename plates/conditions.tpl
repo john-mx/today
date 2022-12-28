@@ -4,11 +4,15 @@
 // $conditions = $data['fire'],4data['air'],$data['current'];
 //u\echor($data,'data',STOP);
 
-$uv = $light['uv'];
+if (! $light || ! $air ){
+	echo "No Data Available (conditions)";
+	return;
+}
+$uv = $light['uv'] ?? [];
 
 $air = $air;
-$gday = $wgov['jr'][1];
-$wday = $wapi['forecast']['jr'][0];
+$gday = $wgov['jr'][1] ?? [];
+$wday = $wapi['forecast']['jr'][0] ?? [];
 
 //u\echor ($current);
 

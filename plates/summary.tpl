@@ -28,7 +28,7 @@ if(empty($wapi)): echo "<p>No wapi Data</p>"; exit;
 	$wupdated =  date('M d g:i a',$wapi['update']);
 	endif;
 	//u\echor($light);exit;
-$daylight = $light['light'];
+$daylight = $light['astro'];
 $uv = $light['uv'];
 $air = $air;
 $uvday = <<<EOT
