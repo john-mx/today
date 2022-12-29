@@ -5,7 +5,7 @@
 <?php
 if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 ?>
-<table class='caltable width100 inleft2'>
+<table class='caltable width100 '>
 
 <tr><th>Time </th><th>Program</th><th> Location</th></tr>
 <tbody>

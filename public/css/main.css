@@ -153,12 +153,12 @@ div.flex-container > div{
 div.conditions {
 	margin-bottom:1em;
 	vertical-align:top;
-
+	padding:6px;
 	display:inline-block;
-	margin-left:1em;
-	margin-right:1em;
+	margin-left:0;
+	margin-right:0;
 	text-align:left;
-	width:25%;
+	width:30%;
 }
 
 div.head {

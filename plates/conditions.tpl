@@ -79,9 +79,9 @@ EOT;
 
 
 <h4>Park Conditions</h4>
-<div class='inleft2'>
+<div >
 <div class='clearafter left '>
-	<h5>In the Park</h5>
+
 	<?=$fireday?>
 
 
