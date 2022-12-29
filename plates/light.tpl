@@ -130,7 +130,7 @@ $wday = $wapi['forecast']['jr'][0] ?? [];
 
 
 	</div><!-- end wapi container-->
-	<div >	<small>weather at 29 Palms from weatherapi.com</small>
+	<div class= 'left' >	<small>weather at 29 Palms from weatherapi.com</small>
 	</div>
 <?php endif; ?>
 

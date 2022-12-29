@@ -19,9 +19,6 @@ if(empty($wapi)): echo "<p>No Data</p>"; else:
 	<col style='width:30%'>
 	</colgroup>
 
-	<tr class='border-bottom'><td colspan='4' class='left'>
-	<small>Weatherapi.com forcast updated at <?=$weather_updated?></small>
-	</td></tr>
 
 <tr>
 		<?php
@@ -62,4 +59,7 @@ if(empty($wapi)): echo "<p>No Data</p>"; else:
 
 	<?php endforeach; // loc? ?>
 	</table>
+
+	<div class='left'><small>Weatherapi.com forcast updated at <?=$weather_updated?></small></div>
+
 <?php	endif; ?>
