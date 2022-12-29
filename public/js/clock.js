@@ -8,8 +8,10 @@ var x = new Date()
 var ampm = x.getHours() >=12 ? ' PM' : ' AM';
 hours = x.getHours() % 12;
 hours = hours ? hours : 12;
+minutes = x.getMinutes();
+if ( minutes < 10) {minutes = '0' + minutes ;}
 // var x1=(x.getMonth() + 1) + "/" + x.getDate() + "/" + x.getFullYear();
-var ctime = hours+':'+x.getMinutes()+ampm;
+var ctime = hours+':'+ minutes +ampm;
 document.getElementById('clock').innerHTML = ctime;
 display_c();
  }
