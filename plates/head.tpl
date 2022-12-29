@@ -57,8 +57,9 @@
 
 
 		case 'snap':
-			$scbody = "onLoad=startRotation(15,$pagelist)";
+			$scbody = "onLoad=startRotation(15,$pagelist);display_clock();";
 			$added_headers .= "	<script src='/js/snap2.js'></script>";
+			$added_headers .= "<script src='/js/clock.js'></script>";
 			$added_headers .= '<meta http-equiv="refresh" content="900" >';
 			break;
 

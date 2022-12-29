@@ -14,6 +14,6 @@
 	<h2  ><?=$subtitle?></h2>
 </div>
 
-<div class='pad'><?=$trial?></div>
+<div class='pad' id='clock'></div>
 </div>
 

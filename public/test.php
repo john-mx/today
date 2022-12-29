@@ -37,8 +37,9 @@ $twolocs = ['jr','hq'];
 
 // what function?
 
-$f = weather_b();
+//$f =
 
+echo "<script>setInterval(dtime(),60);</script>";
 function dtime(){
 echo "time is ";
 echo
