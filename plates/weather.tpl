@@ -58,9 +58,9 @@ if(! isset($wgov['jr'])): echo "<p>No Data</p>"; else:
 					</td>
 			<?php endfor; #day ?>
 		</tr>
-		<tr >
+		<tr class='bg-blue'>
 
-			<td class='bg-midnight white'>Night</td>
+			<td >Night</td>
 			<?php
 			for ($i=1;$i<4;++$i) : //for 3 days
 				if (count($days[$i]) == 2) :
@@ -69,7 +69,7 @@ if(! isset($wgov['jr'])): echo "<p>No Data</p>"; else:
 					$p = $days[$i][0] ;
 				endif;
 				?>
-					<td class='bg-midnight white'>
+					<td >
 					<div >
 								<?=$p['shortForecast']?>  <br />
 								<?= $p['highlow']?>.<br />

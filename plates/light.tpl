@@ -56,12 +56,13 @@ $wday = $wapi['forecast']['jr'][0] ?? [];
 	</div> <!-- end today -->
 
 
-	<div class='border center floatr' style=' font-weight:bold; width:45%; vertical-align:top;' >
+	<div class='border center floatr  bg-blue ' style=' font-weight:bold; width:45%; vertical-align:top;' >
 		<h3><u>Tonight</u></h3>
 
 		<div class=' inlineblock center' style='vertical-align:top;width:40%;'>
 			<img src="/images/moon/<?= $astro['moonpic'] ?>" style='width:76px' class='auto' >
 			<br />
+							<?=$astro['moonphase'] ?> (<?=$astro['moonillumination']?>%&nbsp;illum)
 
 		</div>
 		<div class=' center inlineblock' style='vertical-align:top;width:55%'>
@@ -70,7 +71,7 @@ $wday = $wapi['forecast']['jr'][0] ?? [];
 			(<?=$wday['LowC']?> &deg;C)
 			</p>
 				<p>Moonrise:&nbsp;<?= $astro['moonrise'] ?>  Moonset:&nbsp;<?= $astro['moonset'] ?><br /><br />
-				<?=$astro['moonphase'] ?> (<?=$astro['moonillumination']?>%&nbsp;illum)
+
 				</p>
 		</div>
 	</div> <!-- end tonight -->
@@ -107,11 +108,11 @@ $wday = $wapi['forecast']['jr'][0] ?? [];
 	</div> <!-- end today -->
 
 
-<div class='border center floatr' style=' font-weight:bold; width:45%; vertical-align:top;' >
+<div class='border center floatr bg-blue' style=' font-weight:bold; width:45%; vertical-align:top;' >
 
 		<h3><u>Tonight</u></h3>
 
-			<div class= 'inlineblock center' style='vertical-align:top;width:40%;'>
+			<div class= 'inlineblock center ' style='vertical-align:top;width:40%;'>
 <img src="/images/moon/<?= $astro['moonpic'] ?>" style='width:76px' class='auto' >
 				<br />
 					<?=$astro['moonphase'] ?> (<?=$astro['moonillumination']?>%&nbsp;illum)

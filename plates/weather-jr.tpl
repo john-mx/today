@@ -55,9 +55,9 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 					</td>
 			<?php endfor; #day ?>
 		</tr>
-		<tr >
+		<tr class='bg-blue '>
 
-			<td class='bg-midnight white'>Night</td>
+			<td >Night</td>
 			<?php
 			for ($i=1;$i<4;++$i) : //for 3 days
 				if (count($days[$i]) == 2) :
@@ -66,7 +66,7 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 					$p = $days[$i][0] ;
 				endif;
 				?>
-					<td class='bg-midnight white'>
+					<td>
 					<div >
 								<?=$p['shortForecast']?>  <br />
 								<?= $p['highlow']?>.<br />
@@ -79,6 +79,6 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 	<?php endforeach; // loc? ?>
 	</table>
 	<div class='inleft2 left'>
-	<small>Weather.gov forcast updated at <?=$weather_updated?></small>
+	<small>Forecast from weather.gov updated at <?=$weather_updated?></small>
 	</div>
 <?php	endif; ?>
