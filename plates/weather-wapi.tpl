@@ -32,7 +32,7 @@ if(empty($wapi)): echo "<p>No Data</p>"; else:
 
 <?php	foreach ($wapi['forecast'] as $loc=>$days) :
 		if ($loc == 'update') continue;
-		if (! in_array($loc,[ 'jr','cw'])) continue; // only show jr
+		if (! in_array($loc,[ 'hq','cw'])) continue; // only show jr
 		$locname = Defs::$sitenames[$loc];
 
 		?>

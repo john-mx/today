@@ -17,9 +17,7 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 	<col style='width:30%'>
 	</colgroup>
 
-	<tr class='border-bottom'><td colspan='5' class='left'>
-	<small>Weather.gov forcast updated at <?=$weather_updated?></small>
-	</td></tr>
+
 
 <tr><th></th>
 		<?php
@@ -80,4 +78,7 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
  </tr>
 	<?php endforeach; // loc? ?>
 	</table>
+	<div class='inleft2 left'>
+	<small>Weather.gov forcast updated at <?=$weather_updated?></small>
+	</div>
 <?php	endif; ?>

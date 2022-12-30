@@ -14,29 +14,21 @@ Purchase Your Pass Before You Get To The Entrance</b>
 
 <tr><td style='font-weight:bold;text-align:left;'>Annual Automobile</td><td>up to 15 passengers</td><td>12 months</td><td>$55</td><td>✔︎</td><td>✔︎</td><td>✔︎</td></tr>
 
-<tr><td style='font-weight:bold;text-align:left;'>Motorcycle</td><td>Motorcycle</td><td>7 days</td><td>$25</td><td>✔︎ </td><td>✔︎</td><td></td></tr>
-
-<tr><td style='font-weight:bold;text-align:left;'>Individual</td><td>Hiker/biker</td><td>7 days</td><td>$15</td><td>✔︎</td><td>✔︎</td><td></td></tr>
-
+<tr><td  style='font-weight:bold;text-align:left;' >Hikers and bikers</td><td>Individual</td><td>7 days</td><td>$15</td><td>✔︎</td><td>✔︎</td><td></td></tr>
 
 <tr><td colspan=7  style='font-weight:bold;text-align:left;' class='bg-orange'><b>Interagency Passes</b> for all National Parks and Federal recreation sites (Vehicle and passengers)</td></tr>
 
 <tr><td style='font-weight:bold;text-align:left;'>America the Beautiful</td><td>Everyone</td><td>12 Months</td><td>$80</td><td>✔︎ </td><td>✔︎</td><td>✔︎</td></tr>
 
-<tr><td style='font-weight:bold;text-align:left;'>Senior Annual</td><td>US citizen Age 62+ *</td><td>12 Months</td><td>$20</td><td>✔︎</td><td>✔︎</td><td></td></tr>
+<tr><td style='font-weight:bold;text-align:left;'>Senior Annual</td><td>US citizen Age 62+ *</td><td>12 Months</td><td>$20</td><td></td><td>✔︎</td><td></td></tr>
 
 <tr><td style='font-weight:bold;text-align:left;'>Senior Lifetime</td><td>US citizen Age 62+ *</td><td>Lifetime</td><td>$80</td><td></td><td>✔︎</td><td></td></tr>
 
-<tr><td style='font-weight:bold;text-align:left;'>Access</td><td>Permanent disability *</td><td>Lifetime</td><td>Free</td><td></td><td>✔︎</td><td></td></tr>
-
-<tr><td style='font-weight:bold;text-align:left;'>Military</td><td>Active US military *</td><td>	12 Months</td><td>Free</td><td></td><td>✔︎</td><td></td></tr>
-
-<tr><td style='font-weight:bold;text-align:left;'>Veteran</td><td>US Veteran and Gold Star Families *</td><td>Lifetime</td><td>Free</td><td></td><td>✔︎</td><td></td></tr>
-
-<tr><td style='font-weight:bold;text-align:left;'>4th Grade</td><td>Student in 4th Grade *</td><td>School year</td><td>Free</td><td></td><td>✔︎</td><td></td></tr>
-
+<tr><td  style='font-weight:bold;text-align:left;'>Military, gold star families, handicapped and 4th-graders</td><td>Qualified Visitors *<td>varies</td><td>free</td><td></td><td>✔︎</td><td></td></tr>
 </table>
 <div class='inleft2'><b>On-line passes available at recreation.gov. Entrance stations take credit card only — no cash.</b><br />
-* Documentation required for special passes.<br>
-4th grade pass requires printed voucher from school or https://everykidoutdoors.gov/
-
+* Documentation required for special passes.
+</div>
+<div class='center'>
+<img src='/images/Digital-Pass-Icon.png' style='height:120px;margin:1em;;' alt='https://www.recreation.gov/sitepass/74286'>
+</div>

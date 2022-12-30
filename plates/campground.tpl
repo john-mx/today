@@ -16,7 +16,7 @@ $cgres_asof =  date('M d g:i a', $camps['cgres_age']);
 </h4>
 
 <table  class='inleft2 alt-gray border'>
-<tr ><th>Campground</th><th>Sites</th><th>Fee</th>
+<tr ><th>Campground</th><th>Sites</th><th>Nightly Fee</th>
 <th>Open Sites</th><th style='border-right:2px solid black;'>Note</th></tr>
 <?php
 	$cgs = array_keys(Defs::$campsites);
@@ -44,7 +44,7 @@ $cgres_asof =  date('M d g:i a', $camps['cgres_age']);
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
-				<td> <?= Defs::$campfees[$cg] ?> </td>
+				<td> $<?= Defs::$campfees[$cg] ?> </td>
 				<td><?= $camps['sites'][$cg] ?> </td>
 				<td> <?= $camps['cg_notes'][$cg] ?>  </td>
 				</tr>
@@ -57,11 +57,10 @@ $cgres_asof =  date('M d g:i a', $camps['cgres_age']);
 			<?php endif; ?>
 <?php endforeach; ?>
 
-
-
-
-
-
 </table>
+
+
+<div class='center' style='padding:1em;'><image src='/images/Digital-Cgres-Badge.png' style='height:120px;' alt='https://www.recreation.gov/search?q=Joshua%20Tree%20National%20Park&entity_id=2782&entity_type=recarea&inventory_type=camping&inventory_type=dayuse&parent_asset_id=2782'> </div>
+
 <?php endif; ?>
 

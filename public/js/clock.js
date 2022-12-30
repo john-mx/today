@@ -11,7 +11,7 @@ hours = hours ? hours : 12;
 minutes = x.getMinutes();
 if ( minutes < 10) {minutes = '0' + minutes ;}
 // var x1=(x.getMonth() + 1) + "/" + x.getDate() + "/" + x.getFullYear();
-var ctime = hours+':'+ minutes +ampm;
+var ctime = hours+':'+ minutes + ampm;
 document.getElementById('clock').innerHTML = ctime;
 display_c();
  }
