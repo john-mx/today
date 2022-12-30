@@ -45,7 +45,9 @@ $Cal = new DigitalMx\jotr\Calendar();
 </div><!-- end page-->
 <div id="page-weather" style="display: <?=$divvis?>;">
 
-<?php $wgov_update = $wgov['update'] ?? 0;
+<?php
+	//u\echor($wgov,'wgov',STOP);
+	$wgov_update = $wgov['update'] ?? 0;
 	if (time() - $wgov_update > 60*60*12): #12 hours
 		$this->insert('weather-wapi',['wapi'=>$wapi]);
 	else:

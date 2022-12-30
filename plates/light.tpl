@@ -23,12 +23,12 @@ $gday = $wgov['jr'][1];
 $wday = $wapi['forecast']['jr'][0] ?? [];
 //u\echor($wday,'wday');
 
-//u\echor($gday,'gday',NOSTOP);
+// u\echor($gday,'gday',NOSTOP);
 
 ?>
 <?php if (1 &&
-	isset ($gday) && (time() - $wgov['update'] < 8*60*60)
-	): #use wgov
+	isset ($gday) && (time() - $wgov['update'] )< 8*60*60)
+	: #use wgov
 ?>
 <div class ='center clearafter flex-container' style='vertical-align:top' >
 
@@ -36,18 +36,18 @@ $wday = $wapi['forecast']['jr'][0] ?? [];
 		<h3><u>Today</u></h3>
 		<?php
 			if (!isset($gday)): echo "Data not available";
-			elseif (!isset($gday['day'])): echo "Day has ended";
+			elseif (count($gday) !== 2) : echo "Day has ended";
 			else :
 		?>
 
 		<div class=' inlineblock center' style='vertical-align:top; width:40%;'>
-			<img src="<?= $gday['day']['icon'] ?>" class='auto' ><br />
-			<?= $gday['day']['shortForecast'] ?><br />
-			<b>Wind: </b> up to <?= $wday['maxwind']?>&nbsp;mph (<?= $wday['maxwindM'] ?>&nbsp;kph)
+			<img src="<?= $gday[0]['icon'] ?>" class='auto' ><br />
+			<?= $gday[0]['shortForecast'] ?><br />
+			<b>Wind: </b> <?= $gday[0]['windSpeed']?>&nbsp;<?=$gday[0]['windDirection']?>
 		</div >
 
 		<div class=' center inlineblock' style='vertical-align:top;width:55%'>
-			<p style='margin-top:0;font-size:1.2rem;'><?=$gday['day']['highlow']?></p>
+			<p style='margin-top:0;font-size:1.2rem;'><?=$gday[0]['highlow']?></p>
 			<p>
 			Sunrise:&nbsp;<?= $astro['sunrise'] ?> Sunset:&nbsp;<?= $astro['sunset'] ?>
 			</p>
@@ -66,9 +66,8 @@ $wday = $wapi['forecast']['jr'][0] ?? [];
 
 		</div>
 		<div class=' center inlineblock' style='vertical-align:top;width:55%'>
-				<p style='margin-top:0;font-size:1.2rem;'>Low:
-			<?=$wday['Low']?> &deg;F
-			(<?=$wday['LowC']?> &deg;C)
+				<p style='margin-top:0;font-size:1.2rem;'>
+			<?=$gday[1]['highlow']?>
 			</p>
 				<p>Moonrise:&nbsp;<?= $astro['moonrise'] ?>  Moonset:&nbsp;<?= $astro['moonset'] ?><br /><br />
 
