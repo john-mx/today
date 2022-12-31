@@ -181,8 +181,8 @@ public function __construct($c){
 	$this -> airlocs = ['jr','cw','br']; // air quality locations
 
 	$this -> max_age = Defs::$cache_times;
-	//$this -> properties = $this->load_cache('properties');
-	$this->cache_lock = REPO_PATH . "/var/cache.lock";
+
+
 
 
 
@@ -292,6 +292,10 @@ public function load_cache ($section,$refresh=true) {
 
 #echo "loading cache $section" . BR;
 
+	// see if already loaded
+	if (isset($this->$section)){
+		return $this->$section;
+	}
 	// check validity
 		if (!file_exists (CACHE[$section])) {
 			die ("Attempt to read non-existent cache $section");
@@ -319,6 +323,7 @@ public function load_cache ($section,$refresh=true) {
 			return [];
 		}
 		//u\echor($y,$section,NOSTOP) . BR;
+		$this->$section = $y;
 		return $y;
 }
 
