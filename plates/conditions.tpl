@@ -14,7 +14,7 @@ $wday = $wapi['forecast']['jr'][0] ?? [];
 //u\echor ($current);
 
 $uvday = <<<EOT
-<div class= 'conditions'>
+<div >
 	<b>UV: </b>{$current['uv']['uv']}
 	<span style="background-color:{$current['uv']['uvcolor']};">
 				 {$current['uv']['uvscale']}
@@ -27,7 +27,7 @@ EOT;
 
 $aircolor = $air['jr']['aqi_color'];
 $aqday = <<<EOT
-<div class= 'conditions'>
+<div  >
 		<b>Air Quality:</b> {$air['jr']['aqi']}
 			<span style="background-color:$aircolor;">
 			 {$air['jr']['aqi_scale']}</span>
@@ -38,7 +38,7 @@ $aqday = <<<EOT
 EOT;
 
 $windday = <<<EOT
-<div class= 'conditions'>
+<div >
 <b>Wind</b> up to ${wday['maxwind']} mph (${wday['maxwindM']} kph)
 	<br />
 	&mdash; <i>higher gusts possible</i>
@@ -47,7 +47,7 @@ $windday = <<<EOT
 EOT;
 
 $fireday = <<<EOT
-<div class= 'conditions'>
+<div >
 <b>Fire Danger: </b> {$admin['fire']['level']}
 <br />
 </div>
@@ -56,8 +56,8 @@ EOT;
 
 //u\echor($current,'curr',STOP);
 $current_asof = date('g:i a',$current['updatets']);
-$currentday = <<<EOT
-<div class= 'conditions'>
+$temp = <<<EOT
+<div >
 <b>Temperature: </b>
 		${current['temp_f']}  &deg;F ( ${current['temp_c']} &deg;C)
 
@@ -65,7 +65,7 @@ $currentday = <<<EOT
 EOT;
 
 $currentwind = <<<EOT
-<div class='conditions'>
+<div>
 <b>Wind:</b>
 		${current['wind_mph']} mph ( ${current['wind_kph']} kph) ${current['wind_direction']}
 
@@ -75,22 +75,23 @@ EOT;
 
 
 
-<h4>Park Conditions</h4>
-<div >
-<div class='clearafter left '>
+<h4>Park Conditions  at <?=$current_asof?></h4>
+<div class='inleft2 left clearafter width100' >
+<div class=' floatl width45'>
+	<?=$temp?>
+	<?=$currentwind?>
 
 	<?=$fireday?>
-
+</div>
+<div class='floatl width45'>
 
 	<?=$aqday?>
 	<?=$uvday?>
 </div>
-<div class='clearafter  left '>
+</div>
 
-	<h5>Near Hidden Valley at <?=$current_asof?>: </h5>
-	<?=$currentday?>
 
-	<?=$currentwind?>
+
 
 
 </div>

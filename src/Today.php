@@ -529,7 +529,7 @@ public function build_topic_light() {
 			. round($daily['day']['maxtemp_c']) . "&deg;C)";
 		$low = round($daily['day']['mintemp_f']) . "&deg;F ("
 			. round($daily['day']['mintemp_c']) . "&deg;C)";
-		$wind = 'To ' . round($daily['day']['maxwind_mph']) . ' ' ;
+		$wind = 'To ' . round($daily['day']['maxwind_mph']) . 'mph' ;
 
 
 		//$wapi = $this->format_wapi($y);
