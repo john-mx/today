@@ -443,6 +443,10 @@ public function build_topic_current() {
 	$y['wind_mph'] =  is_null($y['windSpeed']['value'])? 'n/a':round($y['wind_kph'] /2.2) ;
 	$y['wind_direction'] = $this->degToDir($y['windDirection']['value']??0);
 
+	$wapi = $this->load_cache('wapi');
+	$current_uv = $wapi['jr']['current']['uv'];
+	$y['uv'] = $this->uv_data($current_uv);
+
 // u\echor($y,'current', NOSTOP);
 	return ['current' => $y];
 }
@@ -481,61 +485,134 @@ public function build_topic_air() {
 
 }
 
+// prepare data for the ight displlay:
+// needs astro, today high/low wind
+// must accomodate failed wapi or wgov
 
 public function build_topic_light() {
-	$z = [];
-	#$light['x'] = 'x';
-	if (!$y =  $this->load_cache('wapi') ){
-	 	Log::error ("Could not load cache wapi");
-	 	return ['light' => $z];
-	 }
-	$wapi = $this->format_wapi($y);
+	$z = array(
+	'day'=>array(
+		'sunrise'=>'unknown',
+		'sunset' => 'unknown',
+		'wind' => 'unknown',
+		'high' => 'unknown',
+		'short' => 'unknown',
+		'icon' => 'unknown',
+		'uv' => 'unknown',
 
-	//u\echor($wapi,'formatted wapi', NOSTOP);
+		),
 
-	$z['astro']= $wapi['light'];
-	$z['astro']['moonpic'] = $this->Defs->getMoonPic($z['astro']['moonphase']);
+	'night'=>array(
+		'moonrise'=>'unknown',
+		'moonset'=> 'unknown',
+		'wind' => 'unknown',
+		'low' => 'unknown',
+		'short' => 'unknown',
+		'icon' => 'unknown',
+		'moonphase' => 'unknown',
+		'moonillum' => 'unknown',
 
-	$z['uv'] = $this->uv_data($z['astro']['uv']);
+		),
+	'update' => array(
+		'ts' => time(),
+		'source' => 'unknown',
+		),
+	);
+	//u\echor($z,'z init',STOP);
 
-// add in todays weather
 
-	$wgov = $this->load_cache('wgov');
-	if (! isset($wgov['jr']['properties']['updated'] )){
-		return ['light' => $z];
+	if ($wapi =  $this->load_cache('wapi') ){
+
+		$daily = $wapi['br']['forecast']['forecastday'][0];
+		$astro = $daily['astro'];
+		$high = round($daily['day']['maxtemp_f']) . "&deg;F ("
+			. round($daily['day']['maxtemp_c']) . "&deg;C)";
+		$low = round($daily['day']['mintemp_f']) . "&deg;F ("
+			. round($daily['day']['mintemp_c']) . "&deg;C)";
+		$wind = 'To ' . round($daily['day']['maxwind_mph']) . ' ' ;
+
+
+		//$wapi = $this->format_wapi($y);
+		//u\echor($wapi,'formatted wapi', NOSTOP);
+		$z['day']['sunrise'] =  $this -> time_format( $astro['sunrise']);
+		$z['day']['sunset'] = $this -> time_format($astro['sunset']);
+		$z['day']['wind'] = $wind;
+		$z['day']['high'] = $high;
+		$z['day']['short'] = $daily['day']['condition']['text'];
+		$z['day']['icon'] = $daily['day']['condition']['icon'];
+		$z['day']['uv'] = $daily['day']['uv'] ;
+
+		$z['night']['moonrise'] =  $this -> time_format($astro['moonrise']);
+		$z['night']['moonset'] = $this -> time_format($astro['moonset']);
+		$z['night']['wind'] = $wind;
+		$z['night']['low'] = $low;
+		$z['night']['icon'] = $this->Defs->getMoonPic($astro['moon_phase']);
+		$z['night']['moonphase'] =  $astro['moon_phase'];
+		$z['night']['moonillum'] = $astro['moon_illumination'];
+
+		$z['update']['ts'] = $wapi['br']['current']['last_updated_epoch'];
+		$z['update']['source'] = 'Forecast for Black Rock from weatherapi.com';
+
+		//u\echor($z,'z init',STOP);
+
 	}
-	$wupdated = strtotime($wgov['jr']['properties']['updated']) ;
-
-	$gday = ['day' => [],'night'=>[],'updated'=>$wupdated];
-	foreach ($wgov['jr']['properties']['periods'] as $period) {
-		if (strtotime($period['endTime']) < time()){ #already ended
-			continue;
-		}
-		if ($period['isDaytime']) {
-			#got day interval
-			$gday['day'] = $period;
-
-			$temperature = $period['temperature'];
-			$tempc = round(($temperature -32 )* 5/9,0);
-			$gday['day']['highlow'] = "High: $temperature &deg;F ($tempc &deg;C)";
-			continue;
-		} else {#got night time
-			$gday['night'] = $period;
-			$temperature = $period['temperature'];
-			$tempc = round(($temperature -32 )* 5/9,0);
-			$gday['night']['highlow'] = "Low: $temperature &deg;F ($tempc &deg;C)";
-
-			break;
-		}
-	}
-	// gday may be empty if no data for today
 
 
+	if (
+		(time() - $this->getMtime('wgov') < 12*60*60 ) #< 12 hours old
+		&& ($wgov = $this->load_cache('wgov') )
+		&& (isset($wgov['jr']['properties']['updated'] ))
+		){
+		// update for wgov data
 
-	$z['gday'] = $gday;
-//	u\echor($z,'light prepared');
+		$wupdated = strtotime($wgov['jr']['properties']['updated']) ;
+
+
+		foreach ($wgov['jr']['properties']['periods'] as $period) {
+			if (strtotime($period['endTime']) < time()){ #already ended
+				continue;
+			}
+			// found first period that has not ended yet
+			if ($period['isDaytime']) {
+				$wind = $period['windSpeed'] . ' ' . $period['windDirection'];
+				$temperature = $period['temperature'];
+				$tempc = round(($temperature -32 )* 5/9,0);
+				$high =  "High: $temperature &deg;F ($tempc &deg;C)";
+				//$z['day']['sunrise'] =  $this -> time_format( $astro['sunrise']);
+				//$z['day']['sunset'] = $this -> time_format($astro['sunset']);
+				$z['day']['wind'] = $wind;
+				$z['day']['high'] = $high;
+				$z['day']['short'] = $period['shortForecast'];
+				$z['day']['icon'] = $period['icon'];
+				//$z['day']['uv'] = $daily['day']['uv'] ;
+
+			} else {#got night time
+
+				$temperature = $period['temperature'];
+				$tempc = round(($temperature -32 )* 5/9,0);
+				$low = "Low: $temperature &deg;F ($tempc &deg;C)";
+				$wind = $period['windSpeed'] . ' ' . $period['windDirection'];
+
+				//$z['night']['moonrise'] =  $this -> time_format($astro['moonrise']);
+				//$z['night']['moonset'] = $this -> time_format($astro['moonset']);
+				$z['night']['wind'] = $wind;
+				$z['night']['low'] = $low;
+				$z['night']['icon'] = $this->Defs->getMoonPic($astro['moon_phase']);
+				//$z['night']['moonphase'] =  $astro['moon_phase'];
+				//$z['night']['moonillum'] = $astro['moon_illumination'];
+			// night period always exists if wgov is successfull,
+			// so set updates there.
+				$z['update']['ts'] = $wupdated;
+				$z['update']['source'] = 'Forecast for Jumbo Rocks from weather.gov';
+
+
+			} #end night
+			break; // stop looking
+		} #end foreach
+	} #end wgov
+// 	u\echor($z,'light prepared',STOP);
 	return ['light' => $z];
-}
+} #end function
 
 
 public function build_topic_weather() {
@@ -1396,12 +1473,12 @@ public function format_wapi ($r) {
 				'HighC' => round($daily['day']['maxtemp_c']) ,
 				'Low' => round($daily['day']['mintemp_f']) ?? 'n/a' ,
 				'LowC' => round($daily['day']['mintemp_c']) ?? 'n/a' ,
-			//	'winddir' => $daily['day']['winddir'],
+				'winddir' => '',
 				'avghumidity' => $daily['day']['avghumidity'],
 				'maxwind' => round($daily['day']['maxwind_mph']),
 				'maxwindM' => round($daily['day']['maxwind_kph']),
 
-				'skies' => $daily['day']['condition']['text'],
+				'short' => $daily['day']['condition']['text'],
 				'rain' => $daily['day']['daily_chance_of_rain'],
 				'visibility' => $daily['day']['avgvis_miles'],
 				'uv' => $daily['day']['uv'],
@@ -1421,8 +1498,8 @@ public function format_wapi ($r) {
 
 	// add astro and alerts for jr today
 
-	$astro = $r['jr']['forecast']['forecastday']['0']['astro'];
-	$dayuv = $r['jr']['forecast']['forecastday']['0']['day']['uv'];
+	$astro = $r['br']['forecast']['forecastday']['0']['astro'];
+	$dayuv = $r['br']['forecast']['forecastday']['0']['day']['uv'];
 	$light = array(
 				'sunrise' => $this -> time_format( $astro['sunrise']),
 				'sunset' => $this -> time_format($astro['sunset']),

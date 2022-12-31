@@ -37,16 +37,16 @@ $twolocs = ['jr','hq'];
 
 // what function?
 
-//$f =
+$f = light();
 
-echo "<script>setInterval(dtime(),60);</script>";
-function dtime(){
-echo "time is ";
-echo
-"<script>document.write(show_time())</script>"
-;
+// echo "<script>setInterval(dtime(),60);</script>";
+// function dtime(){
+// echo "time is ";
+// echo
+// "<script>document.write(show_time())</script>"
+// ;}
 
-}
+
 function refresh($force=false){
 	$U = new Utilities();
 	echo $U->over_cache_time('wgov');
@@ -84,11 +84,11 @@ function today(){
 function light(){
 	global $Today,$Plates,$Defs;
 
-	$z=$Today->prepare_topics();
-	echo $Plates->render('light-summary',['data'=>$z]);
-	echo $Plates->render('conditions',$z);
+	$z=$Today->build_topic_light();
+	echo $Plates->render('light',['data'=>$z]);
+	//echo $Plates->render('conditions',$z);
 	echo "<hr>";
-//	u\echor($z,'data');
+	u\echor($z,'data');
 	exit;
 }
 

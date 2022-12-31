@@ -4,11 +4,8 @@
 // $conditions = $data['fire'],4data['air'],$data['current'];
 //u\echor($data,'data',STOP);
 
-if (! $light || ! $air ){
-	echo "No Data Available (conditions)";
-	return;
-}
-$uv = $light['uv'] ?? [];
+
+
 
 $air = $air;
 $gday = $wgov['jr'][1] ?? [];
@@ -18,12 +15,12 @@ $wday = $wapi['forecast']['jr'][0] ?? [];
 
 $uvday = <<<EOT
 <div class= 'conditions'>
-	<b>UV: </b>${uv['uv']}
-	<span style="background-color:${uv['uvcolor']};">
-				 ${uv['uvscale']}
+	<b>UV: </b>{$current['uv']['uv']}
+	<span style="background-color:{$current['uv']['uvcolor']};">
+				 {$current['uv']['uvscale']}
 			</span>
 			<br />
-				&mdash; <i> ${uv['uvwarn']}</i>
+				&mdash; <i> {$current['uv']['uvwarn']}</i>
 			<br />
 </div>
 EOT;

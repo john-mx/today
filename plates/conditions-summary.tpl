@@ -58,7 +58,7 @@ $current_asof = date('g:i a',$current['updatets']);
 $currentday = <<<EOT
 <div class= 'conditions'>
 <b>Temperature: </b>
-		${current['temp_f']}  &deg;F ( ${current['temp_c']} &deg;C)
+		{$current['temp_f']}  &deg;F ( {$current['temp_c']} &deg;C)
 
 		</div>
 EOT;
@@ -66,7 +66,7 @@ EOT;
 $currentwind = <<<EOT
 <div class='conditions'>
 <b>Wind:</b>
-		${current['wind_mph']} mph ( ${current['wind_kph']} kph) ${current['wind_direction']}
+		{$current['wind_mph']} mph ( {$current['wind_kph']} kph) {$current['wind_direction']}
 
 </div>
 EOT;
