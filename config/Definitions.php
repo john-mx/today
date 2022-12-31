@@ -281,7 +281,7 @@ mins,
 				'calendar' => 60*6,
 				'admin' => 0,
 				'properties' => 0, // manual only
-				'wgov' => 235,
+				'wgov' => 110,
 				'wapi' => 110,
 				'airq' => 0,
 				'airnow' => 235,
