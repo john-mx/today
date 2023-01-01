@@ -30,6 +30,7 @@ $meta=array(
 	'subtitle' => '',
 	'extra' => "<link rel='stylesheet' href='/css/tv.css'>",
 	'rotate' => $rotate,
+	'rdelay' => $y['rdelay'],
 
 	);
 

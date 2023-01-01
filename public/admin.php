@@ -27,15 +27,17 @@ namespace DigitalMx\jotr;
 
 
 //END START
+$admin = $Today->load_cache('admin');
 
 $meta = array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
 	'page' => basename(__FILE__),
 	'subtitle' => 'Site Admin',
 	'extra' => "<script>src='/js/clearupdate.js'</script>",
+	'rdelay' => $admin['rdelay'],
 
 	);
-
+//u\echor($meta,'meta',STOP);
 if (isset($_POST['pw']) ) {// is login
 	$Login->set_pwl($_POST['pw']);
 }

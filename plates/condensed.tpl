@@ -27,7 +27,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 <div id="page-today" style="display: block">
 
 <?php if ($admin['pithy']): ?>
-	<p><i><?=$admin['pithy']?></i></p>
+	<p class='center'><i><?=$admin['pithy']?></i></p>
 <?php endif; ?>
 
 

@@ -2,7 +2,7 @@
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
 ?>
-<h4>Weather</h4>
+<h4>3-Day Forecast</h4>
 <?php
 // uses wgov data
 //u\echor($weather,'weather',NOSTOP);
@@ -79,6 +79,6 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 	<?php endforeach; // loc? ?>
 	</table>
 	<div class='inleft2 left'>
-	<small>Forecast from weather.gov updated at <?=$weather_updated?></small>
+	<small>Forecast from weather.gov updated at <?=$weather_updated?>. (w-jr)</small>
 	</div>
 <?php	endif; ?>

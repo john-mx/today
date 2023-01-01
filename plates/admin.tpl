@@ -42,7 +42,10 @@ $open_options = u\buildOptions(['','0','a few','around 10','10 +','?'],'',true);
 
 <p>Enter alerts here. Each line of text (separated with a cr) will be a separate bulleted item.</p>
 <textarea name='alerts'><?=$admin['alerts']?></textarea>
-</p>
+<table>
+<tr><th>Headline</th><th>Description</th><th>Expires</th></tr>
+</table>
+
 
 
 <h4>Enter closures/announcements</h4>
@@ -109,7 +112,7 @@ Select which pages should appear in the rotation sequence (?snap)<br />
 <input type='checkbox' name='rotate[]' value='<?=$pid?>' <?=$admin['rchecked'][$pid] ?? ''?> ><a href='/pager.php?<?=$pid?>' target = 'pager'><?=$pid?></a>: <?=$pdesc?><br />
 <?php endforeach; ?>
 <br />
-<!-- Set rotation delay in seconds: <input type='number' name='rdelay' value='<?=$admin['rdelay']?>' > -->
+Set rotation delay in seconds: <input type='number' name='rdelay' value='<?=$admin['rdelay']?>' size='8' min=10 max=30 step=5 >
 <button type='submit'>Submit Form</button>
 
 </form>

@@ -29,6 +29,9 @@
 
 	$rotate ??= [];
 	$pagelist = [];
+$rdelay ??=13;
+//echo "rdealy $rdelay" . BR; exit;
+
 	if ($rotate){
 	// $pagelist = '[';
 // 		foreach ($rotate as $pid){
@@ -40,7 +43,8 @@
 	}
 	$pagelist = json_encode($pagel);
 
-	$rdelay = 15; #delay on rotation
+
+//$rdelay = 15; #delay on rotation
 
 	}
 //echo ($pagelist);
@@ -57,7 +61,7 @@
 
 
 		case 'snap':
-			$scbody = "onLoad=startRotation(15,$pagelist);display_clock();";
+			$scbody = "onLoad=startRotation($rdelay,$pagelist);display_clock();";
 			$added_headers .= "	<script src='/js/snap2.js'></script>";
 			$added_headers .= "<script src='/js/clock.js'></script>";
 			$added_headers .= '<meta http-equiv="refresh" content="900" >';

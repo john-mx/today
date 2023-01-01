@@ -356,6 +356,8 @@ public function post_admin ($post) {
 	$y['uncertainty'] = $post['uncertainty']; #hours to keep site avail
 	$y['rotate'] = $post['rotate']; //array
 //u\echor($y,'y',STOP);
+	$y['rdelay'] = $post['rdelay']; #rotation time
+
 	$this -> write_cache('admin',$y);
 
 	$cgo = $post['cgupdate'];
