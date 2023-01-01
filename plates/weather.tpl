@@ -79,6 +79,7 @@ if(! isset($wgov['jr'])): echo "<p>No Data</p>"; else:
 					</td>
 			<?php endfor; #day ?>
  </tr>
+ <tr><td colspan='4' class='no-col' style='line-height:0.5em;'>&nbsp;</td></tr>
 	<?php endforeach; // loc? ?>
 	</table>
 <?php	endif; ?>

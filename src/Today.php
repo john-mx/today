@@ -1525,29 +1525,6 @@ public function format_wapi ($r) {
 	return $x;
 }
 
-public function wgov_to_forecast($weathergov) {
-	/*
-		manipulate data in wgov to create
-		a forecast format easier to handle
-	*/
-
-		$locs = array_keys($weathergov);
-	foreach ($locs as $loc) {
-	//echo "loc $loc ";
-		if (! $locname = $this->Defs->getLocName($loc) ){continue;}
-
-
-		$fcarray = $weathergov[$loc]['properties']['periods'];
-		$dayno = 0;
-		foreach ($fcarray as $period) {
-			$day = substr($period['startTime'],0,10);
-			$period['dayts'] = strtotime($day);
-			$period['locname'] = $locname;
-			$fc[$loc][$day][] = $period; // so may be 1 or 2 per day
-		}
-	}
-	return $fc;
-}
 
 private function format_alerts($r){
 	if (empty($r)) return '';

@@ -76,6 +76,7 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 					</td>
 			<?php endfor; #day ?>
  </tr>
+ <tr ><td colspan='4' class='no-col' style='line-height:0.6rem;'>&nbsp;</td></tr>
 	<?php endforeach; // loc? ?>
 	</table>
 	<div class='inleft2 left'>

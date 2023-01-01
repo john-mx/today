@@ -90,6 +90,6 @@ EOT;
 	</div>
 
 </div>
-<div> n/a data not currently available.</div>
+
 
 

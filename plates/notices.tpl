@@ -2,14 +2,16 @@
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
 ?>
-<h4>Announcements and Alerts</h4>
-<div class='inleft2'>
+
 <?php
 
 	$d= $admin['notices']['alerts'] ??'';
 	$e = $admin['notices']['announcements'] ?? '';
 	if ( $d || $e) :
+
 ?>
+<h4>Announcements and Alerts</h4>
+<div class='inleft2'>
     <?php if ($d):?>
     <div class=' warn red' >
         <?php
@@ -39,7 +41,6 @@ use DigitalMx as u;
 
     </div>
     <?php endif; ?>
-	<?php else: ?>
-	None at this time.
-	<?php endif; ?>
-</div>
+ </div>
+<?php endif; ?>
+
