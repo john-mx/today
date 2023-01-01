@@ -334,7 +334,7 @@ public function post_admin ($post) {
 
 
 */
- u\echor ($post, 'Posted');
+ //u\echor ($post, 'Posted');
 
 //  admin cache
 	$y=[];
@@ -359,7 +359,7 @@ public function post_admin ($post) {
 	$this -> write_cache('admin',$y);
 
 	$cgo = $post['cgupdate'];
-	u\echor ($cgo,'cgupdate from post');
+//	u\echor ($cgo,'cgupdate from post');
 	// remove any enbtries with blank avlues
 	$cgo = array_filter($cgo,function ($val) {return ($val !== '' );});
 	//u\echor ($cgo,'cgupdate after filter');

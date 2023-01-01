@@ -122,7 +122,7 @@ return $z;
 public function post_calendar($cal){
 
 	$cal = $this->check_calendar($cal);
-	$cal = $this->filter_calendar($cal);
+	$cal = $this->filter_calendar($cal,0);
 	$this->write_calendar($cal);
 }
 
@@ -147,11 +147,12 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 
 
 	$z=[];
-
+//echo "Transform $transform" . BR;
 	foreach ($calendar as $event){ #keep if these conditions:
+// u\echor ($event,'foreach event');
 		if (empty ($event['time'])) {continue;} #drop
 
-		if (empty($event['suspended'])) $event['suspended'] = false;
+		if ( empty($event['suspended'])) $event['suspended'] = false;
 
 
 #	echo "Testing " . $event['title'] . BR;
@@ -159,7 +160,10 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 
  // test for recurring
 		if ($event['suspended']) {
-			if ($transform == 0) {$z[] = $event;}
+			if ($transform == 0) {
+				$event['dt'] = 0;
+				$z[] = $event;
+			}
 			else{ continue;} #skip if not admin
 		}
 		elseif (empty ($event['days']) && !empty ($event['date'] )) { //scheduled
@@ -200,10 +204,10 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 
 
 	}
-#	u\echor($z, 'presort cal', false);
+// u\echor($z, 'presort cal', false);
 		$z = u\element_sort($z, 'dt');
 
-#u\echor($z, 'new cal', true);
+// u\echor($z, 'new cal', true);
 
 	return ($z);
 }

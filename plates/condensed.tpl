@@ -16,8 +16,10 @@ switch ($qs) {
 		$divvis='block';
 }
 
+if (!empty($calendar)){
 $Cal = new DigitalMx\jotr\Calendar();
 	$calendar = $Cal->filter_calendar($calendar,2);
+}
 ?>
 
 <div class='content center'>
@@ -36,6 +38,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 <?php	$this->insert('conditions');?>
 
 </div><!-- end page-->
+
 <div id="page-notices" style="display: <?=$divvis?>;">
 <!-- start notices -->
 <?php $this->insert('notices',['notices' => $admin['notices']]); ?>
@@ -56,12 +59,14 @@ $Cal = new DigitalMx\jotr\Calendar();
 	?>
 
 </div><!-- end page-->
+<?php if (!empty($calendar)) : ?>
 <div id="page-events" style="display: <?=$divvis?>;">
 
 <?php
 		$this->insert('calendar',['calendar' => $calendar]) ?>
 
 </div><!-- end page-->
+<?php endif; ?>
 <div id="page-camps" style="display: <?=$divvis?>;">
 <?php $this->insert('campground-wide',$camps); ?>
 
