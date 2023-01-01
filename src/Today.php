@@ -297,11 +297,12 @@ public function load_cache ($section,$refresh=true) {
 		return $this->$section;
 	}
 	// check validity
-		if (!file_exists (CACHE[$section])) {
-			die ("Attempt to read non-existent cache $section");
+		if  (!file_exists (CACHE[$section]) ) {
+			Log::info("rebuilding non-existent cache $section.");
+			$this->refreshCache($section);
 		}
 
-		if ($refresh ){
+		if ($refresh){
 
 			$ot = $this->over_cache_time($section);
 			$limit = $this->Defs->getMaxTime($section);
