@@ -31,6 +31,7 @@ $meta=array(
 	'extra' => "<link rel='stylesheet' href='/css/tv.css'>",
 	'rotate' => $rotate,
 	'rdelay' => $y['rdelay'],
+	'sunset' => $Today->sunset,
 
 	);
 

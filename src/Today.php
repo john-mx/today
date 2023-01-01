@@ -181,6 +181,7 @@ public function __construct($c){
 	$this -> airlocs = ['jr','cw','br']; // air quality locations
 
 	$this -> max_age = Defs::$cache_times;
+	$this-> sunset = '';
 
 
 
@@ -620,6 +621,7 @@ public function build_topic_light() {
 		} #end foreach
 	} #end wgov
 // 	u\echor($z,'light prepared',STOP);
+	$this->sunset = $z['day']['sunset'];
 	return ['light' => $z];
 } #end function
 
