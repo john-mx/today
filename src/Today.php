@@ -590,7 +590,7 @@ public function build_topic_light() {
 				$z['day']['short'] = $period['shortForecast'];
 				$z['day']['icon'] = $period['icon'];
 				//$z['day']['uv'] = $daily['day']['uv'] ;
-
+				continue;
 			} else {#got night time
 
 				$temperature = $period['temperature'];
@@ -603,6 +603,7 @@ public function build_topic_light() {
 				$z['night']['wind'] = $wind;
 				$z['night']['low'] = $low;
 				$z['night']['icon'] = $this->Defs->getMoonPic($astro['moon_phase']);
+				$z['night']['short'] = $period['shortForecast'];
 				//$z['night']['moonphase'] =  $astro['moon_phase'];
 				//$z['night']['moonillum'] = $astro['moon_illumination'];
 			// night period always exists if wgov is successfull,
