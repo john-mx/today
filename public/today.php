@@ -28,6 +28,7 @@ $meta=array(
 	'page' => basename(__FILE__),
 	'subtitle' => '',
 	'pithy'=> $y['pithy'] ?? '',
+	'sunset' => $Today->sunset,
 	);
 
 	echo $Plates->render ('head',$meta);

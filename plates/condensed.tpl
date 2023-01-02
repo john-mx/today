@@ -37,8 +37,11 @@ $Cal = new DigitalMx\jotr\Calendar();
 <!-- start conditions -->
 <?php	$this->insert('conditions');?>
 
-</div><!-- end page-->
+<div class='border'>
+<h4 class='red center'>No Food &bull; No Water &bull; No Cell Service </h4>
+</div>
 
+</div><!-- end page-->
 <div id="page-notices" style="display: <?=$divvis?>;">
 <!-- start notices -->
 <?php $this->insert('notices',['notices' => $admin['notices']]); ?>
@@ -59,6 +62,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 	?>
 
 </div><!-- end page-->
+
 <?php if (!empty($calendar)) : ?>
 <div id="page-events" style="display: <?=$divvis?>;">
 
@@ -67,26 +71,16 @@ $Cal = new DigitalMx\jotr\Calendar();
 
 </div><!-- end page-->
 <?php endif; ?>
+
 <div id="page-camps" style="display: <?=$divvis?>;">
 <?php $this->insert('campground-wide',$camps); ?>
 
 </div><!-- end page-->
 <div id="page-fees" style="display: <?=$divvis?>;">
 
-<?php $this->insert('feesC'); ?>
+<?php $this->insert('fees'); ?>
 
 </div>
-<!-- end page-->
-<!--
-<div id="page-feesB" style="display: <?=$divvis?>;">
-
-<?php $this->insert('feesB'); ?>
-
-<?php $this->insert('end'); ?>
-
-</div>
- -->
-<!-- end page-->
 
 
 </div> <!-- end content -->

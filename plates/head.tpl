@@ -61,7 +61,7 @@ $rdelay ??=13;
 
 
 		case 'snap':
-			$scbody = "onLoad=startRotation($rdelay,$pagelist);display_clock();";
+			$scbody = "onLoad='startRotation($rdelay,$pagelist);display_clock();'";
 			$added_headers .= "	<script src='/js/snap2.js'></script>";
 			$added_headers .= "<script src='/js/clock.js'></script>";
 			$added_headers .= '<meta http-equiv="refresh" content="900" >';

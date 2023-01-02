@@ -29,23 +29,32 @@ $Cal = new Cal();
 	}
 ?>
 
-<?php $this->insert('notices') ?>
-
 <?php	$this->insert('conditions')?>
-
-<?php $this->insert('advice')?>
-
+<div class='border'>
+<h4 class='red center'>No Food &bull; No Water &bull; No Cell Service </h4>
+</div>
 
 </div> <!-- end page-->
 <div id="page2" class='break' style="display: <?=$divvis?>;">
 
-<?php $this->insert('weather') ?>
+<?php $this->insert('notices') ?>
+
+
+<?php $this->insert('advice')?>
+
+
 
 </div>
 <!-- end page-->
-<div id="page8" class='break' style="display: <?=$divvis?>;">
+<div id="page3" class='break' style="display: <?=$divvis?>;">
+
+<?php $this->insert('weather') ?>
 
 
+
+</div>
+<!-- end page-->
+<div id="page4" class='break' style="display: <?=$divvis?>;">
 
 <?php
 $tcalendar = $Cal->filter_calendar($calendar,2);
@@ -54,13 +63,13 @@ $this->insert('calendar',['calendar'=>$tcalendar])
 
 </div>
 <!-- end page-->
-<div id="page3" class='break' style="display: <?=$divvis?>;">
+<div id="page5" class='break' style="display: <?=$divvis?>;">
 
 
 <?php $this->insert('campground'); ?>
 
 </div> <!-- end page-->
-<div id="page5"  class='break' style="display: <?=$divvis?>;">
+<div id="page6"  class='break' style="display: <?=$divvis?>;">
 
 <?php $this->insert('fees'); ?>
 
