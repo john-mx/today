@@ -11,7 +11,7 @@ use DigitalMx as u;
 <div class='indent2 warn'>
 
 <?php
-	$d= $advice ?? '';
+	$d= $admin['advice'] ?? '';
 		echo "<ul>";
 		$anlist = explode("\n",$d);
 			foreach ($anlist as $item) :

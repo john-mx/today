@@ -4,7 +4,7 @@ use DigitalMx as u;
 ?>
 
 <?php
-
+$alerts = $admin['notices']['alerts'];
 	if (!empty($alerts)):
 		foreach ($alerts as $alert):
 			echo $alert ;

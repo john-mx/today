@@ -113,6 +113,8 @@ $container['Plates']->addData($y,
 [
 	'today','light','notices','conditions','advice','weather',
 	'campground', 'summary', 'condensed','campground-wide',
+	'alerts','summary','weather','weather-wapi','weather-wgov',
+	'weather-wapi-flat',
 
 ]
 );

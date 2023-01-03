@@ -179,8 +179,11 @@ public function __construct($c){
 	// locations to use for weather report
 	$this -> wlocs = ['jr','cw','br'] ; // weather locations
 	$this -> airlocs = ['jr','cw','br']; // air quality locations
-
-	$this -> max_age = Defs::$cache_times;
+	// get wgov update imte
+	$wgov = $this->load_cache('wgov');
+	$this->wgovupdate = strtotime($wgov['jr']['properties']['updated']);
+	$wapi = $this->load_cache('wapi');
+	$this->wapiupdate = $wapi['jr']['current']['last_updated_epoch'];
 	$this-> sunset = '';
 
 
@@ -214,6 +217,7 @@ public function build_topics(){
 			$this->build_topic_air(),
 			$this->build_topic_calendar(),
 			$this->build_topic_current(),
+			$this->build_topic_uv(),
 
 
 		);
@@ -546,6 +550,13 @@ public function build_admin_calendar() {
 	return ['calendar' => $y];
 }
 
+public function build_topic_uv() {
+	$y = $this->load_cache('wapi');
+//u\echor ($y);
+	$uv = $y['jr']['forecast']['forecastday'][0]['day']['uv'];
+	$uvdata=$this->uv_data($uv);
+	return ['uvdata'=>$uvdata];
+}
 public function build_topic_air() {
 	$z=[];
 	if(!$z=$this->load_cache('airnow')){
@@ -703,6 +714,9 @@ public function build_topic_weather() {
 	//get current temp
 	$w = $this->load_cache('wapi');
 	$z['wapi'] = $this->format_wapi($w);
+
+//	$z['wgov_forecast'] = $this->format_wgov_forecast($wgov);
+
 
 //	u\echor($z,'weather topic');
 	return $z;
@@ -977,6 +991,7 @@ public function rebuild_cache_wapi(array $locs=[] ) {
 
 	$this->write_cache($src,$x);
 	Log::info("Saved updated cache $src");
+	$this->wapiupdate = $x['jr']['current']['last_updated_epoch'];
 	return $x;
 }
 
@@ -1141,6 +1156,7 @@ coord: 34.0714,-116.3906,
 		$this->mergeCache($src,$x);
 		Log::info("Merged data into cache wgov");
 	}
+	$this->wgovupdate = strtotime($x['jr']['properties']['updated']);
 	return $x;
 }
 
@@ -1597,7 +1613,30 @@ public function format_wapi ($r) {
 	return $x;
 }
 
+public function display_weather(array $wslocs=['jr','br','cw'],int $wsdays=3 ) {
 
+//u\echor($wgov,'weather',STOP);
+
+	$wspec = array('wslocs'=>$wslocs,'wsdays'=>$wsdays);
+
+	if(1
+	&& isset($this->wgovupdate)
+	&& ($wgovupdate = $this->wgovupdate )
+	&&( (time() - $wgovupdate) < 8*60*60)
+	) {#use wgov
+
+		echo $this->Plates->render('weather-wgov',$wspec);
+	}elseif (1 #use wapi
+	&& isset($this->wapiupdate)
+	&& ($wapiupdate = $this->wapiupdate )
+	&&( (time() - $wapiupdate) < 8*60*60)
+	) {
+		echo $this->Plates->render('weather-wapi',$wspec);
+	} else { #no good datea
+		echo "Cannot build weather data.  All forecasts are stale.";
+	}
+
+}
 private function format_alerts($alert){
 	if (empty($alert)) return '';
 	if (empty($alert['title']) or ($alert['expires'] < time() )) return '';
@@ -1641,29 +1680,32 @@ public function format_wgov ($wgov) {
 
 		$day = 0;
 		$lastday = '';
-foreach ($periods as $p){ // period array]	d
+	foreach ($periods as $perdata){ // period array]	d
 			// two periods per day, for day and night
 			// put into one array
 // u\echor($p,'period',NOSTOP);
 	// set day (key) to datestamp for day, not hours
-			$sttime = $p['startTime'];
-			$highlow = $p['isDaytime']? 'High':'Low';
-			$tempc = round(($p['temperature'] -32 )* 5/9,0);
-			$daytext = date('l, M d',strtotime($sttime));
+			$start = $perdata['startTime'];
+			$dayts = strtotime($start);
+			$daytext = date('l, M d',$dayts);
 			if ($daytext != $lastday){
 				++$day;
 				$lastday = $daytext;
 			}
-			$p['daytext'] = $daytext;
-			$p['highlow'] = $highlow . "&nbsp;" . $p['temperature'] . "&deg;F (" .$tempc . "&deg;C)" ;
+			if ($day > 3) break;
+			$highlow = $perdata['isDaytime']? 'High':'Low';
+			$daynight= $perdata['isDaytime']? 'Day':'Night';
+			$tempc = round(($perdata['temperature'] -32 )* 5/9,0);
+			$perdata['dayts'] = $dayts;
+			$perdata['daytext'] = $daytext;
+			$perdata['highlow'] = $highlow . "&nbsp;" . $perdata['temperature'] . "&deg;F (" .$tempc . "&deg;C)" ;
 
-
-			$x[$loc][$day][] = $p;
+			$x[$loc][$day][$daynight] = $perdata;
 
 		} #end foreach period
 	} #end foreach location
 
-//	u\echor($x,"foramtted wgov", STOP);
+//	u\echor($x,"formatted wgov", STOP);
 	return $x;
 }
 
@@ -1708,7 +1750,7 @@ private function curl_options () {
 
 
 
-private function uv_data($uv) {
+public  function uv_data($uv) {
 	// takes numeric uv, returns array of uv, name, warning
 		$uvscale = $this -> Defs->uv_scale($uv);
 		$uv = array(

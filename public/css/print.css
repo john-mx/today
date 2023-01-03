@@ -2,12 +2,13 @@
 	/*
 		use smaller type, larger lin spacing.
 	*/
+	html{font-size: 10pt ;
+		font-family:"Times New Roman", Times, serif;
+	}
    body {
       color: #000;
       background: #fff;
 	padding-top:0;
-      font: 10pt "Times New Roman", Times, serif;
-line-height: 1.1;
       }
 	.red {color:#AA0000;}
 	div.break {page-break-before: always;}

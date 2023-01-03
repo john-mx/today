@@ -28,15 +28,16 @@ if(empty($wapi)): echo "<p>No wapi Data</p>"; exit;
 	$wupdated =  date('M d g:i a',$wapi['update']);
 	endif;
 	//u\echor($light);exit;
-$daylight = $light['astro'];
-$uv = $light['uv'];
+$daylight = $light['day'];
+//u\echor($daylight, 'day',true);
+
 $air = $air;
 $uvday = <<<EOT
-	UV: ${uv['uv']}
-			<div class='inlineblock' style="padding-left:2em;padding-right:2em;background-color:${uv['uvcolor']};">
-				 ${uv['uvscale']}
+	UV: ${uvdata['uv']}
+			<div class='inlineblock' style="padding-left:2em;padding-right:2em;background-color:${uvdata['uvcolor']};">
+				 ${uvdata['uvscale']}
 			</div>
-				&mdash; ${uv['uvwarn']}
+				&mdash; ${uvdata['uvwarn']}
 			<br />
 EOT;
 		$aircolor = $air['jr']['aqi_color'];
@@ -50,12 +51,7 @@ $aqday = <<<EOT
 			<br />
 EOT;
 
-$gday = $wgov['jr'][1]; #first day
-if (!isset($gday[1])){ #no day, only night;
-	$gday[1] = $gday[0];
-	$gday[0] = [];
-}
-$wday = $wapi['forecast']['jr'][0];
+
 
 ?>
 
@@ -65,32 +61,15 @@ $wday = $wapi['forecast']['jr'][0];
 
 <?php $this->insert('light',[$light]); ?>
 
-<h4>Tomorrow</h4>
+<h4>Next Two Days</h4>
 		<?php
+			$wspec = ['wslocs'=>['jr','cw'],'fcstart'=>'+1','wsdays'=>2];
+			$this->insert('weather-wapi-flat',$wspec);
 
-			for ($i=2;$i<3;++$i) : //for 2 days
-				$gday = $wgov['jr'][$i];
-				$wday = $wapi['forecast']['jr'][$i-1];
+
 		?>
 
 
-				<div class='inleft2  '>
-
-					<b>Day: </b> <?= $gday[0]['shortForecast'] ?>.
-						<?=$gday[0]['highlow']?><br />
-						<?php if ($i==1) : ?>
-						<?=$aqday ?>
-						<?=$uvday ?>
-						<?php endif; ?>
-
-
-				<b>Wind: </b> up to <?= $wday['maxwind']?> mph (<?= $wday['maxwindM'] ?> kph) (higher gusts possible) <br>
-
-				<b>Night: </b> <?= $gday[1]['shortForecast'] ?>.
-						<?=$gday[1]['highlow']?><br />
-
-			</div>
-			<?php endfor; //end day ?>
 
 
 <?php

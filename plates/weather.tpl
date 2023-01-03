@@ -2,84 +2,32 @@
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
 ?>
-<h4>Weather</h4>
+
 <?php
-// weather supplies both formatted wgov and formatted wapi.
+// chooses wapi or wgov data depending on date of wgov
 
-//u\echor($wgov,'weather',STOP);
-if(! isset($wgov['jr'])): echo "<p>No Data</p>"; else:
-	$weather_updated =  date('M d g:i a',$wgov['update']);
-	?>
-	<table class = 'width100 col-border '>
-	<colgroup>
-	<col style='width:10%'>
-	<col style='width:30%'>
-	<col style='width:30%'>
-	<col style='width:30%'>
-	</colgroup>
+	$wspec=[
+	'wslocs'=> $wslocs ??= ['jr','br','cw'],
+	'wsdays'=> $wsdays ??= 3,
+	'fcstart'=> $fcstart ??= 0,
+	];
 
-	<tr class='border-bottom'><td colspan='5' class='left'>
-	<small>Weather.gov forcast updated at <?=$weather_updated?></small>
-	</td></tr>
+//u\echor($wspec);
 
-<tr><th></th>
-		<?php
-			for ($i=1;$i<4;++$i) : //for 3 days
-				$day = $wgov['jr'][$i];
-		//u\echor ($day ,'day',STOP);
-				echo "<th>{$day[0]['daytext']}</th>";
-			endfor;
-		?>
-		</tr>
+//u\echor($wapi,'wapi',STOP);
+	if(1
+	&& isset($wgov['update'])
+	&& ($wgovupdate = ($wgov['update']))
+	&&( (time() - $wgovupdate) < 8*60*60)
+	) {#use wgov
+		echo $this->insert('weather-wgov',$wspec);
+	} elseif (1 #use wapi
+	&& isset($wapi['update'])
+	&& ($wapiupdate = $wapi['update'])
+	&&( (time() - $wapiupdate) < 8*60*60)
+	) {
+		echo $this->insert('weather-wapi',$wspec);
+	} else { #no good datea
+		echo "Cannot build weather data.  All forecasts are stale.";
+	}
 
-<?php	foreach ($wgov as $loc=>$days) :
-		if ($loc == 'update') continue;
-		//if ($loc !== 'jr') continue; // only show jr
-		$locname = Defs::$sitenames[$loc];
-
-		?>
-
-		<tr class='bg-orange left'><td colspan='4'><b><?=$locname?></b></td></tr>
-
-		<tr>
-		<td>Day</td>
-			<?php
-			for ($i=1;$i<4;++$i) : //for 3 days
-				$p = $days[$i][0] ;
-
-				?>
-					<td>
-							<?php if (count($days[$i]) == 2) : ?>
-								<?=$p['shortForecast']?> <br />
-								<?= $p['highlow']?>.<br />
-								Wind <?=$p['windSpeed']?>;
-							<?php endif; ?>
-
-					</td>
-			<?php endfor; #day ?>
-		</tr>
-		<tr class='bg-blue'>
-
-			<td >Night</td>
-			<?php
-			for ($i=1;$i<4;++$i) : //for 3 days
-				if (count($days[$i]) == 2) :
-					$p = $days[$i][1] ;
-				else :
-					$p = $days[$i][0] ;
-				endif;
-				?>
-					<td >
-					<div >
-								<?=$p['shortForecast']?>  <br />
-								<?= $p['highlow']?>.<br />
-								Wind <?=$p['windSpeed']?>;
-
-					</div>
-					</td>
-			<?php endfor; #day ?>
- </tr>
- <tr><td colspan='4' class='no-col' style='line-height:0.5em;'>&nbsp;</td></tr>
-	<?php endforeach; // loc? ?>
-	</table>
-<?php	endif; ?>

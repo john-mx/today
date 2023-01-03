@@ -20,16 +20,11 @@ if(empty($wapi)): echo "<p>No Data</p>"; else:
 	$weather_updated =  date('M d g:i a',$wapi['update']);
 	?>
 	<table class = 'width100 col-border'>
-	<colgroup>
 
-	<col style='width:30%'>
-	<col style='width:30%'>
-	<col style='width:30%'>
-	</colgroup>
 
 
 <tr>
-
+<td></td>
 		<?php
 		// note: fcstart + 0 converts to numeric
 			for ($i=$fcstart+0;$i<$fcstart+$daycnt;++$i) : //for 3 days
@@ -47,10 +42,8 @@ if(empty($wapi)): echo "<p>No Data</p>"; else:
 
 		?>
 
-		<tr class='bg-orange left'><td colspan='4'><b><?=$locname?></b></td></tr>
 
-		<tr>
-
+		<td><b><?=$locname?></b></td>
 			<?php
 			for ($i=$fcstart+0;$i<$fcstart+$daycnt;++$i) : //for 3 days
 				$p = $days[$i] ;

@@ -2,7 +2,7 @@
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
 use DigitalMx\jotr\Calendar as Cal;
-
+use DigitalMx\jotr\Today;
 $pcode ??= '';
 
 switch ($pcode) {
@@ -31,7 +31,7 @@ $Cal = new Cal();
 
 <?php	$this->insert('conditions')?>
 
-<?php $this->insert('alerts',['alerts' => $admin['notices']['alerts'] ])?>
+<?php $this->insert('alerts')?>
 <br />
 </div> <!-- end page-->
 <div id="page2" class='break' style="display: <?=$divvis?>;">
@@ -48,7 +48,13 @@ $Cal = new Cal();
 <!-- end page-->
 <div id="page3" class='break' style="display: <?=$divvis?>;">
 
-<?php $this->insert('weather') ?>
+
+<?php
+	$wspec = array('wslocs'=>['jr','cw'],'wsdays'=>3);
+	$this->insert('weather',$wspec);
+
+?>
+
 
 
 

@@ -37,7 +37,7 @@ $twolocs = ['jr','hq'];
 
 // what function?
 
-$f = light();
+$f = weather();
 
 // echo "<script>setInterval(dtime(),60);</script>";
 // function dtime(){
@@ -92,14 +92,20 @@ function light(){
 	exit;
 }
 
+function weather() {
+	global $Today,$Plates,$Defs;
+	$Today->display_weather(['jr','cw'],2);
 
 
-function weather_b(){
+}
+
+function weather_gov(){
 	global $Today,$Plates,$Defs;
 #	$Today->rebuild_cache_wgov();
 
 	$z=$Today->build_topic_weather();
-	echo $Plates->render('weather-wapi',$z);
+	u\echor($z,'build topic');
+	echo $Plates->render('weather-wgov',$z);
 	exit;
 }
 
@@ -128,11 +134,11 @@ function alerts() {
 	exit;
 }
 
-function weather() {
+function wapi() {
 global $Today,$Plates,$Defs;
 
 	echo "Testing " . 'weather ' . BR;
-	$z = $Today->prepare_topics();
+	$z = $Today->build_topics();
 	echo $Plates->render('weather-wapi',$z);
 	exit
 	;
@@ -153,23 +159,6 @@ function props (){
 	exit;
 }
 
-function t1 () {
-	global $Today,$Plates,$Defs;
-
-$z = $Today->load_cache('wapi',true);
-
-u\echor ($z, 'result of test');
-}
-
-function t2 () {
-	global $Today,$Plates,$Defs;
-
-	echo $Today->start_page('test page','b');
-
-	 u\echor ($z,'Today input to plates');
-
-	echo $Plates->render('today-boot',$z);
-}
 
 function temail ($Plates,$Today) {
 
@@ -186,12 +175,7 @@ global $Today,$Plates,$Defs;
 	exit;
 
 }
-function t4 ($Plates,$Today) {
 
-	$data = file_get_contents(REPO_PATH . '/public/pages/today2.html');
-	//echo $data; exit;
-	$Today->print_pdf($data,'pages/test2.pdf');
-}
 echo BR . "Done" . BRNL;
 
 
