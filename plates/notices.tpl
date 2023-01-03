@@ -10,24 +10,19 @@ use DigitalMx as u;
 	if ( $d || $e) :
 
 ?>
-<h4>Announcements and Alerts</h4>
-<div class='inleft2'>
-    <?php if ($d):?>
-    <div class=' warn red' >
-        <?php
-                echo "<ul>";
-                $anlist = explode("\n",$d);
-                        foreach ($anlist as $item) :
-                                if (empty(trim($item))):continue;endif;
-                                echo "<li>$item</li>";
-                        endforeach;
-                echo "</ul>" . NL;
-        ?>
-    </div>
-    <?php endif; ?>
+
+  <?php if (0): ?>
+  <!-- 	<h4 class='red'>Alerts</h4> -->
+  	<?php foreach ($d as $alert):
+   	echo $alert;
+  	endforeach; ?>
+	<?php endif; ?>
+
+
 
     <?php if($e) : ?>
-    <div class=' warn' >
+    <h4>Announcements and Closures</h4>
+    <div class=' warn inleft2' >
 
         <?php
                 echo "<ul>";
@@ -41,6 +36,6 @@ use DigitalMx as u;
 
     </div>
     <?php endif; ?>
- </div>
+
 <?php endif; ?>
 

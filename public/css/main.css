@@ -361,7 +361,11 @@ table.no-cells tr td {border:0;}
 
 .in2 , .indent2 { margin-left: 2rem;
 	margin-right: 0;
-	width:90%;
+
+	}
+.indent {
+	margin-left:2rem;
+	margin-right:2rem;
 	}
 
 .inleft2 {margin-left:2rem;}
@@ -377,10 +381,11 @@ table.no-cells tr td {border:0;}
 
 .warnblock
 {
-	display: inline-block;
-	font-weight: bold;
+	border:2px solid red;
+	margin-left:2em;
+	margin-right:2em;
 	margin-bottom: 6px;
-	padding-left: 3rem;
-	padding-right: 3rem;
+	padding-left: 1rem;
+	padding-right:1rem;
 }
 

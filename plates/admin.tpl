@@ -40,12 +40,27 @@ $open_options = u\buildOptions(['','0','a few','around 10','10 +','?'],'',true);
 	<hr style="height:4px;background-color:green;">
 </div>
 
-<p>Enter alerts here. Each line of text (separated with a cr) will be a separate bulleted item.</p>
-<textarea name='alerts'><?=$admin['alerts']?></textarea>
-<table>
-<tr><th>Headline</th><th>Description</th><th>Expires</th></tr>
+
+<p>You can have up to two alerts.<br>
+Title will be displayed in red.  To remove alert, remove the title.<br>
+Alerts must have expiration.  If today, just enter the time.  Otherwise enter month/day and time. Day without time means 12:01am</p>
+<h5>Alert A</h5>
+<table class='border no-col'>
+<tr class='left'><td>Headline</td>
+	<td><input type='text' value="<?=$admin['alertA']['title'] ??'' ?> " name="alertA[title]" size='45'></td></tr>
+<tr class='left'><td>Information:</td><td> <textarea name="alertA[text]" rows='2' cols='80'><?=$admin['alertA']['text']??''?></textarea></td></tr>
+<tr class='left'><td>Expires</td><td><input type='text' name="alertA[expires]" value="<?=$admin['alertA']['expires']??''?>" >
+</td></tr>
 </table>
 
+<h5>Alert B</h5>
+<table class='border no-col'>
+<tr class='left'><td>Headline</td>
+	<td><input type='text' value="<?=$admin['alertB']['title'] ??'' ?> " name="alertB[title]" size='45'></td></tr>
+<tr class='left'><td>Information:</td><td> <textarea name="alertB[text]" rows='2' cols='80'><?=$admin['alertB']['text']??''?></textarea></td></tr>
+<tr class='left'><td>Expires</td><td><input type='text' name="alertB[expires]" value="<?=$admin['alertB']['expires']??''?>" >
+</td></tr>
+</table>
 
 
 <h4>Enter closures/announcements</h4>

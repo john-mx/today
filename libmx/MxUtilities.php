@@ -58,7 +58,7 @@ function echoc($text,$title=''){
 // 	return $title;
 // }
 
-function echot(string $string){
+function echot(string $string,$title='',$stop=false ){
 	// call with some php var and optional title for the var.
 	// will print out the contents of var and the location in code this function was called from.
 
@@ -70,7 +70,7 @@ function echot(string $string){
 	$title = "Tracer ($ref)";
    echo "<h4>$title</h4>";
    echo "<pre>$string</pre>\n";
-   return true;
+   if ($stop) exit;
 }
 
 

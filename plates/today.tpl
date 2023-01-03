@@ -30,12 +30,12 @@ $Cal = new Cal();
 ?>
 
 <?php	$this->insert('conditions')?>
-<div class='border'>
-<h4 class='red center'>No Food &bull; No Water &bull; No Cell Service </h4>
-</div>
 
+<?php $this->insert('alerts',['alerts' => $admin['notices']['alerts'] ])?>
+<br />
 </div> <!-- end page-->
 <div id="page2" class='break' style="display: <?=$divvis?>;">
+
 
 <?php $this->insert('notices') ?>
 

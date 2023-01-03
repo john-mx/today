@@ -37,13 +37,14 @@ $Cal = new DigitalMx\jotr\Calendar();
 <!-- start conditions -->
 <?php	$this->insert('conditions');?>
 
-<div class='border'>
-<h4 class='red center'>No Food &bull; No Water &bull; No Cell Service </h4>
-</div>
+<?php $this->insert('alerts',['alerts' => $admin['notices']['alerts'] ])?>
+
 
 </div><!-- end page-->
 <div id="page-notices" style="display: <?=$divvis?>;">
 <!-- start notices -->
+
+
 <?php $this->insert('notices',['notices' => $admin['notices']]); ?>
 
 <?php $this->insert('advice',['advice' => $admin['advice']]); ?>

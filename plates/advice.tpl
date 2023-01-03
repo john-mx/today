@@ -18,7 +18,7 @@ use DigitalMx as u;
 				if (empty(trim($item))):continue;endif;
 				echo "<li>$item</li>";
 			endforeach;
-			echo "<br /><li>Please: <span class='red'>Do Not Die Today!</span> Be Safe.</li>";
+			// echo "<br /><li>Please: <span class='red'>Do Not Die Today!</span> Be Safe.</li>";
 		echo "</ul>" . NL;
 	?>
 </div>

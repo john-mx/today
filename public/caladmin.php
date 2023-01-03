@@ -33,7 +33,7 @@ if (isset($_POST['pw']) ) {// is login
 
 }
 
-$Login->check_pw(1);
+$Login->check_pw(5);
 
 
 

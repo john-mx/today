@@ -22,22 +22,21 @@ use DigitalMx as u;
 
 <h4>Calendar</h4>
 <ol>
-<li>Enter Time for the event.  If you remove the time, the event will be deleted, If you want to stop displaying the event, but keep it in the system for later use, check the "Suspend" box.
-<li>Enter the Date for the event, or, earliest date if it is a repeating event.
+<li>Enter the event's title, location, type, and duration. Duration  will be displayed exactly as you type it (e.g. '45 mins', 'one hour');
+<li>Enter starting time for the event.  If you remove the time, the event will be deleted, If you want to stop displaying the event, but keep it in the system for later use, check the "Suspend" box.
+<li>For one-time events, enter the Date for the event. For repeating events, leave blank to start immediately, or enter date after which events begin.
 <li>
-Enter date and time for event. <br>
-If event repeats, check the days it repeats on.  If there is a starting date, then the first scheduled event will be on the first checked day on or after the date.If there is no starting date entered, repeating schedule will start immediately; i.e., starting date is today. <br />
-Repeating events will continue until the date entered as Last Day.  <br>
-Set a time to "0" or blank to remove an event. All events are deleted after their last scheduled date.
-<br />
-Note: in list below, repeating events are shown first, then one-time events.
-
+Enter repeating schedule for repeating events.
+If event repeats, check the days it repeats on.
+Repeating events will continue until the date entered as Last Day, or until removed.
+<li>Enter the last day of repeating events.  If blank, events will be repeated until removed.
+</ol>
+<p>Set a time to "0" or blank to remove an event. All events are deleted after their last scheduled date.
 </p>
+
+
 <form method=post action='/caladmin.php'>
-
 <table>
-
-
 <tr><th>Title</th><th>Location</th><th>Type</th><th>Duration</th></tr>
 
 <?php
@@ -74,7 +73,7 @@ Note: in list below, repeating events are shown first, then one-time events.
 				0 or blank removes event.<br>
 				<input type='checkbox' name='calendar[<?=$i?>][suspended]'
 					<?php if ($event['suspended']): ?> checked <?php endif; ?>
-					> Suspended: keep,but don't display.)
+					> Suspended: (save, but don't display.)
 			</td>
 
 				<td >On or After date: <br /><input type = 'text' size='15'
@@ -86,13 +85,10 @@ Note: in list below, repeating events are shown first, then one-time events.
 			 Repeat Every: <br />
 Su&nbsp;M&nbsp;&nbsp;T&nbsp;&nbsp;W&nbsp;&nbsp;Th&nbsp;F&nbsp;&nbsp;Sa <br />
 			<?=$dayset?> <br />
-				Last day of repeat<br />
-				<input type='text' size='15' name = "calendar[<?=$i?>][end]" value="<?=$event['end']?>">
 
 			</td><td>
-
-
-
+	Last day of repeat<br />
+				<input type='text' size='15' name = "calendar[<?=$i?>][end]" value="<?=$event['end']?>">
 				</td>
 
 		</tr>

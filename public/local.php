@@ -2,7 +2,7 @@
 namespace DigitalMx\jotr;
 
 /*
-	today admin page
+	local admin page
 
 	first checks for login level.
 	If fails, then shows login screen.  Logging in returns to this screen.
@@ -32,8 +32,8 @@ $admin = $Today->load_cache('admin');
 $meta = array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
 	'page' => basename(__FILE__),
-	'subtitle' => 'Site Admin',
-	'extra' => "<script>src='/js/clearupdate.js'</script>",
+	'subtitle' => 'Local Admin',
+	'extra' => '',
 	'rdelay' => $admin['rdelay'],
 
 	);
@@ -43,27 +43,24 @@ if (isset($_POST['pw']) ) {// is login
 }
 
 
-$Login->check_pw(5);
+$Login->check_pw(2);
 
 //u\echor($_POST,'post');
 
 if (!empty($_POST) && !isset($_POST['pw'])) {
 		post_data ($_POST,$Today);
-		echo "<script>window.location.href='/admin.php';</script>";
+		echo "<script>window.location.href='/local.php';</script>";
 		exit;
 
 } else {
-
-// get calendar
-
 
 	echo $Plates->render('head',$meta);
 echo $Plates->render('title',$meta);
 
 		$y = $Today-> prepare_admin();
 // u\echor($y);
-		echo $Plates->render('admin',$y);
-
+		echo $Plates->render('local',$y);
+echo "Local admin";
 
 	exit;
 }

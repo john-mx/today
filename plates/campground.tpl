@@ -15,7 +15,7 @@ $cgres_asof =  date('M d g:i a', $camps['cgres_age']);
 <?php endif; ?>
 </h4>
 
-<table  class='inleft2 alt-gray border'>
+<table  class='alt-gray border'>
 <tr ><th>Campground</th><th>Sites</th><th>Nightly Fee</th>
 <th>Open Sites</th><th style='border-right:2px solid black;'>Note</th></tr>
 <?php

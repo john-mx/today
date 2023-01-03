@@ -19,7 +19,7 @@ ini_set('display_errors', 1);
 $qs = $_SERVER['QUERY_STRING'] ?? '';
 
 
-$y = $Today->build_topics ();
+
 //u\echor($y,'y',STOP);
 
 // using "Today' as title prevents it from re-appearing on the today page.
@@ -35,6 +35,7 @@ $meta=array(
 	echo $Plates->render('title',$meta);
 
 //	echo $Today->start_page('Today in the Park',$qs);
+
 	echo $Plates -> render('today',$meta) ;
 
 // 	file_put_contents(REPO_PATH .'/data/test.html',

@@ -3,20 +3,16 @@ use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
 ?>
 
-<?php if (!empty ($d= $notices['alerts'])) : ?>
-<div class='float'>
-<h4 class='black'>Active Alerts:</h4>
-<div class='warn'>
 <?php
-		echo "<ul>";
-		$anlist = explode("\n",$d);
-			foreach ($anlist as $item) :
-				if (empty(trim($item))):continue;endif;
-				echo "<li>$item</li>";
-			endforeach;
-		echo "</ul>" . NL;
-	?>
-	</div>
-	</div>
-<?php endif; ?>
 
+	if (!empty($alerts)):
+		foreach ($alerts as $alert):
+			echo $alert ;
+		endforeach;
+	else:
+?>
+<div class='border center' style='margin-top:0.5em;'>
+<b>No Food</b> &bull; <b>No Water</b> &bull; <b>No Cell Service</b>  in the Park. <br>
+<p >Be Prepared: <span class='red' >Do Not Die Today!</p>
+</div>
+<?php endif; ?>

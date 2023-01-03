@@ -229,38 +229,69 @@ public function prepare_admin() {
 // get sections needed for the admin form
 
 
-	if (!$y['admin'] = $this->load_cache('admin')){
+	if (!$admin = $this->load_cache('admin')){
 	 	Log::error ("Could not load cache admin");
 	 	exit;
 	 	return [];
+	 }
+	 //transfer unmodified field
+	 foreach (['pithy','fire_level','announcements',
+	 'advice','uncertainty','rdelay',
+	 ] as $f){
+	 	$y[$f] = $admin[$f];
 	 }
 // 	u\echor ($y, 'read admin cache', NOSTOP);
 
 	// set firelevel options array
 	$fire_levels = array_keys(Defs::$firewarn);
-	$y['admin']['fire_level_options'] = u\buildOptions($fire_levels,$y['admin']['fire_level']);
+	$y['fire_level_options'] = u\buildOptions($fire_levels,$admin['fire_level']);
 
 // camps
 	foreach (array_keys(Defs::$campsites) as $cgcode){
-		$opt = u\buildOptions(Defs::$cgstatus, $y['admin']['cgstatus'][$cgcode] ?? '');
+		$opt = u\buildOptions(Defs::$cgstatus, $admin['cgstatus'][$cgcode] ?? '');
 		$opts[$cgcode]  = $opt;
-		$notes[$cgcode] = $y['admin']['cgnotes'][$cgcode] ?? '';
+		$notes[$cgcode] = $admin['cgnotes'][$cgcode] ?? '';
 
 	}
 	$rchecked = [];
-	$rotators = $y['admin']['rotate'] ?? [];
+	$rotators = $admin['rotate'] ?? [];
 	foreach (array_keys(Defs::$rpages) as $pid){
-
 		if (in_array($pid,$rotators)){$rchecked[$pid] = 'checked';}
 	}
-	$y['admin']['cg_options'] = $opts;
-	$y['admin']['cg_notes'] = $notes;
-	$y['admin']['rchecked'] = $rchecked;
-	$y['admin']['cgsites'] = array_merge($this->load_cache('cgopen'), $this->load_cache('cgres'));
+	$y['cg_options'] = $opts;
+	$y['cg_notes'] = $notes;
+	$y['rchecked'] = $rchecked;
+	$y['cgsites'] = array_merge($this->load_cache('cgopen'), $this->load_cache('cgres'));
 	//$y['admin']['cgfull'] =  (!array_filter($y['admin']['cgopen'])) ? 1:0;
 	//$y['admin']['cgres'] = $this->load_cache('cgres') ?? [];
 
 
+	foreach (['alertA','alertB'] as $alertID){
+		$atitle = trim($admin[$alertID]['title']);
+		$atext = $admin[$alertID]['text'];
+		$aexp = $admin[$alertID]['expires'];
+		if (empty ($atitle) || ($aexp<time()) ){
+			$btitle=$btext=$bexp='';
+		} else {
+			$btitle=$atitle;
+			$btext=$atext;
+			$bexp = date('M d g:i a',$aexp);
+		}
+		$y[$alertID]['title'] = $btitle;
+		$y[$alertID]['text'] = $btext;
+		$y[$alertID]['expires'] = $bexp;
+	}
+
+
+	$r['admin'] = $y;
+
+	if (!$r['galerts'] = $this->load_cache('galerts') ){
+	 	Log::error ("Could not load cache galerts");
+	 	return [];
+	 }
+
+
+// calendar
 	$calendar = $this->Cal->filter_calendar($this->load_cache('calendar'),0);
 
 #add 3 blank recordsw
@@ -268,22 +299,15 @@ public function prepare_admin() {
 		$calendar[] = $this->Cal::$empty_cal;
 	}
 
-$calendar = $this->Cal->add_types($calendar);
-$y['calendar'] = $calendar;
-
-
-	// if (! $galerts = $this->rebuild_cache_galerts() ){
-// 	}
-
-	if (!$y['galerts'] = $this->load_cache('galerts') ){
-	 	Log::error ("Could not load cache galerts");
-	 	return [];
-	 }
+	$calendar = $this->Cal->add_types($calendar);
+	$r['calendar'] = $calendar;
 
 
 
-// u\echor ($y, 'Y to admin',NOSTOP);
-	return $y;
+
+
+//  u\echor ($r, 'r to admin',NOSTOP);
+	return $r;
 }
 
 public function load_cache ($section,$refresh=true) {
@@ -335,7 +359,7 @@ public function post_admin ($post) {
 
 
 */
- //u\echor ($post, 'Posted');
+//  u\echor ($post, 'Posted' );
 
 //  admin cache
 	$y=[];
@@ -346,7 +370,7 @@ public function post_admin ($post) {
 
 	$y['fire_level'] = $post['fire_level'];
 //weather
-	$y['alerts'] = trim($post['alerts']);
+
 
 	$y['advice'] = trim($post['advice']);
 
@@ -359,6 +383,13 @@ public function post_admin ($post) {
 //u\echor($y,'y',STOP);
 	$y['rdelay'] = $post['rdelay']; #rotation time
 
+
+// check alerts
+	foreach (['alertA','alertB'] as $alertID) {
+		$y[$alertID] = $this->checkAlert($post[$alertID]);
+	}
+	u\echor($y ,'post');
+
 	$this -> write_cache('admin',$y);
 
 	$cgo = $post['cgupdate'];
@@ -368,6 +399,10 @@ public function post_admin ($post) {
 	//u\echor ($cgo,'cgupdate after filter');
 	$cgopen = [];
 	$cgres = [];
+
+
+
+
 
 
 	foreach ($cgo as $cg=>$open){
@@ -387,6 +422,35 @@ public function post_admin ($post) {
 
 
 }
+
+private function checkAlert ($alert) {
+//   u\echor($alert,'start alert check');
+	if (empty (trim($alert['title']))) {
+// 		echo "cleared";
+		$y['expires'] = $y['text'] = $y['title'] = '';
+
+	} else {
+		$y['title'] = $alert['title'];
+		$y['text'] =  $alert['text'];
+		if (empty($alert['expires'])){
+
+			u\alertBadInput("Must have an expiration date for an alert");
+		}
+		try{$alertAx = new \DateTime($alert['expires'],new \DateTimeZone('America/Los_Angeles'));}
+		catch (\Exception $e) {
+			u\alertBadInput ("Cannot understand date/time: {$alert['expires']}");
+		}
+		$alertAxts = $alertAx->format('U');
+		if ($alertAxts < time()) {
+			u\alertBadInput("Expiration less than now.  To delete item, remove the title");
+		}
+
+		$y['expires'] = $alertAxts;
+	}
+//  u\echor($y,'checked alert');
+	return $y;
+}
+
 
 public function mergeCache($cache,$merge){
 // merges data into cache, unless data is empty
@@ -712,16 +776,22 @@ public function build_topic_admin() {
 	 	Log::error ("Could not load cache admin");
 	 	return [];
 	 }
-
+// 	u\echor($y , 'loaded cache admin');
 		//clean text for display (spec chars, nl2br) but don't change stored info.
 
 		 	$t = $this->clean_text($y['pithy']);
 			 $z['pithy'] = $t;
 
-			$t = $this->format_alerts ($y['alerts']);
-			$z['notices']['alerts'] = trim($t);
+			$z['notices']['alerts'] = [];
+			foreach (['alertA','alertB'] as $alertID){
+				$atext =  $this->format_alerts($y[$alertID]);
+				//u\echot ($atext,'alert',STOP);
+				if ($atext){$z['notices']['alerts'][] = $atext;}
+			}
 
-				$t = $this->clean_text($y['announcements']);
+
+
+			$t = $this->clean_text($y['announcements']);
 			$z['notices']['announcements'] = trim($t);
 			//u\echor ($z['notices'],'build topic general',STOP);
 
@@ -735,7 +805,7 @@ public function build_topic_admin() {
 			$z['advice'] = $this->clean_text($y['advice']);
 			$z['rotate'] = $y['rotate'] ?? [];
 
-	//u\echor($z,'topic general', NOSTOP);
+// 	u\echor($z,'topic general');
 	return ['admin'=>$z];
 
 }
@@ -1528,13 +1598,22 @@ public function format_wapi ($r) {
 }
 
 
-private function format_alerts($r){
-	if (empty($r)) return '';
-	$t = $this->clean_text($r);
-	$anlist = explode("\n",$t);
-	foreach ($anlist as $al){
+private function format_alerts($alert){
+	if (empty($alert)) return '';
+	if (empty($alert['title']) or ($alert['expires'] < time() )) return '';
+	$expire_date = date('M d g:i a',$alert['expires']);
 
+	$t= "<div class='warnblock'>";
+	$t .= "<div class='red inlineblock'><b>Alert: {$alert['title']}</b> </div> <br />";
+	if ($alert['text']){
+		$t .= "<div class='inline-block indent'>"
+		. u\special($alert['text'])
+		. "</div>";
 	}
+	$t .= "<div class='inlineblock right width100' style='font-weight:normal;'><small>Expires: $expire_date</small></div>";
+	$t .= "</div>";
+
+//u\echot($t,'formatted alert',STOP);
 	return $t;
 }
 
