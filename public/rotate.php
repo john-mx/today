@@ -28,8 +28,7 @@ $meta=array(
 	'qs' => $qs,
 	'page' => basename(__FILE__),
 	'subtitle' => '',
-	'extra' => "<link rel='stylesheet' href='/css/tv.css'>\n
-		<script src='/js/scale.js'></script>",
+	'extra' => "<link rel='stylesheet' href='/css/tv.css'>",
 	'rotate' => $rotate,
 	'rdelay' => $y['rdelay'],
 	'sunset' => $Today->sunset,

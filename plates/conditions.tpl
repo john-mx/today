@@ -75,8 +75,9 @@ EOT;
 
 
 
-<h4>Park Conditions  at <?=$current_asof?></h4>
+
 <div class='center clearafter  border'>
+<h4>Park Conditions  at <?=$current_asof?></h4>
 	<div class=' floatl' style='width:30%'>
 	<?=$temp?>
 	<?=$currentwind?>

@@ -38,7 +38,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 <!-- start conditions -->
 <?php	$this->insert('conditions');?>
 
-<script>doResize('page-today');</script>
+
 
 </div><!-- end page-->
 

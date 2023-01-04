@@ -70,7 +70,7 @@ $rdelay ??=13;
 			$added_headers .= "	<script src='/js/snap2.js'></script>".NL;
 			$added_headers .= "".NL;
 
-			$added_headers .= "<script>var pagelist = $pagelist;</script>" .NL;
+			$added_headers .= "<script>var pageList = $pagelist;</script>" .NL;
 			$added_headers .= "<script>var rdelay = $rdelay;</script>" .NL;
 			break;
 
