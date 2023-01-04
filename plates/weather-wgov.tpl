@@ -43,7 +43,7 @@ use DigitalMx as u;
 
 			<?php for ($i=$fcstart+1;$i<$fcstart+$daycnt+1;++$i) : //for 3 days ?>
 				<td>
-				 <?php if ($p = $days[$i]['Day'] ): ?>
+				 <?php if ($p = $days[$i]['Day'] ?? ''): ?>
 							<?=$p['shortForecast']?><br />
 								<?= $p['highlow']?>.
 								Wind <?=$p['windSpeed']?>;

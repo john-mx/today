@@ -77,15 +77,17 @@ EOT;
 
 <h4>Park Conditions  at <?=$current_asof?></h4>
 <div class='inleft2 left clearafter width100' >
-	<div class=' floatl width45'>
+	<div class=' floatl' style='width:30%'>
 	<?=$temp?>
 	<?=$currentwind?>
 
 	<?=$fireday?>
 	</div>
 
-	<div class='floatl width45'>
+	<div class='floatl ' style='width:30%'>
 	<?=$aqday?>
+	</div>
+	<div class='floatl ' style='width:30%'>
 	<?=$uvday?>
 	</div>
 
