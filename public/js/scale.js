@@ -11,7 +11,7 @@ function doResize(elementID) {
 
 
 	scale = availheight/pageheight;
-alert ('page avail =' + availheight +','+ winheight + ' '+scale);
+//alert ('page avail =' + availheight +','+ winheight + ' '+scale);
 	el.style.transform = "scale("+scale+")";
 
 
