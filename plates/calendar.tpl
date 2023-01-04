@@ -7,7 +7,7 @@ if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 ?>
 <table class='caltable width100 '>
 
-<tr><th>Time </th><th>Program</th><th> Location</th></tr>
+<tr><th>Time </th><th>Program</th><th>Type</th><th> Location</th></tr>
 <tbody>
 
 <?php
@@ -20,17 +20,20 @@ if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 	?>
 	<?php if ($eventdate != $lasteventdate) :?>
 	<tr class='daterow '>
-	<td colspan=3>
+	<td colspan=4>
 	<b><?=$eventdate ?> </b></td>
 </tr>
 	<?php endif; ?>
+
 	<tr class='eventrow'>
 	<td><?=$eventtime?><br />
 
 	</td>
 	<td class='left'>
  	<b><?=$cal['title']?></b>
- 	( <?=$cal['duration']?>)<br />
+ 	</td>
+ 	<td>
+ 	<?=$cal['duration']?>
  	<?=$cal['type']?>
 
 
@@ -41,7 +44,7 @@ if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 	</tr>
 
 	<?php if (!empty($cal['note'])) : ?>
-	<tr class='noterow'><td></td><td colspan='2' >
+	<tr class='noterow'><td></td><td colspan='3' >
 			<?=$cal['note'] ?? '' ?>
 			</td></tr>
  	<?php endif; ?>
