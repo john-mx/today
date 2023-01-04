@@ -40,7 +40,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 
 <?php $this->insert('alerts',['alerts' => $admin['notices']['alerts'] ])?>
 
-<script>window.onload=doResize('page-today');</script>
+<!-- <script>window.onload=doResize('page-today');</script> -->
 </div><!-- end page-->
 <div id="page-notices" style="display: <?=$divvis?>;">
 <!-- start notices -->
