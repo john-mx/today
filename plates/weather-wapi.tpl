@@ -69,6 +69,6 @@ if(empty($wapi)): echo "<p>No Data</p>"; else:
 	<?php endforeach; // loc? ?>
 	</table>
 
-	<div class='inleft2 left'><small>Forecast from weatherapi.com updated at <?=$weather_updated?>. (wapi)</small></div>
+	<div class='inleft2 left'><small>Forecast from weatherapi.com updated at <?=$weather_updated?>.</small></div>
 
 <?php	endif; ?>

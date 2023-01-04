@@ -43,7 +43,7 @@ $rdelay ??=13;
 	}
 
 	$pagelist = json_encode($pagel);
-
+//u\echor($pagelist,'pagelist');
 
 //$rdelay = 15; #delay on rotation
 

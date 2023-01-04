@@ -1,8 +1,8 @@
 
-function startRotation(secs,pageList){
-	var intID = setInterval(rotateDivs,secs*1000,pageList);
+function startRotation(secs,idList){
+	var intID = setInterval(rotateDivs,secs*1000,idList);
 }
-function rotateDivs(pageList){
+function rotateDivs(idList){
 /* function grabs all the division with id starting with "page".
 	They should (or all but one) initially be set as display:none.
 	The script will run through turning on one div after the other
@@ -17,10 +17,10 @@ function rotateDivs(pageList){
 	if ( typeof rotateDivs.dlist == 'undefined' ) {
 //  		rotateDivs.dlist = document.querySelectorAll('div[id^="page"]');
 
-	if (!pageList) {
+	if (!idList) {
 		 	rotateDivs.dlist = document.querySelectorAll('div[id^="page"]');
 	} else {
-		rotateDivs.dlist = document.querySelectorAll(pageList);
+		rotateDivs.dlist = document.querySelectorAll(idList);
 	}
 
 		rotateDivs.dsize = rotateDivs.dlist.length - 1;
