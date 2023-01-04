@@ -6,12 +6,13 @@ function doResize(elementID) {
 
 	var height = pageheight + titleheight;
 	var winheight = window.innerHeight;
+	var winwidth = window.innerWidth;
 
 	var availheight = winheight-titleheight-50;
 
 
-	scale = availheight/pageheight;
-//alert ('page avail =' + availheight +','+ winheight + ' '+scale);
+	scale = Math.max(1,availheight/pageheight);
+// alert ('page avail =' + availheight +','+ winheight + ' '+scale);
 	el.style.transform = "scale("+scale+")";
 
 

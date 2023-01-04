@@ -13,6 +13,6 @@ $alerts = $admin['notices']['alerts'];
 ?>
 <div class='border center' style='margin-top:0.5em;'>
 <b>No Food</b> &bull; <b>No Water</b> &bull; <b>No Cell Service</b>  in the Park. <br>
-<p >Be Prepared: <span class='red' >Do Not Die Today!</p>
+<p >Be Prepared: <span class='red' >Do Not Die Today!</span></p>
 </div>
 <?php endif; ?>

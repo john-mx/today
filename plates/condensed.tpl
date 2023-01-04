@@ -38,13 +38,13 @@ $Cal = new DigitalMx\jotr\Calendar();
 <!-- start conditions -->
 <?php	$this->insert('conditions');?>
 
-<?php $this->insert('alerts',['alerts' => $admin['notices']['alerts'] ])?>
+<script>doResize('page-today');</script>
 
-<!-- <script>window.onload=doResize('page-today');</script> -->
 </div><!-- end page-->
+
 <div id="page-notices" style="display: <?=$divvis?>;">
 <!-- start notices -->
-
+<?php $this->insert('alerts',['alerts' => $admin['notices']['alerts'] ])?>
 
 <?php $this->insert('notices',['notices' => $admin['notices']]); ?>
 
@@ -53,9 +53,11 @@ $Cal = new DigitalMx\jotr\Calendar();
 </div><!-- end page-->
 <div id="page-weather" style="display: <?=$divvis?>; " >
 
+<h4>Forecast</h4>
 <?php
+
 	//u\echor($wgov,'wgov',STOP);
-	$wspec=array('wslocs'=>['jr'],'wsdays'=>3);
+	$wspec=array('wslocs'=>['jr','cw'],'wsdays'=>3);
 	$this->insert('weather',$wspec);
 
 	?>

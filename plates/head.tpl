@@ -39,8 +39,9 @@ $rdelay ??=13;
 // 		}
 // 	$pagelist .="]";
 	foreach ($rotate as $pid){
-		$pagel[] = "#page-$pid";
+		$pagel[] = '#page-'.$pid;
 	}
+
 	$pagelist = json_encode($pagel);
 
 
@@ -54,17 +55,23 @@ $rdelay ??=13;
 			break;
 		case 'scroll':
 			$scbody='onLoad="pageScroll()"';
-			$added_headers .= "<style>html {scroll-behavior: smooth;}</style>";
-			$added_headers .= "<script src='/js/scroll_scripts.js'></script>";
-			$added_headers .= '<meta http-equiv="refresh" content="900" >';
+			$added_headers .= "<style>html {scroll-behavior: smooth;}</style>" .NL;
+			$added_headers .= "<script src='/js/scroll_scripts.js'></script>".NL;
+
+
+			$added_headers .= '<meta http-equiv="refresh" content="900" >' .NL;
 			break;
 
 
 		case 'snap':
-			$scbody = "onLoad='startRotation($rdelay,$pagelist);display_clock();'";
-			$added_headers .= "	<script src='/js/snap2.js'></script>";
-			$added_headers .= "<script src='/js/clock.js'></script>";
-			$added_headers .= '<meta http-equiv="refresh" content="900" >';
+
+			$scbody = "onLoad=load_snap()";
+			$added_headers .= '<meta http-equiv="refresh" content="900" >'.NL;
+			$added_headers .= "	<script src='/js/snap2.js'></script>".NL;
+			$added_headers .= "".NL;
+
+			$added_headers .= "<script>var pagelist = $pagelist;</script>" .NL;
+			$added_headers .= "<script>var rdelay = $rdelay;</script>" .NL;
 			break;
 
 		default:
@@ -89,6 +96,8 @@ $rdelay ??=13;
 
 	<script src='/js/check_time.js'></script>
 	<script src='/js/hide.js'></script>
+	<script src='/js/clock.js'></script>
+	<script src='/js/load_snap.js'></script>
 
 	<link rel='stylesheet' href = '/css/main.css' />
 	<link rel='stylesheet' href = '/css/print.css' />
