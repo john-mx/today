@@ -11,7 +11,7 @@ $alerts = $admin['notices']['alerts'];
 		endforeach;
 	else:
 ?>
-<div class='border center' style='margin-top:0.5em;'>
+<div class='border center' style='margin-top:0.5em;width:80%'>
 In The Park...
 <span class='dk-orange'><b>No Food</b> &bull; <b>No Water</b> &bull; <b>No Cell Service</b>  &bull; <b>No Dogs on Hiking Trails</b></span><br>
 <p class='dk-green'>Be Wise.  Be Safe. Do Not Die Today!</p>

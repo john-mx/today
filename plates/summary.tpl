@@ -70,7 +70,9 @@ EOT;
 		?>
 
 
-
+<?php
+	$this->insert('alerts');
+?>
 
 <?php
 	$this->insert('notices',['notices' => $admin['notices']]);
