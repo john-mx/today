@@ -33,8 +33,10 @@ $Cal = new Cal();
 
 <?php $this->insert('alerts')?>
 <br />
-</div> <!-- end page-->
+<!--
+</div> <!~~ end page~~>
 <div id="page2" class='break' style="display: <?=$divvis?>;">
+ -->
 
 
 <?php $this->insert('notices') ?>
@@ -50,7 +52,7 @@ $Cal = new Cal();
 
 
 <?php
-	$wspec = array('wslocs'=>['jr','cw'],'wsdays'=>3);
+	$wspec = array('wslocs'=>['jr','cw','br'],'wsdays'=>3);
 	$this->insert('weather',$wspec);
 
 ?>
