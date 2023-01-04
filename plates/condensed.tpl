@@ -24,7 +24,8 @@ $Cal = new DigitalMx\jotr\Calendar();
 
 <div class='content center'>
 <!-- ############################## -->
-<div id="page-today" style="display: block">
+<div id="page-today" style="display: block;transform-origin:top center;" >
+<!-- set transform on this page to scale to fit available display height -->
 
 <?php if ($admin['pithy']): ?>
 	<p class='center'><i><?=$admin['pithy']?></i></p>
@@ -39,7 +40,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 
 <?php $this->insert('alerts',['alerts' => $admin['notices']['alerts'] ])?>
 
-
+<script>window.onload=doResize('page-today');</script>
 </div><!-- end page-->
 <div id="page-notices" style="display: <?=$divvis?>;">
 <!-- start notices -->
@@ -50,7 +51,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 <?php $this->insert('advice',['advice' => $admin['advice']]); ?>
 
 </div><!-- end page-->
-<div id="page-weather" style="display: <?=$divvis?>;">
+<div id="page-weather" style="display: <?=$divvis?>; " >
 
 <?php
 	//u\echor($wgov,'wgov',STOP);

@@ -7,7 +7,7 @@
 	?>
 
 
-<div class='head'>
+<div class='head' id='titles'>
 <?php if ($qs == 'snap'): ?>
 <div class='pad'>Now<div id='clock'></div></div>
 <?php endif; ?>

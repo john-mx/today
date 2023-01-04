@@ -1,3 +1,9 @@
+:root {
+    --trickyScale: 1;
+}
+
+
+
 html {
 	font-family:'Times New Roman',times,serif;
 	font-size: 14pt;
@@ -150,7 +156,9 @@ div.flex-container > div{
     -ms-flex: 1; /* IE 10 */
     flex: 1; /* Standard syntax */
 }
-
+div.xform {
+    transform: scale(var(--trickyScale));
+}
 div.conditions {
 	margin-bottom:1em;
 	vertical-align:top;
@@ -204,7 +212,11 @@ div.head {
 			display:inline-block;
 		}
 
+div.content {
+	width:100%;
+	padding:0;
 
+}
 .inlineblock {display:inline-block;}
 .inline {display:inline;}
 

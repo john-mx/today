@@ -7,17 +7,11 @@ html {
 	line-height:1.4;
 }
 body{
-	max-width:100vw;
+	max-width:1920px;
 	width:100vw;
 }
 
-div.content {
-	width:90%;
-	margin-left:auto;
-	margin-right:auto;
-/* 	border:2px solid green; */
-	text-align:left;
-}
+
 table{
 	font-size:1rem;
 }
