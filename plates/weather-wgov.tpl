@@ -68,8 +68,8 @@ use DigitalMx as u;
 				</td>
 			<?php endfor; #day ?>
 		</tr>
-		<tr style='line-height:0.5em;'><td colspan='<?=$daycnt + 3?>'>&nbsp</td></tr>
-		<?php endforeach; // loc? ?>
+		<tr style='line-height:0.5em;'><td colspan='<?php echo $daycnt + 3 ?>'>&nbsp</td></tr>
+		<?php endforeach;  ?>
 	</table>
 
 	<small>Weather.gov forcast updated at <?=$weather_updated?></small>

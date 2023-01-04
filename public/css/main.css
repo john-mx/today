@@ -108,6 +108,9 @@ button {
 .red {color:red;}
 .white {color:white;}
 .black {color:black;}
+.orange {color:#F3984D;}
+.dk-green{color:#008F00;}
+.dk-orange{color:#BC2A46 ;}
 
 .lt-grn { background-color: #D4FB79; }
 .bg-lgrn { background-color: #D4FB79; }
@@ -116,11 +119,8 @@ button {
 .bg-midnight {background-color:#011993 ;}
 .bg-blue {background-color:#005493; color:#EBEBEB;}
 
-.bg-black{
-	background-color:black;
-	padding:6px;
+.bg-black{background-color:black; padding:6px;}
 
-}
 
 .width50 {width:50%;}
 .width45 {width:45%;}

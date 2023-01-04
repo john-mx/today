@@ -65,7 +65,7 @@ if(empty($wapi)): echo "<p>No Data</p>"; else:
 					</td>
 			<?php endfor; #day ?>
 		</tr>
-
+		<tr style='line-height:0.5em;'><td colspan='<?php echo $daycnt + 3 ?>'>&nbsp</td></tr>
 	<?php endforeach; // loc? ?>
 	</table>
 

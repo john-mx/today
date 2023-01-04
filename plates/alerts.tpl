@@ -12,7 +12,8 @@ $alerts = $admin['notices']['alerts'];
 	else:
 ?>
 <div class='border center' style='margin-top:0.5em;'>
-<b>No Food</b> &bull; <b>No Water</b> &bull; <b>No Cell Service</b>  in the Park. <br>
-<p >Be Prepared: <span class='red' >Do Not Die Today!</span></p>
+In The Park...
+<span class='dk-orange'><b>No Food</b> &bull; <b>No Water</b> &bull; <b>No Cell Service</b>  &bull; <b>No Dogs on Hiking Trails</b></span><br>
+<p class='dk-green'>Be Wise.  Be Safe. Do Not Die Today!</p>
 </div>
 <?php endif; ?>
