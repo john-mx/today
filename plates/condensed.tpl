@@ -8,9 +8,6 @@ switch ($qs) {
 	case 'snap':
 		$divvis='none';
 		break;
-	case 'snap2':
-		$divvis='none';
-		break;
 
 	default:
 		$divvis='block';
@@ -24,7 +21,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 
 <div class='content center'>
 <!-- ############################## -->
-<div id="page-today" style="display: block;transform-origin:top center;" >
+<div id="page-today" class='page' style="display: block;" >
 <!-- set transform on this page to scale to fit available display height -->
 
 <?php if ($admin['pithy']): ?>
@@ -59,7 +56,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 
 	//u\echor($wgov,'wgov',STOP);
 	$wspec=array('wslocs'=>['jr','cw'],'wsdays'=>3);
-	$this->insert('weather-wgovB',$wspec);
+	$this->insert('weather-tv',$wspec);
 
 	?>
 
@@ -75,7 +72,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 <?php endif; ?>
 
 <div id="page-camps" style="display: <?=$divvis?>;" class="page">
-<?php $this->insert('campground-wide',$camps); ?>
+<?php $this->insert('campground-tv',$camps); ?>
 
 </div><!-- end page-->
 <div id="page-fees" style="display: <?=$divvis?>;" class="page">

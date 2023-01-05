@@ -20,7 +20,7 @@ use DigitalMx as u;
 	<table class = 'col-border' style='margin:auto'>
 
 
-	<tr class='no-border border-bottom'><th></th>
+	<tr class='no-border border-bottom'><th></th><th></th>
 		<?php
 			for ($i=$fcstart+1;$i<$fcstart+$daycnt+1;++$i) : //for 3 days
 				$daytext = $wgov['jr'][$i]['Night']['daytext'];
@@ -35,10 +35,12 @@ use DigitalMx as u;
 		$locname = Defs::$sitenames[$loc];
 		?>
 
-		<tr class='bg-orange'><td class=left colspan='<?=$daycnt+1?>'>
-			<b><?=$locname?></b></td></tr>
-		<tr style = 'border-top:1px solid black;'>
+
+		<tr style = 'border-top:1px solid black;' >
+			<td rowspan='2' class='bg-orange'><b><?=$locname?></b></td>
+
 			<td>Day</td>
+
 			<?php for ($i=$fcstart+1;$i<$fcstart+$daycnt+1;++$i) : //for 3 days ?>
 				<td>
 				 <?php if ($p = $days[$i]['Day'] ?? ''): ?>
