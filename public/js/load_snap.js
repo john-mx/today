@@ -24,7 +24,7 @@ function doResize(elementID) {
 
 
 	scale = Math.min(1,availheight/contentheight);
- alert (elementID +'- win ' + winheight +' av =' + availheight + ' cont ' + contentheight + ' scale '+ scale);
+// alert (elementID +'- win ' + winheight +' av =' + availheight + ' cont ' + contentheight + ' scale '+ scale);
 
 	el.style.transform = "scale("+scale+")";
 
