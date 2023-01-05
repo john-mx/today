@@ -48,7 +48,7 @@ $rdelay ??=13;
 //$rdelay = 15; #delay on rotation
 
 	}
-//echo ($pagelist);
+//echo "qs: $qs"; exit;
 	switch ($qs) {
 		case '';
 

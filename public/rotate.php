@@ -22,8 +22,9 @@ $rotate = $y['rotate'] ?? '';
 
 // u\echor($rotate,'rotate',STOP);
 $q = $_SERVER['QUERY_STRING'];
-if (empty($q)) {$qs='';}
-else {$qs = 'snap';}
+
+$qs = (!$q)? 'snap' : '';
+
 $meta=array(
 	'qs' => $qs,
 	'page' => basename(__FILE__),
