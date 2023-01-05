@@ -59,7 +59,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 
 	//u\echor($wgov,'wgov',STOP);
 	$wspec=array('wslocs'=>['jr','cw'],'wsdays'=>3);
-	$this->insert('weather',$wspec);
+	$this->insert('weather-wgovB',$wspec);
 
 	?>
 
