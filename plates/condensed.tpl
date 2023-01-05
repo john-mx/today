@@ -57,7 +57,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 <?php
 
 	//u\echor($wgov,'wgov',STOP);
-	$wspec=array('wslocs'=>['jr','cw'],'wsdays'=>2);
+	$wspec=array('wslocs'=>['jr','cw'],'wsdays'=>3);
 	$this->insert('weather',$wspec);
 
 	?>
