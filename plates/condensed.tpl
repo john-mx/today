@@ -53,7 +53,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 </div><!-- end page-->
 <div id="page-weather" style="display: <?=$divvis?>; " >
 
-<h4>Forecast</h4>
+
 <?php
 
 	//u\echor($wgov,'wgov',STOP);

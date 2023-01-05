@@ -7,9 +7,9 @@
 html {
 	/* sets root font size */
 	font-family:Rubik,san-serif;
-	font-size:24pt;
+	font-size:28pt;
 	font-weight:500;
-	line-height:1.4;
+	/* line-height:1.4; */
 }
 body{
 	max-width:1920px;
