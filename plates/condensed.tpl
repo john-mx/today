@@ -42,7 +42,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 
 </div><!-- end page-->
 
-<div id="page-notices" style="display: <?=$divvis?>;">
+<div id="page-notices" style="display: <?=$divvis?>;"  class="page">
 <!-- start notices -->
 <?php $this->insert('alerts',['alerts' => $admin['notices']['alerts'] ])?>
 
@@ -51,7 +51,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 <?php $this->insert('advice',['advice' => $admin['advice']]); ?>
 
 </div><!-- end page-->
-<div id="page-weather" style="display: <?=$divvis?>; " >
+<div id="page-weather" style="display: <?=$divvis?>; " class="page" >
 
 
 <?php
@@ -65,7 +65,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 </div><!-- end page-->
 
 <?php if (!empty($calendar)) : ?>
-<div id="page-events" style="display: <?=$divvis?>;">
+<div id="page-events" style="display: <?=$divvis?>;" class="page">
 
 <?php
 		$this->insert('calendar',['calendar' => $calendar]) ?>
@@ -73,11 +73,11 @@ $Cal = new DigitalMx\jotr\Calendar();
 </div><!-- end page-->
 <?php endif; ?>
 
-<div id="page-camps" style="display: <?=$divvis?>;">
+<div id="page-camps" style="display: <?=$divvis?>;" class="page">
 <?php $this->insert('campground-wide',$camps); ?>
 
 </div><!-- end page-->
-<div id="page-fees" style="display: <?=$divvis?>;">
+<div id="page-fees" style="display: <?=$divvis?>;" class="page">
 
 <?php $this->insert('fees'); ?>
 

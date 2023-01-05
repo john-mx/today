@@ -68,7 +68,7 @@ $rdelay ??=13;
 			$scbody = "onLoad=load_snap()";
 			$added_headers .= '<meta http-equiv="refresh" content="900" >'.NL;
 			$added_headers .= "	<script src='/js/snap2.js'></script>".NL;
-			$added_headers .= '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">';
+			$added_headers .= '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">';
 
 			$added_headers .= "<script>var pageList = $pagelist;</script>" .NL;
 			$added_headers .= "<script>var rdelay = $rdelay;</script>" .NL;
