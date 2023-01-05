@@ -142,6 +142,7 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 		events are left as is (as for admin screen).  If it's 3,
 		then any recurring ewvents in the next 3 days are inserted as scheduled events.  (as for display).
 
+	Removes suspended events unless transform = 0
 	*/
 
 
@@ -208,6 +209,7 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 		$z = u\element_sort($z, 'dt');
 
 // u\echor($z, 'new cal', true);
+
 
 	return ($z);
 }

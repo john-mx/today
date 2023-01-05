@@ -15,7 +15,11 @@ switch ($qs) {
 
 if (!empty($calendar)){
 $Cal = new DigitalMx\jotr\Calendar();
-	$calendar = $Cal->filter_calendar($calendar,2);
+	$caldays = []; // count of events by day
+	$calendar = $Cal->filter_calendar($calendar,3);
+//	u\echor($calendar,'calendar filtered', STOP);
+
+	//u\echor($caldays,'caldays',STOP);
 }
 ?>
 
@@ -65,8 +69,8 @@ $Cal = new DigitalMx\jotr\Calendar();
 <?php if (!empty($calendar)) : ?>
 <div id="page-events" style="display: <?=$divvis?>;" class="page">
 
-<?php
-		$this->insert('calendar',['calendar' => $calendar]) ?>
+<?php  //use filtered calewndar from top o page.
+		$this->insert('calendar-tv',['calendar' => $calendar]) ?>
 
 </div><!-- end page-->
 <?php endif; ?>

@@ -4,11 +4,21 @@
 <h4>Upcoming Events</h4>
 <?php
 if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
+// get count of itmes by date
+foreach ($calendar as $cevent){
+		$cdate = $cevent['date'];
+		$caldays[$cdate] = (isset($caldays[$cdate])) ?
+			$caldays[$cdate] + 1
+			:
+			1;
+		if ($cevent['note']) ++$caldays[$cdate];
+
+	}
 ?>
 
-<table class='caltable center width90' >
+<table class='caltable  width100' >
 
-<tr><th>Time </th><th>Program</th><th>Type</th><th style='width:33%'> Location</th></tr>
+<tr><th>Date</th><th>Time </th><th>Program</th><th>Type</th><th style='width:33%'> Location</th></tr>
 <tbody>
 
 <?php
@@ -17,16 +27,28 @@ if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 		if ($cal['suspended']){continue;} // dont display
 		$eventdate = date('l, F j',$cal['dt']);
 		$eventtime = date('g:i a', $cal['dt']);
-		$rowclass = (empty($cal['note'])) ? 'border-bottom' : 'no-bottom';
+		$eventshortdate = date('l, n/j',  $cal['dt']);
+		// $rowclass = (empty($cal['note'])) ? 'border-bottom' : 'no-bottom';
 	?>
-	<?php if ($eventdate != $lasteventdate) :?>
-	<tr class='daterow '>
+
+
+	<?php if ($eventdate != $lasteventdate) : ?>
+	<!--
+<tr class='daterow '>
 	<td colspan=4>
 	<b><?=$eventdate ?> </b></td>
 </tr>
-	<?php endif; ?>
+ -->
 
-	<tr class='eventrow'>
+
+
+	<tr class='tvdaterow'>
+ 	<td rowspan='<?=$caldays[$cal['date']] ?>'>
+ 		<?=$eventshortdate ?></td>
+ 	<?php else: ?>
+ 	<tr class='eventrow'>
+<?php endif; ?>
+
 	<td><?=$eventtime?><br />
 
 	</td>
@@ -45,7 +67,7 @@ if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 	</tr>
 
 	<?php if (!empty($cal['note'])) : ?>
-	<tr ><td style='border-top:0;'></td><td colspan='3' class='noterow left'>
+	<tr class='noterow'><td colspan='4' >
 			<?=$cal['note'] ?? '' ?>
 			</td></tr>
  	<?php endif; ?>

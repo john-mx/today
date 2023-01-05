@@ -253,15 +253,20 @@ table.index {border:2px solid black; border-collapse:collapse;}
 table.index tr td {text-align:left;border:1px solid black;padding:6px;}
 
 table.center {margin-left:auto;margin-right:auto;}
+/*
 table.caltable td {
 	text-align:left;
 }
+ */
 table.caltable tr.eventrow, table.caltable tr.eventrow td {
-	border-top:1px solid blue;
+	border-top:3px solid #F39840;
 	border-bottom:0;
+	text-align:left;
 }
 table.caltable tr.noterow, table.caltable tr.noterow td {
-	border-top:0;
+	border-top:1px dashed gray;
+	border-left:0; border-right:0;
+	text-align:left;
 }
 table.caltable .daterow {
 	border-top:1px solid black;
@@ -271,6 +276,15 @@ table.caltable .daterow {
 	padding-top:3px;
 
 }
+table.caltable .tvdaterow td{
+	border-top:8px solid #F39840;
+	border-bottom:0;
+	background-color:;
+	padding-bottom:3px;
+	padding-top:3px;
+
+}
+
 table.header {
 	background-color:black;
 	width:85%;
