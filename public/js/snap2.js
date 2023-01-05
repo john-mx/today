@@ -10,6 +10,9 @@ function rotateDivs(idList){
 
 	vars are static (function.name) so they are preserverd across runs.
 
+	In the last step, the page is resized (scaled) to make sure the
+	bottom is still in the window.
+
 */
 
 /* Initialize */
@@ -52,6 +55,7 @@ function rotateDivs(idList){
 		rotateDivs.last = 0;
 	}
 // alert ("pointer " + rotateDivs.pointer + " last " +rotateDivs.last );
+doResize(ondiv);
 return true;
 }
 

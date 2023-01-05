@@ -152,9 +152,7 @@ div.flex-container > div{
     -ms-flex: 1; /* IE 10 */
     flex: 1; /* Standard syntax */
 }
-div.xform {
-    transform: scale(var(--trickyScale));
-}
+
 div.center {
 	margin-left:auto;
 	margin-right:auto;
@@ -209,7 +207,7 @@ div.head {
 
 		}
 	div.head  .pad {
-			width:10%;
+			width:12%;
 			display:inline-block;
 		}
 

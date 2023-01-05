@@ -50,6 +50,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 
 <?php $this->insert('advice',['advice' => $admin['advice']]); ?>
 
+
 </div><!-- end page-->
 <div id="page-weather" style="display: <?=$divvis?>; " class="page" >
 
