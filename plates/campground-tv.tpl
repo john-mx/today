@@ -81,7 +81,7 @@ $no_entries = true; ?>
 
 <?php $status = 'Closed';
 $no_entries = true; ?>
-<table class='alt-gray' style='margin-top:1em;'>
+<table class='alt-gray width45' style='margin-top:1em;'>
 <tr class='bg-orange '><td colspan='4' ><b>Closed Campgrounds</b></td></tr>
 
 <tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th><th>Open SItes</th></tr>
