@@ -65,6 +65,7 @@ Alerts must have expiration.  If today, just enter the time.  Otherwise enter mo
  -->
 <h4>Alternative Alert</h4>
 Enter message here to display if there are no alerts.  (Requires raw html code for colors and styles, so ask for help if needed.)<br />
+for color red: &lt;span style='color:red;'&gt;text you want &lt;/span&gt;<br />
 <textarea name = 'alert_alt' rows='3' cols='80'><?=$admin['alert_alt'] ??'' ?></textarea>
 
 

@@ -2,7 +2,7 @@
 	/*
 		use smaller type, larger lin spacing.
 	*/
-	html{font-size: 10pt ;
+	:root{font-size: 10pt ;
 		font-family:"Times New Roman", Times, serif;
 	}
    body {

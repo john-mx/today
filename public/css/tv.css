@@ -13,10 +13,10 @@
 	*/
 @import url('/css/Frutiger.css');
 
-html {
+:root {
 	/* sets root font size */
 	font-family:Frutiger;
-	font-size:24pt;
+	font-size:28pt;
 	font-weight:bold;
 	/* line-height:1.4; */
 }

@@ -13,7 +13,7 @@ $alerts = $admin['notices']['alerts'];
 	elseif ($admin['alert_alt']):
 ?>
 <div class='border center' style='margin-top:0.5em;width:80%'>
-<?=$admin['alert_alt']?>
+<?php echo nl2br($admin['alert_alt']) ?>
 </div>
 
 <?php endif; ?>

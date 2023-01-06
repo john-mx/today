@@ -1,7 +1,7 @@
 
 
-html {
-	font-family:'Times New Roman',times,serif;
+:root {
+		font-family:Frutiger,sans-serif;
 	font-size: 14pt;
 }
 body {
