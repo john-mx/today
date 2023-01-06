@@ -3,7 +3,7 @@
 	$trial ??= '';
 	$title = 'Today in Joshua Tree National Park';
 	if(empty($subtitle)) $subtitle = date('l, F j, Y');
-
+	$qs ??= '';
 	?>
 
 
