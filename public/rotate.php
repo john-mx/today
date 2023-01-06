@@ -23,7 +23,7 @@ $rotate = $y['rotate'] ?? '';
 // u\echor($rotate,'rotate',STOP);
 $q = $_SERVER['QUERY_STRING'];
 
-$qs = (!$q)? 'snap' : '';
+$qs = (!$q || ($q=='snap') )? 'snap' : '';
 
 $meta=array(
 	'qs' => $qs,
