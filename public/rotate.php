@@ -21,7 +21,7 @@ $y=$Today->load_cache('admin');
 $rotate = $y['rotate'] ?? '';
 
 // u\echor($rotate,'rotate',STOP);
-$q = $_SERVER['QUERY_STRING'];
+$q = trim($_SERVER['QUERY_STRING']);
 
 $qs = (!$q || ($q=='snap') )? 'snap' : '';
 

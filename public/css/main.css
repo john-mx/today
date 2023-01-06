@@ -265,7 +265,7 @@ table.caltable tr.eventrow, table.caltable tr.eventrow td {
 }
 table.caltable tr.noterow, table.caltable tr.noterow td {
 	border-top:1px dashed gray;
-	border-left:0; border-right:0;
+
 	text-align:left;
 }
 table.caltable .daterow {
