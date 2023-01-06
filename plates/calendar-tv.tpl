@@ -67,7 +67,7 @@ foreach ($calendar as $cevent){
 	</tr>
 
 	<?php if (!empty($cal['note'])) : ?>
-	<tr class='noterow'><td colspan='4' >
+	<tr class='noterow'><td colspan='4' style='background-color:#CCC;'>
 			<?=$cal['note'] ?? '' ?>
 			</td></tr>
  	<?php endif; ?>
