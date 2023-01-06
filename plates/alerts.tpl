@@ -4,16 +4,16 @@ use DigitalMx as u;
 ?>
 
 <?php
+//u\echor($admin,'admin');
 $alerts = $admin['notices']['alerts'];
 	if (!empty($alerts)):
 		foreach ($alerts as $alert):
 			echo $alert ;
 		endforeach;
-	else:
+	elseif ($admin['alert_alt']):
 ?>
 <div class='border center' style='margin-top:0.5em;width:80%'>
-In The Park...
-<span class='dk-orange'><b>No Food</b> &bull; <b>No Water</b> &bull; <b>No Cell Service</b>  &bull; <b>No Dogs on Hiking Trails</b></span><br>
-<p class='dk-green'>Be Wise.  Be Safe. Do Not Die Today!</p>
+<?=$admin['alert_alt']?>
 </div>
+
 <?php endif; ?>

@@ -240,7 +240,7 @@ public function prepare_admin() {
 	 }
 	 //transfer unmodified field
 	 foreach (['pithy','fire_level','announcements',
-	 'advice','uncertainty','rdelay',
+	 'advice','uncertainty','rdelay','alert_alt',
 	 ] as $f){
 	 	$y[$f] = $admin[$f];
 	 }
@@ -374,7 +374,7 @@ public function post_admin ($post) {
 
 	$y['fire_level'] = $post['fire_level'];
 //weather
-
+	$y['alert_alt'] = $post['alert_alt'];
 
 	$y['advice'] = trim($post['advice']);
 
@@ -803,7 +803,7 @@ public function build_topic_admin() {
 				if ($atext){$z['notices']['alerts'][] = $atext;}
 			}
 
-
+			$z['alert_alt'] = $y['alert_alt'];
 
 			$t = $this->clean_text($y['announcements']);
 			$z['notices']['announcements'] = trim($t);

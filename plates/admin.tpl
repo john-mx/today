@@ -41,7 +41,7 @@ $open_options = u\buildOptions(['','0','a few','around 10','10 +','?'],'',true);
 </div>
 
 
-<p>You can have up to two alerts.<br>
+<p>You can have only one alert.<br>
 Title will be displayed in red.  To remove alert, remove the title.<br>
 Alerts must have expiration.  If today, just enter the time.  Otherwise enter month/day and time. Day without time means 12:01am</p>
 <h5>Alert A</h5>
@@ -53,6 +53,7 @@ Alerts must have expiration.  If today, just enter the time.  Otherwise enter mo
 </td></tr>
 </table>
 
+<!--
 <h5>Alert B</h5>
 <table class='border no-col'>
 <tr class='left'><td>Headline</td>
@@ -61,6 +62,10 @@ Alerts must have expiration.  If today, just enter the time.  Otherwise enter mo
 <tr class='left'><td>Expires</td><td><input type='text' name="alertB[expires]" value="<?=$admin['alertB']['expires']??''?>" >
 </td></tr>
 </table>
+ -->
+<h4>Alternative Alert</h4>
+Enter message here to display if there are no alerts.  (Requires raw html code for colors and styles, so ask for help if needed.)<br />
+<textarea name = 'alert_alt' rows='3' cols='80'><?=$admin['alert_alt'] ??'' ?></textarea>
 
 
 <h4>Enter closures/announcements</h4>
