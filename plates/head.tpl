@@ -90,7 +90,9 @@ $rdelay ??=13;
    <meta charset="utf-8" />
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<base href='<?=SITE_URL?>'>
+	<!--
+<base href='<?=SITE_URL?>'>
+ -->
 
 	<title><?=$titlex?></title>
 
