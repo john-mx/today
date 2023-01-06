@@ -816,7 +816,7 @@ public function build_topic_admin() {
 			$z['version'] = $this->file_get_contents_locking(REPO_PATH . "/data/version") ;
 			$z['target'] = date('l F j, Y');
 
-			$z['advice'] = $this->clean_text($y['advice']);
+			$z['advice'] = u\special($y['advice']);
 			$z['rotate'] = $y['rotate'] ?? [];
 
 // 	u\echor($z,'topic general');

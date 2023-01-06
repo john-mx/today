@@ -14,7 +14,9 @@ use DigitalMx as u;
 	$d= $admin['advice'] ?? '';
 		echo "<ul>";
 		$anlist = explode("\n",$d);
-			foreach ($anlist as $item) :
+//		u\echor($anlist,'anlist');
+			foreach ($anlist as $item):
+
 				if (empty(trim($item))):continue;endif;
 				echo "<li>$item</li>";
 			endforeach;

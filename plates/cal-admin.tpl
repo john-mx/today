@@ -107,7 +107,7 @@ Repeating events will continue until the date entered as Last Day, or until remo
 
 
 			</td><td>
-	Last day of repeat<br />
+	Repeat Ends on<br />
 				<input type='text' size='15' name = "calendar[<?=$i?>][end]" value="<?=$event['end']?>">
 
 
