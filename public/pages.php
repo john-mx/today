@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <tr class='bg-yellow'><td>'Today' Pages</td><td>add '?snap' or '?scroll' to cycle through sections</tr>
 
 <tr><td ><a href="/today.php" target='today'>/today.php</a>
-</td><td >Regular web page with all data.  Does not include campsite availability. Publicaly accessible.</td></tr>
+</td><td >Regular web page with all data.  Does not include campsite availability. (or should it?) Publicaly accessible.</td></tr>
 
 <tr><td ><a href="/summary.php" target='summary'>/summary.php</a>
 </td><td >One page summary of today's conditions, alerts, and events. </td></tr>
