@@ -24,6 +24,7 @@ class Calendar {
                     'title' => 'Adaptations to the the Desert',
                     'duration' => '30 min',
                     'suspended' => true,
+
                     'note' => '',
                 ),
 
@@ -65,6 +66,7 @@ class Calendar {
 	 	'type'=>'','title'=>'',
 	 	'duration' => '',
 	 	'suspended' => false,
+	 	'reservation' => false,
 	 	'note'=>''
 	 	);
 
@@ -322,7 +324,9 @@ public function check_calendar(array $calendar) {
 		if (empty($event['suspended'])){
 			$event['suspended'] = false;
 		}
-
+	if (empty($event['reservation'])){
+			$event['reservation'] = false;
+		}
 		// convert "day4 = on" to days string
 		$days='';
 		for ($j=0;$j<7;++$j){

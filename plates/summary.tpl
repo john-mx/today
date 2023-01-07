@@ -64,7 +64,7 @@ EOT;
 <h4>Next Two Days</h4>
 		<?php
 			$wspec = ['wslocs'=>['jr','cw'],'fcstart'=>'+1','wsdays'=>2];
-			$this->insert('weather-wapi-flat',$wspec);
+			$this->insert('weather-one-line',$wspec);
 
 
 		?>

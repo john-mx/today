@@ -5,6 +5,8 @@ use DigitalMx as u;
 
 <?php
 // uses wapi data
+// this format used on summary report to get a one-line
+// weather report.
 
 if(empty($wapi)): echo "<p>No Data</p>"; else:
 	$wspec=[

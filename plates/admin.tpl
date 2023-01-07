@@ -122,7 +122,9 @@ Uncertainty.  <input type='number' name='uncertainty' size='4' value="<?=$admin[
 	</tr>
 <?php endforeach; ?>
 </table>
-Click to <button type='button' onClick='clearopen()'> clear all site updates</button> (clear = no change) <br />
+Click to <button type='button' onClick='clearopen()'> clear all site updates</button> (clear = no change)
+<br />
+
 <?php $this->insert('cal-admin',['calendar'=>$calendar]); ?>
 
 <hr>

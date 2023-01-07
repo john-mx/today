@@ -2,7 +2,9 @@
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
 
-
+/* this template is for calendawr admin insertion
+	into a form on another page.  Does NOT include a form.
+*/
 
 	function dayset(int $i,string $days) {
 		// i is the calendar line
@@ -79,8 +81,14 @@ Repeating events will continue until the date entered as Last Day, or until remo
 		<td>Location <br /><input type = 'text'
 				name="calendar[<?=$i?>][location]" size='20'
 				value="<?=$event['location']?>"  > </td>
-		<td>
-				<select name="calendar[<?=$i?>][type]" ><?=$event['typeoptions']?></select></td>
+
+		<td><select name="calendar[<?=$i?>][type]" ><?=$event['typeoptions']?></select><br />
+			<input type='checkbox' name='calendar[<?=$i?>][reservation]'
+					<?php if ($event['reservation'] ?? ''): ?> checked <?php endif; ?>
+					> Reservation Req'd
+			</td>
+
+
 		<td>Duration <br /><input type = 'text'
 				name="calendar[<?=$i?>][duration]"
 				value="<?=$event['duration']?>" size='15'> </td>

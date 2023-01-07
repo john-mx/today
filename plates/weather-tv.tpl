@@ -7,7 +7,7 @@ use DigitalMx as u;
 // chooses wapi or wgov data depending on date of wgov
 
 	$wspec=[
-	'wslocs'=> $wslocs ??= ['jr','br','cw'],
+	'wslocs'=> $wslocs ??= ['jr'],
 	'wsdays'=> $wsdays ??= 3,
 	'fcstart'=> $fcstart ??= 0,
 	];
