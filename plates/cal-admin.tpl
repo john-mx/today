@@ -52,13 +52,13 @@ Repeating events will continue until the date entered as Last Day, or until remo
 <li>Enter the last day of repeating events.  If blank, events will be repeated until removed.
 <li>Enter any additional notes.
 </ol>
-<p>Set a time to "0" or blank to remove an event. All events are deleted after their last scheduled date.
+<p><b>Set a time to "0" or blank to remove an event.</b> All events are deleted after their last scheduled date.
 </p>
 
 <table '>
 
 
-<tr><th>Title</th><th>Location</th><th>Type</th><th>Duration</th></tr>
+<tr><th>Title</th><th>Type</th><th>Duration</th><th>Requirement</th></tr>
 
 <?php
 	$i=0;
@@ -72,7 +72,7 @@ Repeating events will continue until the date entered as Last Day, or until remo
 
 		<tr style='vertical-align:top;'>
 
-			<td>Title: <br /><input type = 'text' size='30'
+			<td class='left'>Title: <br /><input type = 'text' size='30'
 				name="calendar[<?=$i?>][title]"
 				value="<?=$event['title']?>" > </td>
 
@@ -99,8 +99,8 @@ Repeating events will continue until the date entered as Last Day, or until remo
 
 		<tr  style='vertical-align:top;'>
 
-				<td id='timetd'>Starts at: <input type=text name="calendar[<?=$i?>][time]" size='8' value="<?=$event['time']?>" id='timeset[<?=$i?>]' placeholder = '2:30 pm' onChange='checkTime(this)' class='<?=$eventtimeclass?>'> <br />
-				0 or blank removes event.<br>
+				<td id='timetd'>Starts at: <input type=text name="calendar[<?=$i?>][time]" size='8' value="<?=$event['time']?>" id='timeset[<?=$i?>]' placeholder = '2:30 pm' onChange='checkTime(this)' class='<?=$eventtimeclass?>'>
+				(0 removes)<br>
 				<input type='checkbox' name='calendar[<?=$i?>][suspended]'
 					<?php if ($event['suspended']): ?> checked <?php endif; ?>
 					> Suspend (save,but don't display.)
@@ -128,7 +128,7 @@ Repeating events will continue until the date entered as Last Day, or until remo
 
 		<tr class='left' style='border-bottom:8px solid black;'><td class='right' colspan='4'>
 		Notes:
-		<input type = 'text' size='60'
+		<input type = 'text' size='80'
 				name="calendar[<?=$i?>][note]"
 				value="<?=$event['note']?>" ?? '' > </td>
 		</tr>

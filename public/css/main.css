@@ -53,6 +53,7 @@ h1 { font-size: 2rem;
 input {
 	background-color:#FFC;
 	border: 1px solid #CC9;
+	font-size:0.9rem;
 	}
 
 input:invalid {
