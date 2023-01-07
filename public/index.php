@@ -83,7 +83,7 @@ It should fit on five pages each with room for expanding content (today and aler
 <p>Alerts are entered manually, by rangers, but informed by weather.gov alerts for Joshua Tree National Park.</p>
 <p>Notices and Advice are entered manually by rangers</p>
 <p>The Calendar is manually maintained by local rangers. This makes it possible to quickly add or remove events.</p>
-<p>Campground status is manually entered by local rangers. Available sites in First Come First Served campgrounds is manually entered.  The available campsite data for reserved sites is (will) come from recreation.gov, updated every hour or so.  Availability data more than a few hours old will be displayed as '?'</p>
+<p>Campground status (reserved, closed) is manually entered by local rangers. Available sites in First Come First Served campgrounds is manually entered.  The available campsite data for reserved sites is (will) come from recreation.gov, updated every hour or so.  Availability data more than a few hours old will be displayed as '?'</p>
 <p>The web pages all use NPS Frutiger font. You're welcome. </p>
 
 <h3>Help</h3>
