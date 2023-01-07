@@ -50,6 +50,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 <?php $this->insert('notices',['notices' => $admin['notices']]); ?>
 
 <?php $this->insert('advice',['advice' => $admin['advice']]); ?>
+<?php $this->insert('end'); ?>
 
 <div id='page-notices-scale' style='font-size:0.6em;' class='right'>&nbsp;</div>
 </div><!-- end page-->
