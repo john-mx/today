@@ -1,92 +1,69 @@
 <?php
 namespace DigitalMx\jotr;
 
-#ini_set('display_errors', 1);
+ini_set('display_errors', 1);
+
 
 //BEGIN START
-	require  'init.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 
-	use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
+//	use DigitalMx\jotr\Utilities as U;
+// 	use DigitalMx as u;
+// 	use DigitalMx\jotr\Refresh;
+// 	use DigitalMx\jotr\Definitions as Defs;
+
+
 	$Plates = $container['Plates'];
-	$Defs = $container['Defs'];
+// 	$Defs = $container['Defs'];
+// 	$Today = $container['Today'];
+// 	$Cal = $container['Calendar'];
 
-	$Today = $container['Today'];
-
-
-//END START
-
-$meta=array(
+$meta = array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
 	'page' => basename(__FILE__),
-	'subtitle' => 'Today Project Index',
+	'subtitle' => 'About the Today Site',
 	'extra' => "",
 
-	);
+);
+
 echo $Plates->render('head',$meta);
 echo $Plates->render('title',$meta);
+//END START
 
-
-
-//Log::error('starting index' . __FILE__ . __LINE__);
-//Log::info('Index page');
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-	if (array_key_exists('rebuild',$_POST)) {
-			$Today->rebuild(false);
-	}
-	if (array_key_exists('reload',$_POST)) {
-			$Today->rebuild(true);
-	}
-}
 ?>
-
-<p>This project generates the "Today in the Park" report in a variety of formats.</p>
-<p>Project is under development.  Report errors and request changes to <a href='mailto:john@digitalmx.com'>John Springer &lt;john@digitalmx.com&gt;</a></p>
-
-
+<h3>About Today</h3>
+<p>The “Today” site  is a web-based presentation of today’s conditions and activities in the park. It includes weather, alerts and advice, events, and (soon) campsite availability.   It was designed to make timely information available to visitors with minimal effort from park rangers and staff. There are three major products:</p>
 <ol>
-<li> Local data, such as park alerts, closures, and fire level, are entered manually by an admin using the admin.php page.
-<li> External data is collected every few hours from a number of places that report information like weather, air quality, astronomical data, and more. This date is stored on the site.
-<li> The "today" page is built by combining all this data in a user-friendly format.
-<li>It can be accessed as an ordinary web page, a scrolling page for use on a TV monitor, or a form set up for printing (page breaks, etc). The today page can be retrieved with a style code by appending ?style_name.
-<li>The "open campsites" will be obtained live from rec.gov.
+<li>You can display it on a internet-enabled TV screen as a rotating series of slides (only tested on Samsung). Uses large type so will look funny on computer.<br />
+<a href='https://jotr.digitalmx.com/rotate.php' target='rotate'><code>https://jotr.digitalmx.com/rotate.php</code></a>
+<li>You can print a 1-page summary for use in visitor centers or campgrounds.<br />
+<a href='https://jotr.digitalmx.com/summary.php' target='summary'><code>https://jotr.digitalmx.com/summary.php</code></a>
+<li>Anyone can view, or print as a set of 5 pages, all the key park info. This is a publicly available site.<br>
+<a href='https://jotr.digitalmx.com/today.php' target='today'><code>https://jotr.digitalmx.com/today.php</code></a>
 </ol>
-
-<h4>Pages</h4>
-<table class='index'>
-<tr><td >URL</td><td >Result</td></tr>
-<tr class='bg-yellow'><td>'Today' Pages</td><td>add '?snap' or '?scroll' to cycle through sections</tr>
-
-<tr><td ><a href="/today.php" target='today'>/today.php</a>
-</td><td >Regular web page with all data.  See note about printing.</td></tr>
-
-<tr><td ><a href="/summary.php" target='summary'>/summary.php</a>
-</td><td >One page summary of today's conditions. </td></tr>
-
-
-<tr><td colspan='2'>--------- animated -----------</td></tr>
-<tr><td ><a href="/today.php?scroll" target='scroll'>/today.php?scroll</a>
-</td><td >(not recommended) Page slowly scrolls to the bottom, then restarts</td></tr>
-<tr><td><a href="/rotate.php" target='snap'>/rotate.php</a><td> (reommended) Large type version with minimal information.  Choose which pages appear in the rotation on the admin page.</td></tr>
-
-<tr><td colspan='2' class='bg-yellow'>Ranger Admin Pages</td></tr>
-
-<tr><td ><a href='/admin.php' target='admin'>Admin page</a> </td><td >Ranger sets things like alerts, closures, campground status, calendar events, etc.  (password 'abcd')</td></tr>
-
-<!-- <tr><td ><a href='/caladmin.php' target='admin'>Calendar Admin page</a> </td><td >Ranger sets calendar events,  (password 'abcd')</td></tr> -->
-
-<tr><td colspan='2' class='bg-yellow'>Developer Functions</td></tr>
-<tr><td ><a href='/set_properties.php' target='_blank'>Reset properties.json</a> </td><td >gets coordinates, zones, and other data from weather.gov for significant sites. (only used for reference, not live).</td></tr>
-<tr><td ><a href='/refresh.php' target='logs'>Refresh all caches</a></td><td > Updates all the external data (weather, airq, alerts); should run automatically every few hours.</td></tr>
-
-<tr><td ><a href='/logview.php' target='_blank'>View Logs.</td>
-	<td>Displays list of log records.</td></tr>
-
-</table>
-<h3>Printing</h3>
+<p>For a complete list of available pages and functions, go to <a href='/pages.php' target='pages'>/pages.php</a></p>
 <p>
-The page "today.php" can be printed from a web browser.
+<h3>How to set up the rotating display on a Samsung TV:</h3>
+</p>
+<ol>
+<li>Turn on the TV and press Source on remote or press Home.  Press  down and right arrow to move across sources and get to the “Internet:” choice, and select it.
+<li> If you get a page with bookmarks that shows a "Rotate" site, choose it from the bookmarks, and you're basically done.
+<li> Otherwise
+	<ol type='a'>
+<li>type this url  into the url field using the arrow keys and center “Enter” button. <br /> <code>https://jotr.digitalmx.com/rotate.php</code>
+<li> Scroll to and enter “Done” when finished.
+<li> Move the pointer to the Star at the right of the address bar and press Enter to bookmark the site.<br />(Choose local, I think).
+
+<li>(One time setup) Use the arrow keys to navigate to the 3-bar menu pattern at very top right ,and choose Settings.  Under General, set the home page to Bookmarks, and Enable the “hide menu bar automatically” choice.
+</ol>
+<li> Just to be sure... At the top right (use arrow keys to scroll up until menu bar appears), make sure you are set for “100%”. Choose plus and minus tabs to change.
+</ol>
+<p>The screen will change every 15 seconds.  (The first iteration may take longer.) It's just one page, broken into sections that sequentially are visible on the screen.  The page updates every 15 minutes to pick up any new information.<br />
+If something stops working, try pressing the "Refresh" button next to the address bar.
+</p>
+<h3>Printing Today Pages</h3>
+<p>
+The page "today.php" can be printed from a web browser, and appropriate pages posted in a Visitor Center.
 </p>
  <p>
  Printing will <ul>
@@ -94,8 +71,20 @@ The page "today.php" can be printed from a web browser.
  <li> reduce the type size,
  <li> removed the "Current temperature" entry.
  </ul>
-It should fit on three pages each with room for expanding content (alerts on page 1; calendar and weather on page 2; campgrounds on page 3; fees on page 4). Note that Fees doesn't change.
+It should fit on five pages each with room for expanding content (today and alerts on page 1;  weather on page 2,  calendar on page 3; campgrounds on page 4; fees on page 5). Note that Fees doesn't change often, and Campgrounds does.
 </p>
 <p>If printed to a PDF, then the pdf can easily be distributed electronically</p>
 
-<?php echo $Plates->render ('end'); ?>
+<h3>Information Sources</h3>
+<p>Weather information comes from both weather.gov (NOAA) and weatherapi.com (commercial site).  The NOAA data is focused better on a geographic area, but is sometimes unreliable.  The weatherapi data is substituted if weather.gov fails, but the data is for 29 Palms and Indio, not Jumbo rocks and Cottonwood.</p>
+<p>Current data comes from the sensors at Lost Horse Ranger Station, updated every few hours.  If data is not available, it is reported as "n/a". </p>
+<p>Astro data (sun, moon) is from weatherapi.com. Should be non-controversial.</p>
+<p>Air quality is from airnow.com (EPS site).
+<p>Alerts are entered manually, by rangers, but informed by weather.gov alerts for Joshua Tree National Park.</p>
+<p>Notices and Advice are entered manually by rangers</p>
+<p>The Calendar is manually maintained by local rangers. This makes it possible to quickly add or remove events.</p>
+<p>Campground status is manually entered by local rangers. Available sites in First Come First Served campgrounds is manually entered.  The available campsite data for reserved sites is (will) come from recreation.gov, updated every hour or so.  Availability data more than a few hours old will be displayed as '?'</p>
+<p>The web pages all use NPS Frutiger font. You're welcome. </p>
+
+<h3>Help</h3>
+<p>If you want to change any of the information, or if you have any problems or comments, contact John Springer. Phone or text to (503)329-7909 or email john@digitalmx.com.</p>

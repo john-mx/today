@@ -315,8 +315,8 @@ mins,
 	public static $rpages = array (
 		'today' => 'Today and Tonight, Park conditions',
 		'notices' => 'Notices and recommendations',
-		'weather' => 'Weather next 3 days',
-		'events' => 'Calendar next 3 days',
+		'weather' => 'Weather next 2 days',
+		'events' => 'Calendar next 2 days',
 		'camps' => 'Campgrounds',
 		'fees' => 'Fees (condensed)',
 
