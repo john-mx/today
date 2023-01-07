@@ -78,21 +78,24 @@ Repeating events will continue until the date entered as Last Day, or until remo
 
 
 
-		<td>Location <br /><input type = 'text'
-				name="calendar[<?=$i?>][location]" size='20'
-				value="<?=$event['location']?>"  > </td>
 
-		<td><select name="calendar[<?=$i?>][type]" ><?=$event['typeoptions']?></select><br />
-			<input type='checkbox' name='calendar[<?=$i?>][reservation]'
-					<?php if ($event['reservation'] ?? ''): ?> checked <?php endif; ?>
-					> Reservation Req'd
+
+		<td><select name="calendar[<?=$i?>][type]" ><?=$event['typeoptions']?></select>
+
 			</td>
 
 
 		<td>Duration <br /><input type = 'text'
 				name="calendar[<?=$i?>][duration]"
 				value="<?=$event['duration']?>" size='15'> </td>
+		<td><input type='checkbox' name='calendar[<?=$i?>][reservation]'
+					<?php if ($event['reservation'] ?? ''): ?> checked <?php endif; ?>
+					> Reservation Req'd</td>
+
 		</tr>
+		<tr><td colspan='4' class='left'>Location :<input type = 'text'
+				name="calendar[<?=$i?>][location]" size='80'
+				value="<?=$event['location']?>"  > </td></tr>
 
 		<tr  style='vertical-align:top;'>
 
