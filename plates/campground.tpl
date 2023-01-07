@@ -17,7 +17,9 @@ $cgres_asof =  date('M d g:i a', $camps['cgres_age']);
 
 <table  class='alt-gray border center'>
 <tr ><th>Campground</th><th>Sites</th><th>Nightly Fee</th>
-<th>Open Sites</th><th style='border-right:2px solid black;'>Note</th></tr>
+<!-- <th>Open Sites</th> -->
+<th style='border-right:2px solid black;'>Note</th>
+</tr>
 <?php
 	$cgs = array_keys(Defs::$campsites);
 	sort ($cgs);
@@ -45,7 +47,7 @@ $cgres_asof =  date('M d g:i a', $camps['cgres_age']);
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
 				<td> $<?= Defs::$campfees[$cg] ?> </td>
-				<td><?= $camps['sites'][$cg] ?> </td>
+				<!-- <td><?= $camps['sites'][$cg] ?> </td> -->
 				<td> <?= $camps['cg_notes'][$cg] ?>  </td>
 				</tr>
 			<?php  endif; ?>

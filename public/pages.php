@@ -42,16 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 ?>
 
 <p>This project generates the "Today in the Park" report in a variety of formats.</p>
-<p>Project is under development.  Report errors and request changes to <a href='mailto:john@digitalmx.com'>John Springer &lt;john@digitalmx.com&gt;</a></p>
-
-
-<ol>
-<li> Local data, such as park alerts, closures, and fire level, are entered manually by an admin using the admin.php page.
-<li> External data is collected every few hours from a number of places that report information like weather, air quality, astronomical data, and more. This date is stored on the site.
-<li> The "today" page is built by combining all this data in a user-friendly format.
-<li>It can be accessed as an ordinary web page, a scrolling page for use on a TV monitor, or a form set up for printing (page breaks, etc). The today page can be retrieved with a style code by appending ?style_name (scroll or snap).
-<li>The "open campsites" will be obtained live from rec.gov as soon as I can.
-</ol>
 
 <h4>Pages</h4>
 <table class='index'>
@@ -59,10 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <tr class='bg-yellow'><td>'Today' Pages</td><td>add '?snap' or '?scroll' to cycle through sections</tr>
 
 <tr><td ><a href="/today.php" target='today'>/today.php</a>
-</td><td >Regular web page with all data.  See note about printing.</td></tr>
+</td><td >Regular web page with all data.  Does not include campsite availability. Publicaly accessible.</td></tr>
 
 <tr><td ><a href="/summary.php" target='summary'>/summary.php</a>
-</td><td >One page summary of today's conditions. </td></tr>
+</td><td >One page summary of today's conditions, alerts, and events. </td></tr>
 
 
 <tr><td colspan='2'>--------- animated -----------<br>
