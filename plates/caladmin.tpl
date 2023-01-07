@@ -2,7 +2,13 @@
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
 
-
+/*
+	This page includes a form so is self-contained
+	cal admion page.  The other one (cal-admin.tpl)
+	is  the same but does not contain the form, so
+	is used to put the calendar admin into the admin
+	page or another page with a form on it
+*/
 
 	function dayset(int $i,string $days) {
 		// i is the calendar line

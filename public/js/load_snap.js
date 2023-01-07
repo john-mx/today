@@ -15,8 +15,14 @@ function load_snap() {
 	as each page comes into view.
 */
 
-function doResize(element) {
-	//var el = document.getElementById(elementID);
+function doResize(elementID) {
+	if (typeof(elementID)!=='object') {
+	var element = document.getElementById(elementID);
+	} else { // its already an object
+		element = elementID;
+	}
+
+	var elid = element.id;
 	var contentheight = element.offsetHeight; // content
 	var titleheight = document.getElementById('titles').offsetHeight;
 
@@ -26,11 +32,18 @@ function doResize(element) {
 
 	var availheight = winheight-titleheight-50;
 
-
 	scale = Math.min(1,availheight/contentheight);
 // alert ('- win ' + winheight +' av =' + availheight + ' cont ' + contentheight + ' scale '+ scale);
-
+	if (typeof(element) !== 'object'){
+		alert("[load_snap:38] element not object: " + elid);
+	}
 	element.style.transform = "scale("+scale+")";
+	var scaler = Math.round(scale*100);
+	var scalerId = elid+"-scale";
+	var scaleMessage = document.getElementById(scalerId);
+	if (scaleMessage){
+		scaleMessage.innerHTML = scaler + '%';
+	}
 
 
 }

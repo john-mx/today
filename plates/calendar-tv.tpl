@@ -18,7 +18,7 @@ foreach ($calendar as $cevent){
 
 <table class='caltable  width100' >
 
-<tr><th>Date</th><th>Time </th><th>Program</th><th>Type</th><th style='width:33%'> Location</th></tr>
+<tr><th>Date</th><th>Time </th><th>Program</th><th>Type</th><th > Location</th></tr>
 <tbody>
 
 <?php
