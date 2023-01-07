@@ -34,7 +34,7 @@ function doResize(elementID) {
 
 	var scaleRatio = availheight/contentheight;
 	scale = Math.min(1,scaleRatio); // never grow
-	scale = Math.max(0.75,scaleRatio) // never less than 0.75
+	scale = Math.max(0.75,scale) // never less than 0.75
 
 // alert ('- win ' + winheight +' av =' + availheight + ' cont ' + contentheight + ' scale '+ scale);
 	if (typeof(element) !== 'object'){

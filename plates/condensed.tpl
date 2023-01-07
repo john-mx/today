@@ -22,6 +22,11 @@ $Cal = new DigitalMx\jotr\Calendar();
 	//u\echor($caldays,'caldays',STOP);
 }
 ?>
+<!--
+setTimeout(() => {
+  document.location.reload();
+}, 3000);
+ -->
 
 <div class='content center'>
 <!-- ############################## -->
@@ -39,8 +44,9 @@ $Cal = new DigitalMx\jotr\Calendar();
 <!-- start conditions -->
 <?php	$this->insert('conditions');?>
 
+<?php $this->insert('end'); ?>
 
-<div id='page-today-scale' style='font-size:0.6em;' class='right'>&nbsp;</div>
+<div id='page-today-scale' style='font-size:0.5em;' class='right'>&nbsp;</div>
 </div><!-- end page-->
 
 <div id="page-notices" style="display: <?=$divvis?>;"  class="page">
@@ -50,9 +56,9 @@ $Cal = new DigitalMx\jotr\Calendar();
 <?php $this->insert('notices',['notices' => $admin['notices']]); ?>
 
 <?php $this->insert('advice',['advice' => $admin['advice']]); ?>
-<?php $this->insert('end'); ?>
 
-<div id='page-notices-scale' style='font-size:0.6em;' class='right'>&nbsp;</div>
+
+<div id='page-notices-scale' style='font-size:0.5em;' class='right'>&nbsp;</div>
 </div><!-- end page-->
 <div id="page-weather" style="display: <?=$divvis?>; " class="page" >
 
@@ -64,7 +70,7 @@ $Cal = new DigitalMx\jotr\Calendar();
 	$this->insert('weather-tv',$wspec);
 
 	?>
-<div id='page-weather-scale' style='font-size:0.6em;' class='right'>&nbsp;</div>
+<div id='page-weather-scale' style='font-size:0.5em;' class='right'>&nbsp;</div>
 </div><!-- end page-->
 
 <?php if (!empty($calendar)) : ?>
@@ -73,13 +79,13 @@ $Cal = new DigitalMx\jotr\Calendar();
 <?php  //use filtered calewndar from top o page.
 		$this->insert('calendar-tv',['calendar' => $calendar]) ?>
 
-<div id='page-events-scale' style='font-size:0.6em;' class='right'>&nbsp;</div>
+<div id='page-events-scale' style='font-size:0.5em;' class='right'>&nbsp;</div>
 </div><!-- end page-->
 <?php endif; ?>
 
 <div id="page-camps" style="display: <?=$divvis?>;" class="page">
 <?php $this->insert('campground-tv',$camps); ?>
-<div id='page-camps-scale' style='font-size:0.6em;' class='right'>&nbsp;</div>
+<div id='page-camps-scale' style='font-size:0.5em;' class='right'>&nbsp;</div>
 </div><!-- end page-->
 <div id="page-fees" style="display: <?=$divvis?>;" class="page">
 
