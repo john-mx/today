@@ -36,7 +36,7 @@ if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
  	<td>
  	<?=$cal['duration']?>
  	<?=$cal['type']?>
- 	<?php if ($cal['reservation']): ?>
+ 	<?php if ($cal['reservation'] ?? ''): ?>
  		<br /><span class='red'>Reservation Req'd on rec.gov</span>
 	<?php endif; ?>
 
