@@ -58,7 +58,9 @@ foreach ($calendar as $cevent){
  	<td>
  	<?=$cal['duration']?>
  	<?=$cal['type']?>
-
+	<?php if ($cal['reservation'] ?? ''): ?>
+ 		<br /><span class='red'>Reservation Req'd on rec.gov</span>
+	<?php endif; ?>
 
 	</td>
 	<td class='left' >
