@@ -21,7 +21,7 @@ if(empty($wapi)): echo "<p>No Data</p>"; else:
 
 	$weather_updated =  date('M d g:i a',$wapi['update']);
 	?>
-	<table class = 'width100 col-border inleft2'>
+	<table class = ' col-border indent'>
 
 
 
@@ -50,7 +50,7 @@ if(empty($wapi)): echo "<p>No Data</p>"; else:
 			for ($i=$fcstart+0;$i<$fcstart+$daycnt;++$i) : //for 3 days
 				$p = $days[$i] ;
 				?>
-					<td>
+					<td class='lrpad'>
 						<?=$p['short']?><br />
 						High:&nbsp;<?=$p['High']?>&deg;F&nbsp;(<?=$p['HighC']?>&deg;C)
 						Low:&nbsp;<?=$p['Low']?>&deg;F&nbsp;(<?=$p['LowC']?>&deg;C)<br />

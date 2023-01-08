@@ -64,11 +64,12 @@ EOT;
 <h4>Next Two Days</h4>
 		<?php
 			$wspec = ['wslocs'=>['jr','cw'],'fcstart'=>'+1','wsdays'=>2];
+			// locations, start date, number of days in forecast
 			$this->insert('weather-one-line',$wspec);
 
 
 		?>
-
+<br />
 
 <?php
 	$this->insert('alerts');
