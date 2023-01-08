@@ -13,7 +13,7 @@ Purchase Your Pass Before You Get To The Entrance</b>
 	$lastclass = '';
 ?>
 
-<table  class='inleft2 alt-gray center'>
+<table  class='inleft2'>
 <tr style='col-border;' ><th colspan='4' class='no-bottom'></th><th colspan='3' style='border-bottom:1px solid black;'>Where to Buy</th></tr>
 <tr  style='background-color:white;' class='no-borders col-border ' ><th>Pass</th><th>For</th><th>Valid For</th><th>Price</th><th>Rec.gov</th><th>Entrance Station</th><th>Visitor Center</th></tr>
 
