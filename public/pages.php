@@ -45,22 +45,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 <h4>Pages</h4>
 <table class='index'>
-<tr><td >URL</td><td >Result</td></tr>
-<tr class='bg-yellow'><td>'Today' Pages</td><td>add '?snap' or '?scroll' to cycle through sections</tr>
+<tr><td >Link</td><td >Result</td></tr>
+<tr class='bg-yellow'><td>'Today' Pages</td><td></td></tr>
 
-<tr><td ><a href="/today.php" target='today'>/today.php</a>
-</td><td >Regular web page with all data.  Does not include campsite availability. (or should it?) Publicaly accessible.</td></tr>
+<tr><td ><a href="/today.php" target='today'>Everything</a>
+</td><td >Regular web page with all data.  Does not include campsite availability. (or should it?) Publicly accessible.</td></tr>
 
-<tr><td ><a href="/summary.php" target='summary'>/summary.php</a>
+<tr><td ><a href="/summary.php" target='summary'>Today</a>
 </td><td >One page summary of today's conditions, alerts, and events. </td></tr>
 
 
-<tr><td colspan='2'>--------- animated -----------<br>
-("scroll" is smooth scroll through page.  "snap" switches like a slide show.)</td></tr>
-<tr><td ><a href="/today.php?scroll" target='scroll'>/today.php?scroll</a>
-</td><td >(not recommended) Page slowly scrolls to the bottom, then restarts</td></tr>
-<tr><td><a href="/rotate.php" target='snap'>/rotate.php</a><td> (reommended) Large type version designed for TV. Rotates through pages, changing every 15 seconds.  You can choose which pages (or just one page) appear in the rotation using the admin page. Automatically uses "snap" animation unless url ends "?nosnap" </td></tr>
+<tr class='bg-yellow'><td >Animated Pages</td><td>add '?snap' or '?scroll' to url to cycle through sections</td></tr>
+<tr><td ><a href="/today.php?scroll" target='scroll'>Scroll</a>
+</td><td >(not recommended) Everything page slowly scrolls to the bottom, then restarts</td></tr>
+<tr><td><a href="/rotate.php" target='snap'>Rotate</a><td> (reommended) Large type version designed for TV. Rotates through topics, changing every 15 seconds.  (You can choose which pages (or just one page) appear in the rotation using the admin page. ) Uses "snap" animation unless url is "/rotate.php?nosnap" </td></tr>
 
+<tr class='bg-yellow'><td>Topic Pages</td><td>Individual topics from the 'Everything' page</td></tr>
+<tr><td><a href='/pager.php?weather'>Weather</td><td>3-day forecast, Jumbo Rocks, Black Rock and Cottonwood</tr>
+<tr><td><a href='/pager.php?fees'>Fee Schedule</td><td>All fees and where to buy</td></tr>
+<tr><td><a href='/pager.php?events'>Calendar</td><td>Events for next 3 days</td></tr>
+<tr><td><a href='/pager.php?notices'>Notices</td><td>Alerts and Notices</tr>
+<tr><td><a href='/pager.php?campgrounds'>Campgrounds</td><td>Campground status, sites, and fees</tr>
+<tr>
 <tr><td colspan='2' class='bg-yellow'>Ranger Admin Pages</td></tr>
 
 <tr><td ><a href='/admin.php' target='admin'>Admin page</a> </td><td >Ranger sets things like alerts, closures, campground status, calendar events, etc.</td></tr>

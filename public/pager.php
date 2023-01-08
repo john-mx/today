@@ -23,7 +23,7 @@ $y=$Today->build_topics();
 //u\echor ($y,'topics');
 
 $extra = '';
-
+$plate2 = '';
 switch ($page) {
 
 	case 'fees':
@@ -51,8 +51,18 @@ switch ($page) {
 
 		$z['wgov'] = $y['wgov'];
 		break;
+	case 'notices':
+		$subtitle = "Alerts and Notices";
+		$z=$y;
+		$plate = 'alerts';
+		$plate2 = 'notices';
+		break;
 
-
+	case 'campgrounds':
+		$subtitle = 'Campgrounds';
+		$z=$y;
+		$plate = 'campground';
+		break;
 
 	default:
 		die ("Page not recognized: $page");
@@ -69,4 +79,7 @@ $meta=array(
 echo $Plates->render('head',$meta);
 echo $Plates->render('title',$meta);
 echo $Plates->render($plate,$z);
+if ($plate2){
+echo $Plates->render($plate2,$z);
+}
 
