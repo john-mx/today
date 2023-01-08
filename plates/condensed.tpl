@@ -16,7 +16,7 @@ switch ($qs) {
 if (!empty($calendar)){
 $Cal = new DigitalMx\jotr\Calendar();
 	$caldays = []; // count of events by day
-	$calendar = $Cal->filter_calendar($calendar,1);
+	$calendar = $Cal->filter_calendar($calendar,2);
 //	u\echor($calendar,'calendar filtered', STOP);
 
 	//u\echor($caldays,'caldays',STOP);

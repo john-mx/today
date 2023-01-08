@@ -358,7 +358,10 @@ table .alt-gray tr:nth-child(even)  {
 	background: #CCC;
 }
 table.no-cells tr td {border:0;}
-
+table tr td.lrpad {
+	padding-left:2em;
+	padding-right:2em;
+}
 .hidden {
 	display:none;
 }

@@ -65,7 +65,7 @@ $Cal = new Cal();
 <div id="page4" class='break' style="display: <?=$divvis?>;">
 
 <?php
-$tcalendar = $Cal->filter_calendar($calendar,2);
+$tcalendar = $Cal->filter_calendar($calendar,3);
 $this->insert('calendar',['calendar'=>$tcalendar])
 ?>
 

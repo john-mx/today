@@ -23,7 +23,7 @@ function doResize(elementID) {
 	}
 
 	var elid = element.id;
-	var contentheight = element.offsetHeight;
+	var contentheight = element.innerHeight;
 
 
 ; // content

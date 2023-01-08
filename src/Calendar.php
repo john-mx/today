@@ -195,7 +195,7 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 				} else {$enddt=[];}
 
 
-				for ($i=0;$i<=$transform;++$i){
+				for ($i=0;$i<$transform;++$i){
 					$cevent = $this->parse_recurring($event,$begindt,$enddt,$i);
 					if ($cevent) {
 						$z[] = $cevent;

@@ -4,7 +4,7 @@ use DigitalMx as u;
 use DigitalMx\jotr\Calendar;
 
 $Cal = new Calendar();
-$calendar = $Cal->filter_calendar($calendar,1); #one day
+
 ?>
 <style>
 body {
@@ -80,25 +80,29 @@ EOT;
 
 <h4>Today's Events</h4>
 <?php
+$calendar = $Cal->filter_calendar($calendar,1); #one day
 if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 //u\echor($calendar,'data-calendar',NOSTOP);
+
 ?>
+<table class='inleft2 border'>
 
-
-<?php foreach ($calendar as $cal) :
-		if ($cal['suspended']){continue;} // dont display
-		$eventdate = date('l, F j',$cal['dt']);
-		$eventtime = date('g:i a', $cal['dt']);
+<?php foreach ($calendar as $event) :
+		if ($event['suspended']){continue;} // dont display
+		$eventdate = date('l, F j',$event['dt']);
+		$eventtime = date('g:i a', $event['dt']);
+		$reservation = $event['reservation'] ? ' (Reservation required)':'';
 	?>
-	<div class='inleft2'>
-	<b><?=$eventtime?> </b>:
-	<b><?=$cal['title']?></b>
- 	(<?=$cal['duration']?>)
-  at <?=$cal['location']?>
-</div>
+	<tr class='left no-border'>
+	<td style='width:6em;'><b><?=$eventtime?> </b></td>
+	<td class='lrpad'><b><?=$event['title']?></b></td>
+ 	<td><?=$event['duration']?>
+  at <?=$event['location']?></td>
+  <td class=lrpad><?=$reservation?></td>
+  </tr>
 
 <?php endforeach; ?>
-
+</table>
 <?php endif; ?>
 
 <?php $this->insert('end'); ?>
