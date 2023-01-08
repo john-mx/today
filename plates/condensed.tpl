@@ -89,7 +89,7 @@ setTimeout(() => {
 </div><!-- end page-->
 <div id="page-fees" style="display: <?=$divvis?>;" class="page">
 
-<?php $this->insert('fees'); ?>
+<?php $this->insert('fees-tv'); ?>
 
 </div>
 

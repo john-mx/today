@@ -23,11 +23,14 @@ function doResize(elementID) {
 	}
 
 	var elid = element.id;
-	var contentheight = element.offsetHeight; // content
+	var contentheight = element.offsetHeight;
+
+
+; // content
 	var titleheight = document.getElementById('titles').offsetHeight;
 
-	var height = contentheight + titleheight;
-	var  winheight = window.outerHeight;
+	var pageheight = contentheight + titleheight;
+	var  winheight = window.innerHeight;
 	var  winwidth = window.outerWidth;
 
 	var availheight = winheight-titleheight-50;
@@ -44,7 +47,7 @@ function doResize(elementID) {
 	var scaler = Math.round(scale*100);
 	var scalerId = elid+"-scale";
 	var scaleMessage = document.getElementById(scalerId);
-	if (scaleMessage){
+	if (scaleMessage && (scaler < 100)){
 		scaleMessage.innerHTML = scaler + '%';
 	}
 

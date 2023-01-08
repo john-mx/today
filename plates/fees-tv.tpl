@@ -3,9 +3,9 @@
 <b>Help Keep The Line Moving –
 Purchase Your Pass Before You Get To The Entrance</b>
 </div>
-<table  class='inleft2 alt-gray '>
+<table  class='inleft2 alt-gray center'>
 
-<tr style='col-border;' ><th colspan='4' class='no-bottom'></th><th colspan='3' style='border-bottom:1px solid black;'>Where to Get Yours</th></tr>
+<tr style='col-border;' ><th colspan='4' class='no-bottom'></th><th colspan='3' style='border-bottom:1px solid black;'>Where to Buy</th></tr>
 <tr  style='background-color:white;' class='no-borders col-border ' ><th>Pass</th><th>For</th><th>Valid For</th><th>Price</th><th>Rec.gov</th><th>Entrance Station</th><th>Visitor Center</th></tr>
 
 <tr><td colspan=7  style='font-weight:bold;text-align:left;' class='bg-orange'><b>Passes for Joshua Tree National Park</b></td></tr>
@@ -27,6 +27,5 @@ Purchase Your Pass Before You Get To The Entrance</b>
 <tr><td  style='font-weight:bold;text-align:left;'>Military, gold star families, handicapped and 4th-graders</td><td>Qualified Visitors *<td>varies</td><td>free</td><td></td><td>✔︎</td><td></td></tr>
 </table>
 <div class='inleft2'><b>On-line passes available at recreation.gov. Entrance stations take credit card only — no cash.</b><br />
-* Documentation required for special passes.<br>
-4th grade pass requires printed voucher from school or https://everykidoutdoors.gov/
-
+* Documentation required for special passes.
+</div>
