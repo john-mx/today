@@ -323,6 +323,79 @@ mins,
 
 
 	);
+
+	public static $fees =
+	[
+		'park' => [
+		[
+			'name' =>'7-day Vehicle',
+			'for' => 'Up to 15 passengers',
+			'valid' => '7 days',
+			'price' => '30',
+			'avail' => ['rec','vc','ent'],
+		],
+		[
+			'name' =>'Annual Vehicle',
+			'for' => 'Up to 15 passengers',
+			'valid' => '12 months',
+			'price' => '55',
+			'avail' => ['rec','vc','ent'],
+		],
+		[
+			'name' =>'Hikers and Bikers',
+			'for' => 'Individual',
+			'valid' => '7 days',
+			'price' => '15',
+			'avail' => ['rec','ent'],
+		],
+	],
+	'Interagency' => [
+		[
+			'name' =>'America The Beautiful',
+			'for' => 'Everyone',
+			'valid' => '1 year',
+			'price' => '80',
+			'avail' => ['rec','vc','ent'],
+		],
+		[
+			'name' =>'Senior Annual',
+			'for' => 'US Citizen, 62+ ',
+			'valid' => '1 year',
+			'price' => '20',
+			'avail' => ['ent'],
+		],
+		[
+			'name' =>'Senior Lifetime',
+			'for' => 'US Citizen, 62+',
+			'valid' => 'Lifetime',
+			'price' => '80',
+			'avail' => ['ent'],
+		],
+		[
+			'name' =>'Active Military, Gold star families, and Veterans',
+			'for' => 'Qualified Visitors *',
+			'valid' => 'varies',
+			'price' => 'Free',
+			'avail' => ['ent'],
+		],
+		[
+			'name' =>'Handicapped',
+			'for' => 'Qualified Visitors *',
+			'valid' => 'varies',
+			'price' => 'Free',
+			'avail' => ['ent'],
+		],
+		[
+			'name' =>'4th-grade Students *',
+			'for' => 'Students and Passengers in Vehicle',
+			'valid' => 'School Year',
+			'price' => 'Free',
+			'avail' => ['ent'],
+		],
+	]
+	]
+	;
+
 	public static function uv_warn($uvd) {
 		return self::$uvwarn_min[$uvd] ?? 'not defined';
 	}
@@ -345,7 +418,9 @@ mins,
 	public static function getEcode($ecode) {
 		return self::$ecodes[$ecode];
 	}
-
+	public static function getFees() {
+		return self::$fees;
+	}
 	public function getGridpoints($loc){
 		return self::$gridpoints[$loc] ?? '';
 	}

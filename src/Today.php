@@ -573,6 +573,9 @@ public function build_topic_air() {
 // needs astro, today high/low wind
 // must accomodate failed wapi or wgov
 
+public function build_topic_fees() {
+	$fees = Defs::getFees();
+}
 public function build_topic_light() {
 	$z = array(
 	'day'=>array(

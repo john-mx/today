@@ -64,6 +64,12 @@ switch ($page) {
 		$plate = 'campground';
 		break;
 
+	case 'fees2':
+		$subtitle = 'Fees 2';
+		$z=['fees' => Defs::getFees()];
+		$plate = 'fees2';
+		break;
+
 	default:
 		die ("Page not recognized: $page");
 }
