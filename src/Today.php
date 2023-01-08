@@ -218,6 +218,7 @@ public function build_topics(){
 			$this->build_topic_calendar(),
 			$this->build_topic_current(),
 			$this->build_topic_uv(),
+			$this->build_topic_fees(),
 
 
 		);
@@ -575,6 +576,7 @@ public function build_topic_air() {
 
 public function build_topic_fees() {
 	$fees = Defs::getFees();
+	return ['fees'=>$fees];
 }
 public function build_topic_light() {
 	$z = array(

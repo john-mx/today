@@ -32,7 +32,7 @@ $updated = date('M d g:i a',$light['update']['ts']);
 		</div >
 
 		<div class=' center inlineblock' style='vertical-align:top;width:55%'>
-			<p style='margin-top:0;font-size:1.2rem;'> <?=$day['high']?></p>
+			<p style='margin-top:0;font-size:1.5rem;'> <?=$day['high']?></p>
 			<p>
 			Sunrise:&nbsp;<?= $day['sunrise'] ?> Sunset:&nbsp;<?= $day['sunset'] ?>
 			</p>
@@ -51,7 +51,7 @@ $updated = date('M d g:i a',$light['update']['ts']);
 
 		</div>
 		<div class=' center inlineblock' style='vertical-align:top;width:55%'>
-				<p style='margin-top:0;font-size:1.2rem;'>
+				<p style='margin-top:0;font-size:1.5rem;'>
 			<?=$night['low']?>
 			</p>
 				<p>Moonrise:&nbsp;<?= $night['moonrise'] ?>  Moonset:&nbsp;<?= $night['moonset'] ?><br /><br />
