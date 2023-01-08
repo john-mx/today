@@ -21,7 +21,7 @@ if(empty($wapi)): echo "<p>No Data</p>"; else:
 
 	$weather_updated =  date('M d g:i a',$wapi['update']);
 	?>
-	<table class = 'width100 col-border'>
+	<table class = 'width100 col-border inleft2'>
 
 
 
