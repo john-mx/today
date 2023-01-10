@@ -14,7 +14,7 @@ ini_set('display_errors', 1);
 
 
 	$Plates = $container['Plates'];
-// 	$Defs = $container['Defs'];
+// 	
 // 	$Today = $container['Today'];
 // 	$Cal = $container['Calendar'];
 

@@ -8,6 +8,7 @@ namespace DigitalMx\jotr;
 	use DigitalMx as u;
 	use DigitalMx\jotr\Definitions as Defs;
 	use DigitalMx\jotr\Log;
+	use DigitalMx\jotr\Utilities as J;
 
 
 
@@ -335,7 +336,7 @@ public function load_cache ($section,$refresh=true) {
 		if ($refresh){
 
 			$ot = $this->over_cache_time($section);
-			$limit = $this->Defs->getMaxTime($section);
+			$limit = Defs::getMaxTime($section);
 			$otm = round($ot/60);
 			if ($ot>2*$limit){
 				Log::notice("Loading $section is stale. $otm minutes");
@@ -643,7 +644,7 @@ public function build_topic_light() {
 		$z['night']['moonset'] = $this -> time_format($astro['moonset']);
 		$z['night']['wind'] = $wind;
 		$z['night']['low'] = $low;
-		$z['night']['icon'] = $this->Defs->getMoonPic($astro['moon_phase']);
+		$z['night']['icon'] = Defs::getMoonPic($astro['moon_phase']);
 		$z['night']['moonphase'] =  $astro['moon_phase'];
 		$z['night']['moonillum'] = $astro['moon_illumination'];
 		$z['night']['period_count'] = $period_count;
@@ -721,7 +722,7 @@ public function build_topic_light() {
 				//$z['night']['moonset'] = $this -> time_format($astro['moonset']);
 				$z['night']['wind'] = $wind;
 				$z['night']['low'] = $low;
-				$z['night']['icon'] = $this->Defs->getMoonPic($astro['moon_phase']);
+				$z['night']['icon'] = Defs::getMoonPic($astro['moon_phase']);
 				$z['night']['short'] = $period['shortForecast'];
 				//$z['night']['moonphase'] =  $astro['moon_phase'];
 				//$z['night']['moonillum'] = $astro['moon_illumination'];
@@ -1038,7 +1039,7 @@ public function rebuild_cache_wapi(array $locs=[] ) {
 		[$lat,$lon] = $this -> split_coord($loc);
 		$curl_header = [];
 
-		$url = 'http://api.weatherapi.com/v1/forecast.json?key=' . $this->Defs->getKey('weatherapi') . '&q='. $this->Defs->getCoords($loc) . '&days=3&aqi=yes&alerts=yes';
+		$url = 'http://api.weatherapi.com/v1/forecast.json?key=' . Defs::getKey('weatherapi') . '&q='. Defs::getCoords($loc) . '&days=3&aqi=yes&alerts=yes';
 	//echo "url: $url". BRNL;
 		$expected = '';
 		$loginfo = "$src:$loc";
@@ -1096,7 +1097,7 @@ private function rebuild_cache_airowm() {
 		[$lat,$lon] = $this -> split_coord($loc);
 		$curl_header = [];
 
-		$url = "http://api.openweathermap.org/data/2.5/air_pollution?lat={$lat}&lon={$lon}&appid=" . $this->Defs->getKey('openweathermap');
+		$url = "http://api.openweathermap.org/data/2.5/air_pollution?lat={$lat}&lon={$lon}&appid=" . Defs::getKey('openweathermap');
 
 		$expected = '';
 
@@ -1196,7 +1197,7 @@ coord: 34.0714,-116.3906,
 		//[$lat,$lon] = $this -> split_coord($loc);
 		$curl_header = [];
 
-		$url = "https://api.weather.gov/gridpoints/" . $this->Defs->getGridpoints($loc) . '/forecast' ; #./forecast
+		$url = "https://api.weather.gov/gridpoints/" . Defs::getGridpoints($loc) . '/forecast' ; #./forecast
 		#$url = "https://api.weather.gov/points/$lat,$lon";
 		$expected = 'properties';
 
@@ -1243,7 +1244,7 @@ https://www.airnowapi.org/aq/observation/latLong/current/?format=application/jso
 		[$lat,$lon] = $this -> split_coord($loc);
 		$curl_header = [];
 
-		$url = "https://www.airnowapi.org/aq/observation/latLong/current/?format=application/json&latitude=$lat&longitude=$lon&distance=25&API_KEY=" . $this->Defs->getKey('airnow');
+		$url = "https://www.airnowapi.org/aq/observation/latLong/current/?format=application/json&latitude=$lat&longitude=$lon&distance=25&API_KEY=" . Defs::getKey('airnow');
 				$expected = 'AQI'; #field to test for good result
 		$loginfo = "$src:$loc";
 		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
@@ -1591,7 +1592,7 @@ Array
 			$y['aqi_color'] = $aqi_color;
 			$y['observed_dt'] = strtotime($d[0]['DateObserved'] . ' ' . $d[0]['HourObserved'] . ':00') ;
 			$y['reporting'] = $d[0]['ReportingArea'];
-			$y['airwarn'] = $this->Defs->getAirWarn($aqi_scale);
+			$y['airwarn'] = Defs::getAirWarn($aqi_scale);
 
 			$x[$loc] = $y;
 		}
@@ -1819,7 +1820,7 @@ public  function uv_data($uv) {
 			'uv' => $uv,
 			'uvscale' => $uvscale,
 			'uvwarn' => $this ->Defs->uv_warn($uvscale),
-			'uvcolor' => $this->Defs->get_color($uvscale),
+			'uvcolor' => Defs::get_color($uvscale),
 		);
 			return ($uv);
 }
@@ -1827,7 +1828,7 @@ public  function uv_data($uv) {
 private function fire_data($fire_level) {
 	$fire = array (
 		'level' => $fire_level,
-		'color' => $this->Defs->get_firecolor($fire_level),
+		'color' => Defs::get_firecolor($fire_level),
 		);
 
 	return $fire;
@@ -1875,7 +1876,7 @@ private function over_cache_time($section) {
 		XXX Returns true if time is within 5 minutes of limit
 	*/
 	if (!file_exists(CACHE[$section])){ die ("No cache file for $section");}
-	$limit = $this->Defs->getMaxTime($section) ; #in seconds
+	$limit = Defs::getMaxTime($section) ; #in seconds
 	if (!$limit){ return 0;}
 
 	$filetime = filemtime (CACHE[$section]);

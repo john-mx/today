@@ -8,6 +8,6 @@ use DigitalMx as u;
 
 
 	$Plates = $container['Plates'];
-	$Defs = $container['Defs'];
+	
 	$Today = $container['Today'];
 	$Cal = $container['Calendar'];

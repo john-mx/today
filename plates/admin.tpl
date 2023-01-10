@@ -65,19 +65,20 @@ Alerts must have expiration.  If today, just enter the time.  Otherwise enter mo
 </td></tr>
 </table>
  -->
-<h4>Alternative Alert</h4>
+<h4>Alert Alternative </h4>
 Enter message here to display if there are no alerts.  (Requires raw html code for colors and styles, so ask for help if needed.)<br />
 for color red: &lt;span style='color:red;'&gt;text you want &lt;/span&gt;<br />
 <textarea name = 'alert_alt' rows='3' cols='80'><?=$admin['alert_alt'] ??'' ?></textarea>
 
 
 <h4>Enter closures/announcements</h4>
-One announcement per line. They will be listed as bullets <?php Utilities::showHelp('notices');?><br />
+One announcement per line. They will be listed as bullets <?php J::showHelp('notices');?><br />
+
 <textarea name='announcements' ><?=$admin['announcements'] ?></textarea>
 
 
 <h4>Enter visitor advice</h4>
-One announcement per line(carriage return). <?php Utilities::showHelp('advice');?><br />
+One announcement per line(carriage return). <?php J::showHelp('advice');?><br />
 <textarea name='advice' ><?=$admin['advice'] ?></textarea>
 
 

@@ -13,7 +13,7 @@ ini_set('display_errors', 1);
 //
 //
 	$Plates = $container['Plates'];
-	$Defs = $container['Defs'];
+
 	$Today = $container['Today'];
 	$Cal = $container['Calendar'];
 
@@ -38,6 +38,8 @@ J::echor($wlocs);
 
 echo Defs::aq_scale(200);
 
+J::showHelp('notices');
+
 // what function?
 
 //$f = weather();
@@ -57,12 +59,12 @@ function refresh($force=false){
 }
 
 function current() {
-	global $Today,$Plates,$Defs,$Cal;
+	global $Today,$Plates,$Cal;
 	$Today->rebuild_cache_current();
 }
 
 function calendar(){
-	global $Today,$Plates,$Defs,$Cal;
+	global $Today,$Plates,$Cal;
 
 	$c = $Cal->load_cache();
 #u\echor($c);
@@ -76,7 +78,7 @@ function calendar(){
 
 
 function today(){
-	global $Today,$Plates,$Defs;
+	global $Today,$Plates;
 
 	$z=$Today->build_topics();
 	echo $Plates->render('today',['data'=>$z]);
@@ -85,7 +87,7 @@ function today(){
 }
 
 function light(){
-	global $Today,$Plates,$Defs;
+	global $Today,$Plates;
 
 	$z=$Today->build_topic_light();
 	echo $Plates->render('light',['data'=>$z]);
@@ -96,14 +98,14 @@ function light(){
 }
 
 function weather() {
-	global $Today,$Plates,$Defs;
+	global $Today,$Plates;
 	$Today->display_weather(['jr','cw'],2);
 
 
 }
 
 function weather_gov(){
-	global $Today,$Plates,$Defs;
+	global $Today,$Plates;
 #	$Today->rebuild_cache_wgov();
 
 	$z=$Today->build_topic_weather();
@@ -114,7 +116,7 @@ function weather_gov(){
 
 
 function camps(){
-	global $Today,$Plates,$Defs;
+	global $Today,$Plates;
 	$z=$Today->build_topic_campgrounds();
 	u\echor($z,'topic');
 	echo $Plates->render('campground',$z);
@@ -122,7 +124,7 @@ function camps(){
 }
 
 function prep () {
-	global $Today,$Plates,$Defs;
+	global $Today,$Plates;
 
 	$z = $Today->prepare_topics();
 	u\echor($z,'topic array', STOP);
@@ -130,7 +132,7 @@ function prep () {
 
 
 function alerts() {
-	global $Today,$Plates,$Defs;
+	global $Today,$Plates;
 
 	echo "Testing " . 'galerts ' . BR;
 	$Today->rebuild_cache_galerts();;
@@ -138,7 +140,7 @@ function alerts() {
 }
 
 function wapi() {
-global $Today,$Plates,$Defs;
+global $Today,$Plates;
 
 	echo "Testing " . 'weather ' . BR;
 	$z = $Today->build_topics();
@@ -148,14 +150,14 @@ global $Today,$Plates,$Defs;
 	}
 
 function wgov(array $loc) {
-	global $Today,$Plates,$Defs;
+	global $Today,$Plates;
 
 	$z = $Today->rebuild_cache_wgov($loc);
 	u\echor($z);
 }
 
 function props (){
-	global $Today,$Plates,$Defs;
+	global $Today,$Plates;
 
 	 "Testing " . 'props ' . BR;
 	$z = $Today->rebuild_caches(['properties']);
@@ -173,7 +175,7 @@ function temail ($Plates,$Today) {
 }
 
 function tprint (){
-global $Today,$Plates,$Defs;
+global $Today,$Plates;
 	$Today->buildPDF();
 	exit;
 

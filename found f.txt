@@ -1,0 +1,17 @@
+~/Sites/jotr/src/Utilities.php:15: 	public function __construct () {
+~/Sites/jotr/src/Utilities.php:19: 	public function over_cache_time($section) {
+~/Sites/jotr/src/Utilities.php:36: 	public static function showHelp($ref) {
+~/Sites/jotr/src/Utilities.php:62: 	// will print out the contents of var and the location in code this function was called from.
+~/Sites/jotr/src/Utilities.php:76: public static function echor($var,$title='',$stop=false){
+~/Sites/jotr/src/Utilities.php:78: 	// will print out the contents of var and the location in code this function was called from.
+~/Sites/jotr/src/Utilities.php:91: public static function txt2html($text){
+~/Sites/jotr/src/Utilities.php:98: public static function special($var){
+~/Sites/jotr/src/Utilities.php:102: public static function despecial($var) {
+~/Sites/jotr/src/Utilities.php:106: public static function alertBadInput ($msg) {
+~/Sites/jotr/src/Utilities.php:117: public static function buildOptions($val_array,$check='',$choose = true){
+~/Sites/jotr/src/Utilities.php:143: public static function isAssociative($arr)
+~/Sites/jotr/src/Utilities.php:148: public static function buildCheckBoxSet(
+~/Sites/jotr/src/Utilities.php:190: public static function buildRadioSet(
+~/Sites/jotr/src/Utilities.php:232: public static function element_sort(array $array, string $on, $order=SORT_ASC)
+~/Sites/jotr/src/Utilities.php:280: public static function inMultiArray($element, array $array, bool $strict = true) : bool {
+~/Sites/jotr/src/Utilities.php:305: public static function humanSecs($esecs){

@@ -9,7 +9,7 @@ namespace DigitalMx\jotr;
 	use DigitalMx as u;
 	use DigitalMx\jotr\Definitions as Defs;
 	$Plates = $container['Plates'];
-	$Defs = $container['Defs'];
+	
 
 	$Today = $container['Today'];
 

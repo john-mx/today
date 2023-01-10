@@ -125,8 +125,8 @@ class Initialize
 		require "MxConstants.php"; #in libmx; in inc
     // BR, NL, BRNL, CRLF, LF, URL_REGEX //
 	#	require_once 'FileDefs.php';
-		require_once 'Definitions.php';
-		require_once  'MxUtilities.php';
+	#	require_once 'Definitions.php';
+	#	require_once  'MxUtilities.php';
 	#	require_once 'SiteUtilities.php';
 	#	require_once 'Utilities.php';
 

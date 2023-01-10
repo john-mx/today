@@ -11,7 +11,7 @@ ini_set('display_errors', 1);
 	use DigitalMx\jotr\Calendar as Cal;
 
 	$Plates = $container['Plates'];
-	$Defs = $container['Defs'];
+	
 	$Today = $container['Today'];
 	$Cal = new Cal();
 

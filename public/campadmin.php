@@ -5,7 +5,7 @@ use DigitalMx as u;
 	use DigitalMx\jotr\Today;
 
 	$Plates = $container['Plates'];
-	$Defs = $container['Defs'];
+	
 	$Today = $container['Today'];
 	$Login = $container['Login'];
 	$Cal = $container['Calendar'];
