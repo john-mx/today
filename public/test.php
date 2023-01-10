@@ -7,12 +7,11 @@ ini_set('display_errors', 1);
 //BEGIN START
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 
-//	use DigitalMx\jotr\Utilities as U;
-	use DigitalMx as u;
-	use DigitalMx\jotr\Refresh;
+	// use DigitalMx as u;
 	use DigitalMx\jotr\Definitions as Defs;
-
-
+ 	use DigitalMx\jotr\Utilities as J;
+//
+//
 	$Plates = $container['Plates'];
 	$Defs = $container['Defs'];
 	$Today = $container['Today'];
@@ -35,9 +34,13 @@ $hq = ['hq'];
 $twolocs = ['jr','hq'];
 
 
+J::echor($wlocs);
+
+echo Defs::aq_scale(200);
+
 // what function?
 
-$f = weather();
+//$f = weather();
 
 // echo "<script>setInterval(dtime(),60);</script>";
 // function dtime(){

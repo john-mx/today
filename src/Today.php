@@ -1814,7 +1814,7 @@ private function curl_options () {
 
 public  function uv_data($uv) {
 	// takes numeric uv, returns array of uv, name, warning
-		$uvscale = $this -> Defs->uv_scale($uv);
+		$uvscale =  Defs::uv_scale($uv);
 		$uv = array(
 			'uv' => $uv,
 			'uvscale' => $uvscale,

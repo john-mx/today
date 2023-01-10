@@ -2,6 +2,8 @@
 
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx as u;
+use DigitalMx\jotr\Utilities as J;
+
 $open_options = u\buildOptions(['','0','a few','around 10','10 +','?'],'',true);
 
 
@@ -70,12 +72,12 @@ for color red: &lt;span style='color:red;'&gt;text you want &lt;/span&gt;<br />
 
 
 <h4>Enter closures/announcements</h4>
-One announcement per line. They will be listed as bullets<br />
+One announcement per line. They will be listed as bullets <?php Utilities::showHelp('notices');?><br />
 <textarea name='announcements' ><?=$admin['announcements'] ?></textarea>
 
 
 <h4>Enter visitor advice</h4>
-One announcement per line.(<cr>)  They will be listed as bullets<br />
+One announcement per line(carriage return). <?php Utilities::showHelp('advice');?><br />
 <textarea name='advice' ><?=$admin['advice'] ?></textarea>
 
 

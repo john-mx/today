@@ -22,9 +22,10 @@ ini_set('display_errors', 1);
 
 
 $y=$Today->load_cache('admin');
+$admin['rotate'] = $y['rotate'] ?: ['today'];
 $local = $_SESSION['local'] ?? [];
 //u\echor($local,'local');
-$rotate = ($local)?$local['rotate'] :$y['rotate'] ;
+$rotate = ($local)?$local['rotate'] :$admin['rotate'] ;
 $rdelay = ($local)?$local['rdelay']: $y['rdelay'];
 
 // u\echor($rotate,'rotate',STOP);

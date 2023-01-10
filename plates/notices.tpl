@@ -12,7 +12,7 @@ use DigitalMx as u;
  <h4>Announcements and Closures</h4>
     <div class=' inleft2 left' >
 		 <ul>
-        <?php if($e) : ?>
+        <?php if($e) :
 
                 $anlist = explode("\n",$e);
                         foreach ($anlist as $item) :

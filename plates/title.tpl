@@ -20,8 +20,10 @@
 	<h2><?=$subtitle?></h2>
 
 </div>
-<?php if (!empty($sunset)): ?>
-<div class='pad'>Sunset <?=$sunset?></div>
+
+<div class='pad'>
+<?php if (!empty($sunset)): ?>Sunset <?=$sunset?>
 <?php endif; ?>
 </div>
 
+</div>

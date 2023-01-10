@@ -18,6 +18,8 @@ namespace DigitalMx\jotr;
 	use DigitalMx as u;
 	use DigitalMx\jotr\Definitions as Defs;
 	use DigitalMx\jotr\Today;
+	use DigitalMx\jotr\Utilities as J;
+
 
 	$Plates = $container['Plates'];
 	$Defs = $container['Defs'];

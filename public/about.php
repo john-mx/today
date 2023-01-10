@@ -1,7 +1,6 @@
 <?php
 namespace DigitalMx\jotr;
 
-ini_set('display_errors', 1);
 
 
 //BEGIN START
@@ -61,6 +60,14 @@ echo $Plates->render('title',$meta);
 <p>The screen will change every 15 seconds.  (The first iteration may take longer.) It's just one page, broken into sections that sequentially are visible on the screen.  The page updates every 15 minutes to pick up any new information.<br />
 If something stops working, try pressing the "Refresh" button next to the address bar.
 </p>
+<h3>Localization</h3>
+There are a few settings that can be made locally on the display device you're using (TV, for example.)
+<ol>
+<li>You can choose the name of the site, which will display in the title bar like "Welcome to the Cottonwood Visitor Center."
+<li>You can choose which of the available pages appears in the rotation sequence on your device.
+<li> You can choose the rotation rate: how many seconds per slide.
+</ol>
+These settings are stored locally on the display device for 48 hours after last usage, and then would have to be reset.
 <h3>Printing Today Pages</h3>
 <p>
 The page "today.php" can be printed from a web browser, and appropriate pages posted in a Visitor Center.

@@ -1,9 +1,6 @@
 <?php
 namespace DigitalMx\jotr;
 
-ini_set('display_errors', 1);
-
-
 //BEGIN START
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 
@@ -18,10 +15,11 @@ ini_set('display_errors', 1);
 // 	$Today = $container['Today'];
 // 	$Cal = $container['Calendar'];
 
+$q =  $_SERVER['QUERY_STRING'] ?? '';
 $meta = array(
-	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
+
 	'page' => basename(__FILE__),
-	'subtitle' => 'Index',
+	'subtitle' => 'Help',
 	'extra' => "",
 
 );
@@ -30,13 +28,6 @@ echo $Plates->render('head',$meta);
 echo $Plates->render('title',$meta);
 //END START
 
-?>
-<h3>Today in the Park</h3>
-This site compiles key information about Joshua Tree National Park for visitors.<br>
+echo $Plates->render('help/' . $q);
 
-<ul>
-<li><a href='/pages.php' target='pages'>List of Resources</a>
-<li><a href='/about.php'>About the Site</a>
-<li><a href='/today.php' target='today'>Today in the Park</a>
-<li><a href='/rotate.php' targetr='rotate'>Rotating Pages for TV Screen</a>
-</ul>
+?>

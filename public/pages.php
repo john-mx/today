@@ -70,6 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <tr><td colspan='2' class='bg-yellow'>Ranger Admin Pages</td></tr>
 
 <tr><td ><a href='/admin.php' target='admin'>Admin page</a> </td><td >Ranger sets things like alerts, closures, campground status, calendar events, etc.</td></tr>
+<tr><td ><a href='/local.php' target='local'>Local Settings Page</a> </td><td >Settings for local display (pages in rotation, rotation time, etc). Saved in a 48-hour cookie on local device. Access from the rotation page by clicking over the "Now" time in the title.</td></tr>
 
 <!-- <tr><td ><a href='/caladmin.php' target='admin'>Calendar Admin page</a> </td><td >Ranger sets calendar events,  (password 'abcd')</td></tr> -->
 
