@@ -55,7 +55,7 @@ foreach ($calendar as $cevent){
 	<td class='left'>
  	<b><?=$cal['title']?></b>
  	</td>
- 	<td>
+ 	<td class='left'>
  	<?=$cal['duration']?>
  	<?=$cal['type']?>
 	<?php if ($cal['reservation'] ?? ''): ?>
@@ -69,7 +69,7 @@ foreach ($calendar as $cevent){
 	</tr>
 
 	<?php if (!empty($cal['note'])) : ?>
-	<tr class='noterow'><td colspan='4' style='background-color:#CCC;'>
+	<tr class='noterow left'><td colspan='4' style='background-color:#CCC;'>
 			<?=$cal['note'] ?? '' ?>
 			</td></tr>
  	<?php endif; ?>

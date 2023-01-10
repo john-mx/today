@@ -201,6 +201,11 @@ public static $coordinates = [
 		'kv' => 'Keys View',
 		'pdx' => 'Portland, OR',
 		'lh' => 'Lost Horse Ranger Station',
+		'jtvc' => 'Joshua Tree Visitor Center',
+		'29vc' => 'Joshua Tree Cultural Center',
+		'cwvc' => 'Cottonwood Visitor Center',
+		'brvc' => 'Black Rock Visitor Center',
+		'other' => 'Park',
 	];
 
 	public static $campsites = [
@@ -295,16 +300,28 @@ mins,
 
 			);
 
-	private static $moons = array (
-			'New Moon' => '0.gif',
-			'Waxing Crescent' => '1.gif',
-			'First Quarter' => '2.gif',
-			'Waxing Gibbous' => '3.gif',
-			'Full Moon' => '4.gif',
-			'Waning Gibbous' => '5.gif',
-			'Third Quarter' => '6.gif',
-			'Waning Crescent' => '7.gif',
-			'Last Quarter' => '6.gif'
+	// private static $moons = array (
+// 			'New Moon' => '0.gif',
+// 			'Waxing Crescent' => '1.gif',
+// 			'First Quarter' => '2.gif',
+// 			'Waxing Gibbous' => '3.gif',
+// 			'Full Moon' => '4.gif',
+// 			'Waning Gibbous' => '5.gif',
+// 			'Third Quarter' => '6.gif',
+// 			'Waning Crescent' => '7.gif',
+// 			'Last Quarter' => '6.gif'
+// 		);
+	// nasa transparent images
+		private static $moons = array (
+			'New Moon' => '366a.png',
+			'Waxing Crescent' => '361a.png',
+			'First Quarter' => '362a.png',
+			'Waxing Gibbous' => '363a.png',
+			'Full Moon' => '364a.png',
+			'Waning Gibbous' => '365a.png',
+			'Third Quarter' => '367a.png',
+			'Waning Crescent' => '367a.png',
+			'Last Quarter' => '368a.png'
 		);
 
 /* list of pages for rotation in the tv page
@@ -439,7 +456,7 @@ mins,
 	}
 
 	public static function getMoonPic($phase) {
-		return self::$moons[$phase] ?? 'error.png';
+		return '/images/moon-nasa/' . self::$moons[$phase] ?? 'error.png';
 	}
 	public static function getSourceName($source) {
 

@@ -11,20 +11,21 @@ use DigitalMx as u;
 ?>
  <h4>Announcements and Closures</h4>
     <div class=' inleft2 left' >
-
+		 <ul>
         <?php if($e) : ?>
-                echo "<ul>";
+
                 $anlist = explode("\n",$e);
                         foreach ($anlist as $item) :
                                 if (empty(trim($item))):continue;endif;
                                 echo "<li>$item</li>";
                         endforeach;
-                echo "</ul>" . NL;
+
         ?>
 
     <?php else: ?>
-    None at this time
+    <li>None at this time
     <?php endif; ?>
+     </ul>
  </div>
 
 

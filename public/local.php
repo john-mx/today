@@ -1,20 +1,11 @@
 <?php
 namespace DigitalMx\jotr;
 
-/*
-	local admin page
-
-	first checks for login level.
-	If fails, then shows login screen.  Logging in returns to this screen.
-
-*/
-
-
-#ini_set('display_errors', 1);
+ini_set('display_errors', 1);
 
 //BEGIN START
-	require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 
+	require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 	use DigitalMx as u;
 	use DigitalMx\jotr\Definitions as Defs;
 	use DigitalMx\jotr\Today;
@@ -22,78 +13,96 @@ namespace DigitalMx\jotr;
 	$Plates = $container['Plates'];
 	$Defs = $container['Defs'];
 	$Today = $container['Today'];
-	$Login = $container['Login'];
-	$Cal = $container['Calendar'];
 
 
 //END START
-$admin = $Today->load_cache('admin');
 
-$meta = array(
-	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
+
+
+
+
+//u\echor($y,'y',STOP);
+
+// using "Today' as title prevents it from re-appearing on the today page.
+$meta=array(
+
 	'page' => basename(__FILE__),
-	'subtitle' => 'Local Admin',
-	'extra' => '',
-	'rdelay' => $admin['rdelay'],
+	'subtitle' => 'Local Options',
+
 
 	);
-//u\echor($meta,'meta',STOP);
-if (isset($_POST['pw']) ) {// is login
-	$Login->set_pwl($_POST['pw']);
-}
 
-
-$Login->check_pw(2);
-
-//u\echor($_POST,'post');
-
-if (!empty($_POST) && !isset($_POST['pw'])) {
-		post_data ($_POST,$Today);
-		echo "<script>window.location.href='/local.php';</script>";
-		exit;
-
-} else {
-
-	echo $Plates->render('head',$meta);
-echo $Plates->render('title',$meta);
-
-		$y = $Today-> prepare_admin();
-// u\echor($y);
-		echo $Plates->render('local',$y);
-echo "Local admin";
-
-	exit;
-}
+	echo $Plates->render ('head',$meta);
+	echo $Plates->render('title',$meta);
 
 
 
-####################
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	//u\echor ($_POST, 'post');
+	$local['rotate'] = $_POST['rotate'];
+	$local['rdelay'] = $_POST['rdelay'];
+	$local['local_site']=  $_POST['local_site'];
+	$_SESSION['local'] = $local;
 
-
-function login($pw,$Today,$Plates,$Login) {
-
-
-	if (strlen($pw)<4){
-		echo "Error: password not correct (1)";
-		show_login();
-		echo "</body></html>" . NL;
-		exit;
-	}
-	if (! $Login->set_pwlevel($pw)){
-		echo "Error: password not recognized (2)";
-		show_login();
-		echo "</body></html>" . NL;
-		exit;
-	}
-	show_admin($Today,$Plates);
-}
-
-function post_data($post,$Today){
-
-	//u\echor ($post);
-	$Today->post_admin($post);
-
+	Log::info("Local settings saved");
+	//u\echor($_SESSION,'session');
+	echo "<script>
+		window.opener.location.reload();
+		window.close();
+		</script>";
+	return true;
 
 }
+// set up form
+$admin = $Today->build_topic_admin()['admin'];
+//u\echor($admin);
 
+$local = $_SESSION['local'] ?? [];
+//u\echor($local);
 
+$rchecked = [];
+
+$rotators = ($local['rotate'] ?? '') ? $local['rotate'] : $admin['rotate'];
+$rdelay = ($local['rdelay'] ?? '' ) ? $local['rdelay'] : $admin['rdelay'];
+//echo ($rdelay) . BR;
+foreach (array_keys(Defs::$rpages) as $pid){
+		if (in_array($pid,$rotators)){$rchecked[$pid] = 'checked';}
+}
+$site_array = [];
+foreach (['29vc','jtvc','cwvc','brvc','other'] as $vc){
+
+	$site_array[$vc] = Defs::$sitenames[$vc];
+}
+$site_options = u\buildRadioSet(
+    'local_site',
+    $site_array,
+    $check = $local['local_site'] ?? '',
+
+    $per_row = 1,
+    $show_code = false,
+    );
+?>
+
+<h3>Local Options</h3>
+These setting apply only to the device this page is running on.
+If the site is not accessed on this device for 48 hours, the settings will be revert to the standard setting, and must be set again if you want your own settings.
+
+<hr>
+<form method='POST'>
+<h4>Which site is this?</h4>
+<?=$site_options?>
+
+<h4>Choose Pages for TV Rotation</h4>
+<?php //u\echor($admin); ?>
+Set which site you are in:
+
+Select which pages should appear in the rotation sequence (?snap)<br />
+<?php foreach (Defs::$rpages as $pid=>$pdesc) : ?>
+<input type='checkbox' name='rotate[]' value='<?=$pid?>' <?=$rchecked[$pid] ?? ''?> ><a href='/pager.php?<?=$pid?>' target = 'pager'><?=$pid?></a>: <?=$pdesc?><br />
+<?php endforeach; ?>
+<br />
+Set rotation delay in seconds: <input type='number' name='rdelay' value='<?=$rdelay?>' size='8' min=10 max=30 step=5 >
+
+<button type='submit'>Submit Form</button>
+
+</form>

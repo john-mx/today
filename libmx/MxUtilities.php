@@ -783,6 +783,48 @@ function buildCheckBoxSet(
       return $opt;
 }
 
+function buildRadioSet(
+    $var_name,
+    $val_array,
+    $check = '',
+    $per_row = 1,
+    $show_code = false
+) {
+    // like building select options, but shows as
+    // checkboxes instead (multiples ok)
+    // $check is string with multiple characters to match against the val array
+    //per_row is how many items to put in a row; 1 is verticle list
+        $opt = '';
+
+    $rowcount = 0;
+    $tablestyle=false;
+    asort($val_array);
+    $varcount = count($val_array);
+    if ($varcount > $per_row){$tablestyle=true;}
+    $opt = '';
+    if ($tablestyle){$opt = "<table><tr>";}
+
+    foreach ($val_array as $k => $v) {
+    #echo "k=$k,v=$v,check=$check" . BRNL;
+        if (empty($v)){continue;}
+
+        $label = $v;
+        $label .= ($show_code)? " ($k)" : '';
+
+          $checkme = ($check == $k)?"checked":'';
+          if ($tablestyle){ $opt .= "<td>";}
+          $opt .= "<span class='nobreak'><input type='radio' name='${var_name}' value='$k' $checkme>$label</span> ";
+            if ($tablestyle){ $opt .= "</td>";}
+          ++$rowcount;
+        if ($rowcount%$per_row == 0) {
+            $opt .= ($tablestyle)? "</tr><tr>" : '<br>';
+
+        }
+    }
+        if ($tablestyle){ $opt .= "</tr></table>\n";}
+      return $opt;
+}
+
 function is_local ($url) {
 // returns false if not a local format
 // returns '' if local, but no such file

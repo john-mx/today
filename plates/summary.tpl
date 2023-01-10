@@ -6,13 +6,6 @@ use DigitalMx\jotr\Calendar;
 $Cal = new Calendar();
 
 ?>
-<style>
-body {
-	font-size:1.1rem;
-}
-
-
-</style>
 
 
 <?php
@@ -61,15 +54,18 @@ EOT;
 
 <?php $this->insert('light',[$light]); ?>
 
+<!--
 <h4>Next Two Days</h4>
 		<?php
-			$wspec = ['wslocs'=>['jr','cw'],'fcstart'=>'+1','wsdays'=>2];
+			$wspec = ['wslocs'=>['jr','cw'],'fcstart'=>'1','wsdays'=>2];
 			// locations, start date, number of days in forecast
 			$this->insert('weather-one-line',$wspec);
 
 
 		?>
 <br />
+ -->
+<?php $this->insert('advice'); ?>
 
 <?php
 	$this->insert('alerts');
@@ -86,7 +82,7 @@ if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 //u\echor($calendar,'data-calendar',NOSTOP);
 
 ?>
-<table class='inleft2 border'>
+<table class='inleft2  no-border'>
 
 <?php foreach ($calendar as $event) :
 		if ($event['suspended']){continue;} // dont display
@@ -94,12 +90,12 @@ if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 		$eventtime = date('g:i a', $event['dt']);
 		$reservation = $event['reservation'] ? ' (Reservation required)':'';
 	?>
-	<tr class='left no-border'>
-	<td style='width:6em;'><b><?=$eventtime?> </b></td>
+	<tr class='left border-gray no-cols'>
+	<td ><b><?=$eventtime?> </b></td>
 	<td class='lrpad'><b><?=$event['title']?></b></td>
- 	<td><?=$event['duration']?>
-  at <?=$event['location']?></td>
-  <td class=lrpad><?=$reservation?></td>
+ 	<td>
+  at <?=$event['location']?>
+  <?=$reservation?></td>
   </tr>
 
 <?php endforeach; ?>

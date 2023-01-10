@@ -59,7 +59,7 @@ $current_asof = date('g:i a',$current['updatets']);
 $temp = <<<EOT
 <div >
 <b>Temperature: </b>
-		${current['temp_f']}  &deg;F ( ${current['temp_c']} &deg;C)
+		${current['temp_f']}&deg;F ( ${current['temp_c']}&deg;C)
 
 		</div>
 EOT;

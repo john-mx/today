@@ -515,7 +515,7 @@ public function build_topic_current() {
 
 	$y=$z['lhrs']['properties'];
 	$y['updatets'] = strtotime($z['lhrs']['properties']['timestamp']);
-	$y['temp_c']= is_null($y['temperature']['value']) ? 'n/a' : round($y['temperature']['value'],1);
+	$y['temp_c']= is_null($y['temperature']['value']) ? 'n/a' : round($y['temperature']['value']);
 	$y['temp_f'] = is_null($y['temperature']['value']) ? 'n/a' :round( ($y['temp_c'] * 9/5) + 32);
 	$y['wind_kph'] = is_null($y['windSpeed']['value'])? 'n/a':round($y['windSpeed']['value']);
 	$y['wind_mph'] =  is_null($y['windSpeed']['value'])? 'n/a':round($y['wind_kph'] /2.2) ;
@@ -609,6 +609,13 @@ public function build_topic_light() {
 	);
 	//u\echor($z,'z init',STOP);
 
+		// count how many periods captured.  If if it ends up 1, then
+		// there is only a night component.  If it's 2, then there
+		// is both day and night.
+		// If only nighgt, then day info is left over from wapi, and is
+		// for 29p, not jumbo rocks.
+
+		$period_count = 0;
 
 	if ($wapi =  $this->load_cache('wapi') ){
 
@@ -630,6 +637,7 @@ public function build_topic_light() {
 		$z['day']['short'] = $daily['day']['condition']['text'];
 		$z['day']['icon'] = $daily['day']['condition']['icon'];
 		$z['day']['uv'] = $daily['day']['uv'] ;
+		$z['day']['period_count'] = $period_count;
 
 		$z['night']['moonrise'] =  $this -> time_format($astro['moonrise']);
 		$z['night']['moonset'] = $this -> time_format($astro['moonset']);
@@ -638,49 +646,76 @@ public function build_topic_light() {
 		$z['night']['icon'] = $this->Defs->getMoonPic($astro['moon_phase']);
 		$z['night']['moonphase'] =  $astro['moon_phase'];
 		$z['night']['moonillum'] = $astro['moon_illumination'];
+		$z['night']['period_count'] = $period_count;
+
+		$tomorrow = $wapi['br']['forecast']['forecastday'][1];
+		$astro = $tomorrow['astro'];
+		$high = round($tomorrow['day']['maxtemp_f']) . "&deg;F ("
+			. round($tomorrow['day']['maxtemp_c']) . "&deg;C)";
+		$low = round($tomorrow['day']['mintemp_f']) . "&deg;F ("
+			. round($tomorrow['day']['mintemp_c']) . "&deg;C)";
+		$wind = 'To ' . round($tomorrow['day']['maxwind_mph']) . 'mph' ;
+		$z['tomorrow']['sunrise'] =  $this -> time_format( $astro['sunrise']);
+		$z['tomorrow']['sunset'] = $this -> time_format($astro['sunset']);
+		$z['tomorrow']['wind'] = $wind;
+		$z['tomorrow']['high'] = $high;
+		$z['tomorrow']['short'] = $tomorrow['day']['condition']['text'];
+		$z['tomorrow']['icon'] = $tomorrow['day']['condition']['icon'];
+		$z['tomorrow']['uv'] = $tomorrow['day']['uv'] ;
+		$z['tomorrow']['period_count'] = $period_count;
 
 		$z['update']['ts'] = $wapi['br']['current']['last_updated_epoch'];
 		$z['update']['source'] = 'Forecast for Black Rock from weatherapi.com';
+		$z['update']['period_count'] = $period_count;
 
 		//u\echor($z,'z init',STOP);
 
 	}
 
 
-	if (
+	if (//0 &&  //uncomment to simulate wgov failure
 		(time() - $this->getMtime('wgov') < 12*60*60 ) #< 12 hours old
 		&& ($wgov = $this->load_cache('wgov') )
 		&& (isset($wgov['jr']['properties']['updated'] ))
 		){
 		// update for wgov data
-
+		$tomorrow_done = false;
+//u\echor($wgov,'wgov from cache');
 		$wupdated = strtotime($wgov['jr']['properties']['updated']) ;
-
+		$period_count = 0;
 
 		foreach ($wgov['jr']['properties']['periods'] as $period) {
 			if (strtotime($period['endTime']) < time()){ #already ended
+				//echo "Skipping period ${period['name']} ".BR;
 				continue;
 			}
+			//if ($period['isDaytime']) continue; // test no night segment
+			++$period_count;
+			//u\echor($period,'period ');
 			// found first period that has not ended yet
-			if ($period['isDaytime']) {
-				$wind = $period['windSpeed'] . ' ' . $period['windDirection'];
+			if ($period['isDaytime'] && $period_count == 1) {
+				// $wind = $period['windSpeed'] . ' ' . $period['windDirection'];
+				$wind = $period['windSpeed'];
 				$temperature = $period['temperature'];
 				$tempc = round(($temperature -32 )* 5/9,0);
-				$high =  "High: $temperature &deg;F ($tempc &deg;C)";
+				$high =  "$temperature&deg;F ($tempc&deg;C)";
 				//$z['day']['sunrise'] =  $this -> time_format( $astro['sunrise']);
 				//$z['day']['sunset'] = $this -> time_format($astro['sunset']);
 				$z['day']['wind'] = $wind;
 				$z['day']['high'] = $high;
 				$z['day']['short'] = $period['shortForecast'];
 				$z['day']['icon'] = $period['icon'];
+
 				//$z['day']['uv'] = $daily['day']['uv'] ;
 				continue;
-			} else {#got night time
-
+			} elseif (!$period['isDaytime'])  {#got night time
+				//clear the day data
+				$z['day'] = [];
 				$temperature = $period['temperature'];
 				$tempc = round(($temperature -32 )* 5/9,0);
-				$low = "Low: $temperature &deg;F ($tempc &deg;C)";
-				$wind = $period['windSpeed'] . ' ' . $period['windDirection'];
+				$low = "$temperature &deg;F ($tempc &deg;C)";
+				// $wind = $period['windSpeed'] . ' ' . $period['windDirection'];
+				$wind = $period['windSpeed'];
 
 				//$z['night']['moonrise'] =  $this -> time_format($astro['moonrise']);
 				//$z['night']['moonset'] = $this -> time_format($astro['moonset']);
@@ -692,16 +727,35 @@ public function build_topic_light() {
 				//$z['night']['moonillum'] = $astro['moon_illumination'];
 			// night period always exists if wgov is successfull,
 			// so set updates there.
+				$z['night']['period_count'] = $period_count;
 				$z['update']['ts'] = $wupdated;
 				$z['update']['source'] = 'Forecast for Jumbo Rocks from weather.gov';
 
 
 			} #end night
-			break; // stop looking
+			elseif ($period['isDaytime'] && $period_count > 1) { // tomorrow
+				$temperature = $period['temperature'];
+				$tempc = round(($temperature -32 )* 5/9,0);
+				$high = "$temperature&deg;F ($tempc&deg;C)";
+				// $wind = $period['windSpeed'] . ' ' . $period['windDirection'];
+				$wind = $period['windSpeed'];
+
+				//$z['night']['moonrise'] =  $this -> time_format($astro['moonrise']);
+				//$z['night']['moonset'] = $this -> time_format($astro['moonset']);
+				$z['tomorrow']['wind'] = $wind;
+				$z['tomorrow']['high'] = $high;
+				$z['tomorrow']['icon'] = $period['icon'];
+				$z['tomorrow']['short'] = $period['shortForecast'];
+				$tomorrow_done = true;
+
+
+		}
+			if ($tomorrow_done) break; // stop looking
 		} #end foreach
+
 	} #end wgov
-// 	u\echor($z,'light prepared',STOP);
-	$this->sunset = $z['day']['sunset'];
+ //	u\echor($z,'light prepared');
+	$this->sunset = $z['day']['sunset'] ?? '';
 	return ['light' => $z];
 } #end function
 
@@ -823,6 +877,7 @@ public function build_topic_admin() {
 
 			$z['advice'] = u\special($y['advice']);
 			$z['rotate'] = $y['rotate'] ?? [];
+			$z['rdelay'] = $y['rdelay'] ?? [];
 
 // 	u\echor($z,'topic general');
 	return ['admin'=>$z];
@@ -1691,6 +1746,8 @@ public function format_wgov ($wgov) {
 // u\echor($p,'period',NOSTOP);
 	// set day (key) to datestamp for day, not hours
 			$start = $perdata['startTime'];
+			$end = $perdata['endTime'];
+			if (strtotime($end) < time()) continue; //expired
 			$dayts = strtotime($start);
 			$daytext = date('l, M d',$dayts);
 			if ($daytext != $lastday){

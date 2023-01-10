@@ -113,7 +113,7 @@ button {
 .bg-lgrn { background-color: #D4FB79; }
 .bg-yellow {background-color: yellow; }
 .bg-orange {background-color:#F3984D;}
-.bg-midnight {background-color:#011993 ;}
+.bg-midnight {background-color:#011993 ; color:#FFF;}
 .bg-blue {background-color:#005493; color:#EBEBEB;}
 
 .bg-black{background-color:black; padding:6px;}
@@ -137,6 +137,16 @@ button {
 	color:white;
 }
 
+,no-border {border:0;}
+.bottom-border {border-bottom:1px solid gray;}
+.no-bottom {border-bottom:0;}
+.no-top {border-top:0;}
+.border {
+	border: 2px solid black;
+	padding: 3px;
+}
+
+
 .float, .floatl {float:left; margin-right:1rem;;}
 .floatr {float:right; margin-left:1rem;;}
 div.clear {clear:both;}
@@ -149,12 +159,27 @@ div.clear {clear:both;}
 div.flex-container{
     display: -webkit-flex; /* Safari */
     display: flex; /* Standard syntax */
+    flex-direction:row;
+    flex-wrap:nowrap;
+   /*  justify-content:space-between; */
+    align-content:center;
+    vertical-align:top;
+    width:100%;
+
 }
 div.flex-container > div{
-    -webkit-flex: 1; /* Safari */
-    -ms-flex: 1; /* IE 10 */
-    flex: 1; /* Standard syntax */
+
 }
+@media (max-width: 800px) {
+  div.flex-container {
+    flex-direction: column;
+  }
+  div.flex-container > div{
+  	flex:100%;
+  	}
+}
+
+
 
 div.center {
 	margin-left:auto;
@@ -218,6 +243,32 @@ div.content {
 	width:100%;
 	padding:0;
 
+}
+
+div.dayblock {
+	border:1px solid blue;
+	font-weight;bold;
+
+	background-color:#76D6FF;
+	color:#000;
+	vertical-align:top;
+/* 	float:left; */
+	display:inline-block;
+	text-align:center;
+	flex: 48%;
+}
+
+div.nightblock {
+	border:1px solid blue;
+	font-weight;bold;
+
+	background-color:#009;
+	color:#fff;
+	vertical-align:top;
+	/* float:left; */
+	text-align:center;
+	display:inline-block;
+	flex:48%;
 }
 .inlineblock {display:inline-block;}
 .inline {display:inline;}
@@ -324,6 +375,10 @@ table tr.border-bottom th, table tr.border-bottom td
 {
 	border-bottom: 1px solid black;
 }
+table tr.border-gray th, table tr.border-gray td
+{
+	border-bottom: 1px solid gray;
+}
 
 table  tr.borders th , table tr.borders td {
  	border-left: 1px solid black;
@@ -339,7 +394,10 @@ table tr.no-top th, table tr.no-top td {
 	border-top: 0;
 }
 
-.no-bottom {border-bottom:0;border-top:0;}
+table tr.no-cols td {
+	border-left:0;
+	border-right:0;
+}
 table  tr.no-border  td {
  	border-left: 0;
 	border-right: 0;
@@ -358,6 +416,8 @@ table .alt-gray tr:nth-child(even)  {
 	background: #CCC;
 }
 table.no-cells tr td {border:0;}
+table.no-border {border:0;}
+
 table tr td.lrpad {
 	padding-left:2em;
 	padding-right:2em;
@@ -365,10 +425,7 @@ table tr td.lrpad {
 .hidden {
 	display:none;
 }
-.border {
-	border: 2px solid black;
-	padding: 3px;
-}
+
 .warn
 {
 	/*border: 2px solid black;*/

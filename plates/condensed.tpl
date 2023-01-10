@@ -32,7 +32,9 @@ setTimeout(() => {
 <!-- ############################## -->
 <div id="page-today" class='page' style="display: block;" >
 <!-- set transform on this page to scale to fit available display height -->
-
+<?php if ($local_site): ?>
+	<h3>Welcome to the <?=Defs::$sitenames[$local_site]?></h3>
+	<?php endif; ?>
 <?php if ($admin['pithy']): ?>
 	<p class='center'><i><?=$admin['pithy']?></i></p>
 <?php endif; ?>

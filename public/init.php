@@ -19,12 +19,14 @@ namespace DigitalMx\jotr;
 
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
-
-if (!defined ('INIT')){
-	if (!session_start()){
-	die ("Failed to initialize session");
-}
-}
+//session_destroy();
+//session_set_cookie_params(60*2,"/"); // 48 hours
+if (!session_start([
+	'cookie_lifetime' => 3600 * 48,  //48 hours
+	])){
+		die ("Failed to initialize session");
+	}
+//setcookie('test_cookie', 'cake',time() + 120, '/', 'jotr.local');
 ini_set("pcre.jit", "0"); #required for preg_match();
 
 

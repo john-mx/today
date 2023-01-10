@@ -4,6 +4,8 @@ namespace DigitalMx\jotr;
 ini_set('display_errors', 1);
 
 //BEGIN START
+
+
 	require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 	use DigitalMx as u;
 	use DigitalMx\jotr\Definitions as Defs;
@@ -14,13 +16,19 @@ ini_set('display_errors', 1);
 	$Defs = $container['Defs'];
 	$Today = $container['Today'];
 
+
+//u\echor ($_SESSION);
 //END START
 
 
 $y=$Today->load_cache('admin');
-$rotate = $y['rotate'] ?? '';
+$local = $_SESSION['local'] ?? [];
+//u\echor($local,'local');
+$rotate = ($local)?$local['rotate'] :$y['rotate'] ;
+$rdelay = ($local)?$local['rdelay']: $y['rdelay'];
 
 // u\echor($rotate,'rotate',STOP);
+
 $q = trim($_SERVER['QUERY_STRING']);
 
 $qs = (!$q || ($q=='snap') )? 'snap' : '';
@@ -31,8 +39,9 @@ $meta=array(
 	'subtitle' => '',
 	'extra' => "<link rel='stylesheet' href='/css/tv.css'>",
 	'rotate' => $rotate,
-	'rdelay' => $y['rdelay'],
+	'rdelay' => $rdelay,
 	'sunset' => $Today->sunset,
+	'local_site' => $local['local_site'],
 
 	);
 

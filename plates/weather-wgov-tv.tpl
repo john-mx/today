@@ -51,7 +51,7 @@ use DigitalMx as u;
 				</td>
 			<?php endfor; #day ?>
 		</tr>
-		<tr  class='bg-midnight white' >
+		<tr  class='bg-midnight' >
 
 			<td>Night</td>
 

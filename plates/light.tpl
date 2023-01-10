@@ -15,50 +15,109 @@ if (!$light ){
 // endif;
 
 
-$day = $light['day'];
+$day = $light['day'] ?? [];
+
 $night = $light['night'];
+$tomorrow = $light['tomorrow'];
 $updated = date('M d g:i a',$light['update']['ts']);
+
+
 ?>
 
-<div class ='center clearafter flex-container' style='vertical-align:top' >
+<div class =' flex-container  center' >
 
-	<div class='border center floatl' style=' font-weight:bold; width:48%; vertical-align:top; ' >
+	<!-- LEFT PANEL -->
+
+	<?php if ($day) : ?>
+	<div class='dayblock  '>
 		<h3><u>Today</u></h3>
 
 		<div class=' inlineblock center' style='vertical-align:top; width:40%;'>
-			<img src="<?= $day['icon'] ?>" class='auto' ><br />
-			<?= $day['short'] ?><br />
+			<img src="<?= $day['icon'] ?>" style='width:8em;' class='auto' ><br />
+
 			<b>Wind: </b> <?= $day['wind']?>
 		</div >
 
-		<div class=' center inlineblock' style='vertical-align:top;width:55%'>
-			<p style='margin-top:0;font-size:1.5rem;'> <?=$day['high']?></p>
+		<div class=' center inlineblock' style='font-weight:bold;'style='vertical-align:top;width:55% width-min:350px;'>
+			<p><?= $day['short'] ?></p>
+			<p style='margin-top:0;font-size:1.3rem;'> High: <?=$day['high']?></p>
 			<p>
-			Sunrise:&nbsp;<?= $day['sunrise'] ?> Sunset:&nbsp;<?= $day['sunset'] ?>
+			Sunrise:&nbsp;<?= $day['sunrise'] ?> <br />Sunset:&nbsp;<?= $day['sunset'] ?>
 			</p>
 		</div>
+	</div>
 
-	</div> <!-- end today -->
+	<?php elseif ($night): ?>
+	<div class='nightblock  bg-midnight' >
 
-
-	<div class='border center floatr  bg-blue ' style=' font-weight:bold; width:45%; vertical-align:top;' >
 		<h3><u>Tonight</u></h3>
 
 		<div class=' inlineblock center' style='vertical-align:top;width:40%;'>
-			<img src="/images/moon/<?= $night['icon'] ?>" style='width:76px' class='auto' >
+			<img src="<?= $night['icon'] ?>" style='width:8em;' class='auto' >
 			<br />
 							<?=$night['moonphase'] ?> (<?=$night['moonillum']?>%&nbsp;illum)
 
 		</div>
-		<div class=' center inlineblock' style='vertical-align:top;width:55%'>
-				<p style='margin-top:0;font-size:1.5rem;'>
-			<?=$night['low']?>
+		<div class=' center inlineblock' style='vertical-align:top;width:55%; font-weight:bold;width-min:350px;'>
+		<p><?= $night['short'] ?></p>
+				<p style='margin-top:0;font-size:1.3rem;'>
+			Low: <?=$night['low']?>
 			</p>
-				<p>Moonrise:&nbsp;<?= $night['moonrise'] ?>  Moonset:&nbsp;<?= $night['moonset'] ?><br /><br />
+				<p>Moonrise:&nbsp;<?= $night['moonrise'] ?>  <br />
+				Moonset:&nbsp;<?= $night['moonset'] ?><br /><br />
 
 				</p>
 		</div>
-	</div> <!-- end tonight -->
+	</div>
+	<?php endif; ?>
+<div style='flex:0 0 2em;'> </div>
+
+<!-- RIGHT PANEL -->
+
+	<?php if ($day): ?>
+	<div class='nightblock bg-midnight' >
+
+		<h3><u>Tonight</u></h3>
+
+		<div class=' inlineblock center' style='vertical-align:top;width:40%;'>
+			<img src="<?= $night['icon'] ?>" style='width:8em;' class='auto' >
+			<br />
+							<?=$night['moonphase'] ?> (<?=$night['moonillum']?>%&nbsp;illum)
+
+		</div>
+		<div class=' center inlineblock' style='font-weight:bold; vertical-align:top;width:55%'>
+		<p><?= $night['short'] ?></p>
+				<p style='margin-top:0;font-size:1.3rem;'>
+			Low: <?=$night['low']?>
+			</p>
+				<p>Moonrise:&nbsp;<?= $night['moonrise'] ?> <br />
+				Moonset:&nbsp;<?= $night['moonset'] ?><br /><br />
+
+				</p>
+		</div>
+		</div>
+		<?php else: ?>
+
+		<div class='dayblock  ' >
+<h3><u>Tomorrow</u></h3>
+			<div class=' inlineblock center' style='vertical-align:top; width:40%;'>
+			<img src="<?= $tomorrow['icon'] ?>" style='width:8em;' class='auto' ><br />
+
+			<b>Wind: </b> <?= $tomorrow['wind']?>
+			</div >
+
+			<div class=' center inlineblock' style='font-weight:bold;vertical-align:top;width:55%; width-min:350px;'>
+			<p><?= $tomorrow['short'] ?></p>
+			<p style='margin-top:0;font-size:1.3rem;'> High: <?=$tomorrow['high']?></p>
+			<p>
+			Sunrise:&nbsp;<?= $tomorrow['sunrise'] ?> <br/>
+			Sunset:&nbsp;<?= $tomorrow['sunset'] ?>
+			</p>
+			</div>
+
+		</div> <!-- end right panel -->
+	<?php endif; ?>
+
 
 
 	</div> <!-- end container -->
