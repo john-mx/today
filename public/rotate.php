@@ -41,7 +41,7 @@ $meta=array(
 	'rotate' => $rotate,
 	'rdelay' => $rdelay,
 	'sunset' => $Today->sunset,
-	'local_site' => $local['local_site'],
+	'local_site' => $local['local_site'] ?? '',
 
 	);
 

@@ -37,7 +37,7 @@ function doResize(elementID) {
 	scale = Math.min(1,scaleRatio); // never grow
 	scale = Math.max(0.65,scale) // never less than 0.75
 
- alert ('- win ' + winheight +' avail = ' + availheight + ' cont ' + contentHeight + ' scale '+ scale);
+// alert ('- win ' + winheight +' avail = ' + availheight + ' cont ' + contentHeight + ' scale '+ scale);
 	if (typeof(element) !== 'object'){
 		alert("[load_snap:38] element not object: " + elid);
 	}

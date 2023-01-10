@@ -862,7 +862,7 @@ public function build_topic_admin() {
 				if ($atext){$z['notices']['alerts'][] = $atext;}
 			}
 
-			$z['alert_alt'] = $y['alert_alt'];
+			$z['alert_alt'] = $y['alert_alt'] ?? '';
 
 			$t = $this->clean_text($y['announcements']);
 			$z['notices']['announcements'] = trim($t);
