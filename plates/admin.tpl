@@ -17,7 +17,7 @@ $open_options = U::buildOptions(['','0','a few','around 10','10 +','?'],'',true)
 
 
 
-<h4>Enter alerts</h4>
+<h4>Enter alerts <?php U::showHelp('alerts');?></h4>
 <p>Enter any alert you wish to display.  Click <button type='button' onClick = "showDiv('galerts');"> Active Alerts</button> to view active alerts from weather.gov. Copy and edit as appropriate. </p>
 
 <div id='galerts' class='hidden'>
@@ -71,14 +71,14 @@ for color red: &lt;span style='color:red;'&gt;text you want &lt;/span&gt;<br />
 <textarea name = 'alert_alt' rows='3' cols='80'><?=$admin['alert_alt'] ??'' ?></textarea>
 
 
-<h4>Enter closures/announcements</h4>
-One announcement per line. They will be listed as bullets <?php U::showHelp('notices');?><br />
+<h4>Enter closures/announcements  <?php U::showHelp('notices');?></h4>
+One announcement per line. They will be listed as bullets <br />
 
 <textarea name='announcements' ><?=$admin['announcements'] ?></textarea>
 
 
-<h4>Enter visitor advice</h4>
-One announcement per line(carriage return). <?php U::showHelp('advice');?><br />
+<h4>Enter visitor advice <?php U::showHelp('advice');?></h4>
+One announcement per line(carriage return). <br />
 <textarea name='advice' ><?=$admin['advice'] ?></textarea>
 
 
@@ -88,7 +88,7 @@ One announcement per line(carriage return). <?php U::showHelp('advice');?><br />
 
 
 
-<h4>Campground status</h4>
+<h4>Campground status <?php U::showHelp('campsites');?></h4>
 
 
 <!--

@@ -43,7 +43,7 @@ use DigitalMx\jotr\Utilities as U;
 ?>
 
 
-<h4>Calendar</h4>
+<h4>Calendar <?php U::showHelp('calendar');?></h4>
 <ol>
 <li>Enter the event's title, location, type, and duration. Duration  will be displayed exactly as you type it (e.g. '45 mins', 'one hour');
 <li>Enter starting time for the event.  If you remove the time, the event will be deleted, If you want to stop displaying the event, but keep it in the system for later use, check the "Suspend" box.
