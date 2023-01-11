@@ -66,7 +66,7 @@ echo $Plates->render('title',$meta);
 If something stops working, try moving the pointer to the top and press the "Refresh" button next to the address bar.
 </p>
 <h3>Localization</h3>
-There are a few settings that can be made locally on the display device you're using (TV, for example.)
+There are a few settings that can be made locally on the display device you're using (TV, for example.)  You access the local settings by clicking on the "now" time at the left side of the title bar on the rotating TV display.
 <ol>
 <li>You can choose the name of the site, which will display in the title bar like "Welcome to the Cottonwood Visitor Center."
 <li>You can choose which of the available pages appears in the rotation sequence on your device.
