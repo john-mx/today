@@ -175,7 +175,7 @@ public function __construct($c){
 	$this->Cal = $c['Calendar'];
 	$this->Cg = $c['CgOpens'];
 	// locations to use for weather report
-	$this -> wlocs = ['jr','cw','br'] ; // weather locations
+	$this -> wlocs = ['jr','cw','br','hq'] ; // weather locations
 	$this -> airlocs = ['jr','cw','br']; // air quality locations
 	// get wgov update imte
 	$wgov = $this->load_cache('wgov');
@@ -929,7 +929,7 @@ public function refresh_caches($force=false) {
 		echo "airown done" . BR;
 
 	}
-	if ($this->over_cache_time('wgov')> 0 || $force) {
+	if ($this->over_cache_time('wgov')> 0 || $force || 0) {
 			$this->rebuild_cache_wgov();
 			echo "wgov done" . BR;
 	}

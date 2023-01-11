@@ -41,15 +41,7 @@ echo $Plates->render('title',$meta);
 <p>
 “Today in the Park” is a internet-based system to provide visitors with key information about this day in Joshua Tree National Park.
 </p>
-<div class='border inleft2 width50 auto'>
-<ul>
-<li><a href='/about.php'>About the Site</a>
-<li><a href='/pages.php' target='pages'>List of Pages and Resources</a>
-<li><a href='/today.php' target='today'>Today in the Park site</a>
-<li><a href='/summary.php' target='today'>Today: one-page summary</a>
-<li><a href='/rotate.php' target='rotate'>Rotating Pages for TV Screen</a>
-</ul>
-</div>
+
 <h4>Overview</h4>
 It includes
 <ul>
@@ -82,4 +74,14 @@ The advantages of this system are:
 	<li>	It eliminates need for rangers to research information and compile signs for visitor centers.</li>
 	<li>	It eliminates the need for any special hardware for TV interface.</li>
 </ul>
+<h3>Resources</h3>
+<div class=' inleft2 width50 auto'>
 
+<ul>
+<li><a href='/about.php'>About the Site</a>
+<li><a href='/pages.php' target='pages'>List of Pages and Resources</a>
+<li><a href='/today.php' target='today'>Today in the Park site</a>
+<li><a href='/summary.php' target='today'>Today: one-page summary</a>
+<li><a href='/rotate.php' target='rotate'>Rotating Pages for TV Screen</a>
+</ul>
+</div>
