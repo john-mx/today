@@ -46,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <tr class='bg-yellow'><td colspan='2'>Information Pages</td></tr>
 
 <tr><td><a href='about.php'>About</a></td><td>General information about the site.</td></tr>
+<tr><td><a href='/'>Overview</td><td>Overview of the project</td></tr>
 
 <tr class='bg-yellow'><td>'Today' Pages</td><td></td></tr>
 
