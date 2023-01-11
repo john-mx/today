@@ -38,11 +38,11 @@ echo $Plates->render('title',$meta);
 <ol>
 <li>You can display it on a internet-enabled TV screen as a rotating series of slides (only tested on Samsung). Uses large type so will look funny on computer.<br />
 <a href='/rotate.php' target='rotate'><code><?=SITE_URL?>/rotate.php</code></a>
-<li>You can print a 1-page summary, including weather and events, for use in visitor centers or campgrounds.<br />
+<li>You can print a 1-page summary, including weather, alerts, and events, for use in visitor centers or campgrounds.<br />
 <a href='summary.php' target='summary'><code><?=SITE_URL?>/summary.php</code></a>
 <li>Anyone can view all the key park info. This is a publicly available site.<br>
 <a href='/today.php' target='today'><code><?=SITE_URL?>/today.php</code></a>
-<li>The web site above can be printed as a 5-page document.
+<li>The web site above can be printed as a 5-page document. (You can also render and print each section individually.  See the page list below.)
 </ol>
 <p>For a complete list of available pages and functions, go to <a href='/pages.php' target='pages'>/pages.php</a></p>
 <p>
@@ -81,9 +81,9 @@ The page "today.php" can be printed from a web browser, and appropriate pages po
  Printing will <ul>
  <li>change the margins to 0.5" on 8.5x11 pages
  <li> reduce the type size,
- <li> removed the "Current temperature" entry.
+ <li> remove the "Current temperature" entry.
  </ul>
-It should fit on five pages each with room for expanding content (today and alerts on page 1;  weather on page 2,  calendar on page 3; campgrounds on page 4; fees on page 5). Campgrounds doesn't include site availability, so is fairly static.
+It should fit on five pages, each with room for expanding content. (today and alerts on page 1;  weather on page 2,  calendar on page 3; campgrounds on page 4; fees on page 5). Campgrounds page doesn't include site availability, so is fairly static.
 </p>
 <p>If printed to a PDF, then the pdf can easily be distributed electronically</p>
 

@@ -71,7 +71,7 @@ The advantages of this system are:
 	<li>	It has a built-in calendar that’s easy to update with 1-off or repeating events.  Pop-up talks can be entered in the morning for use that day or removed if cancelled.</li>
 	<li> It provides a centralized source for key information, so the same information is available everywhere.
 	<li>	It provides near-real-time information to every visitor center or web-site user.</li>
-	<li>	It eliminates need for rangers to research information and compile signs for visitor centers.</li>
+	<li>	It eliminates need for rangers to research information and compose signs for visitor centers.</li>
 	<li>	It eliminates the need for any special hardware for TV interface.</li>
 </ul>
 <h3>Resources</h3>
