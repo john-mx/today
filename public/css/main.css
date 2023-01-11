@@ -214,7 +214,7 @@ div.head {
 	}
 
 	div.head .title>h1 {
-		font-size:1.5em;
+		font-size:1.2rem;
 		color:white;
 		font-weight:bold;
 		margin:0;
@@ -228,10 +228,10 @@ div.head {
 		}
 
 	div.head .title>h2 {
-		font-size:1.2em;
+		font-size:1rem;
 		color:white;
 		font-weight:bold;
-		margin:0.5em;
+		margin:0;
 
 		}
 	div.head  .pad {
@@ -438,8 +438,8 @@ table tr td.lrpad {
 
 
 }
-.warn li {
-	margin-bottom:0.4rem;
+li {
+	margin-bottom:0.4em;
 }
 
 .warn ul {

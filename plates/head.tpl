@@ -31,21 +31,21 @@ use DigitalMx\jotr\Utilities as U;
 	$added_headers = $extra;
 
 	$rotate ??= [];
-	$pagelist = [];
+
 $rdelay ??=13;
 //echo "rdealy $rdelay" . BR; exit;
-
-	if ($rotate){
+$pagel = [];
+if ($rotate){
 	foreach ($rotate as $pid){
 		$pagel[] = '#page-'.$pid;
 	}
+}
 
 	$pagelist = json_encode($pagel);
 //Utilities::echor($pagelist,'pagelist');
 
 //$rdelay = 15; #delay on rotation
 
-	}
 //echo "qs: $qs"; exit;
 	switch ($qs) {
 		case '';

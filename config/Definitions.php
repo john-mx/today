@@ -205,7 +205,8 @@ public static $coordinates = [
 		'29vc' => 'Joshua Tree Cultural Center',
 		'cwvc' => 'Cottonwood Visitor Center',
 		'brvc' => 'Black Rock Visitor Center',
-		'other' => 'Park',
+		'park' => 'Park',
+		'hqvc' => 'Park Headquarters',
 	];
 
 	public static $campsites = [
@@ -465,7 +466,7 @@ mins,
 	}
 	public static function getLocName($loc) {
 
-		$result = self::$sitenames[$loc] ?? "$loc name not found";
+		$result = self::$sitenames[$loc] ?? '';
 		return $result;
 	}
 }

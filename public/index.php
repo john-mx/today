@@ -26,7 +26,7 @@ $meta = array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
 	'page' => basename(__FILE__),
 	'subtitle' => 'Introduction',
-	'extra' => '<style>body {font-family: "Times New Roman", Times, serif}</style>',
+	'extra' => '<style>body {font-family: "Times New Roman", Times, serif;width:90vw;max-width:800px;}</style>',
 );
 
 echo $Plates->render('head',$meta);
@@ -53,8 +53,8 @@ echo $Plates->render('title',$meta);
 <h4>Overview</h4>
 It includes
 <ul>
-	<li>Weather today and next 2 days, including sun and moon.</li>
-
+	<li>Weather for several days for several locations, including Jumbo Rocks</li>
+	<li>Sun and Moon rising and setting times and moon phase.
 	<li>Live data from Lost Horse RS for air quality, temperature, and wind</li>
 	<li>Visitor Advice and Park Announcements</li>
 	<li>Weather.gov alerts, edited for local use.</li>
@@ -65,9 +65,9 @@ It includes
 
 The data is provided in four formats:
 <ol>
-	<li>A “slide show” of pages designed for TV screen.  Each viewing location can choose which sections ("slides") appear in the rotation. The TV requires only internet access (e.g., any modern Samsung TV) and it only accesses the page once ever 15 minutes for updates.  (<a href='/rotate.php' target='rotate'>Rotate</a>)</li>
+	<li>A “slide show” of pages designed for TV screen.  Each viewing location can choose which sections (slides) appear in the rotation. The TV requires only internet access (e.g., any modern Samsung TV) and it only accesses the internet once every 15 minutes for updates.  (<a href='/rotate.php' target='rotate'>Rotate</a>)</li>
 	<li>A one-page printed form, similar to what is used at JTVC.  Includes weather, announcements, and calendar. (<a href='summary.php' target='summary'>Today Summary</a>)</li>
-	<li>A publicly accessible web site that visitors could access themselves.(<a href='today.php' target='today'>Everything</a></li>
+	<li>A publicly accessible web site that visitors could access themselves.(<a href='today.php' target='today'>Everything</a>)</li>
 	<li>A multi-page document can be printed from the "Everything" site, and one or more pages posted.  (e.g, fees page) </li>
 
 </ol>
@@ -75,11 +75,11 @@ The data is provided in four formats:
 The advantages of this system are:
 <ul>
 	<li>	Most of the information is self-updating, using a variety of internet sources such as weather.gov and the eps site.</li>
-	<li>	Manual information is in an easy-to-use web form that can be updated on any computer.</li>
-	<li>	It has a built-in calendar that’s easy to updated with repeating events and extra information.  Pop-up talks can be entered in the morning for use that day or removed if cancelled.</li>
+	<li>	Manual information is entered in an easy-to-use web form that can be updated on any computer.</li>
+	<li>	It has a built-in calendar that’s easy to update with 1-off or repeating events.  Pop-up talks can be entered in the morning for use that day or removed if cancelled.</li>
 	<li> It provides a centralized source for key information, so the same information is available everywhere.
-	<li>	It provides near-real-time information that can be available in every visitor center.</li>
+	<li>	It provides near-real-time information to every visitor center or web-site user.</li>
 	<li>	It eliminates need for rangers to research information and compile signs for visitor centers.</li>
-	<li>	It eliminates the need for any special hardware.</li>
+	<li>	It eliminates the need for any special hardware for TV interface.</li>
 </ul>
 

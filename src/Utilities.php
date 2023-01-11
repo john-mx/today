@@ -292,7 +292,7 @@ public static function inMultiArray($element, array $array, bool $strict = true)
             if($bool) return true;
 
             if(is_array($value)){
-                $bool = inMultiArray($element, $value, $strict);
+                $bool = self::inMultiArray($element, $value, $strict);
             } else {
                 $bool = $strict ? $element === $value : $element == $value;
             }

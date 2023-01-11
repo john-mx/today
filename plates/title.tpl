@@ -8,9 +8,12 @@ use DigitalMx\jotr\Utilities as U;
 	$title = 'Today in Joshua Tree National Park';
 	if(empty($subtitle)) $subtitle = date('l, F j, Y');
 	$qs ??= '';
-	$local_site ??='other';
+	$local_site ??='';
 
-	$local_site = Defs::$sitenames[$local_site] ?? '';
+	$local_site = Defs::getLocName($local_site);
+	$local_head = ($local_site)?
+		"<div><b>Welcome to the $local_site</b></div>"
+		: '';
 ?>
 <div class='head' id='titles'>
 <?php if ($qs == 'snap'): ?>
@@ -18,10 +21,12 @@ use DigitalMx\jotr\Utilities as U;
 <?php endif; ?>
 
 <div class='title'>
-	<h2><?=$title?></h2>
+	<h1><?=$title?></h1>
 
-	<h2><?=$subtitle?></h2>
-
+	<?php if ($local_head): ?>
+		<h2>Welcome to the <?=$local_site?></h2>
+	<?php endif;?>
+		<h1><?=$subtitle?></h1>
 </div>
 
 <div class='pad'>

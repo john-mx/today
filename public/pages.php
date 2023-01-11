@@ -43,14 +43,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <h4>Pages</h4>
 <table class='index'>
 <tr><td >Link</td><td >Result</td></tr>
-<tr class='bg-yellow'><td>Information Pages</td><td></td></tr>
-<tr><td><a href='intro.php'>Introduction</a></td><td>Introduction to the service</td></tr>
+<tr class='bg-yellow'><td colspan='2'>Information Pages</td></tr>
+
 <tr><td><a href='about.php'>About</a></td><td>General information about the site.</td></tr>
 
 <tr class='bg-yellow'><td>'Today' Pages</td><td></td></tr>
 
 <tr><td ><a href="/today.php" target='today'>Everything</a>
-</td><td >Regular web page with all data.  Does not include campsite availability. (or should it?) Publicly accessible.</td></tr>
+</td><td >Public web site with all data. Can be printed (5 pages).  Does not include campsite availability. (or should it?)</td></tr>
 
 <tr><td ><a href="/summary.php" target='summary'>Today</a>
 </td><td >One page summary of today's conditions, alerts, and events. </td></tr>

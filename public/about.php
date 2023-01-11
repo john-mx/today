@@ -37,11 +37,11 @@ echo $Plates->render('title',$meta);
 <p>The “Today” site  is a web-based presentation of today’s conditions and activities in the park. It includes weather, alerts and advice, events, and (soon) campsite availability.   It was designed to make timely information available to visitors with minimal effort from park rangers and staff. The information is produced in four formats:</p>
 <ol>
 <li>You can display it on a internet-enabled TV screen as a rotating series of slides (only tested on Samsung). Uses large type so will look funny on computer.<br />
-<a href='https://jotr.digitalmx.com/rotate.php' target='rotate'><code>https://jotr.digitalmx.com/rotate.php</code></a>
+<a href='/rotate.php' target='rotate'><code><?=SITE_URL?>/rotate.php</code></a>
 <li>You can print a 1-page summary, including weather and events, for use in visitor centers or campgrounds.<br />
-<a href='https://jotr.digitalmx.com/summary.php' target='summary'><code>https://jotr.digitalmx.com/summary.php</code></a>
+<a href='summary.php' target='summary'><code><?=SITE_URL?>/summary.php</code></a>
 <li>Anyone can view all the key park info. This is a publicly available site.<br>
-<a href='https://jotr.digitalmx.com/today.php' target='today'><code>https://jotr.digitalmx.com/today.php</code></a>
+<a href='/today.php' target='today'><code><?=SITE_URL?>/today.php</code></a>
 <li>The web site above can be printed as a 5-page document.
 </ol>
 <p>For a complete list of available pages and functions, go to <a href='/pages.php' target='pages'>/pages.php</a></p>
@@ -49,12 +49,13 @@ echo $Plates->render('title',$meta);
 <h3>How to set up the rotating display on a Samsung TV:</h3>
 </p>
 <ol>
-<li>Turn on the TV and press Source on remote or press Home.  Press  down and right arrow to move across sources and get to the “Internet:” choice, and select it.
+<li>Turn on the TV and press Source on remote or press Home.  Press  down and right arrow on the remote (may be circle around central button) to move across sources and get to the “Internet:” choice, and select it.
 <li> If you get a page with bookmarks that shows a "Rotate" site, choose it from the bookmarks, and you're basically done.
 <li> Otherwise
 	<ol type='a'>
-<li>type this url  into the url field using the arrow keys and center “Enter” button. <br /> <code>https://jotr.digitalmx.com/rotate.php</code>
-<li> Scroll to and enter “Done” when finished.
+<li>Move to the URL field and press Enter.  You'll get a keyboard on the screen.
+<li>Type this url into the url field using the arrow keys and center “Enter” button to navigate the keyboard. <br /> <code>https://jotr.digitalmx.com/rotate.php</code><br />
+<li> Scroll to and press the “Done” key when finished.  The Today page should come up.
 <li> Move the pointer to the Star at the right of the address bar and press Enter to bookmark the site.<br />(Choose local, I think).
 
 <li>(One time setup) Use the arrow keys to navigate to the 3-bar menu pattern at very top right ,and choose Settings.  Under General, set the home page to Bookmarks, and Enable the “hide menu bar automatically” choice.
@@ -62,7 +63,7 @@ echo $Plates->render('title',$meta);
 <li> Just to be sure... At the top right (use arrow keys to scroll up until menu bar appears), make sure you are set for “100%”. Choose plus and minus tabs to change.
 </ol>
 <p>The screen will change every 15 seconds.  (The first iteration may take longer.) It's just one page, broken into sections that sequentially are visible on the screen.  The page updates every 15 minutes to pick up any new information.<br />
-If something stops working, try pressing the "Refresh" button next to the address bar.
+If something stops working, try moving the pointer to the top and press the "Refresh" button next to the address bar.
 </p>
 <h3>Localization</h3>
 There are a few settings that can be made locally on the display device you're using (TV, for example.)

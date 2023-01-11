@@ -2,7 +2,7 @@
 function load_snap() {
 	startRotation(rdelay,pageList);
 	display_clock();
-	doResize('page-today');
+
 
 };
 /* resize the content portion of the page
