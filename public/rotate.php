@@ -28,8 +28,10 @@ $y=$Today->load_cache('admin');
 $admin['rotate'] = $y['rotate'] ?: ['today'];
 $local = $_SESSION['local'] ?? [];
 //Utilities::echor($local,'local');
-$rotate = ($local['rotate'])?$local['rotate'] :$admin['rotate'] ;
-$rdelay = ($local['rdelay'])?$local['rdelay']: $y['rdelay'];
+
+$rotate = (isset($local['rotate']))?$local['rotate'] :$admin['rotate'] ;
+$rdelay = (isset($local['rdelay']))?$local['rdelay']: $y['rdelay'];
+
 
 // Utilities::echor($rotate,'rotate',STOP);
 
