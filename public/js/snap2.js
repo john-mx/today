@@ -55,6 +55,7 @@ function rotateDivs(idList){
 		rotateDivs.last = 0;
 	}
 // alert ("pointer " + rotateDivs.pointer + " last " +rotateDivs.last );
+document.getElementById('loadholder').style.display='none';
 doResize(ondiv);
 return true;
 }

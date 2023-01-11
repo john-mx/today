@@ -72,7 +72,7 @@ There are a few settings that can be made locally on the display device you're u
 <li>You can choose which of the available pages appears in the rotation sequence on your device.
 <li> You can choose the rotation rate: how many seconds per slide.
 </ol>
-These settings are stored locally on the display device for 48 hours after last usage, and then would have to be reset.
+These settings are stored locally on the display device for 48 hours after last usage, and then revert to default system settings.
 <h3>Printing Today Pages</h3>
 <p>
 The page "today.php" can be printed from a web browser, and appropriate pages posted in a Visitor Center.
