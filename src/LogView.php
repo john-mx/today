@@ -1,9 +1,6 @@
 <?php
 namespace DigitalMx\jotr;
 
-	use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
-
 /*
 	script to retrieve log files
 
@@ -17,7 +14,7 @@ class LogView {
 
 	public function list_logs(){
 		$filelist = glob("$this->dir/*.log");
-#		u\echor($filelist);
+#		Utilities::echor($filelist);
 	echo "<h3>Log Records</h3>" . NL;
 	echo "Click to view contents" . NL;
 		echo "<ul>";

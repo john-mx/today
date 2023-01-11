@@ -1,6 +1,9 @@
 <?php
+namespace DigitalMx\jotr;
 use DigitalMx\jotr\Definitions as Defs;
-use DigitalMx as u;
+use DigitalMx\jotr\Utilities as U;
+
+
 ?>
 
 <?php
@@ -34,7 +37,7 @@ if(empty($wapi)): echo "<p>No Data</p>"; else:
 		// note: fcstart + 0 converts to numeric
 			for ($i=$fcstart+0;$i<$fcstart+$daycnt;++$i) : //for 3 days
 				$day = $wapi['forecast']['jr'][$i];
-// 		u\echor ($day ,'day',STOP);
+// 		Utilities::echor ($day ,'day',STOP);
 				echo "<th>{$day['date']}</th>";
 			endfor;
 		?>

@@ -1,16 +1,19 @@
 <?php
 namespace DigitalMx\jotr;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
 
-ini_set('display_errors', 1);
+
 
 //BEGIN START
 	require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
-	use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
+
+
+
 	use DigitalMx\jotr\Today;
 
 	$Plates = $container['Plates'];
-	
+
 	$Today = $container['Today'];
 
 
@@ -20,7 +23,7 @@ $qs = $_SERVER['QUERY_STRING'] ?? '';
 
 
 
-//u\echor($y,'y',STOP);
+//Utilities::echor($y,'y',STOP);
 
 // using "Today' as title prevents it from re-appearing on the today page.
 $meta=array(
@@ -41,4 +44,4 @@ $meta=array(
 // 	file_put_contents(REPO_PATH .'/data/test.html',
 // 		$Plates -> render('today',['data'=>$y]) );
 //	if ($qs == 's')echo $Plates -> render ('scroll_script');
-//	u\echor($y,'data to plate');
+//	Utilities::echor($y,'data to plate');

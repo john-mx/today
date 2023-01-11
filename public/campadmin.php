@@ -1,16 +1,18 @@
 <?php
+namespace DigitalMx\jotr;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
 
-use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
+
 	use DigitalMx\jotr\Today;
 
 	$Plates = $container['Plates'];
-	
+
 	$Today = $container['Today'];
 	$Login = $container['Login'];
 	$Cal = $container['Calendar'];
 
-$open_options = u\buildOptions(['','0','1-3','4-9','10+','?'],'',true);
+$open_options = Utilities::buildOptions(['','0','1-3','4-9','10+','?'],'',true);
 
 $meta=array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
@@ -27,7 +29,7 @@ if (isset($_POST['pw']) ) {// is login
 
 $Login->check_pw(1);
 
-//u\echor($_POST,'post');
+//Utilities::echor($_POST,'post');
 
 if (!empty($_POST) && !isset($_POST['pw'])) {
 		post_data ($_POST,$Today);
@@ -43,7 +45,7 @@ if (!empty($_POST) && !isset($_POST['pw'])) {
 echo $Plates->render('title',$meta);
 
 		$y = $Today-> prepare_admin();
-// u\echor($y);
+// Utilities::echor($y);
 		echo $Plates->render('admin',$y);
 
 

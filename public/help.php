@@ -1,17 +1,21 @@
 <?php
 namespace DigitalMx\jotr;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
+
 
 //BEGIN START
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 
 //	use DigitalMx\jotr\Utilities as U;
-// 	use DigitalMx as u;
+//
 // 	use DigitalMx\jotr\Refresh;
-// 	use DigitalMx\jotr\Definitions as Defs;
+//
+
 
 
 	$Plates = $container['Plates'];
-// 	
+//
 // 	$Today = $container['Today'];
 // 	$Cal = $container['Calendar'];
 

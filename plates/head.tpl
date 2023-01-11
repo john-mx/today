@@ -1,6 +1,9 @@
 <?php
-	use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
+namespace DigitalMx\jotr;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
+
+
 	use DigitalMx\jotr\Today;
 
 /* start with ['title'=>title,'pcode'=style code,'extra'=>extra headers];
@@ -33,17 +36,12 @@ $rdelay ??=13;
 //echo "rdealy $rdelay" . BR; exit;
 
 	if ($rotate){
-	// $pagelist = '[';
-// 		foreach ($rotate as $pid){
-// 			$pagelist .= "'#page-$pid',";
-// 		}
-// 	$pagelist .="]";
 	foreach ($rotate as $pid){
 		$pagel[] = '#page-'.$pid;
 	}
 
 	$pagelist = json_encode($pagel);
-//u\echor($pagelist,'pagelist');
+//Utilities::echor($pagelist,'pagelist');
 
 //$rdelay = 15; #delay on rotation
 
@@ -75,7 +73,7 @@ $rdelay ??=13;
 			break;
 
 		default:
-			u\echoAlert ("Undefined option: $pcode");
+			Utilities::echoAlert ("Undefined option: $pcode");
 				echo "<script>window.location.href='/today.php';</script>";
 				exit;
 	}

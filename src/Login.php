@@ -1,6 +1,8 @@
 <?php
-
 namespace DigitalMx\jotr;
+
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
 
 /*
     get password
@@ -17,8 +19,9 @@ namespace DigitalMx\jotr;
     	gets level from pw.ini; sets session; returns level
 */
 
-use DigitalMx as u;
-use DigitalMx\jotr\Definitions as Defs;
+
+
+
 
 
 class Login

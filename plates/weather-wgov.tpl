@@ -1,6 +1,9 @@
 <?php
+namespace DigitalMx\jotr;
 use DigitalMx\jotr\Definitions as Defs;
-use DigitalMx as u;
+use DigitalMx\jotr\Utilities as U;
+
+
 ?>
 
 
@@ -24,7 +27,7 @@ use DigitalMx as u;
 		<?php
 			for ($i=$fcstart+1;$i<$fcstart+$daycnt+1;++$i) : //for 3 days
 				$daytext = $wgov['jr'][$i]['Night']['daytext'];
-		//u\echor ($day ,'day',STOP);
+		//Utilities::echor ($day ,'day',STOP);
 				echo "<th>$daytext</th>";
 			endfor;
 		?>

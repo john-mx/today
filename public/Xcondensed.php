@@ -5,8 +5,9 @@ ini_set('display_errors', 1);
 
 //BEGIN START
 	require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
-	use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
+	
+	
+
 	use DigitalMx\jotr\Today;
 
 	$Plates = $container['Plates'];
@@ -20,7 +21,7 @@ ini_set('display_errors', 1);
 
 
 $y = $Today->prepare_topics ();
-//u\echor($y,'y',STOP);
+//Utilities::echor($y,'y',STOP);
 
 
 $meta=array(

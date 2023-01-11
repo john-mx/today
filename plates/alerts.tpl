@@ -1,10 +1,14 @@
 <?php
+namespace DigitalMx\jotr;
 use DigitalMx\jotr\Definitions as Defs;
-use DigitalMx as u;
+use DigitalMx\jotr\Utilities as U;
+
+
+
 ?>
 
 <?php
-//u\echor($admin,'admin');
+//Utilities::echor($admin,'admin');
 $alerts = $admin['notices']['alerts'];
 	if (!empty($alerts)):
 		foreach ($alerts as $alert):

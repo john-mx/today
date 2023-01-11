@@ -1,5 +1,7 @@
 <?php
 namespace DigitalMx\jotr;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
 
 
 
@@ -7,9 +9,10 @@ namespace DigitalMx\jotr;
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 
 //	use DigitalMx\jotr\Utilities as U;
-// 	use DigitalMx as u;
+//
 // 	use DigitalMx\jotr\Refresh;
-// 	use DigitalMx\jotr\Definitions as Defs;
+//
+
 
 
 	$Plates = $container['Plates'];
@@ -31,14 +34,15 @@ echo $Plates->render('title',$meta);
 
 ?>
 <h3>About Today</h3>
-<p>The “Today” site  is a web-based presentation of today’s conditions and activities in the park. It includes weather, alerts and advice, events, and (soon) campsite availability.   It was designed to make timely information available to visitors with minimal effort from park rangers and staff. There are three major products:</p>
+<p>The “Today” site  is a web-based presentation of today’s conditions and activities in the park. It includes weather, alerts and advice, events, and (soon) campsite availability.   It was designed to make timely information available to visitors with minimal effort from park rangers and staff. The information is produced in four formats:</p>
 <ol>
 <li>You can display it on a internet-enabled TV screen as a rotating series of slides (only tested on Samsung). Uses large type so will look funny on computer.<br />
 <a href='https://jotr.digitalmx.com/rotate.php' target='rotate'><code>https://jotr.digitalmx.com/rotate.php</code></a>
 <li>You can print a 1-page summary, including weather and events, for use in visitor centers or campgrounds.<br />
 <a href='https://jotr.digitalmx.com/summary.php' target='summary'><code>https://jotr.digitalmx.com/summary.php</code></a>
-<li>Anyone can view, or print as a set of 5 pages, all the key park info. This is a publicly available site.<br>
+<li>Anyone can view all the key park info. This is a publicly available site.<br>
 <a href='https://jotr.digitalmx.com/today.php' target='today'><code>https://jotr.digitalmx.com/today.php</code></a>
+<li>The web site above can be printed as a 5-page document.
 </ol>
 <p>For a complete list of available pages and functions, go to <a href='/pages.php' target='pages'>/pages.php</a></p>
 <p>
@@ -83,7 +87,7 @@ It should fit on five pages each with room for expanding content (today and aler
 <p>If printed to a PDF, then the pdf can easily be distributed electronically</p>
 
 <h3>Information Sources</h3>
-<p>Weather information comes from both weather.gov (NOAA) and weatherapi.com (commercial site).  The NOAA data is focused better on a geographic area, but is sometimes unreliable.  The weatherapi data is substituted if weather.gov fails, but the data is for 29 Palms and Indio, not Jumbo rocks and Cottonwood.</p>
+<p>Weather information comes from both weather.gov (NOAA) and weatherapi.com (commercial site).  The NOAA data is focused better on a geographic area, so it forecasts for Jumbo Rocks, not just 29 palms.  The weatherapi data is substituted if weather.gov fails, but the data is for 29 Palms and Indio, not Jumbo rocks and Cottonwood.</p>
 <p>Current data comes from the sensors at Lost Horse Ranger Station, updated every few hours.  If data is not available, it is reported as "n/a". </p>
 <p>Astro data (sun, moon) is from weatherapi.com. Should be non-controversial.</p>
 <p>Air quality is from airnow.com (EPS site).</p>

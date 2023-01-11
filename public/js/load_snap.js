@@ -21,25 +21,28 @@ function doResize(elementID) {
 	} else { // its already an object
 		element = elementID;
 	}
-
+	// assume tv window is 1920 x 1080 (16x9)
 	var elid = element.id;
 	var contentHeight = element.offsetHeight;
+	var contentWidth = element.offsetWidth;
  // content
-	var titleheight = document.getElementById('titles').offsetHeight;
+	var titleHeight = document.getElementById('titles').offsetHeight;
 
-	var pageheight = contentHeight + titleheight;
-	var  winheight = window.innerHeight;
+	var pageHeight = contentHeight + titleHeight;
+	var  winHeight = window.innerHeight;
 	var  winwidth = window.outerWidth;
 
-	var availheight = winheight-titleheight;
+	var  calcHeight = contentWidth * 9/16;
 
-	var scaleRatio = availheight/contentHeight;
+	var availHeight = 1080 - titleHeight;
+
+	var scaleRatio = availHeight/contentHeight;
 	scale = Math.min(1,scaleRatio); // never grow
 	scale = Math.max(0.65,scale) // never less than 0.75
-
-// alert ('- win ' + winheight +' avail = ' + availheight + ' cont ' + contentHeight + ' scale '+ scale);
+	var scaler = Math.round(scale*100);
+// alert ('content ' +contentWidth +'x' + contentHeight +' avail ' + 1920 +' x ' +availHeight + ' scale '+ scaleRatio + ' (' + scaler + '%)');
 	if (typeof(element) !== 'object'){
-		alert("[load_snap:38] element not object: " + elid);
+		alert("[load_snap] element not object: " + elid);
 	}
 	element.style.transform = "scale("+scale+")";
 	var scaler = Math.round(scale*100);

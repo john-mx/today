@@ -1,6 +1,9 @@
 <?php
+namespace DigitalMx\jotr;
 use DigitalMx\jotr\Definitions as Defs;
-use DigitalMx as u;
+use DigitalMx\jotr\Utilities as U;
+
+
 ?>
 
 <?php
@@ -31,7 +34,7 @@ if( 0 && !empty($wapi)):
 		// note: fcstart + 0 converts to numeric
 			for ($i=$fcstart;$i<$fcstart+$daycnt;++$i) : //for 3 days
 				$day = $wapi['forecast']['jr'][$i];
-// 		u\echor ($day ,'day',STOP);
+// 		Utilities::echor ($day ,'day',STOP);
 				echo "<th>{$day['date']}</th>";
 			endfor;
 		?>
@@ -70,7 +73,7 @@ if( 0 && !empty($wapi)):
 
 <?php
 	if(!empty($wgov)):
-//	u\echor($wgov,'wgov to 1line');
+//	Utilities::echor($wgov,'wgov to 1line');
 	$wspec=[
 	'wslocs'=> $wslocs ??= ['jr','br','cw'],
 	'wsdays'=> $wsdays ??= 3,
@@ -93,7 +96,7 @@ if( 0 && !empty($wapi)):
 		// note: fcstart + 0 converts to numeric
 			for ($i=$fcstart+1;$i<$fcstart+$daycnt+1;++$i) : //for 3 days
 				$day = $wgov['jr'][$i];
-// 		u\echor ($day ,'day',STOP);
+// 		Utilities::echor ($day ,'day',STOP);
 				echo "<th>{$day['Day']['name']}</th>";
 			endfor;
 		?>
@@ -112,7 +115,7 @@ if( 0 && !empty($wapi)):
 			// today is i=1, so fcstart +1
 			for ($i=$fcstart+1;$i<$fcstart+$daycnt+1;++$i) : //for 3 days
 				$p = $days[$i] ;
-//u\echor($p,$loc. ' $p ' .$i);
+//Utilities::echor($p,$loc. ' $p ' .$i);
 
 
 				?>

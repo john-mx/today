@@ -3,8 +3,9 @@ namespace DigitalMx\jotr;
 
 require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 
-	use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
+	
+	
+
 	use DigitalMx\jotr\Login;
 #$Login = $container['Login'];
 

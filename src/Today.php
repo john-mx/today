@@ -1,20 +1,17 @@
 <?php
 namespace DigitalMx\jotr;
 
-#ini_set('display_errors', 1);
 
-//BEGIN START
-	//require_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
-	use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
-	use DigitalMx\jotr\Log;
-	use DigitalMx\jotr\Utilities as J;
+use DigitalMx\jotr\Log;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
+
 
 
 
 //END START
 
-// u\echor (CACHE); exit;
+// Utilities::echor (CACHE); exit;
 
 /* TOPICS
 
@@ -225,7 +222,7 @@ public function build_topics(){
 		);
 
 
-//	u\echor($topics,'topics',STOP);
+//	Utilities::echor($topics,'topics',STOP);
 
 		return $topics;
 }
@@ -246,15 +243,15 @@ public function prepare_admin() {
 	 ] as $f){
 	 	$y[$f] = $admin[$f];
 	 }
-// 	u\echor ($y, 'read admin cache', NOSTOP);
+// 	Utilities::echor ($y, 'read admin cache', NOSTOP);
 
 	// set firelevel options array
 	$fire_levels = array_keys(Defs::$firewarn);
-	$y['fire_level_options'] = u\buildOptions($fire_levels,$admin['fire_level']);
+	$y['fire_level_options'] = Utilities::buildOptions($fire_levels,$admin['fire_level']);
 
 // camps
 	foreach (array_keys(Defs::$campsites) as $cgcode){
-		$opt = u\buildOptions(Defs::$cgstatus, $admin['cgstatus'][$cgcode] ?? '');
+		$opt = Utilities::buildOptions(Defs::$cgstatus, $admin['cgstatus'][$cgcode] ?? '');
 		$opts[$cgcode]  = $opt;
 		$notes[$cgcode] = $admin['cgnotes'][$cgcode] ?? '';
 
@@ -272,10 +269,10 @@ public function prepare_admin() {
 	//$y['admin']['cgres'] = $this->load_cache('cgres') ?? [];
 
 
-	foreach (['alertA','alertB'] as $alertID){
-		$atitle = trim($admin[$alertID]['title']);
-		$atext = $admin[$alertID]['text'];
-		$aexp = $admin[$alertID]['expires'];
+	foreach (['alertA'] as $alertID){
+		$atitle = trim($admin[$alertID]['title'] ??'');
+		$atext = $admin[$alertID]['text']??'';
+		$aexp = $admin[$alertID]['expires']??'';
 		if (empty ($atitle) || ($aexp<time()) ){
 			$btitle=$btext=$bexp='';
 		} else {
@@ -312,7 +309,7 @@ public function prepare_admin() {
 
 
 
-//  u\echor ($r, 'r to admin',NOSTOP);
+//  Utilities::echor ($r, 'r to admin',NOSTOP);
 	return $r;
 }
 
@@ -354,7 +351,7 @@ public function load_cache ($section,$refresh=true) {
 			Log::error("Failed to load cache $section.  Returning empty.");
 			return [];
 		}
-		//u\echor($y,$section,NOSTOP) . BR;
+		//Utilities::echor($y,$section,NOSTOP) . BR;
 		$this->$section = $y;
 		return $y;
 }
@@ -365,13 +362,13 @@ public function post_admin ($post) {
 
 
 */
-//  u\echor ($post, 'Posted' );
+//  Utilities::echor ($post, 'Posted' );
 
 //  admin cache
 	$y=[];
 	$y['announcements'] = trim($post['announcements']);
 	$y['updated'] = date('d M H:i');
-	$y['pithy'] = trim(u\despecial($post['pithy']));
+	$y['pithy'] = trim(Utilities::despecial($post['pithy']));
 //fire
 
 	$y['fire_level'] = $post['fire_level'];
@@ -382,27 +379,27 @@ public function post_admin ($post) {
 
 
 	$y['cgstatus'] = $post['cgstatus']; // array
-// 	u\echor ($y,'to write admin cache',STOP);
+// 	Utilities::echor ($y,'to write admin cache',STOP);
 	$y['cgnotes']  =$post['cgnotes'] ; //array
 	$y['uncertainty'] = $post['uncertainty']; #hours to keep site avail
 	$y['rotate'] = $post['rotate']; //array
-//u\echor($y,'y',STOP);
+//Utilities::echor($y,'y',STOP);
 	$y['rdelay'] = $post['rdelay']; #rotation time
 
 
 // check alerts
-	foreach (['alertA','alertB'] as $alertID) {
+	foreach (['alertA'] as $alertID) {
 		$y[$alertID] = $this->checkAlert($post[$alertID]);
 	}
-	u\echor($y ,'post');
+	//Utilities::echor($y ,'post',STOP);
 
 	$this -> write_cache('admin',$y);
 
 	$cgo = $post['cgupdate'];
-//	u\echor ($cgo,'cgupdate from post');
+//	Utilities::echor ($cgo,'cgupdate from post');
 	// remove any enbtries with blank avlues
 	$cgo = array_filter($cgo,function ($val) {return ($val !== '' );});
-	//u\echor ($cgo,'cgupdate after filter');
+	//Utilities::echor ($cgo,'cgupdate after filter');
 	$cgopen = [];
 	$cgres = [];
 
@@ -430,7 +427,8 @@ public function post_admin ($post) {
 }
 
 private function checkAlert ($alert) {
-//   u\echor($alert,'start alert check');
+//   Utilities::echor($alert,'start alert check');
+	if (!$alert || empty($alert['title'])){return [];}
 	if (empty (trim($alert['title']))) {
 // 		echo "cleared";
 		$y['expires'] = $y['text'] = $y['title'] = '';
@@ -440,20 +438,20 @@ private function checkAlert ($alert) {
 		$y['text'] =  $alert['text'];
 		if (empty($alert['expires'])){
 
-			u\alertBadInput("Must have an expiration date for an alert");
+			Utilities::alertBadInput("Must have an expiration date for an alert");
 		}
 		try{$alertAx = new \DateTime($alert['expires'],new \DateTimeZone('America/Los_Angeles'));}
 		catch (\Exception $e) {
-			u\alertBadInput ("Cannot understand date/time: {$alert['expires']}");
+			Utilities::alertBadInput ("Cannot understand date/time: {$alert['expires']}");
 		}
 		$alertAxts = $alertAx->format('U');
 		if ($alertAxts < time()) {
-			u\alertBadInput("Expiration less than now.  To delete item, remove the title");
+			Utilities::alertBadInput("Expiration less than now.  To delete item, remove the title");
 		}
 
 		$y['expires'] = $alertAxts;
 	}
-//  u\echor($y,'checked alert');
+//  Utilities::echor($y,'checked alert');
 	return $y;
 }
 
@@ -461,11 +459,11 @@ private function checkAlert ($alert) {
 public function mergeCache($cache,$merge){
 // merges data into cache, unless data is empty
 		$x = $this->load_cache($cache,false) ; #don't refresh it	Log::info("Merged updated cache $loginfo");
-//		u\echor ($x, "merge: Loaded cache $cache");
-//		u\echor ($merge,'merge: Data to merge');
+//		Utilities::echor ($x, "merge: Loaded cache $cache");
+//		Utilities::echor ($merge,'merge: Data to merge');
 		if (! empty ($merge)){ #if empty you're done
 			$y = array_merge($x,$merge);
-// 		u\echor ($y,'merged cache');
+// 		Utilities::echor ($y,'merged cache');
 			$this->write_cache($cache,$y);
 		}
 	}
@@ -473,7 +471,7 @@ public function mergeCache($cache,$merge){
 
 public function buildPDF(){
 	$y = $this->prepare_topics ();
-//u\echor($y,'y',STOP);
+//Utilities::echor($y,'y',STOP);
 
 // using "Today' as title prevents it from re-appearing on the today page.
 $meta=array(
@@ -504,7 +502,7 @@ public function build_topic_calendar() {
 	 	return [];
 	 }
 
-#	u\echor($z,'calendar',STOP);
+#	Utilities::echor($z,'calendar',STOP);
 //	$y=$this->Cal->filter_calendar($z,0);
 	return ['calendar' => $z];
 }
@@ -526,7 +524,7 @@ public function build_topic_current() {
 	$current_uv = $wapi['jr']['current']['uv'];
 	$y['uv'] = $this->uv_data($current_uv);
 
-// u\echor($y,'current', NOSTOP);
+// Utilities::echor($y,'current', NOSTOP);
 	return ['current' => $y];
 }
 
@@ -547,14 +545,14 @@ public function build_admin_calendar() {
 	 	return [];
 	 }
 
-#	u\echor($z,'calendar',STOP);
+#	Utilities::echor($z,'calendar',STOP);
 	$y=$this->Cal->filter_calendar($z,0);
 	return ['calendar' => $y];
 }
 
 public function build_topic_uv() {
 	$y = $this->load_cache('wapi');
-//u\echor ($y);
+//Utilities::echor ($y);
 	$uv = $y['jr']['forecast']['forecastday'][0]['day']['uv'];
 	$uvdata=$this->uv_data($uv);
 	return ['uvdata'=>$uvdata];
@@ -608,7 +606,7 @@ public function build_topic_light() {
 		'source' => 'unknown',
 		),
 	);
-	//u\echor($z,'z init',STOP);
+	//Utilities::echor($z,'z init',STOP);
 
 		// count how many periods captured.  If if it ends up 1, then
 		// there is only a night component.  If it's 2, then there
@@ -630,7 +628,7 @@ public function build_topic_light() {
 
 
 		//$wapi = $this->format_wapi($y);
-		//u\echor($wapi,'formatted wapi', NOSTOP);
+		//Utilities::echor($wapi,'formatted wapi', NOSTOP);
 		$z['day']['sunrise'] =  $this -> time_format( $astro['sunrise']);
 		$z['day']['sunset'] = $this -> time_format($astro['sunset']);
 		$z['day']['wind'] = $wind;
@@ -669,8 +667,8 @@ public function build_topic_light() {
 		$z['update']['source'] = 'Forecast for Black Rock from weatherapi.com';
 		$z['update']['period_count'] = $period_count;
 
-		//u\echor($z,'z init',STOP);
-
+		//Utilities::echor($z,'z init',STOP);
+		$this->sunset = $z['day']['sunset'] ?? '';
 	}
 
 
@@ -681,7 +679,7 @@ public function build_topic_light() {
 		){
 		// update for wgov data
 		$tomorrow_done = false;
-//u\echor($wgov,'wgov from cache');
+//Utilities::echor($wgov,'wgov from cache');
 		$wupdated = strtotime($wgov['jr']['properties']['updated']) ;
 		$period_count = 0;
 
@@ -692,7 +690,7 @@ public function build_topic_light() {
 			}
 			//if ($period['isDaytime']) continue; // test no night segment
 			++$period_count;
-			//u\echor($period,'period ');
+			//Utilities::echor($period,'period ');
 			// found first period that has not ended yet
 			if ($period['isDaytime'] && $period_count == 1) {
 				// $wind = $period['windSpeed'] . ' ' . $period['windDirection'];
@@ -755,8 +753,8 @@ public function build_topic_light() {
 		} #end foreach
 
 	} #end wgov
- //	u\echor($z,'light prepared');
-	$this->sunset = $z['day']['sunset'] ?? '';
+ //	Utilities::echor($z,'light prepared');
+
 	return ['light' => $z];
 } #end function
 
@@ -769,7 +767,7 @@ public function build_topic_weather() {
 	 }
 
 	$z['wgov'] = $this->format_wgov($wgov);
-// u\echor($z,'formatted wgov',STOP);
+// Utilities::echor($z,'formatted wgov',STOP);
 
 	//get current temp
 	$w = $this->load_cache('wapi');
@@ -778,7 +776,7 @@ public function build_topic_weather() {
 //	$z['wgov_forecast'] = $this->format_wgov_forecast($wgov);
 
 
-//	u\echor($z,'weather topic');
+//	Utilities::echor($z,'weather topic');
 	return $z;
 }
 
@@ -795,7 +793,7 @@ public function build_topic_campgrounds() {
 	 	Log::error ("Could not load cache admin");
 	 	return [];
 	 }
-//u\echor($y, 'loaded admin cache');
+//Utilities::echor($y, 'loaded admin cache');
 
 	$w['camps']['cg_notes'] = $y['cgnotes'];
 	$w['camps']['cg_status'] = $y['cgstatus'];
@@ -824,7 +822,7 @@ public function build_topic_campgrounds() {
 
 
 
-//u\echor($w['camps'], 'camps', NOSTOP);
+//Utilities::echor($w['camps'], 'camps', NOSTOP);
 	return $w;
 }
 
@@ -850,16 +848,16 @@ public function build_topic_admin() {
 	 	Log::error ("Could not load cache admin");
 	 	return [];
 	 }
-// 	u\echor($y , 'loaded cache admin');
+// 	Utilities::echor($y , 'loaded cache admin');
 		//clean text for display (spec chars, nl2br) but don't change stored info.
 
 		 	$t = $this->clean_text($y['pithy']);
 			 $z['pithy'] = $t;
 
 			$z['notices']['alerts'] = [];
-			foreach (['alertA','alertB'] as $alertID){
+			foreach (['alertA'] as $alertID){
 				$atext =  $this->format_alerts($y[$alertID]);
-				//u\echot ($atext,'alert',STOP);
+				//Utilities::echot ($atext,'alert',STOP);
 				if ($atext){$z['notices']['alerts'][] = $atext;}
 			}
 
@@ -867,7 +865,7 @@ public function build_topic_admin() {
 
 			$t = $this->clean_text($y['announcements']);
 			$z['notices']['announcements'] = trim($t);
-			//u\echor ($z['notices'],'build topic general',STOP);
+			//Utilities::echor ($z['notices'],'build topic general',STOP);
 
 			$fire_level = $y['fire_level'];
 			$z['fire']['level'] = $fire_level;
@@ -876,11 +874,11 @@ public function build_topic_admin() {
 			$z['version'] = $this->file_get_contents_locking(REPO_PATH . "/data/version") ;
 			$z['target'] = date('l F j, Y');
 
-			$z['advice'] = u\special($y['advice']);
+			$z['advice'] = Utilities::special($y['advice']);
 			$z['rotate'] = $y['rotate'] ?? [];
 			$z['rdelay'] = $y['rdelay'] ?? [];
 
-// 	u\echor($z,'topic general');
+// 	Utilities::echor($z,'topic general');
 	return ['admin'=>$z];
 
 }
@@ -1131,7 +1129,7 @@ public function rebuild_cache_current ($locs=[]) {
 		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
 			Log::notice("Failed $loginfo.  Rebuild aborted."); return [];
 		}
-		//u\echor($aresp,'current aresp');
+		//Utilities::echor($aresp,'current aresp');
 		if (is_null($aresp['properties']['temperature']['value'] )) {
 				Log::warning ("Received null temp for $loginfo",$aresp['properties']['temperature']);
 				return [];
@@ -1279,7 +1277,7 @@ public function rebuild_cache_galerts () {
 	 	Log::error ("Could not load cache wapi");
 	 	return [];
 	 }
- //	u\echor($r,'From wapi',STOP);
+ //	Utilities::echor($r,'From wapi',STOP);
 		$alerts = $r['jr']['alerts']['alert'];
 		$x=[];
 		foreach ($alerts as $alertno => $ad){
@@ -1305,7 +1303,7 @@ public function rebuild_cache_galerts () {
 	 	Log::error ("Could not load cache wapi");
 	 	return [];
 	 }
-//	u\echor($r,'get wgalerts',NOSTOP);
+//	Utilities::echor($r,'get wgalerts',NOSTOP);
 		$items = $r['features'];
 
 		foreach ($items as $item){
@@ -1329,7 +1327,7 @@ public function rebuild_cache_galerts () {
 		$y[$src] = $x;
 		Log::info('rebuilt galerts using wgovalerts');
 		$this->write_cache('galerts',$y);
-//u\echor($y,'from external  alerts', NOSTOP);
+//Utilities::echor($y,'from external  alerts', NOSTOP);
 	return $y;
 }
 
@@ -1433,12 +1431,12 @@ public function set_properties (array $locs) {
 
 
 	if ( ! $r = $this->get_external ($src,$locs)) return false;
-	//u\echor($r,'From external',STOP);
+	//Utilities::echor($r,'From external',STOP);
 
 	foreach ($r as $loc => $d){	//uses weather.gov api directly
 		$y[$loc] = $d['properties'];
 	} #end foreach
-// u\echor($y,'properties',STOP);
+// Utilities::echor($y,'properties',STOP);
 
 	$this->write_cache('properties',$y);
 	echo "Properties updated" . BRNL;
@@ -1450,10 +1448,10 @@ public function set_properties (array $locs) {
 public function format_galert($galerts){
 
 
-#	u\echor($cache);
+#	Utilities::echor($cache);
 	$x = [];
 	foreach ($galerts['features'] as $galert){
-#	u\echor($galert,'galert',STOP);
+#	Utilities::echor($galert,'galert',STOP);
 
 		$props = $galert['properties'];
 
@@ -1609,7 +1607,7 @@ public function format_wapi ($r) {
 
 	$x = [];
 	$x['update'] = time();// will end up with $y[$src] = $x;
-//u\echor($r,'R',STOP);
+//Utilities::echor($r,'R',STOP);
 
 	foreach ($r as $loc => $ldata){
 		 $forecast = $ldata['forecast']['forecastday'];
@@ -1670,13 +1668,13 @@ public function format_wapi ($r) {
 
 	$x['light'] = $light;
 	$x['current'] = $r['jr']['current']; // is atually for 29palms
-//u\echor($x,'x',STOP);
+//Utilities::echor($x,'x',STOP);
 	return $x;
 }
 
 public function display_weather(array $wslocs=['jr','br','cw'],int $wsdays=3 ) {
 
-//u\echor($wgov,'weather',STOP);
+//Utilities::echor($wgov,'weather',STOP);
 
 	$wspec = array('wslocs'=>$wslocs,'wsdays'=>$wsdays);
 
@@ -1707,20 +1705,20 @@ private function format_alerts($alert){
 	$t .= "<div class='red inlineblock'><b>Alert: {$alert['title']}</b> </div> <br />";
 	if ($alert['text']){
 		$t .= "<div class='inline-block indent'>"
-		. u\special($alert['text'])
+		. Utilities::special($alert['text'])
 		. "</div>";
 	}
 	$t .= "<div class='inlineblock right width100' style='font-weight:normal;'><small>Expires: $expire_date</small></div>";
 	$t .= "</div>";
 
-//u\echot($t,'formatted alert',STOP);
+//Utilities::echot($t,'formatted alert',STOP);
 	return $t;
 }
 
 public function format_wgov ($wgov) {
 
 	$x=[];
-	//u\echor ($wgov, 'wgov into format');
+	//Utilities::echor ($wgov, 'wgov into format');
 
 	if (! isset($wgov['jr']['properties']['updated'] )){
 		echo "no jr properties";
@@ -1731,7 +1729,7 @@ public function format_wgov ($wgov) {
 
 
 	foreach ($wgov as $loc => $ldata){	//uses weather.gov api directly
-	//u\echor($ldata, "ldata for $loc");
+	//Utilities::echor($ldata, "ldata for $loc");
 
 		if (! $ldata){continue;}
 
@@ -1744,7 +1742,7 @@ public function format_wgov ($wgov) {
 	foreach ($periods as $perdata){ // period array]	d
 			// two periods per day, for day and night
 			// put into one array
-// u\echor($p,'period',NOSTOP);
+// Utilities::echor($p,'period',NOSTOP);
 	// set day (key) to datestamp for day, not hours
 			$start = $perdata['startTime'];
 			$end = $perdata['endTime'];
@@ -1768,7 +1766,7 @@ public function format_wgov ($wgov) {
 		} #end foreach period
 	} #end foreach location
 
-//	u\echor($x,"formatted wgov", STOP);
+//	Utilities::echor($x,"formatted wgov", STOP);
 	return $x;
 }
 
@@ -1895,7 +1893,7 @@ private function str_to_ts($edt) {
 					throw new RuntimeException ("Illegal date/time: $edt");
 				return $t;
 			} catch (RuntimeException $e) {
-				u\echoAlert ($e->getMessage());
+				Utilities::echoAlert ($e->getMessage());
 				echo "<script>history.back()</script>";
 				exit;
 			}
@@ -1945,7 +1943,7 @@ function get_external ($loginfo, $url,string $expected='',array $header=[]) {
 		$tries = 0;
 
 		while (!$success) {
-			//u\echor($aresp,"Here's what I got for $loginfo:");
+			//Utilities::echor($aresp,"Here's what I got for $loginfo:");
 			if ($tries > 2){
 					//echo "Can't get valid data from ext source  $loginfo";
 				Log::notice("External failed for $loginfo: $fail.",$aresp);
@@ -1962,7 +1960,7 @@ function get_external ($loginfo, $url,string $expected='',array $header=[]) {
 				$fail = " Failed JSON decode ";
 			} else { $success = 1;}
 
-			if ($success &&  $expected && !u\inMultiArray($expected,$aresp)) {
+			if ($success &&  $expected && !Utilities::inMultiArray($expected,$aresp)) {
 				$success = 0;
 				$fail = "Failed expected result $expected";
 			}else { $success = 1;}

@@ -1,10 +1,10 @@
 <?php
+namespace DigitalMx\jotr;
 
 use DigitalMx\jotr\Definitions as Defs;
-use DigitalMx as u;
-use DigitalMx\jotr\Utilities as J;
+use DigitalMx\jotr\Utilities as U;
 
-$open_options = u\buildOptions(['','0','a few','around 10','10 +','?'],'',true);
+$open_options = U::buildOptions(['','0','a few','around 10','10 +','?'],'',true);
 
 
 ?>
@@ -22,7 +22,7 @@ $open_options = u\buildOptions(['','0','a few','around 10','10 +','?'],'',true);
 
 <div id='galerts' class='hidden'>
 	<?php foreach ($galerts as $source=>$alertset) :
-		//u\echor($alertset,$source);
+		//Utilities::echor($alertset,$source);
 		$sourcename =Defs::$sources[$source];
 	?>
 	<hr style="height:4px;background-color:green;">
@@ -49,9 +49,9 @@ Alerts must have expiration.  If today, just enter the time.  Otherwise enter mo
 <h5>Alert A</h5>
 <table class='border no-col'>
 <tr class='left'><td>Headline</td>
-	<td><input type='text' value="<?=$admin['alertA']['title'] ??'' ?> " name="alertA[title]" size='45'></td></tr>
-<tr class='left'><td>Information:</td><td> <textarea name="alertA[text]" rows='2' cols='80'><?=$admin['alertA']['text']??''?></textarea></td></tr>
-<tr class='left'><td>Expires</td><td><input type='text' name="alertA[expires]" value="<?=$admin['alertA']['expires']??''?>" >
+	<td><input type='text' value="<?=$admin['alertA']['title'] ??'' ?> " name="alertA['title']" size='45'></td></tr>
+<tr class='left'><td>Information:</td><td> <textarea name="alertA['text']" rows='2' cols='80'><?=$admin['alertA']['text']??''?></textarea></td></tr>
+<tr class='left'><td>Expires</td><td><input type='text' name="alertA['expires']" value="<?=$admin['alertA']['expires']??''?>" >
 </td></tr>
 </table>
 
@@ -72,13 +72,13 @@ for color red: &lt;span style='color:red;'&gt;text you want &lt;/span&gt;<br />
 
 
 <h4>Enter closures/announcements</h4>
-One announcement per line. They will be listed as bullets <?php J::showHelp('notices');?><br />
+One announcement per line. They will be listed as bullets <?php U::showHelp('notices');?><br />
 
 <textarea name='announcements' ><?=$admin['announcements'] ?></textarea>
 
 
 <h4>Enter visitor advice</h4>
-One announcement per line(carriage return). <?php J::showHelp('advice');?><br />
+One announcement per line(carriage return). <?php U::showHelp('advice');?><br />
 <textarea name='advice' ><?=$admin['advice'] ?></textarea>
 
 
@@ -132,14 +132,18 @@ Click to <button type='button' onClick='clearopen()'> clear all site updates</bu
 
 <hr>
 <h4>Choose Pages for TV Rotation</h4>
-<?php //u\echor($admin); ?>
+<?php //Utilities::echor($admin); ?>
 Select which pages should appear in the rotation sequence (?snap)<br />
 <?php foreach (Defs::$rpages as $pid=>$pdesc) : ?>
 <input type='checkbox' name='rotate[]' value='<?=$pid?>' <?=$admin['rchecked'][$pid] ?? ''?> ><a href='/pager.php?<?=$pid?>' target = 'pager'><?=$pid?></a>: <?=$pdesc?><br />
 <?php endforeach; ?>
 <br />
 Set rotation delay in seconds: <input type='number' name='rdelay' value='<?=$admin['rdelay']?>' size='8' min=10 max=30 step=5 >
+
+<p>
 <button type='submit'>Submit Form</button>
+</p>
+
 
 </form>
 <hr>

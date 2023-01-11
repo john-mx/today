@@ -1,12 +1,15 @@
 <?php
-use DigitalMx as u;
+namespace DigitalMx\jotr;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
+
 
 
 if (!$light ){
 	echo "No Data Available (light)";
 	return;
 }
-//u\echor($light,'light in tpl');
+//Utilities::echor($light,'light in tpl');
 
 // get today's daily data
 // if (! $day = $light['gday'] ?? []):

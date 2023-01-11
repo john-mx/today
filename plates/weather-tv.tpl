@@ -1,6 +1,9 @@
 <?php
+namespace DigitalMx\jotr;
 use DigitalMx\jotr\Definitions as Defs;
-use DigitalMx as u;
+use DigitalMx\jotr\Utilities as U;
+
+
 ?>
 
 <?php
@@ -12,9 +15,9 @@ use DigitalMx as u;
 	'fcstart'=> $fcstart ??= 0,
 	];
 
-//u\echor($wspec);
+//Utilities::echor($wspec);
 
-//u\echor($wapi,'wapi',STOP);
+//Utilities::echor($wapi,'wapi',STOP);
 	if(1
 	&& isset($wgov['update'])
 	&& ($wgovupdate = ($wgov['update']))

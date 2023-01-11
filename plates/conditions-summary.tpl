@@ -1,8 +1,12 @@
 <?php
-	use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
+namespace DigitalMx\jotr;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
+
+
+
 // $conditions = $data['fire'],4data['air'],$data['current'];
-//u\echor($data,'data',STOP);
+//Utilities::echor($data,'data',STOP);
 
 $uv = $light['uv'];
 
@@ -10,7 +14,7 @@ $air = $air;
 $gday = $wgov['jr'][1];
 $wday = $wapi['forecast']['jr'][0];
 
-//u\echor ($current);
+//Utilities::echor ($current);
 
 $uvday = <<<EOT
 <div class= 'conditions'>
@@ -53,7 +57,7 @@ $fireday = <<<EOT
 EOT;
 
 
-//u\echor($current,'curr',STOP);
+//Utilities::echor($current,'curr',STOP);
 $current_asof = date('g:i a',$current['updatets']);
 $currentday = <<<EOT
 <div class= 'conditions'>

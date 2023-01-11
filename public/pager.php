@@ -1,17 +1,19 @@
 <?php
 namespace DigitalMx\jotr;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
 
-ini_set('display_errors', 1);
 
 //BEGIN START
 	require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
-	use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
+
+
+
 	use DigitalMx\jotr\Today;
 	use DigitalMx\jotr\Calendar as Cal;
 
 	$Plates = $container['Plates'];
-	
+
 	$Today = $container['Today'];
 	$Cal = new Cal();
 
@@ -20,7 +22,7 @@ ini_set('display_errors', 1);
 $page = $_SERVER['QUERY_STRING'];
 
 $y=$Today->build_topics();
-//u\echor ($y,'topics');
+//Utilities::echor ($y,'topics');
 
 $extra = '';
 $plate2 = '';

@@ -5,7 +5,7 @@ namespace DigitalMx\jotr;
 
 //BEGIN START
 	require  './init.php';
-	use DigitalMx as u;
+	
 
 
 

@@ -1,11 +1,12 @@
 <?php
-use DigitalMx\jotr\Definitions as Defs;
-use DigitalMx as u;
+
+
+
 ?>
 <h4>3-Day Forecast</h4>
 <?php
 // uses wgov data
-//u\echor($weather,'weather',NOSTOP);
+//Utilities::echor($weather,'weather',NOSTOP);
 if(empty($weather)): echo "<p>No Data</p>"; else:
 	$weather_updated =  date('M d g:i a',$weather['update']);
 	?>
@@ -23,7 +24,7 @@ if(empty($weather)): echo "<p>No Data</p>"; else:
 		<?php
 			for ($i=1;$i<4;++$i) : //for 3 days
 				$day = $weather['jr'][$i];
-		//u\echor ($day ,'day',STOP);
+		//Utilities::echor ($day ,'day',STOP);
 				echo "<th>{$day[0]['daytext']}</th>";
 			endfor;
 		?>

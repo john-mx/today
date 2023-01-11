@@ -1,34 +1,37 @@
 <?php
 namespace DigitalMx\jotr;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
 
-ini_set('display_errors', 1);
+
 
 //BEGIN START
 
 
 	require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
-	use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
+
+
+
 	use DigitalMx\jotr\Today;
 	use DigitalMx\jotr\Calendar;
 
 	$Plates = $container['Plates'];
-	
+
 	$Today = $container['Today'];
 
 
-//u\echor ($_SESSION);
+//Utilities::echor ($_SESSION);
 //END START
 
 
 $y=$Today->load_cache('admin');
 $admin['rotate'] = $y['rotate'] ?: ['today'];
 $local = $_SESSION['local'] ?? [];
-//u\echor($local,'local');
+//Utilities::echor($local,'local');
 $rotate = ($local)?$local['rotate'] :$admin['rotate'] ;
 $rdelay = ($local)?$local['rdelay']: $y['rdelay'];
 
-// u\echor($rotate,'rotate',STOP);
+// Utilities::echor($rotate,'rotate',STOP);
 
 $q = trim($_SERVER['QUERY_STRING']);
 

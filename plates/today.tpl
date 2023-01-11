@@ -1,6 +1,9 @@
 <?php
+namespace DigitalMx\jotr;
 use DigitalMx\jotr\Definitions as Defs;
-use DigitalMx as u;
+use DigitalMx\jotr\Utilities as U;
+
+
 use DigitalMx\jotr\Calendar as Cal;
 use DigitalMx\jotr\Today;
 $pcode ??= '';
@@ -21,7 +24,7 @@ $Cal = new Cal();
 <div id="page1" style="display: block;">
 
 <?php
-//u\echor($data,'data');
+//Utilities::echor($data,'data');
 	try {$this->insert('light');}
 	catch (exception $e) {
 		$einfo = ['src' => 'light','info'=>$e];

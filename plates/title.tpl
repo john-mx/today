@@ -1,5 +1,8 @@
 <?php
-	use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
+
+
 	//$trial = "<p>Software in Development</p>";
 	$trial ??= '';
 	$title = 'Today in Joshua Tree National Park';

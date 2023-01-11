@@ -1,5 +1,9 @@
 <?php
 namespace DigitalMx\jotr;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
+
+
 /**
  Every script run from web must start by running this script
     (scripts run from cron must take care of their own stuff)
@@ -30,9 +34,7 @@ if (!session_start([
 ini_set("pcre.jit", "0"); #required for preg_match();
 
 
-#use DigitalMx\MyPDO;
-use digitalmx as u;
-use DigitalMx\jotr\Definitions as Defs;
+
 
 use DigitalMx\jotr\Initialize;
 #use DigitalMx\Flames\Login;
@@ -121,7 +123,7 @@ $container['Plates']->addData($y,
 ]
 );
 
-// u\echor($y);
+// Utilities::echor($y);
 
  define ('INIT',1);
 

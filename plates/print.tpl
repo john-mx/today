@@ -1,6 +1,9 @@
 <?php
+namespace DigitalMx\jotr;
 use DigitalMx\jotr\Definitions as Defs;
-use DigitalMx as u;
+use DigitalMx\jotr\Utilities as U;
+
+
 ?>
 
 <div >
@@ -91,7 +94,7 @@ if(empty($weather)): echo "<p>No Data</p>"; else: ?>
 			// is captured separately for the alerts cache
 
 			if (! $locname = Defs::$sitenames[$loc] ) : continue; endif;
-	//	u\echor ($x,"Loc $loc", STOP);
+	//	Utilities::echor ($x,"Loc $loc", STOP);
 	?>
 			<tr class='borders '><td ><b><?=$locname?></b></td>
 

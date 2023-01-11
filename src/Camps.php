@@ -1,11 +1,8 @@
 <?php
 namespace DigitalMx\jotr;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
 
-ini_set('display_errors', 1);
-
-//BEGIN START
-	use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
 
 
 //END START
@@ -74,7 +71,7 @@ function __construct($c){
 		$asof =	date('M d H:i a', $mtime);
 		return $asof;
 	}
-		//u\echor($opens,'show_opens');
+		//Utilities::echor($opens,'show_opens');
 
 
 

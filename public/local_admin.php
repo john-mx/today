@@ -1,5 +1,8 @@
 <?php
 namespace DigitalMx\jotr;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
+
 
 /*
 	local admin page
@@ -15,12 +18,13 @@ namespace DigitalMx\jotr;
 //BEGIN START
 	require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 
-	use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
+
+
+
 	use DigitalMx\jotr\Today;
 
 	$Plates = $container['Plates'];
-	
+
 	$Today = $container['Today'];
 	$Login = $container['Login'];
 	$Cal = $container['Calendar'];
@@ -37,7 +41,7 @@ $meta = array(
 	'rdelay' => $admin['rdelay'],
 
 	);
-//u\echor($meta,'meta',STOP);
+//Utilities::echor($meta,'meta',STOP);
 if (isset($_POST['pw']) ) {// is login
 	$Login->set_pwl($_POST['pw']);
 }
@@ -45,7 +49,7 @@ if (isset($_POST['pw']) ) {// is login
 
 $Login->check_pw(2);
 
-//u\echor($_POST,'post');
+//Utilities::echor($_POST,'post');
 
 if (!empty($_POST) && !isset($_POST['pw'])) {
 		post_data ($_POST,$Today);
@@ -58,7 +62,7 @@ if (!empty($_POST) && !isset($_POST['pw'])) {
 echo $Plates->render('title',$meta);
 
 		$y = $Today-> prepare_admin();
-// u\echor($y);
+// Utilities::echor($y);
 		echo $Plates->render('local',$y);
 echo "Local admin";
 
@@ -90,7 +94,7 @@ function login($pw,$Today,$Plates,$Login) {
 
 function post_data($post,$Today){
 
-	//u\echor ($post);
+	//Utilities::echor ($post);
 	$Today->post_admin($post);
 
 

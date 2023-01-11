@@ -1,14 +1,18 @@
 <?php
-
+namespace DigitalMx\jotr;
 use DigitalMx\jotr\Definitions as Defs;
-use DigitalMx as u;
+use DigitalMx\jotr\Utilities as U;
+
+
+
+
 ?>
 <h1>Alerts Compiled from Other Sources</h1>
 
 <?php
-	//u\echor($alerts,'',STOP);
+	//Utilities::echor($alerts,'',STOP);
 	foreach ($alerts as $source=>$alertset) :
-		//u\echor($alertset,$source);
+		//Utilities::echor($alertset,$source);
 
 	$sourcename =Defs::$sources[$source]; ?>
 	<hr style="height:4px;background-color:green;">

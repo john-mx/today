@@ -1,17 +1,21 @@
 <?php
 namespace DigitalMx\jotr;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
+
 
 ini_set('display_errors', 1);
 
 //BEGIN START
 
 	require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
-	use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
+
+
+
 	use DigitalMx\jotr\Today;
 
 	$Plates = $container['Plates'];
-	
+
 	$Today = $container['Today'];
 
 
@@ -21,7 +25,7 @@ ini_set('display_errors', 1);
 
 
 
-//u\echor($y,'y',STOP);
+//Utilities::echor($y,'y',STOP);
 
 // using "Today' as title prevents it from re-appearing on the today page.
 $meta=array(
@@ -38,14 +42,14 @@ $meta=array(
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	//u\echor ($_POST, 'post');
+	//Utilities::echor ($_POST, 'post');
 	$local['rotate'] = $_POST['rotate'];
 	$local['rdelay'] = $_POST['rdelay'];
 	$local['local_site']=  $_POST['local_site'];
 	$_SESSION['local'] = $local;
 
 	Log::info("Local settings saved");
-	//u\echor($_SESSION,'session');
+	//Utilities::echor($_SESSION,'session');
 	echo "<script>
 		window.opener.location.reload();
 		window.close();
@@ -55,10 +59,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 // set up form
 $admin = $Today->build_topic_admin()['admin'];
-//u\echor($admin);
+//Utilities::echor($admin);
 
 $local = $_SESSION['local'] ?? [];
-//u\echor($local);
+//Utilities::echor($local);
 
 $rchecked = [];
 
@@ -73,7 +77,7 @@ foreach (['29vc','jtvc','cwvc','brvc','other'] as $vc){
 
 	$site_array[$vc] = Defs::$sitenames[$vc];
 }
-$site_options = u\buildRadioSet(
+$site_options = Utilities::buildRadioSet(
     'local_site',
     $site_array,
     $check = $local['local_site'] ?? '',
@@ -93,7 +97,7 @@ If the site is not accessed on this device for 48 hours, the settings will be re
 <?=$site_options?>
 
 <h4>Choose Pages for TV Rotation</h4>
-<?php //u\echor($admin); ?>
+<?php //Utilities::echor($admin); ?>
 Set which site you are in:
 
 Select which pages should appear in the rotation sequence (?snap)<br />

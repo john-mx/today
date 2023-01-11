@@ -1,8 +1,10 @@
 <?php
 namespace DigitalMx\jotr;
 
-use DigitalMx as u;
-use DigitalMx\jotr\Definitions as Defs;
+
+
+
+use DigitalMx\jotr\Utilities as U;
 use DigitalMx\jotr\Errors as Errors;
 
 
@@ -35,7 +37,7 @@ class DataException extends \Exception
 
     private function showResponse($code) {
 
-    	  u\echoAlert("Data Error: " . $this->errors->getEcode($code) );
+    	  Utilities::echoAlert("Data Error: " . $this->errors->getEcode($code) );
        // echo "<script>history.back();</script>";
 
     }

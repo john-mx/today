@@ -6,8 +6,9 @@ ini_set('display_errors', 1);
 
 //BEGIN START
 	require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
-	use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
+	
+	
+
 	use DigitalMx\jotr\Today;
 
 	$Plates = $container['Plates'];
@@ -34,7 +35,7 @@ $meta=array(
 
 
 $y = $Today->prepare_topics ();
-//u\echor($y,'y');
+//Utilities::echor($y,'y');
 
 echo $Plates -> render('weather',['weather' => $y['wgov'] ]) ;
 

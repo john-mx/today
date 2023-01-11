@@ -1,16 +1,20 @@
 <?php
 namespace DigitalMx\jotr;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
+
 
 ini_set('display_errors', 1);
 
 //BEGIN START
 	require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
-	use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
+
+
+
 	use DigitalMx\jotr\Today;
 
 	$Plates = $container['Plates'];
-	
+
 	$Today = $container['Today'];
 
 

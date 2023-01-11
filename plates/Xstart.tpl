@@ -1,6 +1,7 @@
 <?php
-	use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
+	
+	
+
 	use DigitalMx\jotr\Today;
 
 /* start with ['title'=>title,'pcode'=style code,'extra'=>extra headers];
@@ -47,13 +48,13 @@
 
 		case 'print':
 			$added_headers .= "<link rel='stylesheet' media='print' href = '/css/print.css' >";
-				//u\echoAlert ("Not implemented yet: $pcode");
+				//Utilities::echoAlert ("Not implemented yet: $pcode");
 				//echo "<script>window.location.href='/today.php';</script>";
 				//exit;
 			break;
 
 		default:
-			u\echoAlert ("Undefined option: $pcode");
+			Utilities::echoAlert ("Undefined option: $pcode");
 				echo "<script>window.location.href='/today.php';</script>";
 				exit;
 	}

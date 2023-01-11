@@ -1,6 +1,9 @@
 <?php
+namespace DigitalMx\jotr;
 use DigitalMx\jotr\Definitions as Defs;
-use DigitalMx as u;
+use DigitalMx\jotr\Utilities as U;
+
+
 use DigitalMx\jotr\Calendar;
 
 $Cal = new Calendar();
@@ -20,9 +23,9 @@ if(empty($wapi)): echo "<p>No wapi Data</p>"; exit;
 	else:
 	$wupdated =  date('M d g:i a',$wapi['update']);
 	endif;
-	//u\echor($light);exit;
+	//Utilities::echor($light);exit;
 $daylight = $light['day'];
-//u\echor($daylight, 'day',true);
+//Utilities::echor($daylight, 'day',true);
 
 $air = $air;
 $uvday = <<<EOT
@@ -79,7 +82,7 @@ EOT;
 <?php
 $calendar = $Cal->filter_calendar($calendar,1); #one day
 if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
-//u\echor($calendar,'data-calendar',NOSTOP);
+//Utilities::echor($calendar,'data-calendar',NOSTOP);
 
 ?>
 <table class='inleft2  no-border'>

@@ -438,7 +438,7 @@ mins,
 	public static function getFees() {
 		return self::$fees;
 	}
-	public function getGridpoints($loc){
+	public static function getGridpoints($loc){
 		return self::$gridpoints[$loc] ?? '';
 	}
 	public static function getCoords($loc) {

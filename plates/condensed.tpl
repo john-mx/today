@@ -1,6 +1,9 @@
 <?php
+namespace DigitalMx\jotr;
 use DigitalMx\jotr\Definitions as Defs;
-use DigitalMx as u;
+use DigitalMx\jotr\Utilities as U;
+
+
 
  $qs ??= '';
 
@@ -14,12 +17,12 @@ switch ($qs) {
 }
 
 if (!empty($calendar)){
-$Cal = new DigitalMx\jotr\Calendar();
+$Cal = new Calendar();
 	$caldays = []; // count of events by day
 	$calendar = $Cal->filter_calendar($calendar,2);
-//	u\echor($calendar,'calendar filtered', STOP);
+//	Utilities::echor($calendar,'calendar filtered', STOP);
 
-	//u\echor($caldays,'caldays',STOP);
+	//Utilities::echor($caldays,'caldays',STOP);
 }
 ?>
 <!--
@@ -67,7 +70,7 @@ setTimeout(() => {
 
 <?php
 
-	//u\echor($wgov,'wgov',STOP);
+	//Utilities::echor($wgov,'wgov',STOP);
 	$wspec=array('wslocs'=>['jr','cw'],'wsdays'=>3);
 	$this->insert('weather-tv',$wspec);
 

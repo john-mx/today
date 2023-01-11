@@ -4,7 +4,7 @@ namespace DigitalMx\jotr;
 #ini_set('display_errors', 1);
 
 //BEGIN START
-	require_once  './init.php';
+
 
 	use DigitalMx\jotr\Definitions as Defs;
 

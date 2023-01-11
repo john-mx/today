@@ -1,6 +1,10 @@
 <?php
+namespace DigitalMx\jotr;
 use DigitalMx\jotr\Definitions as Defs;
-use DigitalMx as u;
+use DigitalMx\jotr\Utilities as U;
+
+
+
 $fees = Defs::getFees();
 
 ?>
@@ -9,7 +13,7 @@ $fees = Defs::getFees();
 <b>Help Keep The Line Moving –
 Purchase Your Pass Before You Get To The Entrance</b>
 </div>
-<?php //u\echor($fees,'fees');
+<?php //Utilities::echor($fees,'fees');
 	$lastclass = '';
 ?>
 

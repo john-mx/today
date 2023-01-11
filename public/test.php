@@ -1,5 +1,7 @@
 <?php
 namespace DigitalMx\jotr;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
 
 ini_set('display_errors', 1);
 
@@ -7,8 +9,9 @@ ini_set('display_errors', 1);
 //BEGIN START
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 
-	// use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
+	//
+
+
  	use DigitalMx\jotr\Utilities as J;
 //
 //
@@ -34,11 +37,11 @@ $hq = ['hq'];
 $twolocs = ['jr','hq'];
 
 
-J::echor($wlocs);
+U::echor($wlocs);
 
 echo Defs::aq_scale(200);
 
-J::showHelp('notices');
+U::showHelp('notices');
 
 // what function?
 
@@ -67,10 +70,10 @@ function calendar(){
 	global $Today,$Plates,$Cal;
 
 	$c = $Cal->load_cache();
-#u\echor($c);
+#Utilities::echor($c);
 
 	$calendar = $Cal->filter_calendar($c,4);
-	#u\echor($calendar,'filtered cal',false);
+	#Utilities::echor($calendar,'filtered cal',false);
 	$platedata = array('calendar'=>$calendar);
 	echo $Plates->render('calendar',$platedata);
 	exit;
@@ -82,7 +85,7 @@ function today(){
 
 	$z=$Today->build_topics();
 	echo $Plates->render('today',['data'=>$z]);
-	//u\echor($z,' topics');
+	//Utilities::echor($z,' topics');
 	exit;
 }
 
@@ -93,7 +96,7 @@ function light(){
 	echo $Plates->render('light',['data'=>$z]);
 	//echo $Plates->render('conditions',$z);
 	echo "<hr>";
-	u\echor($z,'data');
+	Utilities::echor($z,'data');
 	exit;
 }
 
@@ -109,7 +112,7 @@ function weather_gov(){
 #	$Today->rebuild_cache_wgov();
 
 	$z=$Today->build_topic_weather();
-	u\echor($z,'build topic');
+	Utilities::echor($z,'build topic');
 	echo $Plates->render('weather-wgov',$z);
 	exit;
 }
@@ -118,7 +121,7 @@ function weather_gov(){
 function camps(){
 	global $Today,$Plates;
 	$z=$Today->build_topic_campgrounds();
-	u\echor($z,'topic');
+	Utilities::echor($z,'topic');
 	echo $Plates->render('campground',$z);
 	exit;
 }
@@ -127,7 +130,7 @@ function prep () {
 	global $Today,$Plates;
 
 	$z = $Today->prepare_topics();
-	u\echor($z,'topic array', STOP);
+	Utilities::echor($z,'topic array', STOP);
 }
 
 
@@ -153,7 +156,7 @@ function wgov(array $loc) {
 	global $Today,$Plates;
 
 	$z = $Today->rebuild_cache_wgov($loc);
-	u\echor($z);
+	Utilities::echor($z);
 }
 
 function props (){
@@ -169,7 +172,7 @@ function temail ($Plates,$Today) {
 
 //	echo $Today->start_page('test page','b');
 	$z = $Today->prepare_today();
-	// u\echor ($z,'Today input to plates');
+	// Utilities::echor ($z,'Today input to plates');
 
 	echo $Plates->render('email2',$z);
 }

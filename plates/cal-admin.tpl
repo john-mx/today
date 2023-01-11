@@ -1,6 +1,9 @@
 <?php
+namespace DigitalMx\jotr;
 use DigitalMx\jotr\Definitions as Defs;
-use DigitalMx as u;
+use DigitalMx\jotr\Utilities as U;
+
+
 
 /* this template is for calendawr admin insertion
 	into a form on another page.  Does NOT include a form.
@@ -142,6 +145,6 @@ Repeating events will continue until the date entered as Last Day, or until remo
 </table>
 <input type='hidden' name='type' value='update'>
 
-</form>
+
 
 

@@ -1,7 +1,9 @@
-<?php
-// this plate uses inline css for emails
+<<?php
+namespace DigitalMx\jotr;
 use DigitalMx\jotr\Definitions as Defs;
-use DigitalMx as u;
+use DigitalMx\jotr\Utilities as U;
+
+
 ?>
 <?php
 	$site_path = SITE_PATH;

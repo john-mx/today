@@ -1,7 +1,9 @@
 <?php
 namespace DigitalMx\jotr;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
 
-use DigitalMx as u;
+
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
@@ -58,7 +60,7 @@ class Log {
 		$line_format = new LineFormatter($outputFormat, $dateFormat);
 		$stream = new StreamHandler($log, Level::Debug);
 		$stream->setFormatter($line_format);
-		//	u\echor($stream,'stream',STOP);
+		//	Utilities::echor($stream,'stream',STOP);
 		$rotateHandler->setFormatter($line_format);
 		$logger->pushHandler($rotateHandler);
 		//$logger -> pushHandler($stream);

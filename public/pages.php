@@ -1,19 +1,16 @@
 <?php
 namespace DigitalMx\jotr;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
+
 
 #ini_set('display_errors', 1);
 
 //BEGIN START
 	require  'init.php';
 
-	use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
 	$Plates = $container['Plates'];
-	
-
 	$Today = $container['Today'];
-
-
 //END START
 
 $meta=array(
@@ -46,6 +43,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <h4>Pages</h4>
 <table class='index'>
 <tr><td >Link</td><td >Result</td></tr>
+<tr class='bg-yellow'><td>Information Pages</td><td></td></tr>
+<tr><td><a href='intro.php'>Introduction</a></td><td>Introduction to the service</td></tr>
+<tr><td><a href='about.php'>About</a></td><td>General information about the site.</td></tr>
+
 <tr class='bg-yellow'><td>'Today' Pages</td><td></td></tr>
 
 <tr><td ><a href="/today.php" target='today'>Everything</a>
@@ -55,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 </td><td >One page summary of today's conditions, alerts, and events. </td></tr>
 
 
-<tr class='bg-yellow'><td >Animated Pages</td><td>add '?snap' or '?scroll' to url to cycle through sections</td></tr>
+<tr class='bg-yellow'><td >Display Pages</td><td>Animated pages designed for use on TV screen.</td></tr>
 <tr><td ><a href="/today.php?scroll" target='scroll'>Scroll</a>
 </td><td >(not recommended) Everything page slowly scrolls to the bottom, then restarts</td></tr>
 <tr><td><a href="/rotate.php" target='snap'>Rotate</a><td> (reommended) Large type version designed for TV. Rotates through topics, changing every 15 seconds.  (You can choose which pages (or just one page) appear in the rotation using the admin page. ) Uses "snap" animation unless url is "/rotate.php?nosnap" </td></tr>

@@ -1,5 +1,8 @@
 <?php
-namespace DigitalMx;
+namespace DigitalMx\jotr;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
+
 
 use \Exception as Exception;
 
@@ -47,16 +50,6 @@ function echoc($text,$title=''){
     echo "</div>" . NL;
 }
 
-// function getref() {
-// 	// was only used in echor; no longer used.
-// 	// remove any refs to this file
-// 	$me = basename(__FILE__);
-// 	$bt = debug_backtrace();
-// 	$caller['file'] = $me;
-//   	while (strpos($caller['file'], $me) !== false ) {$caller = array_shift($bt);}
-// 	$title = basename($caller['file']) . '(' . $caller['line'] . ')';
-// 	return $title;
-// }
 
 function echot(string $string,$title='',$stop=false ){
 	// call with some php var and optional title for the var.

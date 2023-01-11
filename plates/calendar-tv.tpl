@@ -1,4 +1,9 @@
+<?php
+namespace DigitalMx\jotr;
+use DigitalMx\jotr\Definitions as Defs;
+use DigitalMx\jotr\Utilities as U;
 
+?>
 
 
 <h4>Upcoming Events</h4>

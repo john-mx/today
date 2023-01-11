@@ -4,53 +4,31 @@ use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx\jotr\Utilities as U;
 
 
-ini_set('display_errors', 1);
-
+#ini_set('display_errors', 1);
 
 //BEGIN START
-	require_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
-
-//	use DigitalMx\jotr\Utilities as U;
-//
-// 	use DigitalMx\jotr\Refresh;
-//
-
-
+	require  'init.php';
 
 	$Plates = $container['Plates'];
-//
-// 	$Today = $container['Today'];
-// 	$Cal = $container['Calendar'];
+	$Today = $container['Today'];
+//END START
 
-$meta = array(
+$meta=array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
 	'page' => basename(__FILE__),
 	'subtitle' => 'Introduction',
-	'extra' => '<style>body {font-family: "Times New Roman", Times, serif}</style>',
-);
+	'extra' => "",
 
+	);
 echo $Plates->render('head',$meta);
 echo $Plates->render('title',$meta);
-//END START
+
 
 ?>
-
-
-
-<h4>Today In The Park</h4>
 <p>
 “Today in the Park” is a internet-based system to provide visitors with key information about this day in Joshua Tree National Park.
 </p>
-<div class='border inleft2 width50 auto'>
-<ul>
-<li><a href='/about.php'>About the Site</a>
-<li><a href='/pages.php' target='pages'>List of Pages and Resources</a>
-<li><a href='/today.php' target='today'>Today in the Park site</a>
-<li><a href='/summary.php' target='today'>Today: one-page summary</a>
-<li><a href='/rotate.php' target='rotate'>Rotating Pages for TV Screen</a>
-</ul>
-</div>
-<h4>Overview</h4>
+
 It includes
 <ul>
 	<li>Weather today and next 2 days, including sun and moon.</li>
@@ -65,9 +43,9 @@ It includes
 
 The data is provided in four formats:
 <ol>
-	<li>A “slide show” of pages designed for TV screen.  Each viewing location can choose which sections ("slides") appear in the rotation. The TV requires only internet access (e.g., any modern Samsung TV) and it only accesses the page once ever 15 minutes for updates.  (<a href='/rotate.php' target='rotate'>Rotate</a>)</li>
-	<li>A one-page printed form, similar to what is used at JTVC.  Includes weather, announcements, and calendar. (<a href='summary.php' target='summary'>Today Summary</a>)</li>
-	<li>A publicly accessible web site that visitors could access themselves.(<a href='today.php' target='today'>Everything</a></li>
+	<li>A “slide show” of pages designed for TV screen.  The “admin” can choose which pages appear in the rotation. The TV requires only internet access (e.g., any modern Samsung TV) and it only accesses the page once ever 15 minutes for updates.  (<a href='/rotate.php'>Rotate</a>)</li>
+	<li>A one-page printed form, similar to what is used at JTVC.  Includes weather, announcements, and calendar. (<a href='summary.php'>Today Summary</a>)</li>
+	<li>A publicly accessible web site that visitors could access themselves.(<a href='today.php'>Everything</a></li>
 	<li>A multi-page document can be printed from the "Everything" site, and one or more pages posted.  (e.g, fees page) </li>
 
 </ol>

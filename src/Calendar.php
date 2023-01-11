@@ -3,8 +3,9 @@ namespace DigitalMx\jotr;
 
 //BEGIN START
 
-	use DigitalMx as u;
-	use DigitalMx\jotr\Definitions as Defs;
+
+
+
 
 
 //END START
@@ -102,7 +103,7 @@ class Calendar {
 public function parse_time($t){
 	// converts time in string to hour, min
 	// preg_match('/(\d+)\:?(\d*) *(a|A|p|P).*/',$t,$m);
-// 	#u\echor ($m,"match on $t",false);
+// 	#Utilities::echor ($m,"match on $t",false);
 //
 // 	if (sizeof($m)!=4){return false;}
 	return true;
@@ -115,7 +116,7 @@ public function add_types ($cal) {
 	// adds type select options to each entry
 
 	foreach ($cal as $event){
-		$event['typeoptions']  = u\buildOptions(self::$eventtypes,$event['type']);
+		$event['typeoptions']  = Utilities::buildOptions(self::$eventtypes,$event['type']);
 		$z[] = $event;
 	}
 return $z;
@@ -152,7 +153,7 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 	$z=[];
 //echo "Transform $transform" . BR;
 	foreach ($calendar as $event){ #keep if these conditions:
-// u\echor ($event,'foreach event');
+// Utilities::echor ($event,'foreach event');
 		if (empty ($event['time'])) {continue;} #drop
 
 		if ( empty($event['suspended'])) $event['suspended'] = false;
@@ -184,12 +185,12 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 				}
 				$begindate = $edate . ' ' . trim($event['time']);
 				try{ $begindt = new \DateTime($begindate,$this->tz); }
-				catch (\Exception $e) {u\alertBadInput ("Illegal start date for recurring event: $begindate");
+				catch (\Exception $e) {Utilities::alertBadInput ("Illegal start date for recurring event: $begindate");
 					exit; // should have got during prepare function
 				}
 				if (!empty($enddate = trim($event['end']))){
 					if (! $enddt = new \DateTime($enddate,$this->tz) ){
-						u\alertBadInput ("Illegal end date for recurring event: $enddate");
+						Utilities::alertBadInput ("Illegal end date for recurring event: $enddate");
 						exit; // should have got at prepare
 					}
 				} else {$enddt=[];}
@@ -200,17 +201,17 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 					if ($cevent) {
 						$z[] = $cevent;
 						#echo "added repeating ${event['title']}" . BR;
-						#u\echor($cevent);
+						#Utilities::echor($cevent);
 					}
 				}
 			}
 
 
 	}
-// u\echor($z, 'presort cal', false);
-		$z = u\element_sort($z, 'dt');
+// Utilities::echor($z, 'presort cal', false);
+		$z = Utilities::element_sort($z, 'dt');
 
-// u\echor($z, 'new cal', true);
+// Utilities::echor($z, 'new cal', true);
 
 
 	return ($z);
@@ -276,7 +277,7 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 
 	}
 
-#@	u\echor($z, 'presort', false);
+#@	Utilities::echor($z, 'presort', false);
 
 
 
@@ -288,37 +289,37 @@ public function check_calendar(array $calendar) {
 		if (empty($time = $event['time'])){continue;}
 
 		if (!$t = $this->parse_time($time)){
-				u\alertBadInput ("Time '$time'. Time must be hr:mins am|pm");
+				Utilities::alertBadInput ("Time '$time'. Time must be hr:mins am|pm");
 		}
 
 
 		if (!empty($startdate = trim($event['date']))) {
 			// if empty, then today will be used for start
 			try {$startdate = new \DateTime($startdate);}
-			catch (\Exception $e){	u\alertBadInput ("Illegal date for event: $startdate");
+			catch (\Exception $e){	Utilities::alertBadInput ("Illegal date for event: $startdate");
 			}
 		}
 
 		if (!empty($enddate = trim($event['end']))){
 			if (! $enddt = new \DateTime($enddate) ){
-				u\alertBadInput ("Illegal end date for recurring event: $enddate");
+				Utilities::alertBadInput ("Illegal end date for recurring event: $enddate");
 			}
 		}
 
 		if (empty($event['title'])){
-			u\alertBadInput ("Event must have a title");
+			Utilities::alertBadInput ("Event must have a title");
 		}
 
 		if (empty($event['location'])){
-			u\alertBadInput ("Event must have a location");
+			Utilities::alertBadInput ("Event must have a location");
 		}
 
 		if (empty($event['type'])){
-			u\alertBadInput ("Event must have a type");
+			Utilities::alertBadInput ("Event must have a type");
 		}
 
 		if (empty($event['duration'])){
-			u\alertBadInput ("Event must have a duration");
+			Utilities::alertBadInput ("Event must have a duration");
 		}
 
 		if (empty($event['suspended'])){
@@ -339,7 +340,7 @@ public function check_calendar(array $calendar) {
 	return $z;
 }
 
-#u\echor ($z,'new',true);
+#Utilities::echor ($z,'new',true);
 public function write_calendar(array $z) {
 
 	return file_put_contents(CACHE['calendar'],json_encode($z) ,LOCK_EX);

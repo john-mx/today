@@ -1,7 +1,9 @@
 <?php
-
+namespace DigitalMx\jotr;
 use DigitalMx\jotr\Definitions as Defs;
-use DigitalMx as u;
+use DigitalMx\jotr\Utilities as U;
+
+
 
 
 ?>
@@ -36,7 +38,7 @@ One announcement per line.(<cr>)  They will be listed as bullets<br />
 
 <hr>
 <h4>Choose Pages for TV Rotation</h4>
-<?php //u\echor($admin); ?>
+<?php //Utilities::echor($admin); ?>
 Select which pages should appear in the rotation sequence (?snap)<br />
 <?php foreach (Defs::$rpages as $pid=>$pdesc) : ?>
 <input type='checkbox' name='rotate[]' value='<?=$pid?>' <?=$admin['rchecked'][$pid] ?? ''?> ><a href='/pager.php?<?=$pid?>' target = 'pager'><?=$pid?></a>: <?=$pdesc?><br />
