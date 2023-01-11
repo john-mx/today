@@ -21,10 +21,10 @@ use DigitalMx\jotr\Utilities as U;
 <?php endif; ?>
 
 <div class='title'>
-	<h1><?=$title?></h1>
+	<h1 style='font-weight:800'><?=$title?></h1>
 
 	<?php if ($local_head): ?>
-		<h2>Welcome to the <?=$local_site?></h2>
+		<h2 >Welcome to the <?=$local_site?></h2>
 	<?php endif;?>
 		<h1><?=$subtitle?></h1>
 </div>

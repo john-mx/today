@@ -99,7 +99,7 @@ if ($rotate){
 	<script src='/js/clock.js'></script>
 
 	<script src='/js/help.js'></script>
-
+	<link rel='stylesheet' href = '/css/Frutiger.css' />
 	<link rel='stylesheet' href = '/css/main.css' />
 	<link rel='stylesheet' href = '/css/print.css' />
 
