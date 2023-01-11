@@ -34,7 +34,8 @@ use DigitalMx\jotr\Utilities as U;
 		</tr>
 	<?php
 	foreach ($locs as $loc) :
-		$days = $wgov[$loc];
+		if (!$loc) continue;
+		$days = $wgov[$loc]??[];
 		$locname = Defs::$sitenames[$loc];
 		?>
 
