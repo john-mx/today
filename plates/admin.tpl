@@ -131,7 +131,7 @@ Click to <button type='button' onClick='clearopen()'> clear all site updates</bu
 <?php $this->insert('cal-admin',['calendar'=>$calendar]); ?>
 
 <hr>
-<h4>Choose Pages for TV Rotation</h4>
+<h4>Choose Pages for TV Rotation <?php U::showHelp('rotation');?></h4>
 <?php //Utilities::echor($admin); ?>
 Select which pages should appear in the rotation sequence (?snap)<br />
 <?php foreach (Defs::$rpages as $pid=>$pdesc) : ?>
