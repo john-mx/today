@@ -692,7 +692,9 @@ public function build_topic_light() {
 			++$period_count;
 			//Utilities::echor($period,'period ');
 			// found first period that has not ended yet
+
 			if ($period['isDaytime'] && $period_count == 1) {
+				$periodName = 'day';
 				// $wind = $period['windSpeed'] . ' ' . $period['windDirection'];
 				$wind = $period['windSpeed'];
 				$temperature = $period['temperature'];
@@ -704,12 +706,13 @@ public function build_topic_light() {
 				$z['day']['high'] = $high;
 				$z['day']['short'] = $period['shortForecast'];
 				$z['day']['icon'] = $period['icon'];
+				$z['day']['endTimets'] = strtotime($period['endTime']);
 
 				//$z['day']['uv'] = $daily['day']['uv'] ;
 				continue;
 			} elseif (!$period['isDaytime'])  {#got night time
 				//clear the day data
-				$z['day'] = [];
+
 				$temperature = $period['temperature'];
 				$tempc = round(($temperature -32 )* 5/9,0);
 				$low = "$temperature &deg;F ($tempc &deg;C)";
@@ -727,6 +730,7 @@ public function build_topic_light() {
 			// night period always exists if wgov is successfull,
 			// so set updates there.
 				$z['night']['period_count'] = $period_count;
+				$z['night']['endTimets'] = strtotime($period['endTime']);
 				$z['update']['ts'] = $wupdated;
 				$z['update']['source'] = 'Forecast for Jumbo Rocks from weather.gov';
 
@@ -745,6 +749,7 @@ public function build_topic_light() {
 				$z['tomorrow']['high'] = $high;
 				$z['tomorrow']['icon'] = $period['icon'];
 				$z['tomorrow']['short'] = $period['shortForecast'];
+				$z['tomorrow']['endTimets'] = strtotime($period['endTime']);
 				$tomorrow_done = true;
 
 
@@ -753,7 +758,7 @@ public function build_topic_light() {
 		} #end foreach
 
 	} #end wgov
- //	Utilities::echor($z,'light prepared');
+ 	//Utilities::echor($z,'light prepared',STOP);
 
 	return ['light' => $z];
 } #end function

@@ -28,7 +28,7 @@ $qs = '';
 $meta=array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
 	'page' => basename(__FILE__),
-	'subtitle' => '',
+	'subtitle' => TODAY,
 	'extra' =>'',
 
 );

@@ -29,7 +29,7 @@ $qs = $_SERVER['QUERY_STRING'] ?? '';
 $meta=array(
 	'qs' => $qs,
 	'page' => basename(__FILE__),
-	'subtitle' => '',
+	'title' => TODAY,
 	'pithy'=> $y['pithy'] ?? '',
 	'sunset' => $Today->sunset,
 	);

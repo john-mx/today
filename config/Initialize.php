@@ -99,6 +99,7 @@ class Initialize
 			define ('STOP' , true);
 			define ('NOSTOP',false); // these are for Utilities::echor utility
 			define ('VERSION', file_get_contents(REPO_PATH . "/data/version"));
+			define ('TODAY',date('l, F j, Y'));
     }
 
  	private function setPlatform(){

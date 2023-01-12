@@ -42,7 +42,7 @@ $qs = (!$q || ($q=='snap') )? 'snap' : '';
 $meta=array(
 	'qs' => $qs,
 	'page' => basename(__FILE__),
-	'subtitle' => '',
+	'subtitle' => TODAY,
 	'extra' => "<link rel='stylesheet' href='/css/tv.css'>",
 	'rotate' => $rotate,
 	'rdelay' => $rdelay,

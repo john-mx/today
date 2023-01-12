@@ -207,6 +207,7 @@ public static $coordinates = [
 		'brvc' => 'Black Rock Visitor Center',
 		'park' => 'Park',
 		'hqvc' => 'Park Headquarters',
+		'none' => '',
 	];
 
 	public static $campsites = [

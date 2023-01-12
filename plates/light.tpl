@@ -31,7 +31,7 @@ $updated = date('M d g:i a',$light['update']['ts']);
 
 	<!-- LEFT PANEL -->
 
-	<?php if ($day) : ?>
+	<?php if ($day['endTimets'] > time() ) : ?>
 	<div class='dayblock  '>
 		<h3><u>Today</u></h3>
 

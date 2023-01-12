@@ -5,13 +5,13 @@ ini_set('display_errors', 1);
 
 //BEGIN START
 	require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
-	
-	
+
+
 
 	use DigitalMx\jotr\Today;
 
 	$Plates = $container['Plates'];
-	
+
 	$Today = $container['Today'];
 
 
@@ -27,7 +27,7 @@ $y = $Today->prepare_topics ();
 $meta=array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
 	'page' => basename(__FILE__),
-	'subtitle' => '',
+	'subtitle' => TODAY,
 	'extra' => "<link rel='stylesheet' href='/css/tv.css'>",
 
 	);
