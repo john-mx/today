@@ -18,12 +18,11 @@ if (!$light ){
 // endif;
 
 
-$day = $light['day'] ?? [];
-
-$night = $light['night'];
-$tomorrow = $light['tomorrow'];
+$day = $light['Today'] ?? [];
+$night = $light['Tonight'];
+$tomorrow = $light['Tomorrow'];
 $updated = date('M d g:i a',$light['update']['ts']);
-
+$show_day=1;
 
 ?>
 
@@ -31,7 +30,7 @@ $updated = date('M d g:i a',$light['update']['ts']);
 
 	<!-- LEFT PANEL -->
 
-	<?php if ($day['endTimets'] > time() ) : ?>
+<?php if ($day && $day['endTimets'] > time() ) :  ?>
 	<div class='dayblock  '>
 		<h3><u>Today</u></h3>
 
@@ -50,7 +49,7 @@ $updated = date('M d g:i a',$light['update']['ts']);
 		</div>
 	</div>
 
-	<?php elseif ($night): ?>
+<div style='flex:0 0 1em;'> </div>
 	<div class='nightblock  bg-midnight' >
 
 		<h3><u>Tonight</u></h3>
@@ -72,12 +71,12 @@ $updated = date('M d g:i a',$light['update']['ts']);
 				</p>
 		</div>
 	</div>
-	<?php endif; ?>
-<div style='flex:0 0 2em;'> </div>
 
+
+
+<?php else: ?>
 <!-- RIGHT PANEL -->
 
-	<?php if ($day): ?>
 	<div class='nightblock bg-midnight' >
 
 		<h3><u>Tonight</u></h3>
@@ -99,7 +98,7 @@ $updated = date('M d g:i a',$light['update']['ts']);
 				</p>
 		</div>
 		</div>
-		<?php else: ?>
+<div style='flex:0 0 1em;'> </div>
 
 		<div class='dayblock  ' >
 <h3><u>Tomorrow</u></h3>

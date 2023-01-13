@@ -12,20 +12,6 @@ $Cal = new Calendar();
 
 
 <?php
-$gupdated = '';
-$wupdated = '';
-if(empty($wgov )): echo "<p>No wgov Data</p>"; exit;
-	else:
-	$gupdated =  date('M d g:i a',$wgov['update']);
-	endif;
-
-if(empty($wapi)): echo "<p>No wapi Data</p>"; exit;
-	else:
-	$wupdated =  date('M d g:i a',$wapi['update']);
-	endif;
-	//Utilities::echor($light);exit;
-$daylight = $light['day'];
-//Utilities::echor($daylight, 'day',true);
 
 $air = $air;
 $uvday = <<<EOT

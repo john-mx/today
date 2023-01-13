@@ -96,7 +96,6 @@ if (REPO == 'live'){
 }
 
 
-date_default_timezone_set('America/Los_Angeles');
 
 
 $loginfo =array ('LOGINFO' => [
