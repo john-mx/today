@@ -45,17 +45,13 @@ use DigitalMx\jotr\Utilities as U;
 
 <h4>Calendar <?php U::showHelp('calendar');?></h4>
 <ol>
-<li>Enter the event's title, location, type, and duration. Duration  will be displayed exactly as you type it (e.g. '45 mins', 'one hour');
+<li>The event's title, type, duration, and location are required fields.
 <li>Enter starting time for the event.  If you remove the time, the event will be deleted, If you want to stop displaying the event, but keep it in the system for later use, check the "Suspend" box.
 <li>For one-time events, enter the Date for the event. For repeating events, leave blank to start immediately, or enter date after which events begin.
-<li>
-Enter repeating schedule for repeating events.
-If event repeats, check the days it repeats on.
-Repeating events will continue until the date entered as Last Day, or until removed.
-<li>Enter the last day of repeating events.  If blank, events will be repeated until removed.
-<li>Enter any additional notes.
+<li>All events are deleted after their last scheduled date.
 </ol>
-<p><b>Set a time to "0" or blank to remove an event.</b> All events are deleted after their last scheduled date.
+<p><b>Set a time to "0" or blank to remove an event.<br>
+Check "Suspend" to stop displaying without removing.</b>
 </p>
 
 <table '>
@@ -106,7 +102,7 @@ Repeating events will continue until the date entered as Last Day, or until remo
 				(0 removes)<br>
 				<input type='checkbox' name='calendar[<?=$i?>][suspended]'
 					<?php if ($event['suspended']): ?> checked <?php endif; ?>
-					> Suspend (save,but don't display.)
+					> Suspend (stop showing, don't delete.)
 			</td>
 
 				<td >On or starting date: <br /><input type = 'text' size='15'

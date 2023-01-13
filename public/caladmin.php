@@ -64,7 +64,9 @@ $calendar = $Cal->add_types($calendar);
 
 
 $platedata = array('calendar'=>$calendar);
-echo $Plates->render('caladmin',$platedata);
-exit;
+?>
+<form method='post'>
 
-
+<?php echo $Plates->render('cal-admin',$platedata);?>
+<p><input class='submit' type='submit'></p>
+</form>

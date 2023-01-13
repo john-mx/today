@@ -45,7 +45,7 @@ $open_options = U::buildOptions(['','0','a few','around 10','10 +','?'],'',true)
 
 <p>You can have only one alert.<br>
 Title will be displayed in red.  To remove alert, remove the title.<br>
-Alerts must have expiration.  If today, just enter the time.  Otherwise enter month/day and time. Day without time means 12:01am</p>
+Alerts must have expiration.  If today, just enter the time.  Otherwise enter month/day and time. Day without time means 12:01am. You can use the format shown on government alerts, e.g. 2023-01-14T22:00:00-08:00.</p>
 <h5>Alert A</h5>
 <table class='border no-col'>
 <tr class='left'><td>Headline</td>
@@ -132,8 +132,8 @@ Click to <button type='button' onClick='clearopen()'> clear all site updates</bu
 
 <hr>
 <h4>Choose Pages for TV Rotation <?php U::showHelp('rotation');?></h4>
-<?php //Utilities::echor($admin); ?>
-Select which pages should appear in the rotation sequence (?snap)<br />
+
+Select which pages should appear in the rotation sequence (?snap)<br />(These are default settings.  Each individual display can set their own display preferences.)<br />
 <?php foreach (Defs::$rpages as $pid=>$pdesc) : ?>
 <input type='checkbox' name='rotate[]' value='<?=$pid?>' <?=$admin['rchecked'][$pid] ?? ''?> >&nbsp;&nbsp;<a href='/pager.php?<?=$pid?>' target = 'pager'><?=$pid?></a>: <?=$pdesc?><br />
 <?php endforeach; ?>
@@ -141,7 +141,7 @@ Select which pages should appear in the rotation sequence (?snap)<br />
 Set rotation delay in seconds: <input type='number' name='rdelay' value='<?=$admin['rdelay']?>' size='8' min=10 max=30 step=5 >
 
 <p>
-<button type='submit'>Submit Form</button>
+<button class='submit' type='submit'>Submit Form</button>
 </p>
 
 

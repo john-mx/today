@@ -50,16 +50,28 @@ h1 { font-size: 2rem;
 
 .tdate {margin-bottom:0;}
 
-input {
+input[type=text] {
 	background-color:#FFC;
 	border: 1px solid #CC9;
-	font-size:0.9rem;
+
 	}
 
 input:invalid {
 	background-color:#F00;
 }
 
+button {
+	background-color:#CCF;
+	font-weight: bold;
+}
+input[type=checkbox] {
+	outline:1px solid black;
+	font-size:1.2em;
+}
+
+input.submit, button.submit {
+	background-color:#9F9;
+}
 .invalid { background-color:#Fcc;}
 
 textarea {
@@ -70,10 +82,7 @@ textarea {
 	height:4rem;
 	}
 
-button {
-	background-color:#CFC;
-	font-weight: bold;
-}
+
 
 .likebutton {
 	display:inline-block;
