@@ -702,16 +702,16 @@ public function build_topic_light() {
 				$high =  "$temperature&deg;F ($tempc&deg;C)";
 				//$z['day']['sunrise'] =  $this -> time_format( $astro['sunrise']);
 				//$z['day']['sunset'] = $this -> time_format($astro['sunset']);
-				$z['day']['wind'] = $wind;
-				$z['day']['high'] = $high;
-				$z['day']['short'] = $period['shortForecast'];
-				$z['day']['icon'] = $period['icon'];
-				$z['day']['endTimets'] = strtotime($period['endTime']);
+				$z[$periodName]['wind'] = $wind;
+				$z[$periodName]['high'] = $high;
+				$z[$periodName]['short'] = $period['shortForecast'];
+				$icon = $period['icon'];
+				$z[$periodName]['endTimets'] = strtotime($period['endTime']);
 
 				//$z['day']['uv'] = $daily['day']['uv'] ;
 				continue;
 			} elseif (!$period['isDaytime'])  {#got night time
-				//clear the day data
+				$periodName = 'night';
 
 				$temperature = $period['temperature'];
 				$tempc = round(($temperature -32 )* 5/9,0);
@@ -721,16 +721,16 @@ public function build_topic_light() {
 
 				//$z['night']['moonrise'] =  $this -> time_format($astro['moonrise']);
 				//$z['night']['moonset'] = $this -> time_format($astro['moonset']);
-				$z['night']['wind'] = $wind;
-				$z['night']['low'] = $low;
-				$z['night']['icon'] = Defs::getMoonPic($astro['moon_phase']);
-				$z['night']['short'] = $period['shortForecast'];
-				//$z['night']['moonphase'] =  $astro['moon_phase'];
-				//$z['night']['moonillum'] = $astro['moon_illumination'];
+				$z[$periodName]['wind'] = $wind;
+				$z[$periodName]['low'] = $low;
+				$z[$periodName]['icon'] = Defs::getMoonPic($astro['moon_phase']);
+				$short = $period['shortForecast'];
+				//$z[$periodName]['moonphase'] =  $astro['moon_phase'];
+				//$z[$periodName]['moonillum'] = $astro['moon_illumination'];
 			// night period always exists if wgov is successfull,
 			// so set updates there.
-				$z['night']['period_count'] = $period_count;
-				$z['night']['endTimets'] = strtotime($period['endTime']);
+				$z[$periodName]['period_count'] = $period_count;
+				$z[$periodName]['endTimets'] = strtotime($period['endTime']);
 				$z['update']['ts'] = $wupdated;
 				$z['update']['source'] = 'Forecast for Jumbo Rocks from weather.gov';
 
@@ -747,14 +747,23 @@ public function build_topic_light() {
 				//$z['night']['moonset'] = $this -> time_format($astro['moonset']);
 				$z['tomorrow']['wind'] = $wind;
 				$z['tomorrow']['high'] = $high;
-				$z['tomorrow']['icon'] = $period['icon'];
+				$z['tomorrow']['icon'] = $icon;
 				$z['tomorrow']['short'] = $period['shortForecast'];
 				$z['tomorrow']['endTimets'] = strtotime($period['endTime']);
 				$tomorrow_done = true;
 
 
 		}
-			if ($tomorrow_done) break; // stop looking
+				$z[$periodName]['wind'] = $wind;
+				$z[$periodName]['low'] = $low;
+				$z[$periodName]['icon'] = Defs::getMoonPic($astro['moon_phase']);
+				$z[$periodName]['short'] = $short;
+				$z[$periodName]['period_count'] = $period_count;
+				$z[$periodName]['endTimets'] = strtotime($period['endTime']);
+
+
+
+		if ($tomorrow_done) break; // stop looking
 		} #end foreach
 
 	} #end wgov
