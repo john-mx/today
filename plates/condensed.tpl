@@ -33,10 +33,10 @@ setTimeout(() => {
 
 <div class='content center'>
 <!-- ############################## -->
-<div id='loadholder' style="display:block">
+<div id='loadholder' style="display:none">
 <br /><br /><br />(Setting up rotation...)
 </div>
-<div id="page-today" class='page' style="display: <?=$divvis?>;" >
+<div id="page-today" class='page' style="display: block;" >
 <!-- set transform on this page to scale to fit available display height -->
 <!--
 <?php if ($local_site): ?>
