@@ -774,7 +774,7 @@ public function build_topic_light() {
 				$short = $period['shortForecast'];
 
 				$tomorrow_done = true;
-
+			}
 				$z[$periodName]['wind'] = $wind;
 				$z[$periodName]['low'] = $low;
 				$z[$periodName]['high'] = $high;
@@ -783,7 +783,7 @@ public function build_topic_light() {
 
 				$z[$periodName]['period_count'] = $period_count;
 				$z[$periodName]['endTimets'] = $endTimets;
-			}
+
 			if ($tomorrow_done) break; // stop looking
 		} #end foreach
 		$z['update']['ts'] = $wupdated;
