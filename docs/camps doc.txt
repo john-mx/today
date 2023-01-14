@@ -1,0 +1,39 @@
+Campground strategy.
+
+Campground data is in two json files: one is the local info and status (camps);
+the other is just the openings from rec.gov (camps-rec).
+
+The camps-rec file is updated by rebuild-cache-camps-rec from rec.gov data.
+cgcode => [open = number,
+			asof = ts,
+			], ...
+
+
+the other file has cg status and manuyally set open sites
+	// camps
+	/* camps = [
+		'cgfull' => bool,
+		'cg_options' = [cgcode=>aselect options, (for form onoly; not saved)
+							...
+		'cgs => [
+			'cgcode' = [
+				'notes' => text,
+				'status' => open/closed/res,
+				'open' => text,
+				'asof' => ts,
+			],
+			...
+To display cg status, data is read from both files
+the most recent asof data is used for open sites
+So preparing cg data involves merging these two files to get
+open and most recent date.
+
+In display, actuual open sites are displayed.
+When older than "stale" (3 hours? ) display is yellow
+When older than 24 hours, open displayed as '?'.
+
+In the local file, the asof is updated whenever the avail is updated
+from the camp-admin site.  Each site iss treated separately for that.
+So to "refresh" site data, something has to be put into the update field,
+even if it is the same as the existing data.
+

@@ -10,7 +10,6 @@ use DigitalMx\jotr\Utilities as U;
 
 	$Today = $container['Today'];
 	$Login = $container['Login'];
-	$Cal = $container['Calendar'];
 
 $open_options = Utilities::buildOptions(['','0','1-3','4-9','10+','?'],'',true);
 

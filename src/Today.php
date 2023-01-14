@@ -251,26 +251,45 @@ public function prepare_admin() {
 	$fire_levels = array_keys(Defs::$firewarn);
 	$y['fire_level_options'] = Utilities::buildOptions($fire_levels,$admin['fire_level']);
 
-// camps
-	foreach (array_keys(Defs::$campsites) as $cgcode){
-		$opt = Utilities::buildOptions(Defs::$cgstatus, $admin['cgstatus'][$cgcode] ?? '');
-		$opts[$cgcode]  = $opt;
-		$notes[$cgcode] = $admin['cgnotes'][$cgcode] ?? '';
-
-	}
+// rotation
 	$rchecked = [];
 	$rotators = $admin['rotate'] ?? [];
 	foreach (array_keys(Defs::$rpages) as $pid){
 		if (in_array($pid,$rotators)){$rchecked[$pid] = 'checked';}
 	}
-	$y['cg_options'] = $opts;
-	$y['cg_notes'] = $notes;
 	$y['rchecked'] = $rchecked;
-	$y['cgsites'] = array_merge($this->load_cache('cgopen'), $this->load_cache('cgres'));
-	//$y['admin']['cgfull'] =  (!array_filter($y['admin']['cgopen'])) ? 1:0;
-	//$y['admin']['cgres'] = $this->load_cache('cgres') ?? [];
+
+// camps
+	/* camps = [
+		'cgfull' => bool,
+		'cg_options' = [cgcode=>aselect options, (for form onoly; not saved)
+							...
+		'cgs => [
+			'cgcode' = [
+				'notes' => text,
+				'status' => open/closed/res,
+				'open' => text,
+				'asof' => ts,
+			],
+			...
+
+	*/
+	$camps = load_cache('camps');
+	// to get site avail, must merge with camps-rec
+	// using most recent asof date.
+
+	foreach (array_keys(Defs::$campsites) as $cgcode){
+		$cg_options = Utilities::buildOptions(
+			Defs::$cgstatus, $camps['cgs'][$cgcode]['status'] ?? ''
+		);
+		$camps['cg_options'][$cgcode] = $cg_options;
+	}
+
+	$y['camps'] = $camps;
 
 
+
+// alerts
 	foreach (['alertA'] as $alertID){
 		$atitle = trim($admin[$alertID]['title'] ??'');
 		$atext = $admin[$alertID]['text']??'';
@@ -756,24 +775,22 @@ public function build_topic_light() {
 
 				$tomorrow_done = true;
 
-
-		}
 				$z[$periodName]['wind'] = $wind;
 				$z[$periodName]['low'] = $low;
 				$z[$periodName]['high'] = $high;
-				$z[$periodName]['icon'] = Defs::getMoonPic($astro['moon_phase']);
+				$z[$periodName]['icon'] = $icon;
 				$z[$periodName]['short'] = $short;
 
 				$z[$periodName]['period_count'] = $period_count;
 				$z[$periodName]['endTimets'] = $endTimets;
-
+			}
 			if ($tomorrow_done) break; // stop looking
 		} #end foreach
 		$z['update']['ts'] = $wupdated;
 		$z['update']['source'] = 'Forecast for Jumbo Rocks from weather.gov';
 		$this->sunset = $z['Today']['sunset'] ?? '';
 	} #end wgov
- 	//Utilities::echor($z,'light prepared');
+//  	Utilities::echor($z,'light prepared', STOP);
 
 	return ['light' => $z];
 } #end function
