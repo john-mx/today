@@ -34,7 +34,7 @@ function doResize(elementID) {
 
 	var  calcHeight = contentWidth * 9/16;
 
-	var availHeight = 1080 - titleHeight;
+	var availHeight = 1080 - titleHeight-50;
 
 	var scaleRatio = availHeight/contentHeight;
 	scale = Math.min(1,scaleRatio); // never grow
