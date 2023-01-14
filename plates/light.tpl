@@ -50,7 +50,7 @@ $show_day=1;
 	</div>
 
 <div style='flex:0 0 1em;'> </div>
-	<div class='nightblock  bg-midnight' >
+	<div class='nightblock  bg-midnight white' >
 
 		<h3><u>Tonight</u></h3>
 
@@ -77,7 +77,7 @@ $show_day=1;
 <?php else: ?>
 <!-- RIGHT PANEL -->
 
-	<div class='nightblock bg-midnight' >
+	<div class='nightblock bg-midnight white' >
 
 		<h3><u>Tonight</u></h3>
 

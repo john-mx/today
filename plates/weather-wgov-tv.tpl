@@ -54,7 +54,7 @@ use DigitalMx\jotr\Utilities as U;
 				</td>
 			<?php endfor; #day ?>
 		</tr>
-		<tr  class='bg-midnight' >
+		<tr  class='bg-midnight white' >
 
 			<td>Night</td>
 
