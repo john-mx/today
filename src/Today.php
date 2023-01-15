@@ -2004,7 +2004,7 @@ function get_external ($loginfo, $url,string $expected='',array $header=[]) {
 
 			if (! $success) {
 					++$tries;
-					sleep (5);
+					sleep (1);
 
 			} else {
 				curl_close($curl);
