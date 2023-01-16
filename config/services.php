@@ -54,5 +54,8 @@ $container['CgOpens'] = function ($c) {
 	return $pl;
 };
 
-
+$container['Admin'] = function ($c) {
+	$pl = new \DigitalMx\jotr\Admin($c);
+	return $pl;
+};
 

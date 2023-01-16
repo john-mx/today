@@ -230,109 +230,7 @@ public function build_topics(){
 }
 
 
-public function prepare_admin() {
-// get sections needed for the admin form
 
-
-	if (!$admin = $this->load_cache('admin')){
-	 	Log::error ("Could not load cache admin");
-	 	exit;
-	 	return [];
-	 }
-	 //transfer unmodified field
-	 foreach (['pithy','fire_level','announcements',
-	 'advice','uncertainty','rdelay','alert_alt',
-	 ] as $f){
-	 	$y[$f] = $admin[$f];
-	 }
-// 	Utilities::echor ($y, 'read admin cache', NOSTOP);
-
-	// set firelevel options array
-	$fire_levels = array_keys(Defs::$firewarn);
-	$y['fire_level_options'] = Utilities::buildOptions($fire_levels,$admin['fire_level']);
-
-// rotation
-	$rchecked = [];
-	$rotators = $admin['rotate'] ?? [];
-	foreach (array_keys(Defs::$rpages) as $pid){
-		if (in_array($pid,$rotators)){$rchecked[$pid] = 'checked';}
-	}
-	$y['rchecked'] = $rchecked;
-
-// camps
-	/* camps = [
-		'cgfull' => bool,
-		'cg_options' = [cgcode=>aselect options, (for form onoly; not saved)
-							...
-		'cgs => [
-			'cgcode' = [
-				'notes' => text,
-				'status' => open/closed/res,
-				'open' => text,
-				'asof' => ts,
-			],
-			...
-
-	*/
-	$camps = load_cache('camps');
-	// to get site avail, must merge with camps-rec
-	// using most recent asof date.
-
-	foreach (array_keys(Defs::$campsites) as $cgcode){
-		$cg_options = Utilities::buildOptions(
-			Defs::$cgstatus, $camps['cgs'][$cgcode]['status'] ?? ''
-		);
-		$camps['cg_options'][$cgcode] = $cg_options;
-	}
-
-	$y['camps'] = $camps;
-
-
-
-// alerts
-	foreach (['alertA'] as $alertID){
-		$atitle = trim($admin[$alertID]['title'] ??'');
-		$atext = $admin[$alertID]['text']??'';
-		$aexp = $admin[$alertID]['expires']??'';
-		if (empty ($atitle) || ($aexp<time()) ){
-			$btitle=$btext=$bexp='';
-		} else {
-			$btitle=$atitle;
-			$btext=$atext;
-			$bexp = date('M d g:i a',$aexp);
-		}
-		$y[$alertID]['title'] = $btitle;
-		$y[$alertID]['text'] = $btext;
-		$y[$alertID]['expires'] = $bexp;
-	}
-
-
-	$r['admin'] = $y;
-
-	if (!$r['galerts'] = $this->load_cache('galerts') ){
-	 	Log::error ("Could not load cache galerts");
-	 	return [];
-	 }
-
-
-// calendar
-	$calendar = $this->Cal->filter_calendar($this->load_cache('calendar'),0);
-
-#add 3 blank recordsw
-	for ($i=0;$i<3;++$i) {
-		$calendar[] = $this->Cal::$empty_cal;
-	}
-
-	$calendar = $this->Cal->add_types($calendar);
-	$r['calendar'] = $calendar;
-
-
-
-
-
-//  Utilities::echor ($r, 'r to admin',NOSTOP);
-	return $r;
-}
 
 public function load_cache ($section,$refresh=true) {
 	// normally checks for out of date cacghe and rebuilds it.
@@ -378,74 +276,6 @@ public function load_cache ($section,$refresh=true) {
 }
 
 
-public function post_admin ($post) {
- /* insert posted data and dependencies into cacjes
-
-
-*/
-//  Utilities::echor ($post, 'Posted' );
-
-//  admin cache
-	$y=[];
-	$y['announcements'] = trim($post['announcements']);
-	$y['updated'] = date('d M H:i');
-	$y['pithy'] = trim(Utilities::despecial($post['pithy']));
-//fire
-
-	$y['fire_level'] = $post['fire_level'];
-//weather
-	$y['alert_alt'] = $post['alert_alt'];
-
-	$y['advice'] = trim($post['advice']);
-
-
-	$y['cgstatus'] = $post['cgstatus']; // array
-// 	Utilities::echor ($y,'to write admin cache',STOP);
-	$y['cgnotes']  =$post['cgnotes'] ; //array
-	$y['uncertainty'] = $post['uncertainty']; #hours to keep site avail
-	$y['rotate'] = $post['rotate']; //array
-//Utilities::echor($y,'y',STOP);
-	$y['rdelay'] = $post['rdelay']; #rotation time
-
-
-// check alerts
-	foreach (['alertA'] as $alertID) {
-		$y[$alertID] = $this->checkAlert($post[$alertID]);
-	}
-	//Utilities::echor($y ,'post',STOP);
-
-	$this -> write_cache('admin',$y);
-
-	$cgo = $post['cgupdate'];
-//	Utilities::echor ($cgo,'cgupdate from post');
-	// remove any enbtries with blank avlues
-	$cgo = array_filter($cgo,function ($val) {return ($val !== '' );});
-	//Utilities::echor ($cgo,'cgupdate after filter');
-	$cgopen = [];
-	$cgres = [];
-
-
-
-
-
-
-	foreach ($cgo as $cg=>$open){
-		if ($post['cgstatus'][$cg] == 'Reservation'){
-			$cgres[$cg] = $open;
-		} elseif ($post['cgstatus'][$cg] == 'First'){
-			$cgopen[$cg] = $open;
-		}
-	}
-	// overwrite existing data with updates
-	$this->mergeCache('cgopen',$cgopen);
-	$this->mergeCache('cgres',$cgres);
-
-
-
-	$this->Cal->post_calendar($post['calendar']);
-
-
-}
 
 private function checkAlert ($alert) {
 //   Utilities::echor($alert,'start alert check');
@@ -559,16 +389,6 @@ public function degToDir($deg) {
 	if ($deg <= 292.5) return 'W';
 	if ($deg <= 337.5) return 'NW';
 	if ($deg <= 382.5) return 'N';
-}
-public function build_admin_calendar() {
-	if (!$z=$this->load_cache('calendar')) {
-	 	Log::error ("Could not load cache calendar");
-	 	return [];
-	 }
-
-#	Utilities::echor($z,'calendar',STOP);
-	$y=$this->Cal->filter_calendar($z,0);
-	return ['calendar' => $y];
 }
 
 public function build_topic_uv() {
@@ -774,11 +594,13 @@ public function build_topic_light() {
 				$short = $period['shortForecast'];
 
 				$tomorrow_done = true;
-			}
+
+
+		}
 				$z[$periodName]['wind'] = $wind;
 				$z[$periodName]['low'] = $low;
 				$z[$periodName]['high'] = $high;
-				$z[$periodName]['icon'] = $icon;
+				$z[$periodName]['icon'] = Defs::getMoonPic($astro['moon_phase']);
 				$z[$periodName]['short'] = $short;
 
 				$z[$periodName]['period_count'] = $period_count;
@@ -790,7 +612,7 @@ public function build_topic_light() {
 		$z['update']['source'] = 'Forecast for Jumbo Rocks from weather.gov';
 		$this->sunset = $z['Today']['sunset'] ?? '';
 	} #end wgov
-//  	Utilities::echor($z,'light prepared', STOP);
+ 	//Utilities::echor($z,'light prepared');
 
 	return ['light' => $z];
 } #end function
