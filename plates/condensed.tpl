@@ -17,9 +17,9 @@ switch ($qs) {
 }
 
 if (!empty($calendar)){
-$Cal = new Calendar();
+//$Cal = new Calendar();
 	$caldays = []; // count of events by day
-	$calendar = $Cal->filter_calendar($calendar,2);
+	$calendar = $Cal::filter_calendar($calendar,2);
 //	Utilities::echor($calendar,'calendar filtered', STOP);
 
 	//Utilities::echor($caldays,'caldays',STOP);

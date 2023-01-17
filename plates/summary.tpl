@@ -6,7 +6,7 @@ use DigitalMx\jotr\Utilities as U;
 
 use DigitalMx\jotr\Calendar;
 
-$Cal = new Calendar();
+//$Cal = new Calendar();
 
 ?>
 
@@ -66,7 +66,7 @@ EOT;
 
 <h4>Today's Events</h4>
 <?php
-$calendar = $Cal->filter_calendar($calendar,1); #one day
+$calendar = Calendar::filter_calendar($calendar,1); #one day
 if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 //Utilities::echor($calendar,'data-calendar',NOSTOP);
 
