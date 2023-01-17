@@ -38,7 +38,7 @@ $meta = array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
 	'page' => basename(__FILE__),
 	'subtitle' => 'Site Admin',
-	'extra' => "<script>src='/js/clearupdate.js'</script>",
+	'extra' => "<script src='/js/clearupdate.js'></script>",
 	);
 
 //Utilities::echor($meta,'meta',STOP);
@@ -52,22 +52,19 @@ $Login->check_pw(5);
 //Utilities::echor($_POST,'post');
 
 if (!empty($_POST) && !isset($_POST['pw'])) {
-	//	echo "Posting Data";
-		post_data ($_POST,$Today);
+//		U::echor($_POST, 'POST',STOP);
+		$Admin->post_admin($_POST);
 		echo "<script>location.reload();</script>";
 		exit;
 
 } else {
 
-// get calendar
-
-
 	echo $Plates->render('head',$meta);
-echo $Plates->render('title',$meta);
+	echo $Plates->render('title',$meta);
 
-		$y = $Admin-> prepare_admin();
- Utilities::echor($y, 'prepared admin', STOP);
-		echo $Plates->render('admin',$y);
+	$y = $Admin-> prepare_admin();
+//	 Utilities::echor($y, 'prepared admin');
+	echo $Plates->render('admin',$y);
 
 
 	exit;

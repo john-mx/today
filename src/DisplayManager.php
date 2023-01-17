@@ -94,10 +94,7 @@ class Today {
 
 public function __construct($c){
 	$this->Plates = $c['Plates'];
-	$this -> Defs = $c['Defs'];
 	$this-> CM = $c['CacheManager'];
-
-
 	$this->Cal = $c['Calendar'];
 	$this->Camps = $c['Camps'];
 	// locations to use for weather report
@@ -108,7 +105,7 @@ public function __construct($c){
 	$this->wgovupdate = strtotime($wgov['jr']['properties']['updated']);
 	$wapi = $this->CM->loadCache('wapi');
 	$this->wapiupdate = $wapi['jr']['current']['last_updated_epoch'];
-	$this-> sunset = '';
+	$this-> sunset = $this->time_format($wapi['br']['forecast']['forecastday']['0']['astro']['sunrise']);
 
 
 
@@ -155,14 +152,124 @@ public function build_topics(){
 		return $topics;
 }
 
+public function produceToday() {
+
+		$this->build_topic_light(),
+		$this->build_topic_admin(),
+		$this->build_topic_weather(),
+		$this->build_topic_air(),
+		$this->build_topic_calendar(),
+		$this->build_topic_current(),
+		$this->build_topic_uv(),
+		$this->build_topic_fees(),
+	);
+
+
+}
 
 
 
+public function startHTML($meta){
+<?php
+
+/* start with ['title'=>title,'pcode'=style code,'extra'=>extra headers];
+	A working title is creeated from title . pcode (platform)
+	This is used in the title header tag, so that's what shows up as the page's title in the browser.
+	The title without embellishment is used at the top of the page,
+	UNLESS the title is 'Today'.
+	For title = 'Today',  the title is the current date instead.
+
+	So for the today page, use "Today" as the title.  For all other pages,
+	use a reasonable title for the top of the page.
+
+	pcode modifies page for variation animations.
+	extra is additinal codee to put in head (e.g., <style> section)
+	*/
+
+	$qs = $meta['qs'] ?? '';
+	$extra = $meta['extra'] ?? '';
+
+	$page = $meta['page'] ?? 'page?';
+
+	$scbody = '';
+	$titlex = $page . ":$qs" . " (" .PLATFORM . ") ";
+	$added_headers = $extra;
+
+	$rotate ??= [];
+
+$rdelay ??=13;
+//echo "rdealy $rdelay" . BR; exit;
+$pages = [];
+if ($rotate){
+	foreach ($rotate as $pid){
+		$pages[] = '#page-'.$pid;
+	}
+}
+
+	$pagelist = json_encode($pages);
+
+//Utilities::echor($pagelist,'pagelist');
+
+//$rdelay = 15; #delay on rotation
+
+//echo "qs: $qs"; exit;
+
+		if ($qs == 'scroll'){
+			$scbody='onLoad="pageScroll()"';
+			$added_headers .= "<style>html {scroll-behavior: smooth;}</style>" .NL;
+			$added_headers .= "<script src='/js/scroll_scripts.js'></script>".NL;
+
+
+			$added_headers .= '<meta http-equiv="refresh" content="900" >' .NL;
+
+			} else if ($qs == 'snap'){
+
+
+			$scbody = "onLoad=load_snap()";
+			$added_headers .= '<meta http-equiv="refresh" content="900" >'.NL;
+
+			$added_headers .= '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">';
+			$added_headers .= "<script src='/js/load_snap.js'></script>";
+			$added_headers .= "<script>var pageList = $pagelist;var rdelay = $rdelay;</script>" .NL;
+
+		}
 
 
 
+$maints = U::addTimestamp('/css/main.css');
+$printts = U::addTimestamp('/css/print.css');
+echo <<<EOT
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!--
+<base href='<?=SITE_URL?>'>
+ -->
+
+	<title><?=$titlex?></title>
+
+	<script src='/js/check_time.js'></script>
+	<script src='/js/hide.js'></script>
+	<script src='/js/clock.js'></script>
+
+	<script src='/js/help.js'></script>
+	<link rel='stylesheet' href = '/css/Frutiger.css' />
+	<link rel='stylesheet' href = '$maints' />
+	<link rel='stylesheet' href = '$printts' />
 
 
+
+	$added_headers
+
+</head>
+<body <?=$scbody?> >
+
+EOT;
+}
 
 public function buildPDF(){
 	$y = $this->prepare_topics ();
@@ -201,11 +308,9 @@ public function build_topic_calendar() {
 //	$y=$this->Cal->filter_calendar($z,0);
 	return ['calendar' => $z];
 }
+
 public function build_topic_current() {
-	if (!$z=$this->CM->loadCache('current',false)) {
-	 	Log::error ("Could not load cache current");
-	 	return [];
-	 }
+	$z=$this->CM->loadCache('current');
 
 	$y=$z['lhrs']['properties'];
 	$y['updatets'] = strtotime($z['lhrs']['properties']['timestamp']);
@@ -215,9 +320,11 @@ public function build_topic_current() {
 	$y['wind_mph'] =  is_null($y['windSpeed']['value'])? 'n/a':round($y['wind_kph'] /2.2) ;
 	$y['wind_direction'] = $this->degToDir($y['windDirection']['value']??0);
 
+	$air = $this->CM->loadCache('airnow');
+	$y['aqi'] = $air['jr']['AQI'];
 	$wapi = $this->CM->loadCache('wapi');
 	$current_uv = $wapi['jr']['current']['uv'];
-	$y['uv'] = $this->uv_data($current_uv);
+	$y['uvdata'] = $this->uv_data($current_uv);
 
 // Utilities::echor($y,'current', NOSTOP);
 	return ['current' => $y];
@@ -533,7 +640,7 @@ return [];
 private function getCgDisplay($status,$open,$cgfull,$cgopen_age,$cgres_age,$cg_uncertain) {
 		if ($status == 'Closed'){return 'n/a';}
 		if ($cgfull) {return '0';}
-		if ($status == 'Reservation'){
+		if ($status == 'Reserved'){
 			if ($cg_uncertain && (time() - $cgres_age > $cg_uncertain * 60 * 60)){return '?';}
 			return $open;
 		} elseif ($status == 'First') {
@@ -630,8 +737,8 @@ public function format_airowm ($r){
 
 	foreach ($r as $loc => $d){
 			$aqi = $d['list']['0']['main']['aqi'];
-			$aqi_scale = $this -> Defs->aq_scale($aqi);
-			$aqi_color = $this -> Defs->scale_color($aqi_scale);
+			$aqi_scale = Defs::aq_scale($aqi);
+			$aqi_color = Defs::scale_color($aqi_scale);
 
 			$y['aqi'] = $aqi;
 			$y['pm10'] = $d['list'][0]['components']['pm10'];
@@ -690,8 +797,8 @@ Array
 	foreach ($r as $loc => $d){
 
 			$aqi = $d['0']['AQI'] ?? '' ;
-				$aqi_scale = ($aqi)? $this -> Defs->aq_scale($aqi) : '';
-				$aqi_color = ($aqi) ? $this -> Defs->scale_color($aqi_scale) : '';
+				$aqi_scale = ($aqi)? Defs::aq_scale($aqi) : '';
+				$aqi_color = ($aqi) ? Defs::scale_color($aqi_scale) : '';
 
 			$y['aqi'] = $aqi;
 			$y['pm10'] = $d['0']['PM10'] ?? 'n/a';
@@ -906,7 +1013,7 @@ public  function uv_data($uv) {
 		$uv = array(
 			'uv' => $uv,
 			'uvscale' => $uvscale,
-			'uvwarn' => $this ->Defs->uv_warn($uvscale),
+			'uvwarn' => Defs::uv_warn($uvscale),
 			'uvcolor' => Defs::get_color($uvscale),
 		);
 			return ($uv);

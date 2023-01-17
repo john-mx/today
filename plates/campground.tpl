@@ -5,22 +5,20 @@ use DigitalMx\jotr\Utilities as U;
 
 
 
-$cgopen_asof =  date('M d g:i a', $camps['cgopen_age']);
-$cgres_asof =  date('M d g:i a', $camps['cgres_age']);
 ?>
 
 
 
 <?php if(empty($camps)): echo "No Campground Data"; else: ?>
 <h4>Campgrounds
-<?php if (!empty($camps['cgfull'])) : ?>
+<?php if (!empty($camps['cgfull'] ?? '')) : ?>
 	<span class='red'><b>ALL CAMPGROUNDS ARE FULL!</b></span>
 <?php endif; ?>
 </h4>
 
 <table  class='alt-gray border center'>
 <tr ><th>Campground</th><th>Sites</th><th>Nightly Fee</th>
-<!-- <th>Open Sites</th> -->
+<th>Open Sites</th>
 <th style='border-right:2px solid black;'>Note</th>
 </tr>
 <?php
@@ -30,20 +28,20 @@ $cgres_asof =  date('M d g:i a', $camps['cgres_age']);
 		$no_entries = true; // track for no entries
 	?>
 
-<?php if ($status == 'Reservation'): ?>
+<?php if ($status == 'Reserved'): ?>
 	<tr class='bg-orange left'><td colspan='5' ><b>Reserved Campgrounds</b> Make reservations at rec.gov or call 1-877-444-6777. <br />
-	 Available sites as of <?=$cgres_asof ?></td></tr>
+	 Available sites </td></tr>
 
 <?php elseif ($status == 'First'): ?>
 	<tr class='bg-orange left'><td colspan='5' ><b>First Come, First Served Campgrounds</b> Find an empty site and claim it. Pay ranger or at entrance station. <br />
-			Available sites as of <?=$cgopen_asof?></td></tr>
+			Available sites </td></tr>
 
 <?php elseif ($status == 'Closed'): ?>
 	<tr class='bg-orange left'><td colspan='5' ><b>Closed Campgrounds</b></td></tr>
 <?php endif; ?>
 
 			<?php foreach ($cgs as $cg) : ?>
-			 <?php if ($camps['cg_status'][$cg] == $status):
+			 <?php if ($camps[$cg]['status'] == $status):
 				$no_entries=false;
 				?>
 				<tr class='border-bottom'>
@@ -51,7 +49,7 @@ $cgres_asof =  date('M d g:i a', $camps['cgres_age']);
 				<td> <?= Defs::$campsites[$cg] ?> </td>
 				<td> $<?= Defs::$campfees[$cg] ?> </td>
 				<!-- <td><?= $camps['sites'][$cg] ?> </td> -->
-				<td> <?= $camps['cg_notes'][$cg] ?>  </td>
+				<td> <?= $camps[$cg]['notes'] ?>  </td>
 				</tr>
 			<?php  endif; ?>
 

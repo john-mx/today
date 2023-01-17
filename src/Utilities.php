@@ -278,7 +278,18 @@ public static function element_sort(array $array, string $on, $order=SORT_ASC)
 
     return $new_array;
 }
+public static function addTimestamp ($file){
+	/* adds ?HHmm to file name to force cache updates
+		file is relative to public (e.g., /css/main.css)
+		*/
+	if (substr($file,0,1) !== '/' || ! file_exists(SITE_PATH . $file)){
+		die ("illegal file name at addTimeStamp: $file");
+	}
+	$ts = date('mdHi',filemtime(SITE_PATH . $file));
+	$file_ts = $file . '?' . $ts;
 
+	return $file_ts;
+}
 public static function inMultiArray($element, array $array, bool $strict = true) : bool {
 		 static $currentMultiArrayExec = 0;
 

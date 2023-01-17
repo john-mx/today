@@ -18,33 +18,42 @@ use DigitalMx\jotr\Utilities as U;
 
 class Admin {
 
+private static $empty_camps = array(
+	"ic" => "20","jr" => "0","sp" => "0","hv" => "0","be" => "0","wt" => "0","ry" => "0","br" => "0","cw"=>"0"
+	);
+
+
 public function __construct($c){
 
 	$this->Today = $c['Today'];
+	$this->CM = $c['CacheManager'];
+		$this->Cal = $c['Calendar'];
+		$this->Camps = $c['Camps'];
+
 }
 
 public function prepare_admin() {
 // get sections needed for the admin form
 
-	if (!$admin = $this->Today->load_cache('admin')){
+	if (!$admin = $this->CM->loadCache('admin')){
 	 	Log::error ("Could not load cache admin");
 	 	exit;
-	 	return [];
+
 	 }
 	 //transfer unmodified field
 	 foreach (['pithy','fire_level','announcements',
-	 'advice','uncertainty','rdelay','alert_alt',
+	 'advice','rdelay','alert_alt',
 	 ] as $f){
 	 	$y[$f] = $admin[$f];
 	 }
-// 	Utilities::echor ($y, 'read admin cache', NOSTOP);
+ 	//Utilities::echor ($y, 'read admin cache', NOSTOP);
 
 	// set firelevel options array
 	$fire_levels = array_keys(Defs::$firewarn);
 	$y['fire_level_options'] = Utilities::buildOptions($fire_levels,$admin['fire_level']);
 
 // camps
-$y['camps'] = $this->adminCamps() ;
+
 
 
 // rotation
@@ -74,13 +83,11 @@ $y['camps'] = $this->adminCamps() ;
 
 
 	$r['admin'] = $y;
-
-	$r['galerts'] = $this->load_cache('galerts');
-
-
+$r['camps'] = $this->Camps->prepareAdminCamps() ;
+	$r['galerts'] = $this->CM->loadCache('galerts');
 
 // calendar
-	$calendar = $this->Cal->filter_calendar($this->load_cache('calendar'),0);
+	$calendar = $this->Cal->filter_calendar($this->CM->loadCache('calendar'),0);
 
 #add 3 blank recordsw
 	for ($i=0;$i<3;++$i) {
@@ -90,44 +97,11 @@ $y['camps'] = $this->adminCamps() ;
 	$calendar = $this->Cal->add_types($calendar);
 	$r['calendar'] = $calendar;
 
-
-
-
-
 //  Utilities::echor ($r, 'r to admin',NOSTOP);
 	return $r;
 }
 
-public function adminCamps() {
-	/* camps=> [
-		cgcode => [
-			statusopt => code for open/res/closed,
-			open => number,
-			asof => ts,
-			note => text,
-			,
-		],
-		....
-	]
-	*/
 
-
-	$camps = $this->Today->load_cache('camps');
-	$campsRc = $this->Today->load_cache('camps-rc') ?? [];
-
-	foreach (array_keys(Defs::$campsites) as $cgcode){
-		$opt = Utilities::buildOptions(Defs::$cgstatus, $camps[$cgcode]['cgstatus']);
-		$campsa[$cgcode]['statusopt']  = $opt;
-		$campsa[$cgcode]['notes'] = $camps[$cgcode]['cgnotes']?? '';
-		$rc_newer = isset($campsRc[$cgcode]) && $campsRc[$cgcode]['asof'] > $camps[$cgcode]['asof'];
-		$campsa[$cgcode]['asof'] = $rc_newer?
-			$campsRc[$cgcode]['asof'] :$camps[$cgcode]['asof'];
-		$campsa[$cgcode]['open'] = $rc_newer?
-			$campsRc[$cgcode]['open'] :$camps[$cgcode]['open'];
-
-	}
-
-}
 
 public function post_admin ($post) {
  /* insert posted data and dependencies into cacjes
@@ -150,10 +124,7 @@ public function post_admin ($post) {
 	$y['advice'] = trim($post['advice']);
 
 
-	$y['cgstatus'] = $post['cgstatus']; // array
-// 	Utilities::echor ($y,'to write admin cache',STOP);
-	$y['cgnotes']  =$post['cgnotes'] ; //array
-	$y['uncertainty'] = $post['uncertainty']; #hours to keep site avail
+
 	$y['rotate'] = $post['rotate']; //array
 //Utilities::echor($y,'y',STOP);
 	$y['rdelay'] = $post['rdelay']; #rotation time
@@ -165,33 +136,11 @@ public function post_admin ($post) {
 	}
 	//Utilities::echor($y ,'post',STOP);
 
-	$this -> write_cache('admin',$y);
-
-	$cgo = $post['cgupdate'];
-//	Utilities::echor ($cgo,'cgupdate from post');
-	// remove any enbtries with blank avlues
-	$cgo = array_filter($cgo,function ($val) {return ($val !== '' );});
-	//Utilities::echor ($cgo,'cgupdate after filter');
-	$cgopen = [];
-	$cgres = [];
+	$this -> CM->writeCache('admin',$y);
 
 
 
-
-
-
-	foreach ($cgo as $cg=>$open){
-		if ($post['cgstatus'][$cg] == 'Reservation'){
-			$cgres[$cg] = $open;
-		} elseif ($post['cgstatus'][$cg] == 'First'){
-			$cgopen[$cg] = $open;
-		}
-	}
-	// overwrite existing data with updates
-	$this->mergeCache('cgopen',$cgopen);
-	$this->mergeCache('cgres',$cgres);
-
-
+	$this->Camps->postCamps($post['camps']);
 
 	$this->Cal->post_calendar($post['calendar']);
 
@@ -199,7 +148,7 @@ public function post_admin ($post) {
 }
 
 public function build_admin_calendar() {
-	if (!$z=$this->load_cache('calendar')) {
+	if (!$z=$this->loadCache('calendar')) {
 	 	Log::error ("Could not load cache calendar");
 	 	return [];
 	 }
@@ -209,6 +158,47 @@ public function build_admin_calendar() {
 	return ['calendar' => $y];
 }
 
+private function checkAlert ($alert) {
+//   Utilities::echor($alert,'start alert check');
+	if (!$alert || empty($alert['title'])){return [];}
+	if (empty (trim($alert['title']))) {
+// 		echo "cleared";
+		$y['expires'] = $y['text'] = $y['title'] = '';
+
+	} else {
+		$y['title'] = $alert['title'];
+		$y['text'] =  $alert['text'];
+		if (empty($alert['expires'])){
+
+			Utilities::alertBadInput("Must have an expiration date for an alert");
+		}
+		try{$alertAx = new \DateTime($alert['expires'],new \DateTimeZone('America/Los_Angeles'));}
+		catch (\Exception $e) {
+			Utilities::alertBadInput ("Cannot understand date/time: {$alert['expires']}");
+		}
+		$alertAxts = $alertAx->format('U');
+		if ($alertAxts < time()) {
+			Utilities::alertBadInput("Expiration less than now.  To delete item, remove the title");
+		}
+
+		$y['expires'] = $alertAxts;
+	}
+//  Utilities::echor($y,'checked alert');
+	return $y;
+}
+
+private function str_to_ts($edt) {
+			try {
+				if (empty($edt)) return '';;
+				if (! $t = strtotime($edt) )
+					throw new RuntimeException ("Illegal date/time: $edt");
+				return $t;
+			} catch (RuntimeException $e) {
+				Utilities::echoAlert ($e->getMessage());
+				echo "<script>history.back()</script>";
+				exit;
+			}
+		}
 
 
 }

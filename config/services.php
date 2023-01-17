@@ -49,8 +49,8 @@ $container['Calendar'] = function ($c) {
 	$pl = new \DigitalMx\jotr\Calendar($c);
 	return $pl;
 };
-$container['CgOpens'] = function ($c) {
-	$pl = new \DigitalMx\jotr\CgOpens($c);
+$container['Camps'] = function ($c) {
+	$pl = new \DigitalMx\jotr\Camps($c);
 	return $pl;
 };
 
@@ -58,4 +58,10 @@ $container['Admin'] = function ($c) {
 	$pl = new \DigitalMx\jotr\Admin($c);
 	return $pl;
 };
+
+$container['CacheManager'] = function ($c) {
+	$pl = new \DigitalMx\jotr\CacheManager($c);
+	return $pl;
+};
+
 

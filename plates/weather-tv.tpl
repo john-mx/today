@@ -12,7 +12,7 @@ use DigitalMx\jotr\Utilities as U;
 	$wspec=[
 	'wslocs'=> $wslocs ??= ['jr'],
 	'wsdays'=> $wsdays ??= 3,
-	'fcstart'=> $fcstart ??= 0,
+	'wsstart'=> $wsstart ??= 0,
 	];
 
 //Utilities::echor($wspec);

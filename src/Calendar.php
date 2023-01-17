@@ -83,8 +83,9 @@ class Calendar {
 
 	//$tz = new \DateTimeZone('America/Los_Angeles');
 
-	public function __construct() {
+	public function __construct($c) {
 		$this->tz = new \DateTimezone('America/Los_Angeles');
+		$this->CM = $c['CacheManager'];
 	}
 
 	public function dayset(int $i,string $days) {
@@ -343,7 +344,7 @@ public function check_calendar(array $calendar) {
 #Utilities::echor ($z,'new',true);
 public function write_calendar(array $z) {
 
-	return file_put_contents(CACHE['calendar'],json_encode($z) ,LOCK_EX);
+	return $this->CM->writeCache('calendar',$z);
 }
 
 
