@@ -210,7 +210,7 @@ public function build_topics(){
 		$topics = array_merge(
 			$this->build_topic_admin(),
 			$this->build_topic_weather(),
-			$this->build_topic_campgrounds(),
+			//$this->build_topic_campgrounds(),
 			$this->build_topic_light(),
 			$this->build_topic_air(),
 			$this->build_topic_calendar(),
