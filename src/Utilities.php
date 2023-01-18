@@ -212,7 +212,7 @@ public static function buildRadioSet(
 
     foreach ($val_array as $k => $v) {
     #echo "k=$k,v=$v,check=$check" . BRNL;
-        if (empty($v)){continue;}
+        if (empty($v)){continue;} #removes blank values
 
         $label = $v;
         $label .= ($show_code)? " ($k)" : '';

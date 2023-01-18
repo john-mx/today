@@ -73,7 +73,7 @@ foreach (array_keys(Defs::$rpages) as $pid){
 		if (in_array($pid,$rotators)){$rchecked[$pid] = 'checked';}
 }
 $site_array = [];
-foreach (['29vc','jtvc','cwvc','brvc','hqvc','park'] as $vc){
+foreach (['29vc','jtvc','cwvc','brvc','hqvc','park','none'] as $vc){
 
 	$site_array[$vc] = Defs::$sitenames[$vc];
 }

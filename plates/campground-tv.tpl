@@ -9,6 +9,7 @@ endif;
 
 // $cgopen_asof =  date('M d g:i a', $camps['cgopen_age']);
 // $cgres_asof =  date('M d g:i a', $camps['cgres_age']);
+$cgres_asof = $cgopen_asof = '';
 ?>
 
 <h4>Campgrounds

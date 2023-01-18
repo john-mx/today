@@ -26,9 +26,7 @@ use DigitalMx\jotr\Utilities as U;
 <div class='title' style='flex:1;justify-content:flex-center;flex-grow:8'>
 	<h1 style='font-weight:700'>Today in Joshua Tree National Park</h1>
 
-	<?php if ($local_head): ?>
-		<h2 >Welcome to the <?=$local_site?></h2>
-	<?php endif;?>
+
 		<h1><?=$title?></h1>
 </div>
 
@@ -38,3 +36,6 @@ use DigitalMx\jotr\Utilities as U;
 </div>
 
 </div>
+<?php if ($local_head && $local_site !== 'None'): ?>
+		<p class='center'><b>Welcome to the <?=$local_site?></b></p>
+	<?php endif;?>

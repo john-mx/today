@@ -16,7 +16,7 @@
 	/* sets root font size */
 	font-family:Rubik;
 	font-size:28pt;
-	font-weight:bold;
+	font-weight:00;
 	/* line-height:1.4; */
 }
 body{
@@ -27,7 +27,7 @@ body{
 
 table{
 	font-family: Rubik;
-	font-weight:400;
+	font-weight:600;
 	font-size:1em;
 }
 h4 {
@@ -35,6 +35,7 @@ h4 {
 	margin-top:1rem;
 }
 
+ul,li{ font-weight:600;}
 .page {
 	transform-origin:top center;
 }
