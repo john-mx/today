@@ -16,7 +16,7 @@ $alerts = $admin['notices']['alerts'];
 		endforeach;
 	elseif ($admin['alert_alt']):
 ?>
-<div class='border center' style='margin-top:0.5em;width:80%'>
+<div class='border center' style='margin-top:0.5em;width:80% font-weight:500;'>
 <?php echo nl2br($admin['alert_alt']) ?>
 </div>
 
