@@ -17,24 +17,21 @@ use DigitalMx\jotr\Utilities as U;
 		"<div><b>Welcome to the $local_site</b></div>"
 		: '';
 ?>
-<div class='head' style='display:flex;align-items:flex-end;' id='titles'>
+<div id='titles'>
+<div class='head' style='display:flex;align-items:flex-end;' >
 
-<div class='pad' style='flex:1;justify-content:flex-start;' onClick = 'getLocal();'> <?php if ($qs == 'snap'):?>Now<br /><div id='clock'> </div>
-<?php endif; ?>
-</div>
+	<div class='pad' style='flex:1;justify-content:flex-start;' onClick = 'getLocal();'> <?php if ($qs == 'snap'):?>Now<br /><div id='clock'> </div><?php endif; ?> </div>
 
-<div class='title' style='flex:1;justify-content:flex-center;flex-grow:8'>
+	<div class='title' style='flex:1;justify-content:flex-center;flex-grow:8'>
 	<h1 style='font-weight:700'>Today in Joshua Tree National Park</h1>
-
-
 		<h1><?=$title?></h1>
-</div>
+	</div>
 
-<div class='pad'style='flex:1;justify-content:flex-end;'>
-<?php if (!empty($sunset)): ?>Sunset <br /><?=$sunset?>
-<?php endif; ?>
+	<div class='pad'style='flex:1;justify-content:flex-end;'>
+		<?php if (!empty($sunset)): ?>Sunset <br /><?=$sunset?>
+		<?php endif; ?>
+	</div>
 </div>
-
 
 <?php if ($local_head && $local_site !== 'None'): ?>
 		<p class='center'><b>Welcome to the <?=$local_site?></b></p>
