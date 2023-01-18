@@ -1,8 +1,8 @@
 
 
 :root {
-		font-family:Frutiger,serif;
-	font-size: 14pt;
+		font-family:Rubik,san-serif;
+	font-size: 18pt;
 }
 body {
 	padding:12px;
@@ -258,7 +258,7 @@ div.dayblock {
 	border:1px solid blue;
 	font-weight;bold;
 
-	background-color:#76D6FF;
+	background-color:#D5EDFA;
 	color:#000;
 	vertical-align:top;
 /* 	float:left; */

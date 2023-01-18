@@ -2,8 +2,8 @@
 	/*
 		use smaller type, larger lin spacing.
 	*/
-	:root{font-size: 10pt ;
-		font-family:"Times New Roman", Times, serif;
+	:root{font-size: 12pt ;
+
 	}
    body {
       color: #000;
@@ -17,6 +17,11 @@
 	(e.g., for time-sensitive that would be wrong on printed item)
  */
 	.no-print {display:none;}
+
+	div.head {
+    position: fixed;
+    top: 0;
+  }
 }
 
 

@@ -1,7 +1,5 @@
 
-/*
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
- */
+/* @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,600;0,700,0,800;1,400;1,500&display=swap') */;
 
 /* Rubik font imported from google fonts
 	regykar 400
@@ -9,13 +7,14 @@
 	medium 500
 	semibold 600
 	bold 700
+	black 800
 
 	*/
-@import url('/css/Frutiger.css');
+/* @import url('/css/Frutiger.css'); */
 
 :root {
 	/* sets root font size */
-	font-family:Frutiger;
+	font-family:Rubik;
 	font-size:28pt;
 	font-weight:bold;
 	/* line-height:1.4; */
@@ -27,8 +26,8 @@ body{
 
 
 table{
-	font-family: Frutiger;
-	font-weight:bold;
+	font-family: Rubik;
+	font-weight:400;
 	font-size:1em;
 }
 h4 {
