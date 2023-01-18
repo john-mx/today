@@ -50,6 +50,7 @@ $maincss=U::addTimestamp('/css/main.css');
 $tvcss=U::addTimestamp('/css/tv.css');
 $maincss=U::addTimestamp('/css/main.css');
 $tvcss=U::addTimestamp('/css/tv.css');
+$snapjs = U::addTimestamp('/js/load_snap.js');
 
 //echo "qs: $qs"; exit;
 	switch ($qs) {
@@ -71,7 +72,7 @@ $tvcss=U::addTimestamp('/css/tv.css');
 			$added_headers .= '<meta http-equiv="refresh" content="900" >'.NL;
 
 
-			$added_headers .= "<script src='/js/load_snap.js'></script>";
+			$added_headers .= "<script src='$snapjs'></script>";
 			$added_headers .= "<script>var pageList = $pagelist;</script>" .NL;
 			$added_headers .= "<script>var rdelay = $rdelay;</script>" .NL;
 			break;
