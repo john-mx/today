@@ -46,6 +46,10 @@ if ($rotate){
 //Utilities::echor($pagelist,'pagelist');
 
 //$rdelay = 15; #delay on rotation
+$maincss=U::addTimestamp('/css/main.css');
+$tvcss=U::addTimestamp('/css/tv.css');
+$maincss=U::addTimestamp('/css/main.css');
+$tvcss=U::addTimestamp('/css/tv.css');
 
 //echo "qs: $qs"; exit;
 	switch ($qs) {
@@ -66,7 +70,7 @@ if ($rotate){
 			$scbody = "onLoad=load_snap()";
 			$added_headers .= '<meta http-equiv="refresh" content="900" >'.NL;
 
-
+			$added_headers .= "<script src='$tvcss'></script>";
 			$added_headers .= "<script src='/js/load_snap.js'></script>";
 			$added_headers .= "<script>var pageList = $pagelist;</script>" .NL;
 			$added_headers .= "<script>var rdelay = $rdelay;</script>" .NL;
@@ -78,7 +82,6 @@ if ($rotate){
 				exit;
 	}
 
-$maints=U::addTimestamp('/css/main.css');
 
 ?>
 
@@ -100,7 +103,7 @@ $maints=U::addTimestamp('/css/main.css');
 
 	<script src='/js/help.js'></script>
 	<!-- <link rel='stylesheet' href = '/css/Frutiger.css' /> -->
-	<link rel='stylesheet' href = '<?=$maints?>' />
+	<link rel='stylesheet' href = '<?=$maincss?>' />
 	<link rel='stylesheet' href = '/css/print.css' />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
