@@ -137,9 +137,6 @@ public function build_topics(){
 			$this->build_topic_uv(),
 			$this->build_topic_fees(),
 
-
-
-
 		);
 
 
