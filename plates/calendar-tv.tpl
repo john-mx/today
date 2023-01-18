@@ -16,8 +16,7 @@ foreach ($calendar as $cevent){
 			$caldays[$cdate] + 1
 			:
 			1;
-		if ($cevent['note']) ++$caldays[$cdate];
-
+		if (0 && $cevent['note']) ++$caldays[$cdate];
 	}
 ?>
 

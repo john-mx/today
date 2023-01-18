@@ -100,7 +100,7 @@ setTimeout(() => {
 <div id="page-fees" style="display: <?=$divvis?>;" class="page">
 
 <?php $this->insert('fees-tv'); ?>
-
+<div id='page-fees-scale' style='font-size:0.5em;' class='right'>&nbsp;</div>
 </div>
 
 
