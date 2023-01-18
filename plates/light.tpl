@@ -40,7 +40,9 @@ $show_day=1;
 			<b>Wind: </b> <?= $day['wind']?>
 		</div >
 
+
 		<div class=' center inlineblock' style='font-weight:bold;vertical-align:top;width:55% width-min:350px;'>
+
 			<p><?= $day['short'] ?></p>
 			<p style='margin-top:0;font-size:1.3rem;'> High: <?=$day['high']?></p>
 			<p>

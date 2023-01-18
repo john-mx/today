@@ -83,7 +83,6 @@ class ResourceException extends \RuntimeException{}
 // sets paths, constants, requires
 $init = new Initialize();
 
-
 //creates container and services for most of the classes
 require  REPO_PATH . "/config/services.php";
 
@@ -108,22 +107,9 @@ define ('REMOTE', $loginfo);
 $loginfo ['url'] = $_SERVER['REQUEST_URI'];
 Log::info("Init started" ,$loginfo);
 
-//load all the topic data into $y, and
-// pass it to all the listed templates
 
-$y = $container['Today']->build_topics();
-$container['Plates']->addData($y,
-[
-	'today','light','notices','conditions','advice','weather',
-	'campground', 'summary', 'condensed','campground-tv',
-	'alerts','summary','weather','weather-wapi','weather-wgov',
-	'weather-one-line','weather-tv','weather-wgov-tv','calendar',
 
-]
-);
-
-// Utilities::echor($y);
 
  define ('INIT',1);
-
+//echo basename(__FILE__) . " [". __LINE__ ."]" . BR; exit;
 //EOF

@@ -83,8 +83,9 @@ class Calendar {
 
 	//$tz = new \DateTimeZone('America/Los_Angeles');
 
-	public function __construct() {
+	public function __construct($c) {
 		$this->tz = new \DateTimezone('America/Los_Angeles');
+		$this->CM = $c['CacheManager'];
 	}
 
 	public function dayset(int $i,string $days) {
@@ -125,11 +126,11 @@ return $z;
 public function post_calendar($cal){
 
 	$cal = $this->check_calendar($cal);
-	$cal = $this->filter_calendar($cal,0);
+	$cal = self::filter_calendar($cal,0);
 	$this->write_calendar($cal);
 }
 
-public function filter_calendar(array $calendar,int $transform = 0) {
+public static function filter_calendar(array $calendar,int $transform = 0) {
 	/*
 		removes expired events from calendar and sort by date
 		calenar = array (
@@ -171,7 +172,7 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 			else{ continue;} #skip if not admin
 		}
 		elseif (empty ($event['days']) && !empty ($event['date'] )) { //scheduled
-			$z[] = $this->parse_scheduled($event);
+			$z[] = self::parse_scheduled($event);
 			#echo "added scheduled ${event['title']}" . BR;
 
 		} elseif ($transform == 0 ) { #keep for admin sccreen, but don't expand
@@ -184,7 +185,7 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 					$edate = date('M d,Y'); #today
 				}
 				$begindate = $edate . ' ' . trim($event['time']);
-				try{ $begindt = new \DateTime($begindate,$this->tz); }
+				try{ $begindt = new \DateTime($begindate,new \DateTimeZone('America/Los_Angeles')); }
 				catch (\Exception $e) {Utilities::alertBadInput ("Illegal start date for recurring event: $begindate");
 					exit; // should have got during prepare function
 				}
@@ -197,7 +198,7 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 
 
 				for ($i=0;$i<$transform;++$i){
-					$cevent = $this->parse_recurring($event,$begindt,$enddt,$i);
+					$cevent = self::parse_recurring($event,$begindt,$enddt,$i);
 					if ($cevent) {
 						$z[] = $cevent;
 						#echo "added repeating ${event['title']}" . BR;
@@ -217,7 +218,7 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 	return ($z);
 }
 
-	function parse_recurring($event,$begindt,$enddt,$i) {
+private static function parse_recurring($event,$begindt,$enddt,$i) {
 		$now = new \DateTime();
 		#create actual event list
 		$testdt = new \DateTime($event['time']); // today at sched time
@@ -260,7 +261,7 @@ public function filter_calendar(array $calendar,int $transform = 0) {
 	}
 
 
-	function parse_scheduled ($event) {
+public static	function parse_scheduled ($event) {
 			$edate = $event['date'] . ' ' . $event['time'];
 			$edt = new \DateTime($edate,$this->tz) ;
 			$now = new \DateTime();
@@ -343,7 +344,7 @@ public function check_calendar(array $calendar) {
 #Utilities::echor ($z,'new',true);
 public function write_calendar(array $z) {
 
-	return file_put_contents(CACHE['calendar'],json_encode($z) ,LOCK_EX);
+	return $this->CM->writeCache('calendar',$z);
 }
 
 

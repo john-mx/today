@@ -17,9 +17,9 @@ switch ($qs) {
 }
 
 if (!empty($calendar)){
-$Cal = new Calendar();
+//$Cal = new Calendar();
 	$caldays = []; // count of events by day
-	$calendar = $Cal->filter_calendar($calendar,2);
+	$calendar = Calendar::filter_calendar($calendar,2);
 //	Utilities::echor($calendar,'calendar filtered', STOP);
 
 	//Utilities::echor($caldays,'caldays',STOP);
@@ -33,10 +33,10 @@ setTimeout(() => {
 
 <div class='content center'>
 <!-- ############################## -->
-<div id='loadholder' style="display:none">
+<div id='loadholder' style="display:block">
 <br /><br /><br />(Setting up rotation...)
 </div>
-<div id="page-today" class='page' style="display: block;" >
+<div id="page-today" class='page' style='display:<?=$divvis?>;' >
 <!-- set transform on this page to scale to fit available display height -->
 <!--
 <?php if ($local_site): ?>
@@ -94,7 +94,7 @@ setTimeout(() => {
 <?php endif; ?>
 
 <div id="page-camps" style="display: <?=$divvis?>;" class="page">
-<?php $this->insert('campground-tv',$camps); ?>
+<!--  $this->insert('campground-tv',$camps);  -->
 <div id='page-camps-scale' style='font-size:0.5em;' class='right'>&nbsp;</div>
 </div><!-- end page-->
 <div id="page-fees" style="display: <?=$divvis?>;" class="page">

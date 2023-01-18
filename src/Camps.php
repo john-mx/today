@@ -12,74 +12,108 @@ use DigitalMx\jotr\Utilities as U;
 class Camps {
 
 function __construct($c){
-
-	$this->Plates = $c['Plates'];
-
-	$this->test_opens = array(
-		array (
-			'd' => '11/23/2022',
-			'ic' => 4,
-			'jr' => 2,
-			'sp' => 3,
-			'hv' => 0,
-			'be' => 0,
-			'wt' => 3,
-			'br' => 0,
-			'cw' => 9,
-			'ry' => 0,
-			),
-		 array (
-			'd' => '11/24/2022',
-			'ic' => 9,
-			'jr' => 2,
-			'sp' => 3,
-			'hv' => 2,
-			'be' => 0,
-			'wt' => 3,
-			'br' => 0,
-			'cw' => 9,
-			'ry' => 4,
-			),
-		 array (
-			'd' => '11/25/2022',
-			'ic' => 25,
-			'jr' => 2,
-			'sp' => 3,
-			'hv' => 0,
-			'be' => 0,
-			'wt' => 3,
-			'br' => 0,
-			'cw' => 9,
-			'ry' =>10,
-			),
-		);
+	$this->CM = $c['CacheManager'];
 
 }
 
-	public function get_opens() {
-		if (! $opens = $this->Today->load_cache('cgopen')){
-			$opens = $this->test_opens;
+
+	public function prepareAdminCamps() {
+	/* camps=> [
+		cgcode => [
+			statusopt => code for open/res/closed,
+			open => number,
+			asof => ts,
+			note => text,
+			,
+		],
+		....
+	]
+	*/
+
+
+	$camps = $this->CM->loadCache('camps');
+	$campsRec = $this->CM->loadCache('campsRec') ;
+
+// U::echor($camps,'camps');
+// U::echor($campsRec, 'campsRec',);
+
+
+	foreach (array_keys($camps) as $cg){
+		$opt = Utilities::buildOptions(Defs::$cgstatus, $camps[$cg]['status'] ?? '');
+		$camps[$cg]['statusopt']  = $opt;
+		$rc_newer = isset($campsRec[$cg]) && $campsRec[$cg]['asof'] > $camps[$cg]['asof'];
+	//	echo "$cg: " ; echo ($rc_newer)? 'rc newer':'manual newer' ; echo  BR;
+		$camps[$cg]['asof'] = $rc_newer?
+			$campsRec[$cg]['asof'] :$camps[$cg]['asof'] ?? time();
+		$camps[$cg]['open'] = $rc_newer?
+			$campsRec[$cg]['open'] :$camps[$cg]['open']?? 100;
+		$camps[$cg]['asofHM'] = date('M j g:i a',$camps[$cg]['asof']);
+	}
+//	U::echor($camps, 'camps prepared');
+	return $camps;
+}
+
+
+
+	public function postCamps($post) {
+// 	U::echor($post, 'postCamps');
+		$campd = $post;
+		$camps = $this->CM->loadCache('camps');
+		$campsRec =$this->CM->loadCache('campsRec');
+
+		foreach ($campd as $cg=>$cgd){
+		//U::echor($cgd,"key $cg");
+			if ($cgd['status'] == 'Reserved'){
+				$camps[$cg]['status'] = 'Reserved';
+				$camps[$cg]['notes'] = $cgd['notes'];
+				if (!empty ($cgo = $cgd['cgupdate'])){
+					$camps[$cg]['open'] = $cgo;
+					$camps[$cg]['asof'] = time();
+				}
+
+			} elseif ($cgd['status'] == 'First'){
+				$camps[$cg]['status'] = 'First';
+				$camps[$cg]['notes'] = $cgd['notes'];
+				if (!empty ($cgo = $cgd['cgupdate'])){
+					$camps[$cg]['open'] = $cgo;
+					$camps[$cg]['asof'] = time();
+				}
+			} else { # is closed
+				$camps[$cg]['status'] = 'Closed';
+				$camps[$cg]['notes'] = $cgd['notes'];
+				$camps[$cg]['open'] = 0;
+				$camps[$cg]['asof'] = time();
+			}
 		}
-		return $opens;
-	}
-	public function get_mtime() {
-		if (file_exists(CACHE['cgopen'])){
-			$mtime = filemtime (CACHE['cgopen']);
-		}else{
-			$mtime = time();
-		}
-		$asof =	date('M d H:i a', $mtime);
-		return $asof;
-	}
-		//Utilities::echor($opens,'show_opens');
+// 		U::echor ($camps, 'camps');
+// 		U::echor ($campsRec, 'campsRec');
 
-
-
-
-	public function save_opens($opens){
-		$this->Today->write_cache('cgopen',$opens);
+		$this->CM->writeCache('camps',$camps);
+		$this->CM->writeCache('campsRec',$campsRec);
 	}
 
+public function prepareDisplayCamps(){
+		$camps = $this->CM->loadCache('camps');
+	$campsRec = $this->CM->loadCache('campsRec') ;
+
+// U::echor($camps,'camps');
+// U::echor($campsRec, 'campsRec',);
 
 
+	foreach (array_keys($camps) as $cg){
+		$opt = Utilities::buildOptions(Defs::$cgstatus, $camps[$cg]['status'] ?? '');
+		$camps[$cg]['statusopt']  = $opt;
+		$rc_newer = isset($campsRec[$cg]) && $campsRec[$cg]['asof'] > $camps[$cg]['asof'];
+	//	echo "$cg: " ; echo ($rc_newer)? 'rc newer':'manual newer' ; echo  BR;
+		$camps[$cg]['asof'] = $rc_newer?
+			$campsRec[$cg]['asof'] :$camps[$cg]['asof'] ?? time();
+		$camps[$cg]['open'] = $rc_newer?
+			$campsRec[$cg]['open'] :$camps[$cg]['open']?? 100;
+		$camps[$cg]['asofHM'] = date('M j g:i a',$camps[$cg]['asof']);
+	}
+//	U::echor($camps, 'camps prepared');
+	return $camps;
+
+
+	}
 }

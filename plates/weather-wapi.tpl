@@ -13,7 +13,7 @@ if(empty($wapi)): echo "<p>No Data</p>"; else:
 	$wspec=[
 	'wslocs'=> $wslocs ??= ['jr','br','cw'],
 	'wsdays'=> $wsdays ??= 3,
-	'fcstart'=> $fcstart ??= 0,
+	'wsstart'=> $wsstart ??= 0,
 	];
 
 	//set days and locations
@@ -34,8 +34,8 @@ if(empty($wapi)): echo "<p>No Data</p>"; else:
 <tr>
 
 		<?php
-		// note: fcstart + 0 converts to numeric
-			for ($i=$fcstart+0;$i<$fcstart+$daycnt;++$i) : //for 3 days
+		// note: wsstart + 0 converts to numeric
+			for ($i=$wsstart+0;$i<$wsstart+$daycnt;++$i) : //for 3 days
 				$day = $wapi['forecast']['jr'][$i];
 // 		Utilities::echor ($day ,'day',STOP);
 				echo "<th>{$day['date']}</th>";
@@ -55,7 +55,7 @@ if(empty($wapi)): echo "<p>No Data</p>"; else:
 		<tr>
 
 			<?php
-			for ($i=$fcstart+0;$i<$fcstart+$daycnt;++$i) : //for 3 days
+			for ($i=$wsstart+0;$i<$wsstart+$daycnt;++$i) : //for 3 days
 				$p = $days[$i] ;
 				?>
 					<td>

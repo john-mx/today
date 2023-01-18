@@ -17,7 +17,7 @@ switch ($pcode) {
 		$divvis='block';
 }
 
-$Cal = new Cal();
+
 ?>
 
 <!-- ############################## -->
@@ -68,7 +68,7 @@ $Cal = new Cal();
 <div id="page4" class='break' style="display: <?=$divvis?>;">
 
 <?php
-$tcalendar = $Cal->filter_calendar($calendar,3);
+$tcalendar = Calendar::filter_calendar($calendar,3);
 $this->insert('calendar',['calendar'=>$tcalendar])
 ?>
 

@@ -42,6 +42,7 @@ if ($rotate){
 }
 
 	$pagelist = json_encode($pagel);
+
 //Utilities::echor($pagelist,'pagelist');
 
 //$rdelay = 15; #delay on rotation
@@ -78,7 +79,7 @@ if ($rotate){
 				exit;
 	}
 
-
+$maints=U::addTimestamp('/css/main.css');
 
 ?>
 
@@ -100,7 +101,7 @@ if ($rotate){
 
 	<script src='/js/help.js'></script>
 	<link rel='stylesheet' href = '/css/Frutiger.css' />
-	<link rel='stylesheet' href = '/css/main.css' />
+	<link rel='stylesheet' href = '<?=$maints?>' />
 	<link rel='stylesheet' href = '/css/print.css' />
 
 	<?=$added_headers?>

@@ -7,13 +7,22 @@ use DigitalMx\jotr\Utilities as U;
 ?>
 
 <?php
-// chooses wapi or wgov data depending on date of wgov
+/*
+	chooses wapi or wgov data depending on date of wgov
+
+	starting array wspec:
+	wslocs = locations to report on
+	wsdays = number of days to report on
+	wsstart = days ahead to start forcast.
+
+	*/
 
 	$wspec=[
 	'wslocs'=> $wslocs ??= ['jr','br','cw'],
 	'wsdays'=> $wsdays ??= 3,
-	'fcstart'=> $fcstart ??= 0,
+	'wsstart'=> $wsstart ??= 0,
 	];
+
 
 //Utilities::echor($wspec);
 

@@ -16,15 +16,15 @@ use DigitalMx\jotr\Utilities as U;
 	use DigitalMx\jotr\Calendar;
 
 	$Plates = $container['Plates'];
-
+	$CM = $container['CacheManager'];
 	$Today = $container['Today'];
 
 
 //Utilities::echor ($_SESSION);
 //END START
+$topics = $Today->build_topics();
 
-
-$y=$Today->load_cache('admin');
+$y=$CM->loadCache('admin');
 $admin['rotate'] = $y['rotate'] ?: ['today'];
 $local = $_SESSION['local'] ?? [];
 //Utilities::echor($local,'local');

@@ -17,7 +17,7 @@ use DigitalMx\jotr\Utilities as U;
 		//set days and locations
 		$locs =  $wslocs ?? ['jr','br','cw'];
 		$daycnt = $wsdays ?? 3 ;
-		$fcstart = $fcstart ?? 0;
+		$wsstart = $wsstart ?? 0;
 
 	?>
 	<table class = 'col-border width90 ' style='margin:auto'>
@@ -25,7 +25,7 @@ use DigitalMx\jotr\Utilities as U;
 
 	<tr class='no-border border-bottom'><th></th>
 		<?php
-			for ($i=$fcstart+1;$i<$fcstart+$daycnt+1;++$i) : //for 3 days
+			for ($i=$wsstart+1;$i<$wsstart+$daycnt+1;++$i) : //for 3 days
 				$daytext = $wgov['jr'][$i]['Night']['daytext'];
 		//Utilities::echor ($day ,'day',STOP);
 				echo "<th>$daytext</th>";
@@ -44,7 +44,7 @@ use DigitalMx\jotr\Utilities as U;
 			<b><?=$locname?></b></td></tr>
 		<tr style = 'border-top:1px solid black;'>
 			<td>Day</td>
-			<?php for ($i=$fcstart+1;$i<$fcstart+$daycnt+1;++$i) : //for 3 days ?>
+			<?php for ($i=$wsstart+1;$i<$wsstart+$daycnt+1;++$i) : //for 3 days ?>
 				<td>
 				 <?php if ($p = $days[$i]['Day'] ?? ''): ?>
 							<?=$p['shortForecast']?><br />
@@ -58,7 +58,7 @@ use DigitalMx\jotr\Utilities as U;
 
 			<td>Night</td>
 
-			<?php for ($i=$fcstart+1;$i<$fcstart+$daycnt+1;++$i) : //for 3 days ?>
+			<?php for ($i=$wsstart+1;$i<$wsstart+$daycnt+1;++$i) : //for 3 days ?>
 				<td>
 				<?php if ($p = $days[$i]['Night'] ): ?>
 					<div >

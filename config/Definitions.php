@@ -247,7 +247,7 @@ public static $campfees = [
 	];
 	public static $cgstatus = [
 		'First',
-		'Reservation',
+		'Reserved',
 		'Closed',
 	];
 
@@ -261,22 +261,7 @@ public static $campfees = [
 
 	];
 
-		public static $caches  = array (
-				'admin' => REPO_PATH . "/var/admin.json",
-				'airnow' => REPO_PATH . "/var/airnow.json",
-				'airowm' => REPO_PATH . "/var/airowm.json",
-				'airq' => REPO_PATH . "/var/airq.json",
-				'alerts' => REPO_PATH . "/var/alerts.json",
-				'calendar' => REPO_PATH . "/var/calendar.json",
-				'properties' => REPO_PATH . "/var/properties.json",
-				'wapi' => REPO_PATH . "/var/wapi.json",
-				'wgov' => REPO_PATH . "/var/wgov.json",
-				'galerts' => REPO_PATH . "/var/galerts.json",
-				'cgopen' => REPO_PATH . "/var/cgopen.json",
-				'camp' => REPO_PATH . "/var/camp.json",
-				'current' => REPO_PATH . "/var/current.json",
-				'cgres' => REPO_PATH . '/var/cgres.json',
-			);
+
 
 /* time before refresh in minutes.  0 means
 // cache is static except for update by
@@ -295,8 +280,8 @@ mins,
 				'airowm' => 0,
 				'alerts' => 0,
 				'galerts' => 110,
-				'cgopen' =>0,
-				'camp' => 0,
+				'campsRec' =>0,
+				'camps' => 0,
 				'current' => 55,
 				'cgres' => 25,
 

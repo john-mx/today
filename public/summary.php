@@ -15,8 +15,7 @@ use DigitalMx\jotr\Utilities as U;
 	$Plates = $container['Plates'];
 
 	$Today = $container['Today'];
-	$Cal = new Calendar();
-
+$topics = $Today->build_topics();
 
 //END START
 
