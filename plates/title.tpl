@@ -35,7 +35,8 @@ use DigitalMx\jotr\Utilities as U;
 <?php endif; ?>
 </div>
 
-</div>
+
 <?php if ($local_head && $local_site !== 'None'): ?>
 		<p class='center'><b>Welcome to the <?=$local_site?></b></p>
 	<?php endif;?>
+</div>
