@@ -70,7 +70,7 @@ $tvcss=U::addTimestamp('/css/tv.css');
 			$scbody = "onLoad=load_snap()";
 			$added_headers .= '<meta http-equiv="refresh" content="900" >'.NL;
 
-			$added_headers .= "<script src='$tvcss'></script>";
+
 			$added_headers .= "<script src='/js/load_snap.js'></script>";
 			$added_headers .= "<script>var pageList = $pagelist;</script>" .NL;
 			$added_headers .= "<script>var rdelay = $rdelay;</script>" .NL;
@@ -103,7 +103,7 @@ $tvcss=U::addTimestamp('/css/tv.css');
 
 	<script src='/js/help.js'></script>
 	<!-- <link rel='stylesheet' href = '/css/Frutiger.css' /> -->
-	<link rel='stylesheet' href = '<?=$maincss?>' />
+	<link rel='stylesheet' type='text/css' href = '<?=$maincss?>' />
 	<link rel='stylesheet' href = '/css/print.css' />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

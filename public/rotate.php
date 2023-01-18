@@ -43,7 +43,7 @@ $meta=array(
 	'qs' => $qs,
 	'page' => basename(__FILE__),
 	'subtitle' => TODAY,
-	'extra' => "<link rel='stylesheet' href='$tvcss'></style>",
+	'extra' => "<link rel='stylesheet' type='text/css' href='$tvcss'></style>",
 	'rotate' => $rotate,
 	'rdelay' => $rdelay,
 	'sunset' => $Today->sunset,
