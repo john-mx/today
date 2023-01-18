@@ -24,7 +24,7 @@ use DigitalMx\jotr\Utilities as U;
 <?php
 	$cgs = array_keys(Defs::$campsites);
 	sort ($cgs);
-	foreach (['Reservation','First','Closed'] as $status):
+	foreach (['Reserved','First','Closed'] as $status):
 		$no_entries = true; // track for no entries
 	?>
 
@@ -48,7 +48,7 @@ use DigitalMx\jotr\Utilities as U;
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
 				<td> $<?= Defs::$campfees[$cg] ?> </td>
-				<!-- <td><?= $camps['sites'][$cg] ?> </td> -->
+				<td><?= $camps[$cg] ['open']?> </td>
 				<td> <?= $camps[$cg]['notes'] ?>  </td>
 				</tr>
 			<?php  endif; ?>

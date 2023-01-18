@@ -52,7 +52,7 @@ if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 	</tr>
 
 	<?php if (!empty($cal['note'])) : ?>
-	<tr ><td style='border-top:0;'></td><td colspan='3' class='noterow left'>
+	<tr  ><td style='border-top:0;'></td><td colspan='3' class='noterow left'>
 			<?=$cal['note'] ?? '' ?>
 			</td></tr>
  	<?php endif; ?>

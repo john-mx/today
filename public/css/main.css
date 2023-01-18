@@ -320,12 +320,12 @@ table.caltable td {
 }
  */
 table.caltable tr.eventrow, table.caltable tr.eventrow td {
-	border-top:3px solid #F39840;
+	border-top:6px solid #F39840;
 	border-bottom:0;
 	text-align:left;
 }
 table.caltable tr.noterow, table.caltable tr.noterow td {
-	border-top:1px dashed gray;
+	border-top:1px solid gray;
 
 	text-align:left;
 }

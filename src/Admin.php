@@ -83,7 +83,7 @@ public function prepare_admin() {
 
 
 	$r['admin'] = $y;
-$r['camps'] = $this->Camps->prepareAdminCamps() ;
+	$r['camps'] = $this->Camps->prepareAdminCamps() ;
 	$r['galerts'] = $this->CM->loadCache('galerts');
 
 // calendar
