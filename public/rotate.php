@@ -38,11 +38,12 @@ $rdelay = (isset($local['rdelay']))?$local['rdelay']: $y['rdelay'];
 $q = trim($_SERVER['QUERY_STRING']);
 
 $qs = (!$q || ($q=='snap') )? 'snap' : '';
-
+$tvcss=U::addTimestamp('/css/tv.css');
 $meta=array(
 	'qs' => $qs,
 	'page' => basename(__FILE__),
 	'subtitle' => TODAY,
+	'extra' => "<link rel='stylesheet' href='$tvcss'></style>",
 	'rotate' => $rotate,
 	'rdelay' => $rdelay,
 	'sunset' => $Today->sunset,
