@@ -4,17 +4,24 @@ namespace DigitalMx\jotr;
 #ini_set('display_errors', 1);
 
 //BEGIN START
-	require  './init.php';
-	
-	use DigitalMx\jotr\Today;
+	require_once  './init.php';
 
-	$Today = $container['Today'];
+
+	//$CM = $container['CacheManager'];
 
 
 //END START
+?>
 
-echo	$Today->refresh_caches ();
-echo "Done";
+<html><head>
+<title>Refresh All Caches</title>
+</head>
+<body>
+Starting all cache refresh
+<?php
+//echo	$CM->refreshAllCaches ();
+echo "Done" . BRNL
+. "</body></html>";
 
 exit;
 

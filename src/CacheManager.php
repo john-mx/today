@@ -71,7 +71,8 @@ class CacheManager {
 
 
 
-	private $wlocs = ['jr','br'];
+	private $wlocs = ['jr','br','cw'];
+	private $airlocs = ['jr','br','cw'];
 
 public function __construct() {
 
@@ -194,7 +195,8 @@ private function curl_options () {
 	CURLOPT_FOLLOWLOCATION => true,
 	CURLOPT_ENCODING => "",
 	CURLOPT_MAXREDIRS => 10,
-	CURLOPT_TIMEOUT => 30,
+	CURLOPT_TIMEOUT => 10,
+	CURLOPT_CONNECTTIMEOUT => 5,
 	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 	CURLOPT_CUSTOMREQUEST => "GET",
 
@@ -460,7 +462,11 @@ coord: 34.0714,-116.3906,
 
 public function mergeCache($cache,$merge){
 // merges data into cache, unless data is empty
-		$x = $this->loadCache($cache,false) ; #don't refresh it	Log::info("Merged updated cache $loginfo");
+		if (file_exists (self::$cacheFiles[$cache])){
+			$x = $this->loadCache($cache,false);
+		} else {
+			$x=[];
+		}
 //		Utilities::echor ($x, "merge: Loaded cache $cache");
 //		Utilities::echor ($merge,'merge: Data to merge');
 		if (! empty ($merge)){ #if empty you're done
@@ -664,13 +670,14 @@ public function refreshCache($cache,$force=0) {
 
 
 	*/
-
+	$ot = false;
 	if (!file_exists(self::$cacheFiles[$cache])) {
 		$force=true; $ot=1;
 	} else {
 		$ot = $this->over_cache_time($cache);
 	}
 	if (!$ot &&  ! $force ) return true;
+	Log::info("Starting refresh on $cache");
 	switch ($cache) {
 		case 'admin':
 			if (!file_exists(self::$cacheFiles[$cache])) $this->initializeCache($cache);
@@ -815,8 +822,8 @@ function get_external ($loginfo, $url,string $expected='',array $header=[]) {
 			$loginfo is just for Log info
 		*/
 		$curl = curl_init();
-		$curl_options = $this->curl_options();
-		curl_setopt_array($curl,$curl_options);
+
+		curl_setopt_array($curl,$this->curl_options());
 		curl_setopt($curl,CURLOPT_URL, $url);
 		if ($header)
 				curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
@@ -827,10 +834,11 @@ function get_external ($loginfo, $url,string $expected='',array $header=[]) {
 
 		while (!$success) {
 			//Utilities::echor($aresp,"Here's what I got for $loginfo:");
+			Log::info("trying external. Tries:$tries. URL: $url");
 			if ($tries > 2){
 					//echo "Can't get valid data from ext source  $loginfo";
-				Log::notice("External failed for $loginfo: $fail.",$aresp);
-				return [];
+				Log::error("External failed for $loginfo: $fail.",$aresp);
+				return false;
 			}
 			if (! $response = curl_exec($curl)) {
 				$success = 0;

@@ -17,6 +17,7 @@ ini_set('display_errors', 1);
 	$Today = $container['Today'];
 	$Cal = $container['Calendar'];
 	$CM = $container['CacheManager'];
+	$DM = $container['DisplayManager'];
 
 $meta = array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
@@ -25,12 +26,13 @@ $meta = array(
 	'extra' => "<script src='/js/show_time.js'></script>",
 
 );
+$DM->showLight();
 
-echo $Plates->render('head',$meta);
-echo $Plates->render('title',$meta);
+//echo $Plates->render('head',$meta);
+//echo $Plates->render('title',$meta);
 //END START
 
-$CM->refreshCache('wgov');
-
-$y = $CM->load_cache('wgov');
-U::echor($y);
+// $CM->refreshCache('wgov');
+//
+// $y = $CM->loadCache('wgov');
+// U::echor($y);

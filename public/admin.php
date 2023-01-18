@@ -30,7 +30,7 @@ use DigitalMx\jotr\Utilities as U;
 
 
 //END START
-
+$topics = $Today->build_topics();
 
 
 

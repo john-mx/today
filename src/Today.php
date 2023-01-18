@@ -103,15 +103,8 @@ public function __construct($c){
 	// locations to use for weather report
 	$this -> wlocs = ['jr','cw','br','hq'] ; // weather locations
 	$this -> airlocs = ['jr','cw','br']; // air quality locations
-	// get wgov update imte
-	$wgov = $this->CM->loadCache('wgov');
-	$this->wgovupdate = strtotime($wgov['jr']['properties']['updated']);
-	$wapi = $this->CM->loadCache('wapi');
-	$this->wapiupdate = $wapi['jr']['current']['last_updated_epoch'];
-	$this-> sunset = '';
-
-
-
+	$this->light = $this->build_topic_light()['light'];
+	$this->sunset = $this->light['Today']['sunset'];
 
 
 }
@@ -135,7 +128,7 @@ public function build_topics(){
 
 		$topics = array_merge(
 			$this->build_topic_admin(),
-			$this->build_topic_weather(),
+		$this->build_topic_weather(),
 			$this->build_topic_campgrounds(),
 			$this->build_topic_light(),
 			$this->build_topic_air(),
@@ -150,7 +143,15 @@ public function build_topics(){
 		);
 
 
-//	Utilities::echor($topics,'topics',STOP);
+		$this->Plates->addData($topics,
+[
+	'today','light','notices','conditions','advice','weather',
+	'campground', 'summary', 'condensed','campground-tv',
+	'alerts','summary','weather','weather-wapi','weather-wgov',
+	'weather-one-line','weather-tv','weather-wgov-tv','calendar',
+
+]);
+
 
 		return $topics;
 }
@@ -242,6 +243,8 @@ public function build_topic_uv() {
 	$uvdata=$this->uv_data($uv);
 	return ['uvdata'=>$uvdata];
 }
+
+
 public function build_topic_air() {
 	$z=[];
 	if(!$z=$this->CM->loadCache('airnow')){
@@ -251,7 +254,7 @@ public function build_topic_air() {
 	$y = $this->format_airnow($z);
 
 	return ['air' => $y];
-
+U::echor($y,'air',STOP);
 }
 
 // prepare data for the ight displlay:

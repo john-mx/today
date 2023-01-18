@@ -15,7 +15,7 @@ use DigitalMx\jotr\Utilities as U;
 	$Plates = $container['Plates'];
 
 	$Today = $container['Today'];
-
+$topics = $Today->build_topics();
 
 //END START
 

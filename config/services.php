@@ -64,4 +64,8 @@ $container['CacheManager'] = function ($c) {
 	return $pl;
 };
 
+$container['DisplayManager'] = function ($c) {
+	$pl = new \DigitalMx\jotr\DisplayManager($c);
+	return $pl;
+};
 

@@ -10,16 +10,19 @@ use DigitalMx\jotr\Utilities as U;
 
 
 	use DigitalMx\jotr\Today;
-	use DigitalMx\jotr\Calendar as Cal;
+
 
 	$Plates = $container['Plates'];
 
 	$Today = $container['Today'];
-	$Cal = new Cal();
+	$CM = $container['CacheManager'];
+
 
 
 
 $page = $_SERVER['QUERY_STRING'];
+
+//$CM->refreshCache('wgov');
 
 $y=$Today->build_topics();
 //Utilities::echor ($y,'topics');
@@ -44,7 +47,7 @@ switch ($page) {
 		$subtitle = "Upcoming Events";
 		$plate = 'calendar';
 
-		$z['calendar'] = $Cal->filter_calendar($y['calendar'],3);
+		$z['calendar'] = Calendar::filter_calendar($y['calendar'],3);
 		break;
 
 	case 'weather':

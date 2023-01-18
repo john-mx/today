@@ -7,19 +7,20 @@ use DigitalMx\jotr\Utilities as U;
 #ini_set('display_errors', 1);
 
 //BEGIN START
-	require  'init.php';
-
+	require_once 'init.php';
+//echo basename(__FILE__) . " [". __LINE__ ."]" . BR;
 	$Plates = $container['Plates'];
 	$Today = $container['Today'];
-//END START
 
+//END START
+//echo basename(__FILE__) . " [". __LINE__ ."]" . BR;
 $meta=array(
-	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
 	'page' => basename(__FILE__),
 	'subtitle' => 'Today Project Index',
-	'extra' => "",
-
 	);
+
+//echo basename(__FILE__) . " [". __LINE__ ."]" . BR;
+
 echo $Plates->render('head',$meta);
 echo $Plates->render('title',$meta);
 
@@ -28,14 +29,14 @@ echo $Plates->render('title',$meta);
 //Log::error('starting index' . __FILE__ . __LINE__);
 //Log::info('Index page');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-	if (array_key_exists('rebuild',$_POST)) {
-			$Today->rebuild(false);
-	}
-	if (array_key_exists('reload',$_POST)) {
-			$Today->rebuild(true);
-	}
-}
+// if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+// 	if (array_key_exists('rebuild',$_POST)) {
+// 			$Today->rebuild(false);
+// 	}
+// 	if (array_key_exists('reload',$_POST)) {
+// 			$Today->rebuild(true);
+// 	}
+// }
 ?>
 
 <p>This project generates the "Today in the Park" report in a variety of formats.</p>
@@ -45,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <tr><td >Link</td><td >Result</td></tr>
 <tr class='bg-yellow'><td colspan='2'>Information Pages</td></tr>
 
-<tr><td><a href='about.php'>About</a></td><td>General information about the site.</td></tr>
+<tr><td><a href='about.php' target='about'>About</a></td><td>General information about the site.</td></tr>
 <tr><td><a href='/'>Overview</td><td>Overview of the project</td></tr>
 
 <tr class='bg-yellow'><td>'Today' Pages</td><td></td></tr>
@@ -63,11 +64,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <tr><td><a href="/rotate.php" target='snap'>Rotate</a><td> (reommended) Large type version designed for TV. Rotates through topics, changing every 15 seconds.  (You can choose which pages (or just one page) appear in the rotation using the admin page. ) Uses "snap" animation unless url is "/rotate.php?nosnap" </td></tr>
 
 <tr class='bg-yellow'><td>Topic Pages</td><td>Individual topics from the 'Everything' page</td></tr>
-<tr><td><a href='/pager.php?weather'>Weather</td><td>3-day forecast, Jumbo Rocks, Black Rock and Cottonwood</tr>
-<tr><td><a href='/pager.php?fees'>Fee Schedule</td><td>All fees and where to buy</td></tr>
-<tr><td><a href='/pager.php?events'>Calendar</td><td>Events for next 3 days</td></tr>
-<tr><td><a href='/pager.php?notices'>Notices</td><td>Alerts and Notices</tr>
-<tr><td><a href='/pager.php?campgrounds'>Campgrounds</td><td>Campground status, sites, and fees</tr>
+<tr><td><a href='/pager.php?weather' target='topic'>Weather</td><td>3-day forecast, Jumbo Rocks, Black Rock and Cottonwood</tr>
+<tr><td><a href='/pager.php?fees' target='topic'>Fee Schedule</td><td>All fees and where to buy</td></tr>
+<tr><td><a href='/pager.php?events' target='topic'>Calendar</td><td>Events for next 3 days</td></tr>
+<tr><td><a href='/pager.php?notices' target='topic'>Notices</td><td>Alerts and Notices</tr>
+<tr><td><a href='/pager.php?campgrounds' target='topic'>Campgrounds</td><td>Campground status, sites, and fees</tr>
 <tr>
 <tr><td colspan='2' class='bg-yellow'>Ranger Admin Pages</td></tr>
 
