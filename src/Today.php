@@ -492,43 +492,10 @@ public function build_topic_campgrounds() {
 	(.e., closed) and age of cache (changes to
 	'?' if cache is too old.
 */
-return [];
+	$r['camps'] = $this->Camps->prepareDisplayCamps() ;
 // admin cache contains status and notes for each cg
-	if (!$camps = $this->CM->loadCache('camps') ){
-	 	Log::error ("Could not load cache camps");
-	 	return [];
-	 }
-//Utilities::echor($y, 'loaded admin cache');
-
-	$w['cg_notes'] = $y['cgnotes'];
-	$w['camps']['cg_status'] = $y['cgstatus'];
-	$w['camps']['cgfull'] = $cgfull = $y['cgfull'] ?? false;
-
-
-// get age of each cache.
-// 	$cgopen_age = $this->getMtime('cgopen');
-// 	$cgres_age = $this->getMtime('cgres');
-// 	$w['camps']['cgopen_age'] = $cgopen_age;
-// 	 $w['camps']['cgres_age'] = $cgres_age;
-// 	//$cg_uncertain = 0; // hours until display changes to ? (0 disables test)
-// 	$uncertainty = $y['uncertainty'] ?? 0;
-
-	// // load the two caches and set display
-// 	if (! $cgsites = array_merge($this->CM->loadCache('cgopen'),$this->CM->loadCache('cgres'))){
-// 	 	Log::error ("Could not load cache cgopen or cgres");
-// 	 	die();
-// 	 }
-// 	//set display based on status and age
-// 	 foreach ($cgsites as $cg=>$open){ // ic => 7
-// 	 	$status = $w['camps']['cg_status'][$cg];
-// 		$display = $this->getCgDisplay($status,$open,$cgfull,$cgopen_age,$cgres_age,$uncertainty);
-// 		$w['camps']['sites'][$cg] = $display;
-// 	}
-//
-
-
-//Utilities::echor($w['camps'], 'camps', NOSTOP);
-	return $w;
+	//Utilities::echor($r, 'camps', STOP);
+	return $r;
 }
 
 

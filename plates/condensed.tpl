@@ -94,7 +94,7 @@ setTimeout(() => {
 <?php endif; ?>
 
 <div id="page-camps" style="display: <?=$divvis?>;" class="page">
-<!--  $this->insert('campground-tv',$camps);  -->
+ <?php $this->insert('campground-tv',$camps); ?>
 <div id='page-camps-scale' style='font-size:0.5em;' class='right'>&nbsp;</div>
 </div><!-- end page-->
 <div id="page-fees" style="display: <?=$divvis?>;" class="page">

@@ -7,8 +7,8 @@ use DigitalMx\jotr\Utilities as U;
 if(empty($camps)): echo "No Campground Data"; exit;
 endif;
 
-$cgopen_asof =  date('M d g:i a', $camps['cgopen_age']);
-$cgres_asof =  date('M d g:i a', $camps['cgres_age']);
+// $cgopen_asof =  date('M d g:i a', $camps['cgopen_age']);
+// $cgres_asof =  date('M d g:i a', $camps['cgres_age']);
 ?>
 
 <h4>Campgrounds
@@ -23,7 +23,7 @@ $cgres_asof =  date('M d g:i a', $camps['cgres_age']);
 <div>Open Sites updated when known.  ? = Information is stale and may not be reliable.</div>
 <div class ='center ' style='vertical-align:top' >
 
-<?php $status = 'Reservation';
+<?php $status = 'Reserved';
 $no_entries = true; ?>
 
 <table class='alt-gray width45 inlineblock'>
@@ -36,17 +36,17 @@ $no_entries = true; ?>
 		<th style='width:4em;'>Fee</th>
 		<th>Open Sites</th></tr>
 	<?php foreach ($cgs as $cg) :
-		if ($camps['cg_status'][$cg] == $status): ?>
-				<?php $no_entries =false;?>
+		if ($camps[$cg]['status'] == $status) :
+				$no_entries=false; ?>
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
-				<td>$ <?= Defs::$campfees[$cg] ?> </td>
+				<td> <?= Defs::$campfees[$cg] ?> </td>
 
-				<td><?= $camps['sites'][$cg] ?> </td>
+				<td><?= $camps[$cg]['open'] ?> </td>
 
 				</tr>
-		<?php  endif; ?>
+		<?php endif ?>
 	<?php endforeach;?>
 	<?php if ($no_entries):?>
 			<tr><td colspan='4' class='left'>None</td></tr>
@@ -64,17 +64,17 @@ $no_entries = true; ?>
 		</td></tr>
 	<tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th><th>Open Sites</th></tr>
 	<?php foreach ($cgs as $cg) :
-			if ($camps['cg_status'][$cg] == $status): ?>
-				<?php $no_entries =false;?>
+		if ($camps[$cg]['status'] == $status) :
+				$no_entries=false; ?>
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
-				<td>$ <?= Defs::$campfees[$cg] ?> </td>
+				<td> <?= Defs::$campfees[$cg] ?> </td>
 
-				<td><?= $camps['sites'][$cg] ?> </td>
+				<td><?= $camps[$cg]['open'] ?> </td>
 
 				</tr>
-			<?php  endif; ?>
+			<?php endif ?>
 		<?php endforeach;?>
 		<?php if ($no_entries):?>
 			<tr><td colspan='4' class='left'>None</td></tr>
@@ -88,17 +88,17 @@ $no_entries = true; ?>
 
 <tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th><th>Open SItes</th></tr>
 	<?php foreach ($cgs as $cg) :
-			if ($camps['cg_status'][$cg] == $status):
-				$no_entries =false;?>
+		if ($camps[$cg]['status'] == $status) :
+				$no_entries=false; ?>
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
-				<td>$ <?= Defs::$campfees[$cg] ?> </td>
+				<td><?= Defs::$campfees[$cg] ?> </td>
 
-				<td><?= $camps['sites'][$cg] ?> </td>
+				<td><?= $camps[$cg]['open'] ?> </td>
 
 				</tr>
-			<?php  endif; ?>
+			<?php endif ?>
 		<?php endforeach;?>
 		<?php if ($no_entries):?>
 			<tr><td colspan='4' class='left'>None</td></tr>
