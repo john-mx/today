@@ -45,7 +45,7 @@ function doResize(elementID) {
 	scale = Math.min(1,scaleRatio); // never grow
 	scale = Math.max(0.65,scale) // never less than 0.75
 	var scaler = Math.round(scale*100);
- alert ('content ' +contentWidth +'x' + contentHeight +' avail ' + winwidth +' x ' +availHeight + ' scale '+ scaleRatio + ' (' + scaler + '%)');
+// alert ('content ' +contentWidth +'x' + contentHeight +' avail ' + winwidth +' x ' +availHeight + ' scale '+ scaleRatio + ' (' + scaler + '%)');
 	if (typeof(element) !== 'object'){
 		alert("[load_snap] element not object: " + elid);
 	}
