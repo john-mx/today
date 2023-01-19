@@ -15,7 +15,7 @@ use DigitalMx\jotr\Utilities as U;
 	$local_site = Defs::getLocName($local_site);
 	$local_head = ($local_site && $local_site !== 'None')?
 		"<div><b>Welcome to the $local_site</b></div>"
-		: 'Today in Joshua Treee National Park';
+		: 'Today in Joshua Tree National Park';
 ?>
 <div id='titles'>
 <div class='head' style='display:flex;align-items:flex-end;' >

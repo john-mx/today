@@ -4,11 +4,12 @@ use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx\jotr\Utilities as U;
 
 
-#ini_set('display_errors', 1);
+
+#ini_set('display_errors', 1)
 
 //BEGIN START
 	require_once 'init.php';
-//echo basename(__FILE__) . " [". __LINE__ ."]" . BR;
+//echo "At " . basename(__FILE__) . " [". __LINE__ ."]" . BR;
 	$Plates = $container['Plates'];
 	$Today = $container['Today'];
 
@@ -51,10 +52,10 @@ echo $Plates->render('title',$meta);
 
 <tr class='bg-yellow'><td>'Today' Pages</td><td></td></tr>
 
-<tr><td ><a href="/today.php" target='today'>Everything</a>
+<tr><td ><a href="/today.php" target='today'>Today Report</a>
 </td><td >Public web site with all data. Can be printed (5 pages).  Does not include campsite availability. (or should it?)</td></tr>
 
-<tr><td ><a href="/summary.php" target='summary'>Today</a>
+<tr><td ><a href="/summary.php" target='summary'>Summary</a>
 </td><td >One page summary of today's conditions, alerts, and events. </td></tr>
 
 

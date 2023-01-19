@@ -43,11 +43,11 @@ $show_day=1;
 
 		<div class=' center inlineblock' style='font-weight:bold;vertical-align:top;width:55% width-min:350px;'>
 
-			<p><?= $day['short'] ?></p>
-			<p style='margin-top:0;'> High: <?=$day['high']?></p>
-			<p>
+			<?= $day['short'] ?><br /><br />
+			 High: <?=$day['high']?><br />
+			<br /><br />
 			Sunrise:&nbsp;<?= $day['sunrise'] ?> <br />Sunset:&nbsp;<?= $day['sunset'] ?>
-			</p>
+
 		</div>
 	</div>
 
@@ -63,14 +63,15 @@ $show_day=1;
 
 		</div>
 		<div class=' center inlineblock' style='vertical-align:top;width:55%; width-min:350px;'>
-		<p><?= $night['short'] ?></p>
+		<?= $night['short'] ?>
+		<br><br>
 				<p style='margin-top:0;'>
-			Low: <?=$night['low']?>
-			</p>
+			Low: <?=$night['low']?><br>
+			<br>
 				<p>Moonrise:&nbsp;<?= $night['moonrise'] ?>  <br />
-				Moonset:&nbsp;<?= $night['moonset'] ?><br /><br />
+				Moonset:&nbsp;<?= $night['moonset'] ?>
 
-				</p>
+
 		</div>
 	</div>
 
