@@ -1,6 +1,8 @@
-
-}
- @media screen and (min-width:1800px) {
+:root {
+	font-family:Rubik,san-serif;
+	font-size: 18pt;
+	}
+@media screen and (min-width:1800px) {
 :root {
 	/* sets root font size */
 	font-family:Rubik,san-serif;
@@ -8,19 +10,15 @@
 	font-weight:600;
 	/* line-height:1.4; */
 	}
-
-:root {font-family:Rubik,san-serif;
-	font-size: 18pt;
-	}
 }
 
+ div.flex-container > div{
+  	flex:100%;
+  	}
 @media (max-width: 800px) {
   div.flex-container {
     flex-direction: column;
   }
-  div.flex-container > div{
-  	flex:100%;
-  	}
 }
 
 body {
