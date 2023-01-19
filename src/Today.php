@@ -401,7 +401,7 @@ public function build_topic_light() {
 			}
 			//if ($period['isDaytime']) continue; // test no night segment
 			++$period_count;
-			//Utilities::echor($period,'period ');
+		//	Utilities::echor($period,'period ');
 			// found first period that has not ended yet
 
 			if ($period['isDaytime'] && $period_count == 1) {
@@ -446,7 +446,7 @@ public function build_topic_light() {
 				$z[$periodName]['wind'] = $wind;
 				$z[$periodName]['low'] = $low;
 				$z[$periodName]['high'] = $high;
-				$z[$periodName]['icon'] = Defs::getMoonPic($astro['moon_phase']);
+				$z[$periodName]['icon'] = $icon;
 				$z[$periodName]['short'] = $short;
 
 				$z[$periodName]['period_count'] = $period_count;

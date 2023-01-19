@@ -23,7 +23,7 @@ $night = $light['Tonight'];
 $tomorrow = $light['Tomorrow'];
 $updated = date('M d g:i a',$light['update']['ts']);
 $show_day=1;
-
+//U::echor($light,'light',STOP);
 ?>
 
 <div class =' flex-container  center' >
