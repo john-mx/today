@@ -6,7 +6,7 @@
 :root {
 	/* sets root font size */
 	font-family:Rubik;
-	font-size:24pt;
+	font-size:28pt;
 	font-weight:600;
 	/* line-height:1.4; */
 	}
@@ -478,6 +478,7 @@ table tr td.lrpad {
 }
 li {
 	margin-bottom:0.4em;
+	font-size:1rem;
 }
 
 .warn ul {
@@ -514,4 +515,16 @@ li {
 	padding-left: 1rem;
 	padding-right:1rem;
 }
+
+.scaler {
+	text-align:left;
+	font-size:0.8em;
+	content:&nbsp;
+}
+.scaler:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
 

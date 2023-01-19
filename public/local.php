@@ -98,11 +98,11 @@ If the site is not accessed on this device for 48 hours, the settings will be re
 
 <h4>Choose Pages for TV Rotation</h4>
 <?php //Utilities::echor($admin); ?>
-Set which site you are in:
+
 
 Select which pages should appear in the rotation sequence (?snap)<br />
 <?php foreach (Defs::$rpages as $pid=>$pdesc) : ?>
-<input type='checkbox' name='rotate[]' value='<?=$pid?>' <?=$rchecked[$pid] ?? ''?> >&nbsp;&nbsp;<a href='/pager.php?<?=$pid?>' target = 'pager'><?=$pid?></a>: <?=$pdesc?><br />
+<input type='checkbox' name='rotate[]' value='<?=$pid?>' <?=$rchecked[$pid] ?? ''?> >&nbsp;&nbsp;<!-- <a href='/pager.php?<?=$pid?>' target = 'pager' --><?=$pid?>: <?=$pdesc?><br />
 <?php endforeach; ?>
 <br />
 Set rotation delay in seconds: <input type='number' name='rdelay' value='<?=$rdelay?>' size='8' min=10 max=30 step=5 >
