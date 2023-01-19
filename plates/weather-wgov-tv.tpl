@@ -75,7 +75,7 @@ use DigitalMx\jotr\Utilities as U;
 		<?php endforeach;  ?>
 	</table>
 
-	<small>Weather.gov forcast updated at <?=$weather_updated?></small>
+	<small>Weather.gov (tv) forcast updated at <?=$weather_updated?></small>
 
 </div>
 

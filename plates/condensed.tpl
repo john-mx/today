@@ -77,7 +77,7 @@ setTimeout(() => {
 	//Utilities::echor($wgov,'wgov',STOP);
 	$wspec=array('wslocs'=>['jr','cw'],'wsdays'=>3);
 	$this->insert('weather-tv',$wspec);
-
+//U::echor ($wgov,'wgov',STOP);
 	?>
 <div id='page-weather-scale'  class='scaler'></div>
 </div><!-- end page-->

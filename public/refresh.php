@@ -7,7 +7,7 @@ namespace DigitalMx\jotr;
 	require_once  './init.php';
 
 
-	//$CM = $container['CacheManager'];
+	$CM = $container['CacheManager'];
 
 
 //END START
@@ -19,7 +19,7 @@ namespace DigitalMx\jotr;
 <body>
 Starting all cache refresh
 <?php
-//echo	$CM->refreshAllCaches ();
+echo	$CM->refreshAllCaches ();
 echo "Done" . BRNL
 . "</body></html>";
 

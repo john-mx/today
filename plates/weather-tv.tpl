@@ -17,14 +17,17 @@ use DigitalMx\jotr\Utilities as U;
 
 //Utilities::echor($wspec);
 
-//Utilities::echor($wapi,'wapi',STOP);
+//U::echor($wgov,'wgov',STOP);
+//echo "up: " .$wgov['update'] . ' time ' . time() . BR; exit;
 	if(1
 	&& isset($wgov['update'])
 	&& ($wgovupdate = ($wgov['update']))
-	&&( (time() - $wgovupdate) < 8*60*60)
+	&&( (time() - $wgovupdate) < 24*60*60)
 	) {#use wgov
 		echo $this->insert('weather-wgov-tv',$wspec);
-	} elseif (1 #use wapi
+
+	} elseif (0 #use wapi
+
 	&& isset($wapi['update'])
 	&& ($wapiupdate = $wapi['update'])
 	&&( (time() - $wapiupdate) < 8*60*60)

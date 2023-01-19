@@ -537,7 +537,7 @@ private function rebuild_cache_airowm() {
 private function rebuild_cache_calendar () {
 	if (! file_exists(self::$cacheFiles['calendar'])) $this->initializeCache['calendar'];
 	$x = $this->loadCache('calendar');
-	$x = $this->Cal -> filter_calendar($x,0);
+	$x = Calendar::filter_calendar($x,0);
 	$this->writeCache('calendar',$x);
 	Log::info('rebuilt calendar cache');
 }
