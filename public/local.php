@@ -102,7 +102,7 @@ Set which site you are in:
 
 Select which pages should appear in the rotation sequence (?snap)<br />
 <?php foreach (Defs::$rpages as $pid=>$pdesc) : ?>
-<input type='checkbox' name='rotate[]' value='<?=$pid?>' <?=$rchecked[$pid] ?? ''?> ><a href='/pager.php?<?=$pid?>' target = 'pager'><?=$pid?></a>: <?=$pdesc?><br />
+<input type='checkbox' name='rotate[]' value='<?=$pid?>' <?=$rchecked[$pid] ?? ''?> >&nbsp;&nbsp;<a href='/pager.php?<?=$pid?>' target = 'pager'><?=$pid?></a>: <?=$pdesc?><br />
 <?php endforeach; ?>
 <br />
 Set rotation delay in seconds: <input type='number' name='rdelay' value='<?=$rdelay?>' size='8' min=10 max=30 step=5 >

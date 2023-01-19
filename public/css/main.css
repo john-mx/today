@@ -77,7 +77,15 @@ button {
 input[type=checkbox] {
 	outline:1px solid black;
 	font-size:1.2em;
+
 }
+
+input[type=radio] {
+	outline:1px solid black;
+	font-size:1.2em;
+
+}
+
 
 input.submit, button.submit {
 	background-color:#9F9;

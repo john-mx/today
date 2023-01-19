@@ -80,7 +80,7 @@ EOT;
 
 
 
-<div class='center clearafter  border'>
+<div class='center clearafter  border' style='font-weight:600;'>
 <h3>Park Conditions  at <?=$current_asof?></h3>
 	<div class=' floatl' style='width:30%'>
 	<?=$temp?>
