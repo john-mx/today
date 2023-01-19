@@ -265,6 +265,7 @@ div.content {
 div.dayblock {
 	border:1px solid black;
 	font-weight;bold;
+	font-size:1.2rem;
 	padding:1rem;
 	background-color:#D5EDFA;
 	color:#000;
@@ -278,8 +279,9 @@ div.dayblock {
 div.nightblock {
 	border:1px solid black;
 	font-weight;bold;
+	font-size:1.2rem;
 	padding:1rem;
-	background-color:#009;
+	background-color:#011993;
 	color:#fff;
 	vertical-align:top;
 	/* float:left; */
