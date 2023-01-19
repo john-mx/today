@@ -31,11 +31,11 @@ $show_day=1;
 	<!-- LEFT PANEL -->
 
 <?php if ($day && $day['endTimets'] > time() ) :  ?>
-	<div class='dayblock  '>
+	<div class='dayblock  ' style='font-size:1.2rem;'>
 		<h3><u>Today</u></h3>
 
 		<div class=' inlineblock center' style='vertical-align:top; width:40%;'>
-			<img src="<?= $day['icon'] ?>" style='width:8em;' class='auto' ><br />
+			<img src="<?= $day['icon'] ?>" class='auto' ><br />
 
 			<b>Wind: </b> <?= $day['wind']?>
 		</div >
@@ -44,7 +44,7 @@ $show_day=1;
 		<div class=' center inlineblock' style='font-weight:bold;vertical-align:top;width:55% width-min:350px;'>
 
 			<p><?= $day['short'] ?></p>
-			<p style='margin-top:0;font-size:1.3rem;'> High: <?=$day['high']?></p>
+			<p style='margin-top:0;'> High: <?=$day['high']?></p>
 			<p>
 			Sunrise:&nbsp;<?= $day['sunrise'] ?> <br />Sunset:&nbsp;<?= $day['sunset'] ?>
 			</p>
@@ -52,19 +52,19 @@ $show_day=1;
 	</div>
 
 <div style='flex:0 0 1em;'> </div>
-	<div class='nightblock  bg-midnight white' >
+	<div class='nightblock  bg-midnight white '  style='font-size:1.2rem;' >
 
 		<h3><u>Tonight</u></h3>
 
 		<div class=' inlineblock center' style='vertical-align:top;width:40%;'>
-			<img src="<?= $night['icon'] ?>" style='width:8em;' class='auto' >
+			<img src="<?= $night['icon'] ?>" class='auto' >
 			<br />
 							<?=$night['moonphase'] ?> (<?=$night['moonillum']?>%&nbsp;illum)
 
 		</div>
-		<div class=' center inlineblock' style='vertical-align:top;width:55%; font-weight:bold;width-min:350px;'>
+		<div class=' center inlineblock' style='vertical-align:top;width:55%; font-weight:bold;width-min:350px;>
 		<p><?= $night['short'] ?></p>
-				<p style='margin-top:0;font-size:1.3rem;'>
+				<p style='margin-top:0;'>
 			Low: <?=$night['low']?>
 			</p>
 				<p>Moonrise:&nbsp;<?= $night['moonrise'] ?>  <br />
@@ -79,19 +79,19 @@ $show_day=1;
 <?php else: ?>
 <!-- RIGHT PANEL -->
 
-	<div class='nightblock bg-midnight white' >
+	<div class='nightblock bg-midnight white'  style='font-size:1.2rem;'>
 
 		<h3><u>Tonight</u></h3>
 
-		<div class=' inlineblock center' style='vertical-align:top;width:40%;'>
-			<img src="<?= $night['icon'] ?>" style='width:8em;' class='auto' >
+		<div class=' inlineblock center' style='vertical-align:top;width:40%;font-size:1.2rem;'>
+			<img src="<?= $night['icon'] ?>"  class='auto' >
 			<br />
 							<?=$night['moonphase'] ?> (<?=$night['moonillum']?>%&nbsp;illum)
 
 		</div>
 		<div class=' center inlineblock' style='font-weight:bold; vertical-align:top;width:55%'>
 		<p><?= $night['short'] ?></p>
-				<p style='margin-top:0;font-size:1.3rem;'>
+				<p style='margin-top:0;'>
 			Low: <?=$night['low']?>
 			</p>
 				<p>Moonrise:&nbsp;<?= $night['moonrise'] ?> <br />
@@ -102,10 +102,10 @@ $show_day=1;
 		</div>
 <div style='flex:0 0 1em;'> </div>
 
-		<div class='dayblock  ' >
+		<div class='dayblock  ' style='font-size:1.2rem;'>
 <h3><u>Tomorrow</u></h3>
-			<div class=' inlineblock center' style='vertical-align:top; width:40%;'>
-			<img src="<?= $tomorrow['icon'] ?>" style='width:8em;' class='auto' ><br />
+			<div class=' inlineblock center' style='vertical-align:top; width:40%;' >
+			<img src="<?= $tomorrow['icon'] ?>"  class='auto' ><br />
 
 			<b>Wind: </b> <?= $tomorrow['wind']?>
 			</div >

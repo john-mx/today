@@ -72,7 +72,6 @@ setTimeout(() => {
 </div><!-- end page-->
 <div id="page-weather" style="display: <?=$divvis?>; " class="page" >
 
-
 <?php
 
 	//Utilities::echor($wgov,'wgov',STOP);
