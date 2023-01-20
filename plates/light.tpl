@@ -31,7 +31,7 @@ $show_day=1;
 	<!-- LEFT PANEL -->
 
 <?php if ($day && $day['endTimets'] > time() ) :  ?>
-	<div class='dayblock  '>
+	<div class='dayblock  highnoon'>
 		<h3><u>Today</u></h3>
 
 		<div class=' inlineblock center' style='vertical-align:top; width:40%;'>
@@ -52,7 +52,7 @@ $show_day=1;
 	</div>
 
 <div style='flex:0 0 1em;'> </div>
-	<div class='nightblock'>
+	<div class='nightblock midnight'>
 
 		<h3><u>Tonight</u></h3>
 
@@ -80,7 +80,7 @@ $show_day=1;
 <?php else: ?>
 <!-- RIGHT PANEL -->
 
-	<div class='nightblock'  >
+	<div class='nightblock midnight'  >
 
 		<h3><u>Tonight</u></h3>
 
@@ -103,7 +103,7 @@ $show_day=1;
 		</div>
 <div style='flex:0 0 1em;'> </div>
 
-		<div class='dayblock  '>
+		<div class='dayblock highnoon '>
 <h3><u>Tomorrow</u></h3>
 			<div class=' inlineblock center' style='vertical-align:top; width:40%;' >
 			<img src="<?= $tomorrow['icon'] ?>"  class='auto' ><br />

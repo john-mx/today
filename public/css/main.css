@@ -20,6 +20,24 @@
     flex-direction: column;
   }
 }
+@media print {
+	/* use smaller type, larger lin spacing. */
+	:root {font-size: 12pt ;}
+
+/*
+	use this class for diviison to be omitted when printed.
+	(e.g., for time-sensitive that would be wrong on printed item)
+ */
+	.no-print {display:none;}
+	div.break {page-break-before: always;}
+
+}
+
+@page {
+    size: 8.5in 11in;
+      margin: 0.3in;
+   }
+
 
 body {
 	padding:12px;
@@ -77,6 +95,8 @@ input:invalid {
 	background-color:#F00;
 }
 
+
+
 button {
 	background-color:#CCF;
 	font-weight: bold;
@@ -109,19 +129,6 @@ textarea {
 
 
 
-.likebutton {
-	display:inline-block;
-	background-color:#CFC;
-	border:2px solid black;
-	padding:4px;
-
-}
-
-.likebutton a {
-	color:black;
-	text-decoration:none;
-}
-
 .pithy
 {
 	font-style: italic;
@@ -147,7 +154,8 @@ textarea {
 .bg-lgrn { background-color: #D4FB79; }
 .bg-yellow {background-color: yellow; }
 .bg-orange {background-color:#F3984D;}
-.bg-midnight {background-color:#011993 ; color:#FFF;}
+.midnight {background-color:#011993; color:#FFF;}
+.highnoon {background-color:#D5EDFA; color:#000;}
 .bg-blue {background-color:#005493; color:#EBEBEB;}
 
 .bg-black{background-color:black; padding:6px;}
@@ -201,9 +209,6 @@ div.flex-container{
     width:100%;
 
 }
-
-
-
 
 div.center {
 	margin-left:auto;
@@ -274,8 +279,6 @@ div.dayblock {
 	font-weight;bold;
 	font-size:1.2rem;
 	padding:1rem;
-	background-color:#D5EDFA;
-	color:#000;
 	vertical-align:top;
 /* 	float:left; */
 	display:inline-block;
@@ -288,8 +291,6 @@ div.nightblock {
 	font-weight;bold;
 	font-size:1.2rem;
 	padding:1rem;
-	background-color:#011993;
-	color:#fff;
 	vertical-align:top;
 	/* float:left; */
 	text-align:center;

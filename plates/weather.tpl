@@ -6,40 +6,77 @@ use DigitalMx\jotr\Utilities as U;
 
 ?>
 
+
+
+<h4>Weather Forecast</h4>
+
+
 <?php
-/*
-	chooses wapi or wgov data depending on date of wgov
 
-	starting array wspec:
-	wslocs = locations to report on
-	wsdays = number of days to report on
-	wsstart = days ahead to start forcast.
+	$weather_updated =  date('M d g:i a',$weather['update']);
+	$source = $weather['source'];
+		//set days and locations
+		$locs =  $wslocs ?? ['jr','br','cw'];
+		$daycnt = $wsdays ?? 3 ;
+		$wsstart = $wsstart ?? 0;
+		$loccols = $daycnt + 1;
 
-	*/
-
-	$wspec=[
-	'wslocs'=> $wslocs ??= ['jr','br','cw'],
-	'wsdays'=> $wsdays ??= 3,
-	'wsstart'=> $wsstart ??= 0,
-	];
+	?>
+	<table class = 'col-border width90 ' style='margin:auto'>
 
 
-//Utilities::echor($wspec);
+	<tr class='no-border border-bottom'><th></th>
+		<?php
+			for ($i=$wsstart;$i<$wsstart+$daycnt;++$i) : //for 3 days
+				$daytext = $weather['forecast']['jr'][$i]['Night']['daytext'];
+		//Utilities::echor ($day ,'day',STOP);
+				echo "<th>$daytext</th>";
+			endfor;
+		?>
+		</tr>
+	<?php
+	foreach ($locs as $loc) :
 
-//Utilities::echor($wapi,'wapi',STOP);
-	if(1
-	&& isset($wgov['update'])
-	&& ($wgovupdate = ($wgov['update']))
-	&&( (time() - $wgovupdate) < 8*60*60)
-	) {#use wgov
-		echo $this->insert('weather-wgov',$wspec);
-	} elseif (1 #use wapi
-	&& isset($wapi['update'])
-	&& ($wapiupdate = $wapi['update'])
-	&&( (time() - $wapiupdate) < 8*60*60)
-	) {
-		echo $this->insert('weather-wapi',$wspec);
-	} else { #no good datea
-		echo "Cannot build weather data.  All forecasts are stale.";
-	}
+		$days = $weather['forecast'][$loc]??[];
+		if (!$days) continue;
+		$locname = Defs::$sitenames[$loc];
+		?>
+
+		<tr class='bg-orange'><td class=left colspan='<?=$loccols?>'>
+			<b><?=$locname?></b></td></tr>
+		<tr style = 'border-top:1px solid black;' class='highnoon'>
+			<td>Day</td>
+			<?php for ($i=$wsstart;$i<$wsstart+$daycnt;++$i) : //for 3 days ?>
+				<td>
+				 <?php if ($p = $days[$i]['Day'] ?? ''): ?>
+							<?=$p['short']?><br />
+								<?= $p['temp']?>.
+								<?php if ($p['wind']):echo " Wind ${p['wind']} "; endif; ?>
+					<?php endif; ?>
+				</td>
+			<?php endfor; #day ?>
+		</tr>
+		<tr  class='midnight' >
+
+			<td>Night</td>
+
+			<?php for ($i=$wsstart;$i<$wsstart+$daycnt;++$i) : //for 3 days ?>
+				<td>
+				<?php if ($p = $days[$i]['Night'] ): ?>
+					<div >
+								<?php if (!trim($p['short'])):echo "${p['short']} <br />"; endif; ?>
+								<?= $p['temp']?>.
+								<?php if ($p['wind']):echo " Wind ${p['wind']} "; endif; ?>
+
+					</div>
+					<?php endif; ?>
+				</td>
+			<?php endfor; #day ?>
+		</tr>
+		<tr style='line-height:0.5em;'><td colspan='<?php echo $daycnt + 3 ?>'>&nbsp</td></tr>
+		<?php endforeach;  ?>
+	</table>
+
+	<div class='left'><small><?=$source?> forecast updated at <?=$weather_updated?></small></div>
+
 

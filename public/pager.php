@@ -29,6 +29,7 @@ $y=$Today->build_topics();
 
 $extra = '';
 $plate2 = '';
+$z=[];
 switch ($page) {
 
 	case 'fees':
@@ -54,7 +55,7 @@ switch ($page) {
 		$subtitle = "Weather";
 		$plate = 'weather';
 
-		$z['wgov'] = $y['wgov'];
+		//$z['wgov'] = $y['weather'];
 		break;
 	case 'notices':
 		$subtitle = "Alerts and Notices";

@@ -71,8 +71,8 @@ class CacheManager {
 
 
 
-	private $wlocs = ['jr','br','cw'];
-	private $airlocs = ['jr','br','cw'];
+	private $wlocs = ['hq','jr','br','cw'];
+	private $airlocs = ['hq','jr','br','cw'];
 
 public function __construct() {
 
@@ -734,13 +734,13 @@ public function refreshCache($cache,$force=0) {
 
 
 		case 'wapi':
-			$this->rebuild_cache_wapi();
+			$this->rebuild_cache_wapi($this->wlocs);
 			Log::info ("Refreshed cache $cache. Overtime = $ot.");
 			echo "$cache Refreshed." . BR;
 			break;
 
 		case 'wgov':
-			$this->rebuild_cache_wgov();
+			$this->rebuild_cache_wgov($this->wlocs);
 			Log::info ("Refreshed cache $cache. Overtime = $ot.");
 			echo "$cache Refreshed." . BR;
 			break;

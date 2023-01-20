@@ -105,7 +105,8 @@ public function __construct($c){
 	$this -> airlocs = ['jr','cw','br']; // air quality locations
 	$this->light = $this->build_topic_light()['light'];
 	$this->sunset = $this->light['Today']['sunset'];
-
+	$this->nowTZ = new \DateTimeZone('America/Los_Angeles');
+	$this->nowDT = new \DateTime();
 
 }
 
@@ -129,7 +130,7 @@ public function build_topics(){
 		$topics = array_merge(
 			$this->build_topic_admin(),
 
-		$this->build_topic_weather(),
+			$this->build_topic_weather(),
 			$this->build_topic_campgrounds(),
 
 			$this->build_topic_light(),
@@ -146,8 +147,8 @@ public function build_topics(){
 [
 	'today','light','notices','conditions','advice','weather',
 	'campground', 'summary', 'condensed','campground-tv',
-	'alerts','summary','weather','weather-wapi','weather-wgov',
-	'weather-one-line','weather-tv','weather-wgov-tv','calendar',
+	'alerts','summary','weather','weather-wgov',
+	'weather-one-line','weather-tv','calendar',
 
 ]);
 
@@ -213,6 +214,12 @@ public function build_topic_current() {
 	$y['temp_f'] = is_null($y['temperature']['value']) ? 'n/a' :round( ($y['temp_c'] * 9/5) + 32);
 	$y['wind_kph'] = is_null($y['windSpeed']['value'])? 'n/a':round($y['windSpeed']['value']);
 	$y['wind_mph'] =  is_null($y['windSpeed']['value'])? 'n/a':round($y['wind_kph'] /2.2) ;
+
+	$y['gusts_kph'] = is_null($y['windGust']['value'])? 'n/a':round($y['windGust']['value']);
+	$y['gusts_mph'] =  is_null($y['windGust']['value'])? 'n/a':round($y['gusts_kph'] /2.2) ;
+
+	$y['humidity'] = is_null($y['relativeHumidity']['value'])? 'n/a':round($y['relativeHumidity']['value']);
+
 	$y['wind_direction'] = $this->degToDir($y['windDirection']['value']??0);
 
 	$wapi = $this->CM->loadCache('wapi');
@@ -465,25 +472,46 @@ public function build_topic_light() {
 
 
 public function build_topic_weather() {
-	if (!$wgov = $this->CM->loadCache('wgov') ){
-	 	Log::error ("Could not load cache wgov");
-	 	echo "No wgov";
-	 	return [];
-	 }
+/* delivers 'weather' array in same format
+	using either wgov or wapi files.
+	*/
 
-	$z['wgov'] = $this->format_wgov($wgov);
-// Utilities::echor($z,'formatted wgov',STOP);
+	$fail = false;
+	// set first term to 1 to force fail for testing.  Otherwise 0.
+	if (0  || !$wgov = $this->CM->loadCache('wgov')) $fail = true;
+	if (!$fail and !array_key_exists('hq',$wgov)) $fail = true;
+	if (!$fail && !$update =
+		strtotime($wgov['hq']['properties']['updateTime'])) $fail = true;
+	if (!$fail &&  (time() - $update ) > 12*60*60) $fail = true;
+	if (!$fail){
 
-	//get current temp
-	$w = $this->CM->loadCache('wapi');
-	$z['wapi'] = $this->format_wapi($w);
+			$weather = $this->format_wgov($wgov);
+			$weather['source'] = 'weather.gov';
+			$w['weather'] = $weather;
+			return $w;
+		}
 
-//	$z['wgov_forecast'] = $this->format_wgov_forecast($wgov);
+	// try wapi if wgov fails
+	$fail = false;
+	// set first term to 1 to force fail for testing.  Otherwise 0.
+	if (0 || !$fail && !$wapi = $this->CM->loadCache('wapi')) $fail=true;
+	if (!$fail && !array_key_exists('hq',$wapi)) $fail = true;
+	if (!$fail && !$update =  $wapi['hq']['current']['last_updated_epoch']) $fail = true;
+	if (!$fail && (time() - $update) > 12*60*60) $fail = true;
+	if (!$fail) {
+			$weather = $this->format_wapi_like_wgov($wapi);
+			$weather['source'] = 'weatherapi.com';
+			$w['weather'] = $weather;
+			return $w ;
+	}
 
+	die ("All weather caches are stale "  . __LINE__);
 
-//	Utilities::echor($z,'weather topic');
-	return $z;
 }
+
+
+
+
 
 public function build_topic_campgrounds() {
 /* reads the res and open caches for available
@@ -751,6 +779,89 @@ public function format_wapi ($r) {
 	return $x;
 }
 
+public function format_wapi_like_wgov ($r) {
+
+	$x = [];
+	$x['update'] = time();// will end up with $y[$src] = $x;
+//Utilities::echor($r,'R',STOP);
+
+	foreach ($r as $loc => $ldata){
+		 $forecast = $ldata['forecast']['forecastday'];
+		 // there are forecasts for 3 days
+		 $day = 0;
+		 $lastday = '';
+		foreach ($forecast as $daily){
+			$startts = $daily['date_epoch'];
+			if ($startts < strtotime('yesterday')) continue;
+			$daytext = date('l, F j', $startts);
+			$nightts = strtotime($daytext . ' 6:00pm');
+			/*
+			$w[$loc][$day]['Day'] = array(
+				'dayts' => $daily['date_epoch'],
+				'daytext' => date('l, F j', $startts),
+				'High' => round($daily['day']['maxtemp_f']) ,
+				'HighC' => round($daily['day']['maxtemp_c']) ,
+				'Low' => round($daily['day']['mintemp_f']) ?? 'n/a' ,
+				'LowC' => round($daily['day']['mintemp_c']) ?? 'n/a' ,
+				'winddir' => '',
+				'avghumidity' => $daily['day']['avghumidity'],
+				'maxwind' => round($daily['day']['maxwind_mph']),
+				'maxwindM' => round($daily['day']['maxwind_kph']),
+
+				'short' => $daily['day']['condition']['text'],
+				'rain' => $daily['day']['daily_chance_of_rain'],
+				'visibility' => $daily['day']['avgvis_miles'],
+				'uv' => $daily['day']['uv'],
+				'icon' => $daily['day']['condition']['icon'],
+
+				);
+			*/
+
+			$High = round($daily['day']['maxtemp_f']) ;
+				$HighC = round($daily['day']['maxtemp_c']) ;
+				$Low = round($daily['day']['mintemp_f']) ?? 'n/a' ;
+				$LowC = round($daily['day']['mintemp_c']) ?? 'n/a' ;
+				$maxwind = round($daily['day']['maxwind_mph']);
+				$maxwindM = round($daily['day']['maxwind_kph']);
+
+				$w[$loc][$day]['Day'] = array(
+					'short' => $daily['day']['condition']['text'],
+					'long' => '',
+					'icon' => $daily['day']['condition']['icon'],
+					'startts' => $startts,
+					'daytext' => $daytext,
+					'highlow' => '',
+					'wind' => "$maxwind mph ($maxwindM kph)",
+					'isDaytime' => true,
+					'temp' => "$High&deg;F ($HighC&deg;C)",
+
+				);
+
+				$w[$loc][$day]['Night'] = array(
+					'short' => '',
+					'long' => '',
+					'icon' => '',
+					'startts' => $nightts,
+					'daytext' => $daytext,
+					'highlow' => '',
+					'wind' => '',
+					'isDaytime' => false,
+					'temp' => "$Low&deg;F ($LowC&deg;C)",
+
+				);
+
+
+			++$day;
+			//if ($day > 3) break;
+			}
+		} #end loc
+
+	$x['forecast'] = $w;
+//U::echor($x,'wapi as wgov');
+	return $x;
+}
+
+
 public function display_weather(array $wslocs=['jr','br','cw'],int $wsdays=3 ) {
 
 //Utilities::echor($wgov,'weather',STOP);
@@ -806,7 +917,6 @@ public function format_wgov ($wgov) {
 	$wupdated = strtotime($wgov['jr']['properties']['updated']) ;
 	$x['update'] = $wupdated;
 
-
 	foreach ($wgov as $loc => $ldata){	//uses weather.gov api directly
 	//Utilities::echor($ldata, "ldata for $loc");
 
@@ -826,26 +936,39 @@ public function format_wgov ($wgov) {
 			$start = $perdata['startTime'];
 			$end = $perdata['endTime'];
 			if (strtotime($end) < time()) continue; //expired
-			$dayts = strtotime($start);
-			$daytext = date('l, M d',$dayts);
-			if ($daytext != $lastday){
-				++$day;
-				$lastday = $daytext;
-			}
+
+			$startts = strtotime($start);
+			$daytext = date('l, M d',$startts);
+
 			if ($day > 3) break;
+
 			$highlow = $perdata['isDaytime']? 'High':'Low';
 			$daynight= $perdata['isDaytime']? 'Day':'Night';
 			$tempc = round(($perdata['temperature'] -32 )* 5/9,0);
-			$perdata['dayts'] = $dayts;
-			$perdata['daytext'] = $daytext;
-			$perdata['highlow'] = $highlow . "&nbsp;" . $perdata['temperature'] . "&deg;F (" .$tempc . "&deg;C)" ;
+			$temp = $perdata['temperature'] . "&deg;F (" .$tempc . "&deg;C)";
 
-			$x[$loc][$day][$daynight] = $perdata;
+			$wdata['short'] = $perdata['shortForecast'];
+			$wdata['long'] = $perdata['detailedForecast'];
+			$wdata['icon'] = $perdata['icon'];
+			$wdata['startts'] = $startts;
+			$wdata['daytext'] = $daytext;
+			$wdata['highlow'] = $highlow . "&nbsp;" .
+				$perdata['temperature'] . "&deg;F (" .$tempc . "&deg;C)" ;
+			$wdata['temp'] = $temp;
+			$wdata['wind'] = $perdata['windSpeed'];
+			$wdata['isDaytime'] = $perdata['isDaytime'];
 
+			$x['forecast'][$loc][$day][$daynight] = $wdata;
+
+		if ($daynight == 'Night' && $daytext != $lastday){
+				++$day;
+				$lastday = $daytext;
+			}
 		} #end foreach period
+
 	} #end foreach location
 
-//	Utilities::echor($x,"formatted wgov", STOP);
+//Utilities::echor($x,"formatted wgov");
 	return $x;
 }
 

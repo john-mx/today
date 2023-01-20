@@ -95,7 +95,7 @@ if( 0 && !empty($wapi)):
 		<?php
 		// note: fcstart + 0 converts to numeric
 			for ($i=$fcstart+1;$i<$fcstart+$daycnt+1;++$i) : //for 3 days
-				$day = $wgov['jr'][$i];
+				$day = $wgov['forecast']['jr'][$i];
 // 		Utilities::echor ($day ,'day',STOP);
 				echo "<th>{$day['Day']['name']}</th>";
 			endfor;
@@ -120,13 +120,13 @@ if( 0 && !empty($wapi)):
 
 				?>
 					<td class='lrpad'>
-						<b><?=$p['Day']['shortForecast']?></b><br />
+						<b><?=$p['Day']['short']?></b><br />
 
-					<b><?= $p['Day']['highlow'] ?>
-					<?= $p['Night']['highlow'] ?></b>
+					<b><?= $p['Day']['temp'] ?>
+					<?= $p['Night']['temp'] ?></b>
 					<br />
-					Night: <?=$p['Night']['shortForecast']?><br />
-						Wind: <?=$p['Day']['windSpeed']?> mph
+					Night: <?=$p['Night']['short']?><br />
+						Wind: <?=$p['Day']['wind']?> mph
 
 
 					</td>

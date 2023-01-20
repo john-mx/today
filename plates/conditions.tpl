@@ -18,7 +18,7 @@ $wday = $wapi['forecast']['jr'][0] ?? [];
 //Utilities::echor ($current);
 
 $uvday = <<<EOT
-<div >
+<div  style='margin-bottom:6px;'>
 	<b>UV: </b>{$current['uv']['uv']}
 	<span style="background-color:{$current['uv']['uvcolor']};">
 				 {$current['uv']['uvscale']}
@@ -31,7 +31,7 @@ EOT;
 
 $aircolor = $air['jr']['aqi_color'];
 $aqday = <<<EOT
-<div  >
+<div   style='margin-bottom:6px;'>
 		<b>Air Quality:</b> {$air['jr']['aqi']}
 			<span style="background-color:$aircolor;">
 			 {$air['jr']['aqi_scale']}</span>
@@ -41,17 +41,10 @@ $aqday = <<<EOT
 </div>
 EOT;
 
-$windday = <<<EOT
-<div >
-<b>Wind</b> up to ${wday['maxwind']} mph (${wday['maxwindM']} kph)
-	<br />
-	&mdash; <i>higher gusts possible</i>
-	<br />
-</div>
-EOT;
+
 
 $fireday = <<<EOT
-<div >
+<div style='margin-bottom:6px;'>
 <b>Fire Danger: </b> {$admin['fire']['level']}
 <br />
 </div>
@@ -61,30 +54,37 @@ EOT;
 //Utilities::echor($current,'curr',STOP);
 $current_asof = date('g:i a',$current['updatets']);
 $temp = <<<EOT
-<div >
+<div  style='margin-bottom:6px;'>
 <b>Temperature: </b>
 		${current['temp_f']}&deg;F ( ${current['temp_c']}&deg;C)
 
 		</div>
 EOT;
 
-$currentwind = <<<EOT
-<div>
+$currentWind = <<<EOT
+<div style='margin-bottom:6px;'>
 <b>Wind:</b>
-		${current['wind_mph']} mph ( ${current['wind_kph']} kph) ${current['wind_direction']}
+		${current['wind_mph']} mph ( ${current['wind_kph']} kph) ${current['wind_direction']} <br />
+		Gusts to ${current['gusts_mph']} mph
 
 </div>
 EOT;
+
+$currentHumidity = <<<EOT
+<div style='margin-bottom:6px;'>
+<b>Humidity:</b>
+	${current['humidity']} %
+</div>
+EOT;
+
 ?>
 
 
-
-
-<div class='center clearafter  border' style='font-weight:600;'>
+<div class='center clearafter  border'>
 <h3>Park Conditions  at <?=$current_asof?></h3>
 	<div class=' floatl' style='width:30%'>
 	<?=$temp?>
-	<?=$currentwind?>
+	<?=$currentWind?>
 
 	<?=$fireday?>
 	</div>
@@ -96,6 +96,9 @@ EOT;
 	<?=$uvday?>
 	</div>
 
+<div class='floatl ' style='width:30%'>
+	<?=$currentHumidity?>
+	</div>
 </div>
 
 
