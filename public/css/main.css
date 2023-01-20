@@ -179,7 +179,7 @@ textarea {
 	color:white;
 }
 
-,no-border {border:0;}
+.no-border {border:0;}
 .bottom-border {border-bottom:1px solid gray;}
 .no-bottom {border-bottom:0;}
 .no-top {border-top:0;}
@@ -276,7 +276,7 @@ div.content {
 
 div.dayblock {
 	border:1px solid black;
-	font-weight;bold;
+	font-weight:bold;
 	font-size:1.2rem;
 	padding:1rem;
 	vertical-align:top;
@@ -288,7 +288,7 @@ div.dayblock {
 
 div.nightblock {
 	border:1px solid black;
-	font-weight;bold;
+	font-weight:bold;
 	font-size:1.2rem;
 	padding:1rem;
 	vertical-align:top;
@@ -369,7 +369,6 @@ table.caltable .daterow {
 table.caltable .tvdaterow td{
 	border-top:8px solid #F39840;
 	border-bottom:0;
-	background-color:;
 	padding-bottom:3px;
 	padding-top:3px;
 
@@ -519,7 +518,7 @@ li {
 .scaler {
 	text-align:left;
 	font-size:0.8em;
-	content:&nbsp;
+	content:"&nbsp";
 }
 .scaler:after {
     content: '';
