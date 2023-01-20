@@ -22,21 +22,20 @@
 }
 @media print {
 	/* use smaller type, larger lin spacing. */
-	:root {font-size: 12pt ;}
+	:root {
+	font-size: 10pt; ;
+	}
 
-/*
-	use this class for diviison to be omitted when printed.
-	(e.g., for time-sensitive that would be wrong on printed item)
- */
+   @page {
+   	size: 8.5in 11in;
+      margin: 0.3in;
+      padding 0;
+   }
 	.no-print {display:none;}
 	div.break {page-break-before: always;}
 
 }
 
-@page {
-    size: 8.5in 11in;
-      margin: 0.3in;
-   }
 
 
 body {
