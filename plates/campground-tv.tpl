@@ -42,7 +42,7 @@ $no_entries = true; ?>
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
-				<td> <?= Defs::$campfees[$cg] ?> </td>
+				<td> $&nbsp;<?= Defs::$campfees[$cg] ?> </td>
 
 				<td><?= $camps[$cg]['open'] ?> </td>
 
@@ -70,7 +70,7 @@ $no_entries = true; ?>
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
-				<td> <?= Defs::$campfees[$cg] ?> </td>
+				<td> $&nbsp;<?= Defs::$campfees[$cg] ?> </td>
 
 				<td><?= $camps[$cg]['open'] ?> </td>
 
@@ -94,7 +94,7 @@ $no_entries = true; ?>
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
-				<td><?= Defs::$campfees[$cg] ?> </td>
+				<td>$&nbsp;<?= Defs::$campfees[$cg] ?> </td>
 
 				<td><?= $camps[$cg]['open'] ?> </td>
 

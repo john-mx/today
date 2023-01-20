@@ -10,19 +10,19 @@ Purchase Your Pass Before You Get To The Entrance</b>
 
 <tr><td colspan=7  style='font-weight:bold;text-align:left;' class='bg-orange'><b>Passes for Joshua Tree National Park</b></td></tr>
 
-<tr><td style='font-weight:bold;text-align:left;'>7-Day Automobile</td><td>up to 15 passengers</td><td>7 days</td><td>$30</td><td>✔︎</td><td>✔︎</td><td>✔︎</td></tr>
+<tr><td style='font-weight:bold;text-align:left;'>7-Day Automobile</td><td>up to 15 passengers</td><td>7 days</td><td>$&nbsp;30</td><td>✔︎</td><td>✔︎</td><td>✔︎</td></tr>
 
-<tr><td style='font-weight:bold;text-align:left;'>Annual Automobile</td><td>up to 15 passengers</td><td>12 months</td><td>$55</td><td>✔︎</td><td>✔︎</td><td>✔︎</td></tr>
+<tr><td style='font-weight:bold;text-align:left;'>Annual Automobile</td><td>up to 15 passengers</td><td>12 months</td><td>$&nbsp;55</td><td>✔︎</td><td>✔︎</td><td>✔︎</td></tr>
 
-<tr><td  style='font-weight:bold;text-align:left;' >Hikers and bikers</td><td>Individual</td><td>7 days</td><td>$15</td><td>✔︎</td><td>✔︎</td><td></td></tr>
+<tr><td  style='font-weight:bold;text-align:left;' >Hikers and bikers</td><td>Individual</td><td>7 days</td><td>$&nbsp;15</td><td>✔︎</td><td>✔︎</td><td></td></tr>
 
 <tr><td colspan=7  style='font-weight:bold;text-align:left;' class='bg-orange'><b>Interagency Passes</b> for all National Parks and Federal recreation sites (Vehicle and passengers)</td></tr>
 
-<tr><td style='font-weight:bold;text-align:left;'>America the Beautiful</td><td>Everyone</td><td>12 Months</td><td>$80</td><td>✔︎ </td><td>✔︎</td><td>✔︎</td></tr>
+<tr><td style='font-weight:bold;text-align:left;'>America the Beautiful</td><td>Everyone</td><td>12 Months</td><td>$&nbsp;80</td><td>✔︎ </td><td>✔︎</td><td>✔︎</td></tr>
 
-<tr><td style='font-weight:bold;text-align:left;'>Senior Annual</td><td>US citizen Age 62+ *</td><td>12 Months</td><td>$20</td><td></td><td>✔︎</td><td></td></tr>
+<tr><td style='font-weight:bold;text-align:left;'>Senior Annual</td><td>US citizen Age 62+ *</td><td>12 Months</td><td>$&nbsp;20</td><td></td><td>✔︎</td><td></td></tr>
 
-<tr><td style='font-weight:bold;text-align:left;'>Senior Lifetime</td><td>US citizen Age 62+ *</td><td>Lifetime</td><td>$80</td><td></td><td>✔︎</td><td></td></tr>
+<tr><td style='font-weight:bold;text-align:left;'>Senior Lifetime</td><td>US citizen Age 62+ *</td><td>Lifetime</td><td>$&nbsp;80</td><td></td><td>✔︎</td><td></td></tr>
 
 <tr><td  style='font-weight:bold;text-align:left;'>Military, gold star families, handicapped and 4th-graders</td><td>Qualified Visitors *<td>varies</td><td>free</td><td></td><td>✔︎</td><td></td></tr>
 </table>

@@ -43,12 +43,12 @@ use DigitalMx\jotr\Utilities as U;
 		<tr style = 'border-top:1px solid black;' >
 			<td rowspan='2' class='bg-orange'><b><?=$locname?></b></td>
 
-			<td class='highnoon'>Day</td>
+			<td class='highnoon'><b>Day</b></td>
 
 			<?php for ($i=$wsstart;$i<$wsstart+$daycnt;++$i) : //for 3 days ?>
 				<td class='highnoon'>
 				 <?php if ($p = $days[$i]['Day'] ?? ''): ?>
-							<?=$p['short']?><br />
+							<b><?=$p['short']?></b><br />
 								<?= $p['temp']?>.
 								<?php if ($p['wind']):echo " Wind ${p['wind']} "; endif; ?>
 					<?php endif; ?>
@@ -57,13 +57,13 @@ use DigitalMx\jotr\Utilities as U;
 		</tr>
 		<tr  class='midnight' >
 
-			<td>Night</td>
+			<td><b>Night</b></td>
 
 			<?php for ($i=$wsstart;$i<$wsstart+$daycnt;++$i) : //for 3 days ?>
 				<td>
 				<?php if ($p = $days[$i]['Night'] ): ?>
 					<div >
-								<?php if ($p['short']):echo "${p['short']} <br> "; endif; ?>
+								<?php if ($p['short']):echo "<b>${p['short']}</b> <br> "; endif; ?>
 								<?= $p['temp']?>.
 								<?php if ($p['wind']):echo " Wind ${p['wind']} "; endif; ?>
 
@@ -76,7 +76,7 @@ use DigitalMx\jotr\Utilities as U;
 		<?php endforeach;  ?>
 	</table>
 
-	<small>Weather.gov (tv) forcast updated at <?=$weather_updated?></small>
+	<small><?=$weather['source']?> forecast updated at <?=$weather_updated?></small>
 
 </div>
 

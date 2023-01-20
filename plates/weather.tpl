@@ -45,28 +45,28 @@ use DigitalMx\jotr\Utilities as U;
 		<tr class='bg-orange'><td class=left colspan='<?=$loccols?>'>
 			<b><?=$locname?></b></td></tr>
 		<tr style = 'border-top:1px solid black;' class='highnoon'>
-			<td>Day</td>
+			<td><b>Day</b></td>
 			<?php for ($i=$wsstart;$i<$wsstart+$daycnt;++$i) : //for 3 days ?>
 				<td>
 				 <?php if ($p = $days[$i]['Day'] ?? ''): ?>
-							<?=$p['short']?><br />
+							<b><?=$p['short']?></b><br />
 								<?= $p['temp']?>.
-								<?php if ($p['wind']):echo " Wind ${p['wind']} "; endif; ?>
+								<?php if ($p['wind']):echo " <br />Wind ${p['wind']} "; endif; ?>
 					<?php endif; ?>
 				</td>
 			<?php endfor; #day ?>
 		</tr>
 		<tr  class='midnight' >
 
-			<td>Night</td>
+			<td><b>Night</b></td>
 
 			<?php for ($i=$wsstart;$i<$wsstart+$daycnt;++$i) : //for 3 days ?>
 				<td>
 				<?php if ($p = $days[$i]['Night'] ): ?>
 					<div >
-								<?php if (!trim($p['short'])):echo "${p['short']} <br />"; endif; ?>
+								<?php if (!trim($p['short'])):echo "<b>${p['short']}</b> <br />"; endif; ?>
 								<?= $p['temp']?>.
-								<?php if ($p['wind']):echo " Wind ${p['wind']} "; endif; ?>
+								<?php if ($p['wind']):echo "<br /> Wind ${p['wind']} "; endif; ?>
 
 					</div>
 					<?php endif; ?>

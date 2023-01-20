@@ -11,7 +11,7 @@ use DigitalMx\jotr\Utilities as U;
 
 
 
-<h4 class='black'>Ranger Recommendations</h4>
+<h4 class='black'>Today's Recommendations for Visitors</h4>
 <div class='indent2 warn'>
 
 <?php

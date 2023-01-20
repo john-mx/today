@@ -43,7 +43,7 @@ setTimeout(() => {
 	<h3>Welcome to the <?=Defs::$sitenames[$local_site]?></h3>
 	<?php endif; ?>
  -->
-<?php if ($admin['pithy']): ?>
+<?php if (1 && $admin['pithy']): ?>
 	<p class='center'><i><?=$admin['pithy']?></i></p>
 <?php endif; ?>
 
@@ -51,8 +51,8 @@ setTimeout(() => {
 <!-- start light -->
 <?php $this->insert('light',[$light]); ?>
 
-<!-- start conditions -->
-<?php	$this->insert('conditions');?>
+<?php $this->insert('alerts',['alerts' => $admin['notices']['alerts'] ])?>
+
 
 <?php $this->insert('end'); ?>
 
@@ -61,7 +61,7 @@ setTimeout(() => {
 
 <div id="page-notices" style="display: <?=$divvis?>;"  class="page">
 <!-- start notices -->
-<?php $this->insert('alerts',['alerts' => $admin['notices']['alerts'] ])?>
+
 
 <?php $this->insert('notices',['notices' => $admin['notices']]); ?>
 
@@ -72,10 +72,12 @@ setTimeout(() => {
 </div><!-- end page-->
 <div id="page-weather" style="display: <?=$divvis?>; " class="page" >
 
-<?php
 
+<!-- start conditions -->
+<?php	$this->insert('conditions');?>
+<?php
 	//Utilities::echor($wgov,'wgov',STOP);
-	$wspec=array('wslocs'=>['jr','cw'],'wsdays'=>3);
+	$wspec=array('wslocs'=>['jr'],'wsdays'=>3);
 	$this->insert('weather-tv',$wspec);
 //U::echor ($wgov,'wgov',STOP);
 	?>

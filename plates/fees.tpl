@@ -34,7 +34,7 @@ Purchase Your Pass Before You Get To The Entrance</b>
 			<?=$feeitem['name']?></td>
 		<td><?=$feeitem['for']?></td>
 		<td><?=$feeitem['valid']?></td>
-		<td><?=$feeitem['price']?></td>
+		<td>$&nbsp;<?=$feeitem['price']?></td>
 		<?php foreach(['rec','ent','vc'] as $here):
 			echo "<td>";
 			if (in_array($here,$feeitem['avail']) ): echo "✔︎"; endif;

@@ -47,7 +47,7 @@ use DigitalMx\jotr\Utilities as U;
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
-				<td> $<?= Defs::$campfees[$cg] ?> </td>
+				<td> $&nbsp;<?= Defs::$campfees[$cg] ?> </td>
 				<td><?= $camps[$cg] ['open']?> </td>
 				<td> <?= $camps[$cg]['notes'] ?>  </td>
 				</tr>
