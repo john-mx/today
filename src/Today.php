@@ -211,9 +211,9 @@ public function build_topic_current() {
 	$y=$z['lhrs']['properties'];
 	$y['updatets'] = strtotime($z['lhrs']['properties']['timestamp']);
 	$y['temp_c']= is_null($y['temperature']['value']) ? 'n/a' : round($y['temperature']['value']);
-	$y['temp_f'] = is_null($y['temperature']['value']) ? 'n/a' :round( ($y['temp_c'] * 9/5) + 32);
+	$y['temp_f'] = $temp_f = is_null($y['temperature']['value']) ? 'n/a' :round( ($y['temp_c'] * 9/5) + 32);
 	$y['wind_kph'] = is_null($y['windSpeed']['value'])? 'n/a':round($y['windSpeed']['value']);
-	$y['wind_mph'] =  is_null($y['windSpeed']['value'])? 'n/a':round($y['wind_kph'] /2.2) ;
+	$y['wind_mph'] = $wind_mph =  is_null($y['windSpeed']['value'])? 'n/a':round($y['wind_kph'] /2.2) ;
 
 	$y['gusts_kph'] = is_null($y['windGust']['value'])? 'n/a':round($y['windGust']['value']);
 	$y['gusts_mph'] =  is_null($y['windGust']['value'])? 'n/a':round($y['gusts_kph'] /2.2) ;
@@ -222,11 +222,29 @@ public function build_topic_current() {
 
 	$y['wind_direction'] = $this->degToDir($y['windDirection']['value']??0);
 
+	$y['wind_chillC'] = is_null($y['windChill']['value']) ?
+		'n/a' : round($y['windChill']['value']);
+	$y['wind_chillF'] = is_null($y['windChill']['value']) ?
+		'n/a' : $y['wind_chillC'] * 9/5 + 32;
+
+	// if ($temp_f == 'n/a') {
+// 		$y['wind_chill'] = 'n/a';
+// 	} elseif ($wind_f == 'n/a') {
+// 		if ($gusts_mph == 'n/a') $y['wind_chill'] = 'n/a';
+// 		else $wind_f = 0.8*$gusts_mph;
+// 	}
+// 	if (! isset($y['wind_chill'])){
+// 	$y['wind_chill'] =
+// 		35.74 + (0.6215 * $temp_f)
+// 		- (35.75 * $wind_mph**0.16)
+// 		+ (0.4275 * $temp_f * $wind_f**0.16) ;
+// 	}
+
 	$wapi = $this->CM->loadCache('wapi');
 	$current_uv = $wapi['jr']['current']['uv'];
 	$y['uv'] = $this->uv_data($current_uv);
 
-// Utilities::echor($y,'current', NOSTOP);
+// Utilities::echor($y,'current', STOP);
 	return ['current' => $y];
 }
 

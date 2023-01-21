@@ -57,15 +57,15 @@ $temp = <<<EOT
 <div  style='margin-bottom:6px;'>
 <b>Temperature: </b>
 		${current['temp_f']}&deg;F ( ${current['temp_c']}&deg;C)
-
-		</div>
+</div>
 EOT;
 
 $currentWind = <<<EOT
 <div style='margin-bottom:6px;'>
 <b>Wind:</b>
 		${current['wind_mph']} mph ( ${current['wind_kph']} kph) ${current['wind_direction']} <br />
-		Gusts to ${current['gusts_mph']} mph
+		Gusts to ${current['gusts_mph']} mph<br />
+		Wind chill: ${current['wind_chillF']}&deg;F (${current['wind_chillC']}&deg;C)
 
 </div>
 EOT;
@@ -81,23 +81,25 @@ EOT;
 
 
 <div class='center clearafter  border'>
-<h3>Park Conditions  at <?=$current_asof?></h3>
+<h3 style='margin-bottom:0px;'>Park Conditions  at <?=$current_asof?></h3>
+<div style='font-weight:normal;font-size:1rem; margin-bottom:0.8em;'>Reported near Hidden Valley</div>
+
 	<div class=' floatl' style='width:30%'>
 	<?=$temp?>
 	<?=$currentWind?>
 
-	<?=$fireday?>
 	</div>
 
 	<div class='floatl ' style='width:30%'>
 	<?=$aqday?>
-	</div>
-	<div class='floatl ' style='width:30%'>
-	<?=$uvday?>
+
+		<?=$fireday?>
+		<?=$currentHumidity?>
+
 	</div>
 
 <div class='floatl ' style='width:30%'>
-	<?=$currentHumidity?>
+		<?=$uvday?>
 	</div>
 </div>
 
