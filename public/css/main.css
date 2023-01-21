@@ -3,15 +3,7 @@
 	font-size: 16pt;
 	font-weight:400;
 	}
-@media screen and (min-width:1400px) {
-:root {
-	/* sets root font size */
-	font-family:Rubik,san-serif;
-	font-size:28pt;
-	font-weight:500;
-	/* line-height:1.4; */
-	}
-}
+
 
  div.flex-container > div{
   	flex:100%;

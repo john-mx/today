@@ -14,9 +14,9 @@
 
 :root {
 	/* sets root font size */
-	font-family:Rubik;
-	font-size:32pt;
-	font-weight:600;
+	font-family:Rubik, san-serif;
+	font-size:28pt;
+	font-weight:500;
 	/* line-height:1.4; */
 }
 body{
@@ -25,17 +25,6 @@ body{
 }
 
 
-table{
-	font-family: Rubik;
-	font-weight:600;
-	font-size:1em;
-}
-h4 {
-	text-decoration:underline;
-	margin-top:1rem;
-}
-
-ul,li{ font-weight:600;}
 
 .page {
 	transform-origin:top center;

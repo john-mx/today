@@ -263,7 +263,7 @@ private static function parse_recurring($event,$begindt,$enddt,$i) {
 
 public static	function parse_scheduled ($event) {
 			$edate = $event['date'] . ' ' . $event['time'];
-			$edt = new \DateTime($edate,$this->tz) ;
+			$edt = new \DateTime($edate) ;
 			$now = new \DateTime();
 			//$today->setTimeZone('America/Los_Angeles');
 
