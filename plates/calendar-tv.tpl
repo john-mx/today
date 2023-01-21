@@ -10,14 +10,17 @@ use DigitalMx\jotr\Utilities as U;
 <?php
 if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 // get count of itmes by date
-foreach ($calendar as $cevent){
-		$cdate = $cevent['date'];
-		$caldays[$cdate] = (isset($caldays[$cdate])) ?
-			$caldays[$cdate] + 1
+
+foreach ($calendar as $cal){
+		$eventdate = date('l, F j',$cal['dt']);
+		$caldays[$eventdate] = (isset($caldays[$eventdate])) ?
+			$caldays[$eventdate] + 1
 			:
 			1;
-		if (0 && $cevent['note']) ++$caldays[$cdate];
+		if (0 && $cevent['note']) ++$caldays[$eventdate];
 	}
+	U::echor($caldays,'caldays', NOSTOP);
+
 ?>
 
 <table class='caltable  width100' >
@@ -47,7 +50,7 @@ foreach ($calendar as $cevent){
 
 
 	<tr class='tvdaterow'>
- 	<td rowspan='<?=$caldays[$cal['date']] ?>'>
+ 	<td rowspan='<?=$caldays[$eventdate] ?>'>
  		<?=$eventshortdate ?></td>
  	<?php else: ?>
  	<tr class='eventrow'>
