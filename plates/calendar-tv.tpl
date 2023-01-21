@@ -19,7 +19,7 @@ foreach ($calendar as $cal){
 			1;
 		if (0 && $cevent['note']) ++$caldays[$eventdate];
 	}
-	U::echor($caldays,'caldays', NOSTOP);
+//	U::echor($caldays,'caldays', NOSTOP);
 
 ?>
 
