@@ -43,7 +43,7 @@ $rdelay = (isset($local['rdelay']))?$local['rdelay']: $y['rdelay'];
 }
 body{
 
-	width:98vw;
+	width:94vw;
 }
 
 .page {
