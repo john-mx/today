@@ -495,6 +495,7 @@ public function build_topic_weather() {
 	*/
 
 	$fail = false;
+
 	// set first term to 1 to force fail for testing.  Otherwise 0.
 	if (0  || !$wgov = $this->CM->loadCache('wgov')) $fail = true;
 	if (!$fail and !array_key_exists('hq',$wgov)) $fail = true;
@@ -508,6 +509,7 @@ public function build_topic_weather() {
 			$w['weather'] = $weather;
 			return $w;
 		}
+
 
 	// try wapi if wgov fails
 	$fail = false;
