@@ -7,7 +7,7 @@ use DigitalMx\jotr\Utilities as U;
 
 
 ?>
-
+<div class='content'>
 <form method='post'>
 <input type='hidden' name='type' value='update'>
 <h4>Say something pithy</h4>
@@ -149,6 +149,7 @@ Set rotation delay in seconds: <input type='number' name='rdelay' value='<?=$adm
 
 
 </form>
+</div>
 <hr>
 
 

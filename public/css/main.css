@@ -265,6 +265,7 @@ div.head {
 
 div.content {
 	width:100%;
+	margin:1rem;
 	flex:1
 	padding:0;
 
