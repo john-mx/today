@@ -63,8 +63,10 @@ foreach ($calendar as $cal){
  	<b><?=$cal['title']?></b>
  	</td>
  	<td class='left'>
- 	<?=$cal['duration']?>
- 	<?=$cal['type']?>
+ 	<?=$cal['type']?><br />
+ 	(<?=$cal['duration']?>)
+
+
 	<?php if ($cal['reservation'] ?? ''): ?>
  		<br /><span class='red'>Reservation Req'd on rec.gov</span>
 	<?php endif; ?>
