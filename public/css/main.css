@@ -3,7 +3,7 @@
 	font-size: 16pt;
 	font-weight:400;
 	}
-@media screen and (min-width:1800px) {
+@media screen and (min-width:1400px) {
 :	root {
 	/* sets root font size */
 	font-family:Rubik,san-serif;
@@ -265,11 +265,14 @@ div.head {
 		}
 	div.head  .pad {
 			width:12%;
-			display:inline-block;
+			/* display:inline-block; */
+			font-weight:500;
+
 		}
 
 div.content {
 	width:100%;
+	flex:1
 	padding:0;
 
 }
