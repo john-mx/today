@@ -31,10 +31,10 @@ setTimeout(() => {
 }, 3000);
  -->
 
-<div class='content center'>
+<div id = 'content' class='content center'>
 <!-- ############################## -->
 <div id='loadholder' style="display:block">
-<br /><br /><br />(Setting up rotation...)
+<br /><br /><br />(Refreshing...)
 </div>
 <div id="page-today" class='page' style='display:<?=$divvis?>;' >
 <!-- set transform on this page to scale to fit available display height -->

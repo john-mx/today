@@ -8,7 +8,7 @@ use DigitalMx\jotr\Utilities as U;
 
 
 
-<h4>Weather Forecast</h4>
+<h3>Weather</h3>
 
 
 <?php

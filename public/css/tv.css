@@ -13,19 +13,25 @@
 /* @import url('/css/Frutiger.css'); */
 
 :root {
-	/* sets root font size */
-	font-family:Rubik, san-serif;
 	font-size:28pt;
 	font-weight:500;
-	/* line-height:1.4; */
-}
-body{
-	width:1900px;
-	/* width:98vw; */
 }
 
+#content, #head {
+	width:100%;
+	min-width:1400px;
+	padding:0;
 
+
+}
 
 .page {
 	transform-origin:top center;
 }
+
+#content h3 {
+	text-align:center;
+	text-decoration:underline;
+}
+
+

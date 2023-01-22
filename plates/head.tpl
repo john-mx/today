@@ -23,7 +23,7 @@ use DigitalMx\jotr\Utilities as U;
 	$qs ??= '';
 	$extra ??='';
 	$pithy ??='';
-
+	$extra_style ??='';
 	$page ??= 'page?';
 
 	$scbody = '';
@@ -42,17 +42,21 @@ if ($rotate){
 }
 
 	$pagelist = json_encode($pagel);
+$added_style = '';
+
 
 //Utilities::echor($pagelist,'pagelist');
 
 //$rdelay = 15; #delay on rotation
 $maincss=U::addTimestamp('/css/main.css');
 $tvcss=U::addTimestamp('/css/tv.css');
-$maincss=U::addTimestamp('/css/main.css');
-$tvcss=U::addTimestamp('/css/tv.css');
+
 $snapjs = U::addTimestamp('/js/load_snap.js');
+$root_large = U::addTimestamp('/css/root-large.css');
+$root_std = U::addTimestamp('/css/root-std.css');
 
 //echo "qs: $qs"; exit;
+$root_css = "<link rel='stylesheet' href='$root_std'>";
 	switch ($qs) {
 		case '';
 
@@ -75,6 +79,8 @@ $snapjs = U::addTimestamp('/js/load_snap.js');
 			$added_headers .= "<script src='$snapjs'></script>";
 			$added_headers .= "<script>var pageList = $pagelist;</script>" .NL;
 			$added_headers .= "<script>var rdelay = $rdelay;</script>" .NL;
+			$root_css = "<link rel='stylesheet' href='$root_large'>";
+			$added_style = "<link rel='stylesheet' href='$tvcss'>";
 			break;
 
 		default:
@@ -104,13 +110,14 @@ $snapjs = U::addTimestamp('/js/load_snap.js');
 
 	<script src='/js/help.js'></script>
 	<!-- <link rel='stylesheet' href = '/css/Frutiger.css' /> -->
+	<?=$root_css?>
 	<link rel='stylesheet' type='text/css' href = '<?=$maincss?>' />
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
 	<!-- Google Rubik sans, weights 400, 500, 600 ,700 ,800.  Italic in 400 and 500 -->
-
+	<?=$added_style?>
 	<?=$added_headers?>
 
 </head>

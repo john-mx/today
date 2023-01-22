@@ -12,11 +12,11 @@ endif;
 $cgres_asof = $cgopen_asof = '';
 ?>
 
-<h4>Campgrounds
+<h3>Campgrounds
 <?php if (!empty($camps['cgfull'])) : ?>
 	<span class='red'><b>ALL CAMPGROUNDS ARE FULL!</b></span>
 <?php endif; ?>
-</h4>
+</h3>
 <?php
 	$cgs = array_keys(Defs::$campsites);
 	sort ($cgs);

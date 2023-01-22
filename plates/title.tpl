@@ -17,21 +17,21 @@ use DigitalMx\jotr\Utilities as U;
 		"<div><b>Welcome to the $local_site</b></div>"
 		: 'Today in Joshua Tree National Park';
 ?>
-<div id='titles'>
-<div class='head' style='display:flex;align-items:flex-end;' >
 
-	<div class='pad' style='flex:1;justify-content:flex-start;' onClick = 'getLocal();'> <?php if ($qs == 'snap'):?>Now<br /><div id='clock'> </div><?php endif; ?> </div>
+<div class='head' id='head' >
 
-	<div class='title' style='flex:1;justify-content:flex-center;flex-grow:8'>
-	<h1 style='font-weight:700'><?=$local_head ?></h1>
-		<h1><?=$title?></h1>
+	<div class='pad' style='justify-content:flex-start;' onClick = 'getLocal();'> <?php if ($qs == 'snap'):?>Now<br /><div id='clock'> </div><?php endif; ?> </div>
+
+	<div class='title' style='justify-content:flex-center;flex-grow:8'>
+	<h1><?=$local_head ?></h1>
+		<h2><?=$title?></h2>
 	</div>
 
-	<div class='pad'style='flex:1;justify-content:flex-end;'>
+	<div class='pad'style='justify-content:flex-end;'>
 		<?php if (!empty($sunset)): ?>Sunset <br /><?=$sunset?>
 		<?php endif; ?>
 	</div>
 </div>
 
 
-</div>
+

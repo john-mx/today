@@ -10,11 +10,11 @@ use DigitalMx\jotr\Utilities as U;
 
 
 <?php if(empty($camps)): echo "No Campground Data"; else: ?>
-<h4>Campgrounds
+<h3>Campgrounds
 <?php if (!empty($camps['cgfull'] ?? '')) : ?>
 	<span class='red'><b>ALL CAMPGROUNDS ARE FULL!</b></span>
 <?php endif; ?>
-</h4>
+</h3>
 
 <table  class='alt-gray border center'>
 <tr ><th>Campground</th><th>Sites</th><th>Nightly Fee</th>

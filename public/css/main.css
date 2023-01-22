@@ -1,8 +1,3 @@
-:root {
-	font-family:Rubik,san-serif;
-	font-size: 16pt;
-	font-weight:400;
-	}
 
 
  div.flex-container > div{
@@ -34,9 +29,9 @@
 body {
 	padding:0;
 	width:100vw;
-	margin-left:auto;margin-right:auto;
 	padding-top:0;
 /* 	max-width:960px; */
+
 	}
 
 h5
@@ -51,24 +46,24 @@ h4
 {
 	margin-bottom: 3px;
 	margin-top:1rem;
-	font-size: 1.2rem;
+	font-size: 1.1rem;
 
 	font-weight:bold;
 }
 
-h3 { font-size: 1.3rem;
+h3 { font-size: 1.25rem;
 	font-weight:bold;
-	text-decoration:underline;
 	margin-top:1rem;
+	text-align:left;
 	}
 
 h2 { font-size: 1.5rem;
-	font-weight:bold;
+	font-weight:500;
 	text-align:center;
 	}
 
 h1 { font-size: 2rem;
-	font-weight:bold;
+	font-weight:700
 	text-align:center;}
 
 .auto {
@@ -219,62 +214,53 @@ div.conditions {
 	width:30%;
 }
 
-div.head {
+#head {
 		text-align:center;
 		background-color:black;
 		color:white;
 		margin-bottom: 0.5rem;
 		width:100%;
 		padding:0.5rem;
+		display:flex;
+		align-items:flex-end;
 
 
 		}
+#content {
+	width:100%;
+	padding:1rem;
 
-	div.head .title {
+}
+
+
+	#head .title {
 		display:inline-block;
-		width:70%;
+		flex:1;
+
 	}
 
-	div.head .title>h1 {
-		font-size:1.3rem;
-		color:white;
-		font-weight:bold;
+	#head .title>h1 {
 		margin:0.3em;;
-
 		}
 
-	div.head  p {
-		font-size:0.7rem;
-		color:red;
-		margin:0;
-		}
 
-	div.head .title>h2 {
-		font-size:1rem;
-		color:white;
-		font-weight:bold;
+	#head .title>h2 {
 		margin:0.3rem;
-
 		}
-	div.head  .pad {
+	#head  .pad {
 			width:12%;
 			/* display:inline-block; */
 			font-weight:500;
+			flex:1;
 
 		}
 
-div.content {
-	width:100%;
-	margin:1rem;
-	flex:1
-	padding:0;
 
-}
 
 div.dayblock {
 	border:1px solid black;
 	font-weight:bold;
-	font-size:1.2rem;
+	font-size:1.1rem;
 	padding:1rem;
 	vertical-align:top;
 /* 	float:left; */
@@ -286,7 +272,7 @@ div.dayblock {
 div.nightblock {
 	border:1px solid black;
 	font-weight:bold;
-	font-size:1.2rem;
+	font-size:1rem;
 	padding:1rem;
 	vertical-align:top;
 	/* float:left; */

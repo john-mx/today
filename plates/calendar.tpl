@@ -6,7 +6,7 @@ use DigitalMx\jotr\Utilities as U;
 ?>
 
 
-<h4>Upcoming Events</h4>
+<h3>Upcoming Events</h3>
 <?php
 if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 ?>

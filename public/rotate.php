@@ -32,25 +32,7 @@ $local = $_SESSION['local'] ?? [];
 $rotate = (isset($local['rotate']))?$local['rotate'] :$admin['rotate'] ;
 $rdelay = (isset($local['rdelay']))?$local['rdelay']: $y['rdelay'];
 
-	$style =  <<<EOT
-<style>
-:root {
-	/* sets root font size */
-	font-family:Rubik, san-serif;
-	font-size:28pt;
-	font-weight:500;
-	/* line-height:1.4; */
-}
-body{
 
-	width:94vw;
-}
-
-.page {
-	transform-origin:top center;
-}
-</style>
-EOT;
 
 // Utilities::echor($rotate,'rotate',STOP);
 
@@ -62,7 +44,8 @@ $meta=array(
 	'qs' => $qs,
 	'page' => basename(__FILE__),
 	'subtitle' => TODAY,
-'extra' => $style,
+	'extra' => '',
+	'extra_style' => 'tv.css',
 	'rotate' => $rotate,
 	'rdelay' => $rdelay,
 	'sunset' => $Today->sunset,

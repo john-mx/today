@@ -11,7 +11,7 @@ use DigitalMx\jotr\Utilities as U;
 
 <?php if(!empty($d = $notices['announcements'])) : ?>
 <div class='float'>
-<h4>Announcements</h4>
+<h3>Announcements</h3>
 <div>
 	<?php
 		echo "<ul>";

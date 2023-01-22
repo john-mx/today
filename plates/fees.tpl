@@ -8,7 +8,7 @@ use DigitalMx\jotr\Utilities as U;
 $fees = Defs::getFees();
 
 ?>
-<h4>Entrance Fees</h4>
+<h3>Entrance Fees</h3>
 <div class='inleft2 red'>
 <b>Help Keep The Line Moving –
 Purchase Your Pass Before You Get To The Entrance</b>

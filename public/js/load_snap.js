@@ -31,7 +31,7 @@ function doResize(elementID) {
 	var contentHeight = element.offsetHeight;
 	var contentWidth = element.offsetWidth;
  // content
-	var titleHeight = document.getElementById('titles').offsetHeight;
+	var titleHeight = document.getElementById('head').offsetHeight;
 
 	var pageHeight = contentHeight + titleHeight;
 	var  winHeight = window.innerHeight;
