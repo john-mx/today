@@ -22,7 +22,7 @@ use DigitalMx\jotr\Utilities as U;
 		$loccols = $daycnt + 1;
 
 	?>
-	<table class = 'col-border width90 ' style='margin:auto'>
+	<table class = 'col-border indent2 ' style='margin:auto'>
 
 
 	<tr class='no-border border-bottom'><th></th>

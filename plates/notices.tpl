@@ -15,7 +15,7 @@ use DigitalMx\jotr\Utilities as U;
 
 ?>
  <h3>Announcements and Closures</h3>
-    <div class=' inleft2 left' >
+    <div class=' indent2 left' >
 		 <ul>
         <?php if($e) :
 

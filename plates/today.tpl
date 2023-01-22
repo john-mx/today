@@ -78,11 +78,13 @@ $this->insert('calendar',['calendar'=>$tcalendar])
 
 
 <?php $this->insert('campground'); ?>
+<?php $this->insert('qr_camps'); ?>
 
 </div> <!-- end page-->
 <div id="page6"  class='break' style="display: <?=$divvis?>;">
 
 <?php $this->insert('fees'); ?>
+<?php $this->insert('qr_fees'); ?>
 
 
 <?php $this->insert('end'); ?>

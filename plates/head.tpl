@@ -52,7 +52,7 @@ $maincss=U::addTimestamp('/css/main.css');
 $tvcss=U::addTimestamp('/css/tv.css');
 
 $snapjs = U::addTimestamp('/js/load_snap.js');
-$root_large = U::addTimestamp('/css/root-large.css');
+$root_tv = U::addTimestamp('/css/root-tv.css');
 $root_std = U::addTimestamp('/css/root-std.css');
 
 //echo "qs: $qs"; exit;
@@ -79,8 +79,7 @@ $root_css = "<link rel='stylesheet' href='$root_std'>";
 			$added_headers .= "<script src='$snapjs'></script>";
 			$added_headers .= "<script>var pageList = $pagelist;</script>" .NL;
 			$added_headers .= "<script>var rdelay = $rdelay;</script>" .NL;
-			$root_css = "<link rel='stylesheet' href='$root_large'>";
-			$added_style = "<link rel='stylesheet' href='$tvcss'>";
+			$root_css = "<link rel='stylesheet' href='$root_tv'>";
 			break;
 
 		default:

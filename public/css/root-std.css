@@ -3,3 +3,25 @@
 		font-size: 16pt;
 	font-weight:400;
 	}
+
+body {
+	padding:1rem;
+/* 	width:100%; */
+/* 	padding-top:0; */
+/* 	max-width:960px; */
+
+	}
+
+#head {
+		}
+#content {
+	width:100%;
+	padding:1rem;
+
+}
+
+h3 { font-size: 1.25rem;
+	font-weight:bold;
+	margin-top:1rem;
+	text-align:left;
+	}
