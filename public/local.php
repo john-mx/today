@@ -37,6 +37,7 @@ $meta=array(
 	);
 
 	echo $Plates->render ('head',$meta);
+	echo "<body>";
 	echo $Plates->render('title',$meta);
 
 

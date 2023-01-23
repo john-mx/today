@@ -89,6 +89,7 @@ $meta=array(
 	);
 
 echo $Plates->render('head',$meta);
+echo "<body>";
 echo $Plates->render('title',$meta);
 echo $Plates->render($plate,$z);
 if ($plate2){

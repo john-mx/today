@@ -93,7 +93,7 @@ One announcement per line(carriage return). <br />
 
 
 <h4>Campground status <?php U::showHelp('campsites');?></h4>
-Click <button type='button' onClick = "showDiv('camps');">Admin Camps</button> to update campground information.
+Click <button type='button' onClick = "showDiv('camps');">Campground Admin</button> to update campground information.
 
 <div id='camps' class='hidden'>
 <!--
@@ -140,7 +140,7 @@ Click to <button type='button' onClick='clearopen()'> clear all site updates</bu
 
 
 <h4>Calendar <?php U::showHelp('calendar');?></h4>
-Click <button type='button' onClick = "showDiv('cal');"> Admin Calendar</button> to update calendar entries.
+Click <button type='button' onClick = "showDiv('cal');">Calendar Admin</button> to update calendar entries.
 <div id='cal' class='hidden'>
 <?php $this->insert('cal-admin',['calendar'=>$calendar]); ?>
 </div>

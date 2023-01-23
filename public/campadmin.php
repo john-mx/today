@@ -41,6 +41,7 @@ if (!empty($_POST) && !isset($_POST['pw'])) {
 
 
 	echo $Plates->render('head',$meta);
+	echo "<body>";
 echo $Plates->render('title',$meta);
 
 		$y = $Today-> prepare_admin();

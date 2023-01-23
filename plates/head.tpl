@@ -79,7 +79,7 @@ $root_css = "<link rel='stylesheet' href='$root_std'>";
 			$added_headers .= "<script src='$snapjs'></script>";
 			$added_headers .= "<script>var pageList = $pagelist;</script>" .NL;
 			$added_headers .= "<script>var rdelay = $rdelay;</script>" .NL;
-			$root_css = "<link rel='stylesheet' href='$root_tv'>";
+			$root_css = "<link rel='stylesheet' href='$root_std'>";
 			break;
 
 		default:
@@ -120,6 +120,6 @@ $root_css = "<link rel='stylesheet' href='$root_std'>";
 	<?=$added_headers?>
 
 </head>
-<body <?=$scbody?> >
+
 
 

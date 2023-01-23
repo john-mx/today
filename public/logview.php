@@ -31,6 +31,7 @@ $meta=array(
 
 	);
 echo $Plates->render('head',$meta);
+echo "<body>";
 echo $Plates->render('title',$meta);
 //
 $dir = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'logs';

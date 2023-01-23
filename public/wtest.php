@@ -6,13 +6,13 @@ ini_set('display_errors', 1);
 
 //BEGIN START
 	require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
-	
-	
+
+
 
 	use DigitalMx\jotr\Today;
 
 	$Plates = $container['Plates'];
-	
+
 	$Today = $container['Today'];
 
 
@@ -30,6 +30,7 @@ $meta=array(
 	);
 
 	echo $Plates->render ('head',$meta);
+	echo "<body>";
 	echo $Plates->render('title',$meta);
 
 

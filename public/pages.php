@@ -23,6 +23,7 @@ $meta=array(
 //echo basename(__FILE__) . " [". __LINE__ ."]" . BR;
 
 echo $Plates->render('head',$meta);
+echo "<body>";
 echo $Plates->render('title',$meta);
 
 

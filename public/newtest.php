@@ -29,6 +29,7 @@ $meta = array(
 $DM->showLight();
 
 //echo $Plates->render('head',$meta);
+//echo "<body>";
 //echo $Plates->render('title',$meta);
 //END START
 

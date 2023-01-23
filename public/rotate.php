@@ -54,11 +54,52 @@ $meta=array(
 	);
 
 	echo $Plates->render ('head',$meta);
+?>
+<style type='text/css'>
+:root {
+	font-family:Rubik,san-serif;
+	font-size:28pt;
+	font-weight:500;
+}
+
+body {
+	padding:0;
+	width:100%;
+	padding-top:0;
+/* 	max-width:960px; */
+
+	}
+
+#content {
+/* 	width:100%; */
+	min-width:1400px;
+	padding-left:1rem;
+	padding-right:1rem;
+}
+
+#head {
+	min-width:1400px;
+	padding:0;
+}
+
+.page {
+	transform-origin:top center;
+}
+
+h3 { font-size: 1.25rem;
+	font-weight:bold;
+	margin-top:1rem;
+	text-align:center;
+	text-decoration:underline;
+}
+</style>
 
 
-	echo $Plates->render('title',$meta);
+<?php
+echo "<body onLoad=load_snap()>";
 
-;
-// using "Today' as title prevents it from re-appearing on the today page.
+echo $Plates->render('title',$meta);
+
 
 	echo $Plates -> render('condensed',$meta) ;
+?>
