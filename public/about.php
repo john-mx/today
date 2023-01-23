@@ -29,7 +29,7 @@ $meta = array(
 );
 
 echo $Plates->render('head',$meta);
-<body>
+echo "<body>";
 echo $Plates->render('title',$meta);
 //END START
 

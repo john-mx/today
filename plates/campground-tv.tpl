@@ -33,7 +33,7 @@ foreach ($cgs as $cg):
 	$cgs = array_keys(Defs::$campsites);
 	sort ($cgs);
 ?>
-<div>Open Sites updated when known. Green = checked in last 3 hours; yellow = last 12 hours; red = older. </div>
+<div>Open Sites updated frequently. Green = reported in last 3 hours; yellow = last 12 hours; red = older. </div>
 <div class ='center ' style='vertical-align:top' >
 
 <?php $status = 'Reserved';

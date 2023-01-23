@@ -1,11 +1,9 @@
-html {
-	font-family:Rubik,san-serif;
-		font-size: 16pt;
-	font-weight:400;
-	}
 
 body {
+font-family:Rubik,san-serif;
 	padding:1rem;
+	font-size:1.6rem; /*16 pt*/
+	font-weight:400;
 /* 	width:100%; */
 /* 	padding-top:0; */
 /* 	max-width:960px; */

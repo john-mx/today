@@ -24,8 +24,22 @@
   }
 }
 
+html {
+		font-size: 62.5%
+		/* sets rem to 10px */
+	}
 
+body {
+	font-size: 1.6rem;
+	/* sets it back to 16 pt */
+	font-family:Rubik,san-serif;
+	padding:1rem;
+	font-weight:300;
+/* 	width:100%; */
+/* 	padding-top:0; */
+/* 	max-width:960px; */
 
+}
 
 
 #head {
@@ -114,6 +128,7 @@ textarea {
 	width: 40em;
 	max-width: 85%;
 	height:4em;
+	font-size:0.9em;
 	}
 
 
