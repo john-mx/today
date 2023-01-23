@@ -497,11 +497,23 @@ public function build_topic_weather() {
 	$fail = false;
 
 	// set first term to 1 to force fail for testing.  Otherwise 0.
-	if (0  || !$wgov = $this->CM->loadCache('wgov')) $fail = true;
-	if (!$fail and !array_key_exists('hq',$wgov)) $fail = true;
+	if (0  || !$wgov = $this->CM->loadCache('wgov')){
+		$fail = true;
+		$f = 'could not load wgov cache';
+	}
+	if (!$fail and !array_key_exists('hq',$wgov)){
+		$fail = true;
+		$f = 'No hq in wgov';
+	}
 	if (!$fail && !$update =
-		strtotime($wgov['hq']['properties']['updateTime'])) $fail = true;
-	if (!$fail &&  (time() - $update ) > 12*60*60) $fail = true;
+		strtotime($wgov['hq']['properties']['updateTime'])){
+		$fail = true;
+		$f = 'Could not convert update time to time';
+	}
+	if (!$fail &&  (time() - $update ) > 12*60*60) {
+		$fail = true;
+		$f = 'Time over 12 hours ';
+	}
 	if (!$fail){
 
 			$weather = $this->format_wgov($wgov);
@@ -509,7 +521,7 @@ public function build_topic_weather() {
 			$w['weather'] = $weather;
 			return $w;
 		}
-
+	else {Log::error ("Failed wgov ". $f);
 
 	// try wapi if wgov fails
 	$fail = false;
