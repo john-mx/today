@@ -574,12 +574,8 @@ public function build_topic_admin() {
 		 	$t = $this->clean_text($y['pithy']);
 			 $z['pithy'] = $t;
 
-			$z['notices']['alerts'] = [];
-			foreach (['alertA'] as $alertID){
-				$atext =  $this->format_alerts($y[$alertID]);
-				//Utilities::echot ($atext,'alert',STOP);
-				if ($atext){$z['notices']['alerts'][] = $atext;}
-			}
+			$z['notices']['alert'] = $y['alertA'];
+
 
 			$z['alert_alt'] = $y['alert_alt'] ?? '';
 

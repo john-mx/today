@@ -18,7 +18,7 @@ foreach ($cgs as $cg):
 					$camps[$cg]['open'] = 0;
 	endif;
 endforeach;
-U::echor($stale,'stale',NOSTOP);
+//U::echor($stale,'stale',NOSTOP);
 ?>
 
 
@@ -29,7 +29,7 @@ U::echor($stale,'stale',NOSTOP);
 	<span class='red'><b>ALL CAMPGROUNDS ARE FULL!</b></span>
 <?php endif; ?>
 </h3>
-<div class='inleft2'>Open Sites recorded every few hours.  If yellow, data is more than 3 hours old.  If black, data is more than 12 hours old.</div>
+<div class='inleft2'>Open Sites recorded every few hours.  If yellow, data is more than 3 hours old and not reliable.  If black, data is more than 12 hours old.</div>
 <table  class='alt-gray border center'>
 <tr ><th>Campground</th><th>Sites</th><th>Nightly Fee</th>
 <th>Open Sites</th>

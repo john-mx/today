@@ -51,7 +51,7 @@ setTimeout(() => {
 <!-- start light -->
 <?php $this->insert('light',[$light]); ?>
 
-<?php $this->insert('alerts',['alerts' => $admin['notices']['alerts'] ])?>
+<?php $this->insert('alerts')?>
 
 
 <?php $this->insert('end'); ?>
@@ -100,7 +100,7 @@ setTimeout(() => {
 </div><!-- end page-->
 <div id="page-fees" style="display: <?=$divvis?>;" class="page">
 
-<?php $this->insert('fees-tv'); ?>
+<?php $this->insert('fees'); ?>
 <div id='page-fees-scale'  class='scaler'></div>
 </div>
 

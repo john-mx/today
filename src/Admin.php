@@ -159,20 +159,20 @@ public function build_admin_calendar() {
 }
 
 private function checkAlert ($alert) {
-//   Utilities::echor($alert,'start alert check');
-	if (!$alert || empty($alert['title'])){return [];}
+ // Utilities::echor($alert,'start alert check');
+	if (! isset($alert['title']) ){return [];}
 	if (empty (trim($alert['title']))) {
-// 		echo "cleared";
+		echo "cleared";
 		$y['expires'] = $y['text'] = $y['title'] = '';
 
 	} else {
 		$y['title'] = $alert['title'];
 		$y['text'] =  $alert['text'];
+		echo 'exp ' .$alert['expires'] . BR;
 		if (empty($alert['expires'])){
-
 			Utilities::alertBadInput("Must have an expiration date for an alert");
 		}
-		try{$alertAx = new \DateTime($alert['expires'],new \DateTimeZone('America/Los_Angeles'));}
+		try{$alertAx = new \DateTime($alert['expires']);}
 		catch (\Exception $e) {
 			Utilities::alertBadInput ("Cannot understand date/time: {$alert['expires']}");
 		}
@@ -183,7 +183,7 @@ private function checkAlert ($alert) {
 
 		$y['expires'] = $alertAxts;
 	}
-//  Utilities::echor($y,'checked alert');
+ // Utilities::echor($y,'checked alert', STOP );
 	return $y;
 }
 

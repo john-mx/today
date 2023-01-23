@@ -20,7 +20,11 @@ use DigitalMx\jotr\Utilities as U;
 <p>Enter any alert you wish to display.  Click <button type='button' onClick = "showDiv('galerts');"> Active Alerts</button> to view active alerts from weather.gov. Copy and edit as appropriate. </p>
 
 <div id='galerts' class='hidden'>
-	<?php foreach ($galerts as $source=>$alertset) :
+	<?php
+// 		foreach ($galerts as $source=>$alertset) :
+		$source = 'wgovalerts';
+		$alertset = $galerts[$source];
+
 		//Utilities::echor($alertset,$source);
 		$sourcename =Defs::$sources[$source];
 	?>
@@ -35,9 +39,10 @@ use DigitalMx\jotr\Utilities as U;
 				<?=$alert['instructions'] ?? '' ?></p>
 			<p>Expires <?= $alert['expires']?></p>
 		</div>
-	<?php endforeach; ?>
-	<?php endif; ?>
-<?php endforeach; ?>
+	<?php endforeach;
+	endif;
+//endforeach;
+?>
 	<hr style="height:4px;background-color:green;">
 </div>
 
@@ -48,9 +53,9 @@ Alerts must have expiration.  If today, just enter the time.  Otherwise enter mo
 <h5>Alert A</h5>
 <table class='border no-col'>
 <tr class='left'><td>Headline</td>
-	<td><input type='text' value="<?=$admin['alertA']['title'] ??'' ?> " name="alertA['title']" size='45'></td></tr>
-<tr class='left'><td>Information:</td><td> <textarea name="alertA['text']" rows='2' cols='80'><?=$admin['alertA']['text']??''?></textarea></td></tr>
-<tr class='left'><td>Expires</td><td><input type='text' name="alertA['expires']" value="<?=$admin['alertA']['expires']??''?>" >
+	<td><input type='text' value="<?=$admin['alertA']['title'] ??'' ?> " name="alertA[title]" size='45'></td></tr>
+<tr class='left'><td>Information:</td><td> <textarea name="alertA[text]" rows='2' cols='80'><?=$admin['alertA']['text']??''?></textarea></td></tr>
+<tr class='left'><td>Expires</td><td><input type='text' name="alertA[expires]" value="<?=$admin['alertA']['expires']??''?>" >
 </td></tr>
 </table>
 
@@ -88,8 +93,9 @@ One announcement per line(carriage return). <br />
 
 
 <h4>Campground status <?php U::showHelp('campsites');?></h4>
+Click <button type='button' onClick = "showDiv('camps');">Admin Camps</button> to update campground information.
 
-
+<div id='camps' class='hidden'>
 <!--
 <p><input type='checkbox' name='cgfull'
 > Check to force all campgrounds full until unset.</p>
@@ -130,9 +136,14 @@ Uncertainty.  <input type='number' name='uncertainty' size='4' value="<?=$admin[
 </table>
 Click to <button type='button' onClick='clearopen()'> clear all site updates</button> (clear = no change)
 <br />
+</div>
 
+
+<h4>Calendar <?php U::showHelp('calendar');?></h4>
+Click <button type='button' onClick = "showDiv('cal');"> Admin Calendar</button> to update calendar entries.
+<div id='cal' class='hidden'>
 <?php $this->insert('cal-admin',['calendar'=>$calendar]); ?>
-
+</div>
 <hr>
 <h4>Choose Pages for TV Rotation <?php U::showHelp('rotation');?></h4>
 
