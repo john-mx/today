@@ -61,8 +61,7 @@ $meta=array(
 	font-size:28pt;
 	font-weight:500;
 }
-
-body {
+ body {
 	padding:0;
 	width:100%;
 	padding-top:0;
@@ -70,23 +69,23 @@ body {
 
 	}
 
-#content {
+ #content {
 /* 	width:100%; */
 	min-width:1400px;
 	padding-left:1rem;
 	padding-right:1rem;
 }
 
-#head {
+ #head {
 	min-width:1400px;
 	padding:0;
 }
 
-.page {
+ .page {
 	transform-origin:top center;
 }
-
-h3 { font-size: 1.25rem;
+table tr td {font-size:28pt;}
+ h3 { font-size: 1.25rem;
 	font-weight:bold;
 	margin-top:1rem;
 	text-align:center;
@@ -96,7 +95,7 @@ h3 { font-size: 1.25rem;
 
 
 <?php
-echo "<body onLoad=load_snap()>";
+echo "<body id='rotator' onLoad=load_snap()>";
 
 echo $Plates->render('title',$meta);
 

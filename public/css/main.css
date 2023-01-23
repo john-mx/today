@@ -32,9 +32,9 @@
 		text-align:center;
 		background-color:black;
 		color:white;
-		margin-bottom: 0.5rem;
+		margin-bottom: 0.5em;
 /* 		width:100%; */
-		padding:1rem;
+		padding:1em;
 		display:flex;
 		align-items:flex-end;
 		}
@@ -42,7 +42,7 @@
 h5
 {
 	margin-bottom: 3px;
-	font-size: 1rem;
+	font-size: 1em;
 	text-decoration:underline;
 	margin-top:3px;
 
@@ -50,20 +50,20 @@ h5
 h4
 {
 	margin-bottom: 3px;
-	margin-top:1rem;
-	font-size: 1.1rem;
+	margin-top:1em;
+	font-size: 1.1em;
 
 	font-weight:bold;
 }
 
 
 
-h2 { font-size: 1.4rem;
+h2 { font-size: 1.4em;
 	font-weight:500;
 	text-align:center;
 	}
 
-h1 { font-size: 1.6rem;
+h1 { font-size: 1.6em;
 	font-weight:700
 	text-align:center;}
 
@@ -111,9 +111,9 @@ input.submit, button.submit {
 textarea {
 	background-color:#FFC;
 	border: 1px solid #CC9;
-	width: 40rem;
+	width: 40em;
 	max-width: 85%;
-	height:4rem;
+	height:4em;
 	}
 
 
@@ -181,8 +181,8 @@ textarea {
 }
 
 
-.float, .floatl {float:left; margin-right:1rem;;}
-.floatr {float:right; margin-left:1rem;;}
+.float, .floatl {float:left; margin-right:1em;;}
+.floatr {float:right; margin-left:1em;;}
 div.clear {clear:both;}
 .clearafter::after{
     content: '';
@@ -242,12 +242,13 @@ div.alert{
 
 
 	#head .title>h2 {
-		margin:0.3rem;
+		margin:0.3em;
 		}
 	#head  .pad {
 			width:12%;
 			/* display:inline-block; */
 			font-weight:500;
+			font-size:1rem;
 			flex:1;
 
 		}
@@ -257,8 +258,8 @@ div.alert{
 div.dayblock {
 	border:1px solid black;
 	font-weight:bold;
-	font-size:1.1rem;
-	padding:1rem;
+	font-size:1.1em;
+	padding:1em;
 	vertical-align:top;
 /* 	float:left; */
 	display:inline-block;
@@ -269,8 +270,8 @@ div.dayblock {
 div.nightblock {
 	border:1px solid black;
 	font-weight:bold;
-	font-size:1rem;
-	padding:1rem;
+	font-size:1em;
+	padding:1em;
 	vertical-align:top;
 	/* float:left; */
 	text-align:center;
@@ -296,7 +297,7 @@ div.nightblock  img{
 table {
 	border-collapse: collapse;
 	border: 2px solid black;
-	font-size:1rem;
+	font-size:1em;
 }
 
 table tr td
@@ -377,10 +378,10 @@ table tr.left td {text-align:left;}
 table tr td.center {text-align:center;}
 table tr.center td {text-align:center;}
 
-table tr.heads {line-height:0.8rem;}
+table tr.heads {line-height:0.8em;}
 table tr.heads td {
 	font-weight:bold;
-	font-size:.8rem;
+	font-size:.8em;
 	text-align:center;
 }
 
@@ -451,15 +452,15 @@ table tr td.lrpad {
 	text-align: left;
 
 	padding: 3px;
-	/* margin-bottom: 1rem; */
-	/* margin-left:2rem; */
-	margin-right:2rem;
+	/* margin-bottom: 1em; */
+	/* margin-left:2em; */
+	margin-right:2em;
 
 
 }
 li {
 	margin-bottom:0.4em;
-	font-size:1rem;
+	font-size:1em;
 }
 
 .warn ul {
@@ -467,22 +468,22 @@ li {
 	margin-bottom:0;
 }
 
-.in2 , .indent2 { margin-left: 2rem;
+.in2 , .indent2 { margin-left: 2em;
 	margin-right: 0;
 
 	}
 .indent {
-	margin-left:2rem;
-	margin-right:2rem;
+	margin-left:2em;
+	margin-right:2em;
 	}
 
-.inleft2 {margin-left:2rem;}
+.inleft2 {margin-left:2em;}
 
 .today
 {
 	font-weight: bold;
 	text-align: center;
-	font-size: 1.5rem;
+	font-size: 1.5em;
 }
 
 
@@ -493,8 +494,8 @@ li {
 	margin-left:2em;
 	margin-right:2em;
 	margin-bottom: 6px;
-	padding-left: 1rem;
-	padding-right:1rem;
+	padding-left: 1em;
+	padding-right:1em;
 }
 
 .scaler {
