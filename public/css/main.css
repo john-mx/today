@@ -1,10 +1,17 @@
+html {
+		font-size: 62.5%
+		/* sets rem to 10px */
+	}
+
+
 @media print {
 	/* use smaller type, larger lin spacing. */
-	body {
-	font-size: 1.1rem;
+
+	html {
+	font-size: 50%;
 	}
-	table tr td {font-size:1.1rem;}
-	table th{font-size:1.2rem;}
+	table tr td {font-size:1rem;}
+	table th{font-size:1rem;}
 
    @page {
    	size: 8.5in 11in;
@@ -25,11 +32,6 @@
     flex-direction: column;
   }
 }
-
-html {
-		font-size: 62.5%
-		/* sets rem to 10px */
-	}
 
 body {
 	font-size: 1.6rem;
