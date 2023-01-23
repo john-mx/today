@@ -52,17 +52,17 @@ $maincss=U::addTimestamp('/css/main.css');
 $tvcss=U::addTimestamp('/css/tv.css');
 
 $snapjs = U::addTimestamp('/js/load_snap.js');
-$root_tv = U::addTimestamp('/css/root-tv.css');
-$root_std = U::addTimestamp('/css/root-std.css');
+// $root_tv = U::addTimestamp('/css/root-tv.css');
+// $root_std = U::addTimestamp('/css/root-std.css');
 
 //echo "qs: $qs"; exit;
-$root_css = "<link rel='stylesheet' href='$root_std'>";
+// $root_css = "<link rel='stylesheet' href='$root_std'>";
 	switch ($qs) {
 		case '';
 
 			break;
 		case 'scroll':
-			$scbody='onLoad="pageScroll()"';
+
 			$added_headers .= "<style>html {scroll-behavior: smooth;}</style>" .NL;
 			$added_headers .= "<script src='/js/scroll_scripts.js'></script>".NL;
 
@@ -71,15 +71,13 @@ $root_css = "<link rel='stylesheet' href='$root_std'>";
 			break;
 
 		case 'snap':
-
-			$scbody = "onLoad=load_snap()";
 			$added_headers .= '<meta http-equiv="refresh" content="900" >'.NL;
 
 
 			$added_headers .= "<script src='$snapjs'></script>";
 			$added_headers .= "<script>var pageList = $pagelist;</script>" .NL;
 			$added_headers .= "<script>var rdelay = $rdelay;</script>" .NL;
-			$root_css = "<link rel='stylesheet' href='$root_std'>";
+// 			$root_css = "<link rel='stylesheet' href='$root_std'>";
 			break;
 
 		default:
@@ -109,13 +107,13 @@ $root_css = "<link rel='stylesheet' href='$root_std'>";
 
 	<script src='/js/help.js'></script>
 	<!-- <link rel='stylesheet' href = '/css/Frutiger.css' /> -->
-	<?=$root_css?>
+
 	<link rel='stylesheet' type='text/css' href = '<?=$maincss?>' />
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
-	<!-- Google Rubik sans, weights 400, 500, 600 ,700 ,800.  Italic in 400 and 500 -->
+	<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+	<!-- Google Rubik sans, weights 300,400, 500, 600 ,700 ,800.  Italic in 400 and 500 -->
 	<?=$added_style?>
 	<?=$added_headers?>
 

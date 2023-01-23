@@ -907,7 +907,7 @@ private function format_alerts($alert){
 	if (empty($alert['title']) or ($alert['expires'] < time() )) return '';
 	$expire_date = date('M d g:i a',$alert['expires']);
 
-	$t= "<div class='warnblock'>";
+	$t= "<div class='alertblock'>";
 	$t .= "<div class='red inlineblock'><b>Alert: {$alert['title']}</b> </div> <br />";
 	if ($alert['text']){
 		$t .= "<div class='inline-block indent'>"

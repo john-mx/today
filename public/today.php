@@ -33,9 +33,9 @@ $meta=array(
 	'pithy'=> $y['pithy'] ?? '',
 	'sunset' => $Today->sunset,
 	);
-
+	$bodycode = ($qs == 'scroll')? "onLoad='pageScroll()'" : '';
 	echo $Plates->render ('head',$meta);
-	echo "<body>";
+	echo "<body $bodycode>";
 	echo $Plates->render('title',$meta);
 
 //	echo $Today->start_page('Today in the Park',$qs);

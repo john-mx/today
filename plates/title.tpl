@@ -18,7 +18,7 @@ use DigitalMx\jotr\Utilities as U;
 		: 'Today in Joshua Tree National Park';
 ?>
 
-<div class='head' id='head' >
+<div class='head' id='titles' >
 
 	<div class='pad' style='justify-content:flex-start;' onClick = 'getLocal();'> <?php if ($qs == 'snap'):?>Now<br /><div id='clock'> </div><?php endif; ?> </div>
 

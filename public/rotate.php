@@ -56,12 +56,10 @@ $meta=array(
 	echo $Plates->render ('head',$meta);
 ?>
 <style type='text/css'>
-:root {
-	font-family:Rubik,san-serif;
-	font-size:28pt;
-	font-weight:500;
+html { font-size:140%;
 }
  body {
+ 	font-weight:500;
 	padding:0;
 	width:100%;
 	padding-top:0;
@@ -70,23 +68,25 @@ $meta=array(
 	}
 
  #content {
-/* 	width:100%; */
+	width:100%;
 	min-width:1400px;
 	padding-left:1rem;
 	padding-right:1rem;
 }
 
- #head {
+ #titles {
 	min-width:1400px;
 	padding:0;
 }
 
- .page {
+
+.page {
 	transform-origin:top center;
 }
-table tr td {font-size:28pt;}
- h3 { font-size: 1.25rem;
-	font-weight:bold;
+table tr td {font-size:1.6rem;}
+table th {font-size: 1.6rem;}
+
+h3 {
 	margin-top:1rem;
 	text-align:center;
 	text-decoration:underline;
