@@ -510,7 +510,7 @@ public function build_topic_weather() {
 		$fail = true;
 		$f = 'Could not convert update time to time';
 	}
-	if (!$fail &&  (time() - $update ) > 12*60*60) {
+	if (!$fail &&  (time() - $update ) > 24*60*60) {
 		$fail = true;
 		$f = 'Time over 12 hours ' . date('M d H:i',$update);
 	}
