@@ -526,7 +526,7 @@ public function build_topic_weather() {
 	// try wapi if wgov fails
 	$fail = false;
 	// set first term to 1 to force fail for testing.  Otherwise 0.
-	if (1 || !$fail && !$wapi = $this->CM->loadCache('wapi')) $fail=true;
+	if (0 || !$fail && !$wapi = $this->CM->loadCache('wapi')) $fail=true;
 	if (!$fail && !array_key_exists('hq',$wapi)) $fail = true;
 	if (!$fail && !$update =  $wapi['hq']['current']['last_updated_epoch']) $fail = true;
 	if (!$fail && (time() - $update) > 12*60*60) $fail = true;
