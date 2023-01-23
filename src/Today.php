@@ -512,7 +512,7 @@ public function build_topic_weather() {
 	}
 	if (!$fail &&  (time() - $update ) > 12*60*60) {
 		$fail = true;
-		$f = 'Time over 12 hours ';
+		$f = 'Time over 12 hours ' . date('M d H:i',$update);
 	}
 	if (!$fail){
 
