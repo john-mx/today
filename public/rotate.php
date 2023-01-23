@@ -76,7 +76,7 @@ html { font-size:140%;
 
  #titles {
 	min-width:1400px;
-	padding:0;
+	padding:1rem;
 }
 
 
