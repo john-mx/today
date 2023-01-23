@@ -6,7 +6,7 @@ use DigitalMx\jotr\Utilities as U;
 
 
 ?>
-<div class='alert' >
+
 <?php
 //U::echor($admin['notices']);
 //Utilities::echor($admin,'admin');
@@ -17,15 +17,21 @@ use DigitalMx\jotr\Utilities as U;
 		|| empty($admin['notices']['alert']['title'])
 		|| $admin['notices']['alert']['expires'] < time()
 		):
-			echo  nl2br($admin['alert_alt']);
-	else:
+		$altalert = nl2br($admin['alert_alt']);
+		?>
+		<div class='alert middle center ' style='border:1px solid black'>
+			<?=$altalert?>
+		</div>
+	<?php else:
 		$alert = $admin['notices']['alert'];
 		$expire_date = date('M d g:i a',$alert['expires']);
 	?>
-		<div class='red inlineblock center width100 larger'><b><?=$alert['title']?></b> </div> <br />
+	<div class='alert middle center ' >
+		<div class='red inlineblock width100 larger'>
+		<b><?=$alert['title']?></b> </div> <br />
 		<div class='inline-block indent width100 center'>
 			<?php echo $this->escape($alert['text']);?>
 		</div>
 		<div class='inlineblock right width100' style='font-weight:normal;'><small>Expires: <?=$expire_date?></small></div>
+		</div>
 	<?php endif; ?>
-</div>

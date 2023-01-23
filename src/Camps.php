@@ -32,13 +32,11 @@ function __construct($c){
 
 
 	$camps = $this->CM->loadCache('camps');
-	$campsRec = $this->CM->loadCache('campsRec') ;
 
 // U::echor($camps,'camps');
-// U::echor($campsRec, 'campsRec',);
 
 
-	foreach (array_keys($camps) as $cg){
+	foreach (array_keys(Defs::$campsites) as $cg){
 		$opt = Utilities::buildOptions(Defs::$cgstatus, $camps[$cg]['status'] ?? '');
 		$camps[$cg]['statusopt']  = $opt;
 		$rc_newer = isset($campsRec[$cg]) && $campsRec[$cg]['asof'] > $camps[$cg]['asof'];
@@ -56,40 +54,34 @@ function __construct($c){
 
 
 	public function postCamps($post) {
-// 	U::echor($post, 'postCamps');
+ 	//U::echor($post, 'postCamps');
 		$campd = $post;
 		$camps = $this->CM->loadCache('camps');
-		$campsRec =$this->CM->loadCache('campsRec');
+		//$campsRec =$this->CM->loadCache('campsRec');
+		$campsU = [];
 
-		foreach ($campd as $cg=>$cgd){
-		//U::echor($cgd,"key $cg");
-			if ($cgd['status'] == 'Reserved'){
-				$camps[$cg]['status'] = 'Reserved';
-				$camps[$cg]['notes'] = $cgd['notes'];
-				if (!empty ($cgo = $cgd['cgupdate'])){
-					$camps[$cg]['open'] = $cgo;
-					$camps[$cg]['asof'] = time();
-				}
+		foreach (array_keys(Defs::$campsites) as $cg){
 
-			} elseif ($cgd['status'] == 'First'){
-				$camps[$cg]['status'] = 'First';
-				$camps[$cg]['notes'] = $cgd['notes'];
-				if (!empty ($cgo = $cgd['cgupdate'])){
-					$camps[$cg]['open'] = $cgo;
-					$camps[$cg]['asof'] = time();
-				}
-			} else { # is closed
-				$camps[$cg]['status'] = 'Closed';
-				$camps[$cg]['notes'] = $cgd['notes'];
-				$camps[$cg]['open'] = 0;
-				$camps[$cg]['asof'] = time();
+			$campsU[$cg]['status'] = $campd[$cg]['status'];
+			$campsU[$cg]['notes'] = $campd[$cg]['notes'];
+			if (strlen ( $campd[$cg]['cgupdate']) > 0) { #0 is ok, null is not
+				$campsU[$cg]['open'] = $campd[$cg]['cgupdate'];
+				$campsU[$cg]['asof'] = time();
+			} else { #no change
+				$campsU[$cg]['open'] = $camps[$cg]['open'] ;
+				$campsU[$cg]['asof'] = $camps[$cg]['asof'] ;
+			}
+
+			if ($campd[$cg]['status'] == 'Closed'){
+				$campsU[$cg]['open'] = 0;
+				$campsU[$cg]['asof'] = time();
 			}
 		}
-// 		U::echor ($camps, 'camps');
-// 		U::echor ($campsRec, 'campsRec');
+ //	U::echor ($campsU, 'campsU');
 
-		$this->CM->writeCache('camps',$camps);
-		$this->CM->writeCache('campsRec',$campsRec);
+
+	$this->CM->writeCache('camps',$campsU);
+
 	}
 
 public function prepareDisplayCamps(){
@@ -103,12 +95,10 @@ public function prepareDisplayCamps(){
 	foreach (array_keys($camps) as $cg){
 		$opt = Utilities::buildOptions(Defs::$cgstatus, $camps[$cg]['status'] ?? '');
 		$camps[$cg]['statusopt']  = $opt;
-		$rc_newer = isset($campsRec[$cg]) && $campsRec[$cg]['asof'] > $camps[$cg]['asof'];
+
 	//	echo "$cg: " ; echo ($rc_newer)? 'rc newer':'manual newer' ; echo  BR;
-		$camps[$cg]['asof'] = $rc_newer?
-			$campsRec[$cg]['asof'] :$camps[$cg]['asof'] ?? time();
-		$camps[$cg]['open'] = $rc_newer?
-			$campsRec[$cg]['open'] :$camps[$cg]['open']?? 100;
+		$camps[$cg]['asof'] = $camps[$cg]['asof'] ?? time();
+		$camps[$cg]['open'] = $camps[$cg]['open']?? 100;
 		$camps[$cg]['asofHM'] = date('M j g:i a',$camps[$cg]['asof']);
 	}
 //	U::echor($camps, 'camps prepared');

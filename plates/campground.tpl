@@ -7,17 +7,18 @@ use DigitalMx\jotr\Utilities as U;
 // set up stale flags
 $cgs = array_keys(Defs::$campsites);
 	sort ($cgs);
-
+$total_open = 0;
 foreach ($cgs as $cg):
-	if ((time() - $camps[$cg]['asof'])  > 24*60*60): $stale[$cg] = '#000';
-	elseif ((time() - $camps[$cg]['asof'])  > 3*60*60): $stale[$cg] = '#FF0';
-	else: $stale[$cg] = '#FFF';
+	if ((time() - $camps[$cg]['asof'])  < 3*60*60): $stale[$cg] = '#3F3';
+	elseif ((time() - $camps[$cg]['asof'])  < 12*60*60): $stale[$cg] = '#FF3';
+	else: $stale[$cg] = '#F33';
 	endif;
 	if ($camps[$cg]['status'] == 'Closed'):
 					$stale[$cg] = '#FFF';
 					$camps[$cg]['open'] = 0;
 	endif;
-endforeach;
+	if ($camps[$cg]['open'] > 0):++$total_open;endif;
+	endforeach;
 //U::echor($stale,'stale',NOSTOP);
 ?>
 
@@ -25,11 +26,12 @@ endforeach;
 
 <?php if(empty($camps)): echo "No Campground Data"; else: ?>
 <h3>Campgrounds
-<?php if (!empty($camps['cgfull'] ?? '')) : ?>
+<?php if ($total_open ==0 ):?>
 	<span class='red'><b>ALL CAMPGROUNDS ARE FULL!</b></span>
 <?php endif; ?>
 </h3>
-<div class='inleft2'>Open Sites recorded every few hours.  If yellow, data is more than 3 hours old and not reliable.  If black, data is more than 12 hours old.</div>
+<div class='inleft2'>Open Sites checked several times a day.<br/>
+If background is green, data is less than 3 hours old.  If yellow, data is less than 12 hours old and may be optimistic.  If red, data is more than 12 hours old and unreliable.</div>
 <table  class='alt-gray border center'>
 <tr ><th>Campground</th><th>Sites</th><th>Nightly Fee</th>
 <th>Open Sites</th>

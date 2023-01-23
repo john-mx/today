@@ -7,21 +7,33 @@ use DigitalMx\jotr\Utilities as U;
 if(empty($camps)): echo "No Campground Data"; exit;
 endif;
 
-// $cgopen_asof =  date('M d g:i a', $camps['cgopen_age']);
-// $cgres_asof =  date('M d g:i a', $camps['cgres_age']);
-$cgres_asof = $cgopen_asof = '';
+$cgs = array_keys(Defs::$campsites);
+	sort ($cgs);
+$total_open = 0;
+foreach ($cgs as $cg):
+	if ((time() - $camps[$cg]['asof'])  < 3*60*60): $stale[$cg] = '#3F3';
+	elseif ((time() - $camps[$cg]['asof'])  < 12*60*60): $stale[$cg] = '#FF3';
+	else: $stale[$cg] = '#F33';
+	endif;
+	if ($camps[$cg]['status'] == 'Closed'):
+					$stale[$cg] = '#FFF';
+					$camps[$cg]['open'] = 0;
+	endif;
+	if ($camps[$cg]['open'] > 0):++$total_open;endif;
+	endforeach;
 ?>
 
 <h3>Campgrounds
-<?php if (!empty($camps['cgfull'])) : ?>
+<?php if ($total_open == 0) : ?>
 	<span class='red'><b>ALL CAMPGROUNDS ARE FULL!</b></span>
 <?php endif; ?>
 </h3>
+
 <?php
 	$cgs = array_keys(Defs::$campsites);
 	sort ($cgs);
 ?>
-<div>Open Sites updated when known.  ? = Information is stale and may not be reliable.</div>
+<div>Open Sites updated when known. Green = checked in last 3 hours; yellow = last 12 hours; red = older. </div>
 <div class ='center ' style='vertical-align:top' >
 
 <?php $status = 'Reserved';
@@ -30,7 +42,7 @@ $no_entries = true; ?>
 <table class='alt-gray width45 inlineblock'>
 	<tr class='bg-orange '><td colspan='4' ><b>Reserved Campsites</b></td></tr>
 		<tr><td colspan='4' class='left'>Reserve site at rec.gov or call (877) 444-6777 or from outside US +1 (606) 515-6777.<br />
-		Open sites as of <?=$cgres_asof?>
+
 		</td></tr>
 	<tr ><th>Campground</th>
 		<th>Sites</th>
@@ -44,7 +56,7 @@ $no_entries = true; ?>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
 				<td> $&nbsp;<?= Defs::$campfees[$cg] ?> </td>
 
-				<td><?= $camps[$cg]['open'] ?> </td>
+				<td style='background-color:<?=$stale[$cg]?>' ><?= $camps[$cg]['open'] ?> </td>
 
 				</tr>
 		<?php endif ?>
@@ -61,7 +73,7 @@ $no_entries = true; ?>
 <table class='alt-gray' >
 <tr class='bg-orange left'><td colspan='4' ><b>First Come, First Served Campgrounds</b></td></tr>
 		<tr><td colspan='4'  class='left'>Find a site and claim it.  Pay ranger or at entrance station.<br />
-		Open sites as of <?=$cgopen_asof?>
+
 		</td></tr>
 	<tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th><th>Open Sites</th></tr>
 	<?php foreach ($cgs as $cg) :
@@ -72,7 +84,7 @@ $no_entries = true; ?>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
 				<td> $&nbsp;<?= Defs::$campfees[$cg] ?> </td>
 
-				<td><?= $camps[$cg]['open'] ?> </td>
+				<td style='background-color:<?=$stale[$cg]?>' ><?= $camps[$cg]['open'] ?> </td>
 
 				</tr>
 			<?php endif ?>
@@ -96,7 +108,7 @@ $no_entries = true; ?>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
 				<td>$&nbsp;<?= Defs::$campfees[$cg] ?> </td>
 
-				<td><?= $camps[$cg]['open'] ?> </td>
+				<td>0 </td>
 
 				</tr>
 			<?php endif ?>
