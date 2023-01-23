@@ -29,7 +29,7 @@ use DigitalMx\jotr\Utilities as U;
 	<div class='alert middle center ' >
 		<div class='red inlineblock larger'>
 		<b><?=$alert['title']?></b> </div> <br />
-		<div class='inline-block width60  middle center'>
+		<div class='inline-block width80  middle center'>
 			<?php echo $this->escape($alert['text']);?>
 		</div>
 		<div class=' right ' style='font-weight:normal;'><small>Expires: <?=$expire_date?></small></div>

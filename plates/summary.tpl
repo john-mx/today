@@ -64,7 +64,7 @@ EOT;
 	$this->insert('notices',['notices' => $admin['notices']]);
 ?>
 
-<h4>Today's Events</h4>
+<h3>Today's Events</h3>
 <?php
 $calendar = Calendar::filter_calendar($calendar,1); #one day
 if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
