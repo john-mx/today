@@ -27,11 +27,11 @@ use DigitalMx\jotr\Utilities as U;
 		$expire_date = date('M d g:i a',$alert['expires']);
 	?>
 	<div class='alert middle center ' >
-		<div class='red inlineblock width100 larger'>
+		<div class='red inlineblock larger'>
 		<b><?=$alert['title']?></b> </div> <br />
-		<div class='inline-block indent width100 center'>
+		<div class='inline-block width60  middle center'>
 			<?php echo $this->escape($alert['text']);?>
 		</div>
-		<div class='inlineblock right width100' style='font-weight:normal;'><small>Expires: <?=$expire_date?></small></div>
+		<div class=' right ' style='font-weight:normal;'><small>Expires: <?=$expire_date?></small></div>
 		</div>
 	<?php endif; ?>
