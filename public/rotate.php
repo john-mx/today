@@ -60,23 +60,26 @@ html { font-size:140%;
 }
  body {
  	font-weight:500;
-	padding:0;
-	width:100%;
+	padding:0.5em;;
+	width:100vm;
 	padding-top:0;
 /* 	max-width:960px; */
 
 	}
 
  #content {
-	width:100%;
+
 	min-width:1400px;
-	padding-left:1rem;
-	padding-right:1rem;
+	padding-left:1em;
+	padding-right:1em;
 }
 
  #titles {
 	min-width:1400px;
-	padding:1rem;
+	padding:1em;
+
+
+
 }
 
 

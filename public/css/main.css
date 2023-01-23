@@ -56,7 +56,7 @@ body {
 		}
 
 #content {
-	width:100%;
+/* 	width:100%; */
 	padding:1rem;
 
 }
@@ -83,12 +83,15 @@ h3 { font-size:2rem;
 	text-align:left;
 	}
 
-
+/* used only for date in head */
 h2 { font-size: 2.4rem;
 	font-weight:500;
 	text-align:center;
+	margin:0;
 	}
 
+
+/* used only for main heade */
 h1 { font-size:2.5rem;
 	font-weight:700
 	text-align:center;}
