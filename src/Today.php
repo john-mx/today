@@ -521,7 +521,7 @@ public function build_topic_weather() {
 			$w['weather'] = $weather;
 			return $w;
 		}
-	else {Log::error ("Failed wgov ". $f);
+	else {Log::error ("Failed wgov ". $f);}
 
 	// try wapi if wgov fails
 	$fail = false;
