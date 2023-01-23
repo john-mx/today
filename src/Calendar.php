@@ -75,9 +75,9 @@ class Calendar {
 
 	'Evening Program',
 	'Guided Activity',
-	'Guided Hike',
 	'Guided Tour',
-	'Short Program',
+	'Ranger Chat',
+	'Ranger Walk',
 	'Social Event',
 	);
 

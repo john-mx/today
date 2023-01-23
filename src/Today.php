@@ -506,7 +506,7 @@ public function build_topic_weather() {
 		$f = 'No hq in wgov';
 	}
 	if (!$fail && !$update =
-		strtotime($wgov['hq']['properties']['updateTime'])){
+		strtotime($wgov['jr']['properties']['updateTime'])){
 		$fail = true;
 		$f = 'Could not convert update time to time';
 	}
