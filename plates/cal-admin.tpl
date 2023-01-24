@@ -92,9 +92,7 @@ Check "Suspend" to stop displaying without removing.</b>
 					> Reservation Req'd</td>
 
 		</tr>
-		<tr><td colspan='4' class='left'>Location :<input type = 'text'
-				name="calendar[<?=$i?>][location]" size='80'
-				value="<?=$event['location']?>"  > </td></tr>
+
 
 		<tr  style='vertical-align:top;'>
 
@@ -124,7 +122,10 @@ Check "Suspend" to stop displaying without removing.</b>
 				</td>
 
 		</tr>
-
+		<tr><td colspan='4' class='left'>Location :<input type = 'text'
+				name="calendar[<?=$i?>][location]" size='80'
+				value="<?=$event['location']?>"  > </td></tr>
+				s
 		<tr class='left' style='border-bottom:8px solid black;'><td class='right' colspan='4'>
 		Notes:
 		<input type = 'text' size='80'
