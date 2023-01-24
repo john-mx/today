@@ -288,6 +288,7 @@ public function check_calendar(array $calendar) {
 	$z=[];
 	foreach ($calendar as $event){
 		if (empty($time = $event['time'])){continue;}
+		if (isset($event['delete'])) continue;
 
 		if (!$t = $this->parse_time($time)){
 				Utilities::alertBadInput ("Time '$time'. Time must be hr:mins am|pm");

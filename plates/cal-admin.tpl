@@ -46,11 +46,11 @@ use DigitalMx\jotr\Utilities as U;
 
 <ol>
 <li>The event's title, type, duration, and location are required fields.
-<li>Enter starting time for the event.  If you remove the time, the event will be deleted, If you want to stop displaying the event, but keep it in the system for later use, check the "Suspend" box.
+<li>Enter starting time for the event.  If you remove the time, the event will be deleted, If you want to stop displaying the event, but keep it in the system for later use, check the "Suspend" box. To delete, change start time to 0 or check the Delete box.
 <li>For one-time events, enter the Date for the event. For repeating events, leave blank to start immediately, or enter date after which events begin.
 <li>All events are deleted after their last scheduled date.
 </ol>
-<p><b>Set a time to "0" or blank to remove an event.<br>
+<p><b>Check "Delete" to remove an item.<br>
 Check "Suspend" to stop displaying without removing.</b>
 </p>
 
@@ -96,11 +96,13 @@ Check "Suspend" to stop displaying without removing.</b>
 
 		<tr  style='vertical-align:top;'>
 
-				<td id='timetd'>Starts at: <input type=text name="calendar[<?=$i?>][time]" size='8' value="<?=$event['time']?>" id='timeset[<?=$i?>]' placeholder = '2:30 pm' onChange='checkTime(this)' class='<?=$eventtimeclass?>'>
-				(0 removes)<br>
+				<td class='left' id='timetd'>Starts at: <input type=text name="calendar[<?=$i?>][time]" size='8' value="<?=$event['time']?>" id='timeset[<?=$i?>]' placeholder = '2:30 pm' onChange='checkTime(this)' class='<?=$eventtimeclass?>'>
+				<br>
 				<input type='checkbox' name='calendar[<?=$i?>][suspended]'
 					<?php if ($event['suspended']): ?> checked <?php endif; ?>
-					> Suspend (stop showing, don't delete.)
+					> Suspend (stop showing, don't delete.)<br/>
+					<input type='checkbox' name='calendar[<?=$i?>][delete]'>
+					Delete
 			</td>
 
 				<td >On or starting date: <br /><input type = 'text' size='15'
