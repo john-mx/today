@@ -56,7 +56,7 @@ $meta=array(
 	echo $Plates->render ('head',$meta);
 ?>
 <style type='text/css'>
-html { font-size:140%;
+html { font-size:130%; /*20 pt */
 }
  body {
  	font-weight:500;

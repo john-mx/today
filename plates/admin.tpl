@@ -3,10 +3,14 @@ namespace DigitalMx\jotr;
 
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx\jotr\Utilities as U;
+use DigitalMx\jotr\CacheSettings as CS;
 
 
 
 ?>
+<div>The admin page has a number of sections, but it is really one big long form.  There are Submit buttons in several places, but they are all the same: they all submit the entire form, not just the part near the button.
+</div>
+
 <div class='content'>
 <form method='post'>
 <input type='hidden' name='type' value='update'>
@@ -16,8 +20,8 @@ use DigitalMx\jotr\Utilities as U;
 
 
 
-<h4>Enter alerts <?php U::showHelp('alerts');?></h4>
-<p>Enter any alert you wish to display.  Click <button type='button' onClick = "showDiv('galerts');"> Active Alerts</button> to view active alerts from weather.gov. Copy and edit as appropriate. </p>
+<h4>Enter alert <?php U::showHelp('alerts');?></h4>
+<p>Enter the alert you wish to display.  Click <button type='button' onClick = "showDiv('galerts');"> View Active Alerts</button> to view active alerts from weather.gov. Copy and edit as appropriate. </p>
 
 <div id='galerts' class='hidden'>
 	<?php
@@ -26,7 +30,7 @@ use DigitalMx\jotr\Utilities as U;
 		$alertset = $galerts[$source];
 
 		//Utilities::echor($alertset,$source);
-		$sourcename =Defs::$sources[$source];
+		$sourcename =CS::getSourceName($source);
 	?>
 	<hr style="height:4px;background-color:green;">
 	<b><?= $sourcename ?></b><br>
@@ -50,7 +54,7 @@ use DigitalMx\jotr\Utilities as U;
 <p>You can have only one alert.<br>
 Title will be displayed in red.  To remove alert, remove the title.<br>
 Alerts must have expiration.  If today, just enter the time.  Otherwise enter month/day and time. Day without time means 12:01am. You can use the format shown on government alerts, e.g. 2023-01-14T22:00:00-08:00.</p>
-<h5>Alert A</h5>
+
 <table class='border no-col'>
 <tr class='left'><td>Headline</td>
 	<td><input type='text' value="<?=$admin['alertA']['title'] ??'' ?> " name="alertA[title]" size='45'></td></tr>
@@ -58,7 +62,7 @@ Alerts must have expiration.  If today, just enter the time.  Otherwise enter mo
 <tr class='left'><td>Expires</td><td><input type='text' name="alertA[expires]" value="<?=$admin['alertA']['expires']??''?>" >
 </td></tr>
 </table>
-
+<button class='submit' type='submit'>Submit Form</button>
 <!--
 <h5>Alert B</h5>
 <table class='border no-col'>
@@ -70,8 +74,9 @@ Alerts must have expiration.  If today, just enter the time.  Otherwise enter mo
 </table>
  -->
 <h4>Alert Alternative </h4>
-Enter message here to display if there are no alerts.  (Requires raw html code for colors and styles, so ask for help if needed.)<br />
-for color red: &lt;span style='color:red;'&gt;text you want &lt;/span&gt;<br />
+Enter message here to display if there are no alerts. HtML is allowed here, so ask for help if needed.  Carriage returns are displayed as new lines.  <br />
+Example: for color red: &lt;span style='color:red;'&gt;text you want &lt;/span&gt;
+<br />See help button for more help.<br />
 <textarea name = 'alert_alt' rows='3' cols='80'><?=$admin['alert_alt'] ??'' ?></textarea>
 
 
@@ -89,7 +94,7 @@ One announcement per line(carriage return). <br />
 <h4>Enter fire status</h4>
 <p>General Fire Level: <select name='fire_level'><?=$admin['fire_level_options']?></select>
 </p>
-
+<button class='submit' type='submit'>Submit Form</button>
 
 
 <h4>Campground status <?php U::showHelp('campsites');?></h4>
@@ -136,6 +141,7 @@ Uncertainty.  <input type='number' name='uncertainty' size='4' value="<?=$admin[
 </table>
 Click to <button type='button' onClick='clearopen()'> clear all site updates</button> (clear = no change)
 <br />
+<button class='submit' type='submit'>Submit Form</button>
 </div>
 
 
@@ -143,6 +149,7 @@ Click to <button type='button' onClick='clearopen()'> clear all site updates</bu
 Click <button type='button' onClick = "showDiv('cal');">Calendar Admin</button> to update calendar entries.
 <div id='cal' class='hidden'>
 <?php $this->insert('cal-admin',['calendar'=>$calendar]); ?>
+<button class='submit' type='submit'>Submit Form</button>
 </div>
 <hr>
 <h4>Choose Pages for TV Rotation <?php U::showHelp('rotation');?></h4>

@@ -1,7 +1,9 @@
 <?php
 namespace DigitalMx\jotr;
+
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx\jotr\Utilities as U;
+use DigitalMx\jotr\CacheManager as CM;
 
 ini_set('display_errors', 1);
 
@@ -10,15 +12,13 @@ ini_set('display_errors', 1);
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 
 	//
-
-
- 	use DigitalMx\jotr\Utilities as J;
 //
 //
 	$Plates = $container['Plates'];
 
 	$Today = $container['Today'];
 	$Cal = $container['Calendar'];
+	$CM = $container['CacheManager'];
 
 $meta = array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
@@ -38,15 +38,15 @@ $hq = ['hq'];
 $twolocs = ['jr','hq'];
 
 
-U::echor($wlocs);
+//U::echor($wlocs);
 
-echo Defs::aq_scale(200);
+//echo Defs::aq_scale(200);
 
-U::showHelp('notices');
+//U//::showHelp('notices');
 
 // what function?
 
-//$f = weather();
+$f = reccamps();
 
 // echo "<script>setInterval(dtime(),60);</script>";
 // function dtime(){
@@ -55,7 +55,11 @@ U::showHelp('notices');
 // "<script>document.write(show_time())</script>"
 // ;}
 
-
+function reccamps(){
+	global $CM;
+	$CM->updateCampsRec();
+	exit;
+}
 function refresh($force=false){
 	$U = new Utilities();
 	echo $U->over_cache_time('wgov');

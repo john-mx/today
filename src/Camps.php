@@ -39,12 +39,10 @@ function __construct($c){
 	foreach (array_keys(Defs::$campsites) as $cg){
 		$opt = Utilities::buildOptions(Defs::$cgstatus, $camps[$cg]['status'] ?? '');
 		$camps[$cg]['statusopt']  = $opt;
-		$rc_newer = isset($campsRec[$cg]) && $campsRec[$cg]['asof'] > $camps[$cg]['asof'];
+
 	//	echo "$cg: " ; echo ($rc_newer)? 'rc newer':'manual newer' ; echo  BR;
-		$camps[$cg]['asof'] = $rc_newer?
-			$campsRec[$cg]['asof'] :$camps[$cg]['asof'] ?? time();
-		$camps[$cg]['open'] = $rc_newer?
-			$campsRec[$cg]['open'] :$camps[$cg]['open']?? 100;
+		$camps[$cg]['asof'] =$camps[$cg]['asof'] ?? time();
+		$camps[$cg]['open'] = $camps[$cg]['open']?? 100;
 		$camps[$cg]['asofHM'] = date('M j g:i a',$camps[$cg]['asof']);
 	}
 //	U::echor($camps, 'camps prepared');
@@ -57,7 +55,6 @@ function __construct($c){
  	//U::echor($post, 'postCamps');
 		$campd = $post;
 		$camps = $this->CM->loadCache('camps');
-		//$campsRec =$this->CM->loadCache('campsRec');
 		$campsU = [];
 
 		foreach (array_keys(Defs::$campsites) as $cg){
@@ -86,10 +83,10 @@ function __construct($c){
 
 public function prepareDisplayCamps(){
 		$camps = $this->CM->loadCache('camps');
-	$campsRec = $this->CM->loadCache('campsRec') ;
+
 
 // U::echor($camps,'camps');
-// U::echor($campsRec, 'campsRec',);
+
 
 
 	foreach (array_keys($camps) as $cg){

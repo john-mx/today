@@ -6,6 +6,7 @@ use DigitalMx\jotr\Log;
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx\jotr\Utilities as U;
 use DigitalMx\jotr\InitializeCache;
+use DigitalMx\jotr\CacheSettings as CS;
 
 
 
@@ -19,7 +20,7 @@ use DigitalMx\jotr\InitializeCache;
 	of the raw source.  Caches are all json arrays.
 
 	Caches need to be refreshed periodically.  The refresh
-	time for each cache is stored in Defs::$cache_times,
+	time for each cache is stored in CacheSetting::$cacheTimes,
 		Refresh time is 0 for caches that are manually updated,
 	like admin.  So refresh =
 	$limit && (time() - $limit > 0)
@@ -42,37 +43,12 @@ use DigitalMx\jotr\InitializeCache;
 
 class CacheManager {
 
-	private static $sources = [
-	'airq' => 'air-quality.p.rapidapi.com/current',
-	'airowm' => 'api.openweathermap.org',
-	'airnow' => 'airnowapi.org/observation',
-	'wapi' => 'api.weatherapi.com forecast',
-	'wgov' => 'weather.gov',
-	'wgovalerts' => 'weather.gov alerts',
-
-	];
-
-		private static $cacheFiles  = array (
-				'admin' => REPO_PATH . "/var/admin.json",
-				'airnow' => REPO_PATH . "/var/airnow.json",
-				'airowm' => REPO_PATH . "/var/airowm.json",
-				'airq' => REPO_PATH . "/var/airq.json",
-				//'alerts' => REPO_PATH . "/var/alerts.json",
-				'calendar' => REPO_PATH . "/var/calendar.json",
-				'camps' => REPO_PATH . "/var/camps.json",
-				'campsRec' => REPO_PATH . "/var/campsRec.json",
-				'current' => REPO_PATH . "/var/current.json",
-				'galerts' => REPO_PATH . "/var/galerts.json",
-				'properties' => REPO_PATH . "/var/properties.json",
-				'wapi' => REPO_PATH . "/var/wapi.json",
-				'wgov' => REPO_PATH . "/var/wgov.json",
-
-			);
 
 
-
+	private $reccamps = ['jr','br','ic','ry','cw','sp'];
 	private $wlocs = ['hq','jr','br','cw'];
 	private $airlocs = ['hq','jr','br','cw'];
+	private $currentlocs = ['lhrs'];
 
 public function __construct() {
 
@@ -83,7 +59,7 @@ public function writeCache(string $section,array $z) {
 	if (empty($z)){
 	Log::error("Writing empty array to $section") ;
 	}
-	if($this->file_put_contents_locking (self::$cacheFiles[$section],json_encode($z))){
+	if($this->file_put_contents_locking (CS::getCacheFile($section),json_encode($z))){
 		//Log::info("Writing cache $section");
 	} else {
 		Log::error("Cannot write cache $section due to lock");
@@ -92,7 +68,7 @@ public function writeCache(string $section,array $z) {
 }
 
 private function getCacheMtime($section){
-	$mtime = filemtime (self::$cacheFiles[$section]);
+	$mtime = filemtime (CS::getCacheFile($section));
 	return $mtime;
 }
 
@@ -108,7 +84,7 @@ public function loadCache ($section) {
 		return $this->$section;
 	}
 	// check validity
-		if  (!file_exists (self::$cacheFiles[$section]) ) {
+		if  (!file_exists (CS::getCacheFile($section)) ) {
 			Log::info("rebuilding non-existent cache $section.");
 			$this->refreshCache($section,true);
 		}
@@ -116,7 +92,7 @@ public function loadCache ($section) {
 
 
 			$ot = $this->over_cache_time($section);
-			$limit = Defs::getMaxTime($section);
+			$limit = CacheSettings::getMaxTime($section);
 			$otm = round($ot/60);
 			if ($ot>2*$limit){
 				Log::notice("Loading $section is stale. $otm minutes");
@@ -125,7 +101,7 @@ public function loadCache ($section) {
 			}
 
 
-		if (!$y = json_decode ($this->file_get_contents_locking(self::$cacheFiles[$section]), true)) {
+		if (!$y = json_decode ($this->file_get_contents_locking(CS::getCacheFile($section)), true)) {
 			Log::error("Failed to json decode cache $section.  ");
 
 		}
@@ -147,10 +123,10 @@ private function over_cache_time($section) {
 		XXX Returns true if time is within 5 minutes of limit
 	*/
 
-	$limit = Defs::getMaxTime($section) ; #in seconds
+	$limit = CacheSettings::getMaxTime($section) ; #in seconds
 	if (!$limit){ return 0;}
-	if (!file_exists(self::$cacheFiles[$section])){return 2*$limit;}
-	$filetime = filemtime (self::$cacheFiles[$section]);
+	if (!file_exists(CS::getCacheFile($section))){return 2*$limit;}
+	$filetime = filemtime (CS::getCacheFile($section));
 	$age = time() - $filetime;
 	$margin = 0;
 	if ( $age > ($limit - $margin) ) return $age; #in seconds
@@ -230,7 +206,7 @@ https://www.airnowapi.org/aq/observation/latLong/current/?format=application/jso
 		[$lat,$lon] = $this -> split_coord($loc);
 		$curl_header = [];
 
-		$url = "https://www.airnowapi.org/aq/observation/latLong/current/?format=application/json&latitude=$lat&longitude=$lon&distance=25&API_KEY=" . Defs::getKey('airnow');
+		$url = "https://www.airnowapi.org/aq/observation/latLong/current/?format=application/json&latitude=$lat&longitude=$lon&distance=25&API_KEY=" . CS::getKey('airnow');
 				$expected = 'AQI'; #field to test for good result
 		$loginfo = "$src:$loc";
 		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
@@ -319,29 +295,7 @@ public function rebuild_cache_galerts () {
 	return $y;
 }
 
-public function rebuildCampsRec() {
-	$cache = 'campsRec';
-	if (! file_exists(self::$cacheFiles[$cache])) $this->initializeCache($cache);
-		// for now just:
-		touch (self::$cacheFiles['campsRec']);
 
-
-		// if (! 1 #||  load rec.gov data
-// 		){
-// 			Log::info("Cannot retrieve opens from rec.gov");
-// 			// do leave for another time.
-// 			return false;
-// 		}
-		// update opens from fretried data
-		//$this->writeCache('cgres',$current_res);
-		Log::info("Touched cgres");
-		return true;
-
-}
-
-private function loadRecData(){
-	//tbd
-}
 
 
 
@@ -436,7 +390,7 @@ coord: 34.0714,-116.3906,
 		//[$lat,$lon] = $this -> split_coord($loc);
 		$curl_header = [];
 
-		$url = "https://api.weather.gov/gridpoints/" . Defs::getGridpoints($loc) . '/forecast' ; #./forecast
+		$url = "https://api.weather.gov/gridpoints/" . CS::getGridpoints($loc) . '/forecast' ; #./forecast
 		#$url = "https://api.weather.gov/points/$lat,$lon";
 		$expected = 'properties';
 
@@ -462,7 +416,7 @@ coord: 34.0714,-116.3906,
 
 public function mergeCache($cache,$merge){
 // merges data into cache, unless data is empty
-		if (file_exists (self::$cacheFiles[$cache])){
+		if (file_exists (CS::$cacheFiles[$cache])){
 			$x = $this->loadCache($cache,false);
 		} else {
 			$x=[];
@@ -483,7 +437,7 @@ public function rebuild_cache_current ($locs=[]) {
 	curl -X GET "https://api.weather.gov/stations/LTHC1/observations/latest" -H "accept: application/geo+json"
 	*/
 	$src = 'current';
-	if (!$locs) $locs = Defs::$clocs;
+	if (!$locs) $locs = $this->currentlocs;
 
 	$curl_header = [];
 	foreach ($locs as $loc) {
@@ -517,7 +471,7 @@ private function rebuild_cache_airowm() {
 		[$lat,$lon] = $this -> split_coord($loc);
 		$curl_header = [];
 
-		$url = "http://api.openweathermap.org/data/2.5/air_pollution?lat={$lat}&lon={$lon}&appid=" . Defs::getKey('openweathermap');
+		$url = "http://api.openweathermap.org/data/2.5/air_pollution?lat={$lat}&lon={$lon}&appid=" . CS::getKey('openweathermap');
 
 		$expected = '';
 
@@ -535,7 +489,7 @@ private function rebuild_cache_airowm() {
 }
 
 private function rebuild_cache_calendar () {
-	if (! file_exists(self::$cacheFiles['calendar'])) $this->initializeCache['calendar'];
+	if (! file_exists(CS::$cacheFiles['calendar'])) $this->initializeCache['calendar'];
 	$x = $this->loadCache('calendar');
 	$x = Calendar::filter_calendar($x,0);
 	$this->writeCache('calendar',$x);
@@ -567,6 +521,49 @@ private function rebuild_cache_airq() {
 
 }
 
+public function updateCampsRec (){
+	$x=[];
+	$src = 'ridb';
+	$locs = $this->reccamps;
+	$apikey = CS::getKey('ridb');
+	$d = new \DateTime('today',new \DateTimeZone('UTC'));
+	$dateiso = $d->format('Y-m-d\TH:i:s\Z');;
+	$curl_header = [
+			"apikey:$apikey",
+			"accept: application/json",
+				];
+		//	U::echor($curl_header,'curl headers', NOSTOP);
+
+	foreach ($locs as $loc) {
+		$facilityID = CS::getFacility($loc);
+		//$expected = 'aqi'; #field to test for good result
+		$url = "https://" . CS::getURL($src) . '/camping/' . $facilityID;
+		$expected = '';
+		$loginfo = "$src:$loc";
+	//	echo "URL: $url" . BR;
+		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
+			Log::notice("Failed $loginfo.  Update aborted."); return [];
+		} //if one loc fails, fail the whole thing
+		$cgavail = $this->parseRecCamps($aresp);
+		$cgavaildate = $cgavail[$dateiso];
+		$availability[$loc] = $cgavaildate;
+
+
+	} # next loc
+	U::echor ($availability,'availability',NOSTOP);
+	$camps = $this->loadCache('camps');
+	foreach ($availability as $cg=>$open){
+		$camps[$cg]['open'] = $open;
+		$camps[$cg]['asof'] = time();
+	}
+	$this->writeCache('camps',$camps);
+
+
+	Log::info("Saved updated cache camps");
+
+}
+
+
 public function rebuild_cache_wapi(array $locs=[] ) {
 	$x=[];
 	$src = 'wapi';
@@ -576,7 +573,7 @@ public function rebuild_cache_wapi(array $locs=[] ) {
 		[$lat,$lon] = $this -> split_coord($loc);
 		$curl_header = [];
 
-		$url = 'http://api.weatherapi.com/v1/forecast.json?key=' . Defs::getKey('weatherapi') . '&q='. Defs::getCoords($loc) . '&days=3&aqi=yes&alerts=yes';
+		$url = 'http://api.weatherapi.com/v1/forecast.json?key=' . CS::getKey('weatherapi') . '&q='. CS::getCoords($loc) . '&days=3&aqi=yes&alerts=yes';
 	//echo "url: $url". BRNL;
 		$expected = '';
 		$loginfo = "$src:$loc";
@@ -626,8 +623,8 @@ public function refreshAllCaches($force=false) {
 /* refreshes all the external caches, if they are due
 
 */
-	foreach (array_keys(self::$cacheFiles) as $cache){
-		$this->refreshCache($cache);
+	foreach (CS::$cacheTimes as $cache=>$rtime){
+		if ($rtime) $this->refreshCache($cache);
 	}
 
 	#	$this -> rebuild_properties('jr');
@@ -643,9 +640,6 @@ private function initializeCache($cache) {
 			$this->writeCache($cache,InitializeCache::$$cache);
 			break;
 		case 'camps':
-			$this->writeCache($cache,InitializeCache::$$cache);
-			break;
-		case 'campsRec':
 			$this->writeCache($cache,InitializeCache::$$cache);
 			break;
 
@@ -671,7 +665,7 @@ public function refreshCache($cache,$force=0) {
 
 	*/
 	$ot = false;
-	if (!file_exists(self::$cacheFiles[$cache])) {
+	if (!file_exists(CS::getCacheFile($cache))) {
 		$force=true; $ot=1;
 	} else {
 		$ot = $this->over_cache_time($cache);
@@ -680,7 +674,7 @@ public function refreshCache($cache,$force=0) {
 	Log::info("Starting refresh on $cache");
 	switch ($cache) {
 		case 'admin':
-			if (!file_exists(self::$cacheFiles[$cache])) $this->initializeCache($cache);
+			if (!file_exists(CS::$cacheFiles[$cache])) $this->initializeCache($cache);
 			break;
 
 		case 'airnow':
@@ -713,12 +707,6 @@ public function refreshCache($cache,$force=0) {
 			echo "$cache Refreshed." . BR;
 			break;
 
-		case 'campsRec':
-
-			$this->rebuildCampsRec(); #rebuild from rec.gov
-			Log::info ("Refreshed cache $cache. Overtime = $ot.");
-			echo "$cache Refreshed." . BR;
-			break;
 
 		case 'current':
 			$this->rebuild_cache_current();
@@ -833,7 +821,7 @@ function get_external ($loginfo, $url,string $expected='',array $header=[]) {
 		$tries = 0;
 
 		while (!$success) {
-			//Utilities::echor($aresp,"Here's what I got for $loginfo:");
+
 			Log::info("trying external. Tries:$tries. URL: $url");
 			if ($tries > 2){
 					//echo "Can't get valid data from ext source  $loginfo";
@@ -844,7 +832,15 @@ function get_external ($loginfo, $url,string $expected='',array $header=[]) {
 				$success = 0;
 				$fail = "No response on $loginfo";
 			} else { $success = 1;}
-
+//U::echor ($response,'curl response' );
+			if ($success ){
+				$info = curl_getinfo($curl);
+				$httpResult =  $info["http_code"];
+			//	echo "httpResult: $httpResult" . BR;
+				if ($httpResult !== '200'){
+					$fail = 'Bad return ' . $httpResult;
+				} else {$success = 1;}
+			}
 
 			if ($success && !$aresp = json_decode($response, true) ){
 				$success = 0;
@@ -871,13 +867,33 @@ function get_external ($loginfo, $url,string $expected='',array $header=[]) {
 	}
 
 private function split_coord ($loc) {
-	if (!$coord = Defs::$coordinates[$loc]){
+	if (!$coord = CS::$coordinates[$loc]){
 		die ("Attempt to get coordinates of undefined location $loc");
 	}
 	[$lat,$long] = explode(',',$coord);
 	return [$lat,$long];
 }
 
+private function parseRecCamps ($rec){
+// parses rec.gov campsite data to determine
+// vailability by campground and date
+// $rec = [campsites=>siteid=>'availabilities'=>'2023-01-14T00:00:00Z' = 'Rewsereved|Not Avaialbe|Available
 
+// $cgavail = cg => date => ground = avail]
+	$cgavail=[];
+
+	foreach ($rec['campsites']  as $siteid=>$sitedata ){
+		$sitename = $sitedata['site'];
+		foreach ($sitedata['availabilities'] as $resdate=>$avail){
+			if ($avail == 'Available'){
+				$cgavail[$resdate] =  (isset($cgavail[$resdate]))  ? ++$cgavail[$resdate] : 1;
+			}
+
+		}
+	}
+
+	//U::echor($cgavail, 'cgavail');
+	return $cgavail;
+}
 
 }

@@ -18,10 +18,7 @@ class Definitions {
 		'passwords' => 'passwords.ini',
 	];
 
-// stations for current weather
-public static $clocs = array (
-	'lhrs',
-);
+
 public static $scale_color = [
 
 		'Low' => 'green',
@@ -65,64 +62,6 @@ public static $firewarn = [
 
 
 	];
-
-/* apis
-JUMBO ROCKWS
-	https://api.weather.gov/points/33.9917,-116.1402
- "forecastZone": "https://api.weather.gov/zones/forecast/CAZ560",
-"county": "https://api.weather.gov/zones/county/CAC065",
-"fireWeatherZone": "https://api.weather.gov/zones/fire/CAZ230",
-
-Cottonwood
-https://api.weather.gov/points/33.7485,-115.8211
-Indian cove
-
-Black rock
-https://api.weather.gov/points/34.0733,-116.3907
-29 palms
-
-Keys View
-https://api.weather.gov/points/33.9272,-116.1875
-
-hq
-https://api.weather.gov/points/
-*/
-
-// weather.gov grid points
-
-
-public static $gridpoints = [
-	'hq' => 'VEF/72,12',
-	'jr' => 'PSR/13,102',
-	'cw'=>	'PSR/23,89',
-	'br' => 'PSR/4,107',
-	'kv' => 'PSR/11,99',
-
-
-
-	];
-
-public static $coordinates = [
-// no spaces!
-	'jr' => '33.9917,-116.1402',
-	'br' => '34.0733,-116.3907',
-	'kv' => '33.9272,-116.1875',
-	'hq' => '34.1348,-116.0815',
-	'cw' => '33.7485,-115.8211',
-	'pdx' => '45.5152,-122.6784',
-	'shasta' => '41.3099,-122.3106',
-	'denver' => '39.7392,-104.9903',
-	'lhrs' => '34.01779,-116.18857',
-];
-
-	public static $api_keys = array (
-		'airnow' => '7FB4BEFF-A568-4FE4-8E67-F1EE36B5C04B',
-		 'weatherapi' => '098273e9f48149029c4141515220107',
-        'openweathermap' => '8f15b8d7833c050a41538d5b0ee4204a',
-        'iqair' => '8e4fb9bb-1502-4711-b3d7-f98447082dcf',
-
-      );
-
 
 
 
@@ -251,41 +190,9 @@ public static $campfees = [
 		'Closed',
 	];
 
-	public static $sources = [
-	'airq' => 'air-quality.p.rapidapi.com/current',
-	'airowm' => 'api.openweathermap.org',
-	'airnow' => 'airnowapi.org/observation',
-	'wapi' => 'api.weatherapi.com forecast',
-	'wgov' => 'weather.gov',
-	'wgovalerts' => 'weather.gov alerts',
-
-	];
 
 
 
-/* time before refresh in minutes.  0 means
-// cache is static except for update by
-// the admin screen.  Caches checked every 60
-mins,
-*/
-	public static $cache_times  = array (
-
-				'calendar' => 60*6,
-				'admin' => 0,
-				'properties' => 0, // manual only
-				'wgov' => 110,
-				'wapi' => 110,
-				'airq' => 0,
-				'airnow' => 235,
-				'airowm' => 0,
-				'alerts' => 0,
-				'galerts' => 110,
-				'campsRec' =>0,
-				'camps' => 0,
-				'current' => 55,
-				'cgres' => 25,
-
-			);
 
 	// private static $moons = array (
 // 			'New Moon' => '0.gif',
@@ -425,31 +332,13 @@ mins,
 	public static function getFees() {
 		return self::$fees;
 	}
-	public static function getGridpoints($loc){
-		return self::$gridpoints[$loc] ?? '';
-	}
-	public static function getCoords($loc) {
-		return self::$coordinates[$loc] ?? '';
-	}
-
-	public static function getKey($site){
-		return self::$api_keys[$site] ?? '';
-	}
 
 
-	public static function getMaxtime($section) {
-
-		return (60 * self::$cache_times[$section]);
-	}
 
 	public static function getMoonPic($phase) {
 		return '/images/moon-nasa/' . self::$moons[$phase] ?? 'error.png';
 	}
-	public static function getSourceName($source) {
 
-		$result = self::$sources[$source] ?? "$source name not found";
-		return $result;
-	}
 	public static function getLocName($loc) {
 
 		$result = self::$sitenames[$loc] ?? '';

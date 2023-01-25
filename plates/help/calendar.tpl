@@ -18,7 +18,7 @@ Day after which events won'be be scheduled.</p>
 </p><b>Notes</b><br>
 Any additional notes. This will get a whole line on the calendar below the event.</p>
 
-<p><b>Suspended</b><br>
+<p><b>Suspend</b><br>
 Check this box to stop displaying an event without removing it from the list of events.  If you only want to suspend one instance of a repeating event, uncheck the day you want to remove; don't forget to put it back in later.  </p>
 <p><b>Reservation Required</b><br>
 Checking this box puts a red notice on the event that reservations are needed at recreation.gov</p>
@@ -26,6 +26,7 @@ Checking this box puts a red notice on the event that reservations are needed at
 <p><b>Removing Events</b><br>
 Non-repeating events are removed after the date and time of the event.<br>
 Repeating events are removed after the "Repeat Ends" date.<br>
-Any event is removed if you set the Start Time to blank or zero.
+Any event is removed if you set the Start Time to 0 or check the Delete box.
+Removed events cannot be recovered.
 </p>
 

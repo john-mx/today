@@ -89,32 +89,6 @@ public static $camps = [
 		],
 	];
 
-public static $campsRec = [
-		"ic" => [
-			"open" => 0,
-			"asof" => 1673899787,
-		],
-		"jr" => [
-			"open" => 0,
-			"asof" => 1673899787,
-		],
-		"sp" => [
-			"open" => 0,
-			"asof" => 1673899787,
-		],
-		"ry" =>  [
-			"open" => 0,
-			"asof" => 1673899787,
-		],
-		"br" =>  [
-			"open" => 0,
-			"asof" => 1673899787,
-		],
-		"cw" =>  [
-			"open" => 0,
-			"asof" => 1673899787,
-		],
-	];
 
 
 }
