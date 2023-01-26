@@ -7,24 +7,10 @@ use DigitalMx\jotr\Utilities as U;
 if(empty($camps)): echo "No Campground Data"; exit;
 endif;
 
-$cgs = array_keys(Defs::$campsites);
-	sort ($cgs);
-$total_open = 0;
-foreach ($cgs as $cg):
-	if ((time() - $camps['cgs'][$cg]['asof'])  < 3*60*60): $stale[$cg] = '#3F3';
-	elseif ((time() - $camps['cgs'][$cg]['asof'])  < 12*60*60): $stale[$cg] = '#FF3';
-	else: $stale[$cg] = '#F33';
-	endif;
-	if ($camps['cgs'][$cg]['status'] == 'Closed'):
-					$stale[$cg] = '#FFF';
-					$camps['cgs'][$cg]['open'] = 0;
-	endif;
-	if ($camps['cgs'][$cg]['open'] > 0):++$total_open;endif;
-	endforeach;
 ?>
 
 <h3>Campgrounds
-<?php if ($total_open == 0) : ?>
+<?php if ($camps['total_open'] == 0) : ?>
 	<span class='red'><b>ALL CAMPGROUNDS ARE FULL!</b></span>
 <?php endif; ?>
 </h3>
@@ -56,7 +42,7 @@ $no_entries = true; ?>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
 				<td> $&nbsp;<?= Defs::$campfees[$cg] ?> </td>
 
-				<td style='background-color:<?=$stale[$cg]?>' ><?= $camps['cgs'][$cg]['open'] ?> </td>
+				<td style='background-color:<?=$camps['cgs'][$cg]['stale']?>' ><?= $camps['cgs'][$cg]['open'] ?> </td>
 
 				</tr>
 		<?php endif ?>
@@ -85,7 +71,7 @@ $no_entries = true; ?>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
 				<td> $&nbsp;<?= Defs::$campfees[$cg] ?> </td>
 
-				<td style='background-color:<?=$stale[$cg]?>' ><?= $camps['cgs'][$cg]['open'] ?> </td>
+				<td style='background-color:<?=$camps['cgs'][$cg]['stale']?>' ><?= $camps['cgs'][$cg]['open'] ?> </td>
 
 				</tr>
 			<?php endif ?>

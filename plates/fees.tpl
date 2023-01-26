@@ -24,7 +24,8 @@ Purchase Your Pass Before You Get To The Entrance</b>
 
 <tr><td style='font-weight:bold;text-align:left;'>Senior Lifetime</td><td>US citizen Age 62+ *</td><td>Lifetime</td><td>$&nbsp;80</td><td></td><td>✔︎</td><td></td></tr>
 
-<tr><td  style='font-weight:bold;text-align:left;'>Military, Gold Star Families, Disabled, and 4th-graders</td><td>Qualified Visitors *<td>varies</td><td>free</td><td></td><td>✔︎</td><td></td></tr>
+<tr><td  style='font-weight:bold;text-align:left;'>Military, Gold Star Families, Disabled</td><td>Qualified Visitors *<td>varies</td><td>free</td><td></td><td>✔︎</td><td></td></tr>
+<tr><td  style='font-weight:bold;text-align:left;'>Fourth Grade Students</td><td>Qualified Visitors *<td>School Year</td><td>free</td><td></td><td>✔︎</td><td></td></tr>
 </table>
 <div class='inleft2'><b>On-line passes available at recreation.gov. Entrance stations take credit card only — no cash.</b><br />
 Vehicle passes include vehicle and up to 6 passengers<br/>

@@ -7,26 +7,11 @@ use DigitalMx\jotr\Utilities as U;
 // set up stale flags
 $cgs = array_keys(Defs::$campsites);
 	sort ($cgs);
-$total_open = 0;
-foreach ($cgs as $cg):
-	if ((time() - $camps['cgs'][$cg]['asof'])  < 3*60*60): $stale[$cg] = '#3F3';
-	elseif ((time() - $camps['cgs'][$cg]['asof'])  < 12*60*60): $stale[$cg] = '#FF3';
-	else: $stale[$cg] = '#F33';
-	endif;
-	if ($camps['cgs'][$cg]['status'] == 'Closed'):
-					$stale[$cg] = '#FFF';
-					$camps['cgs'][$cg]['open'] = 0;
-	endif;
-	if ($camps['cgs'][$cg]['open'] > 0):++$total_open;endif;
-	endforeach;
-//U::echor($stale,'stale',NOSTOP);
+
+	if(empty($camps)): echo "No Campground Data"; else:
 ?>
-
-
-
-<?php if(empty($camps)): echo "No Campground Data"; else: ?>
 <h3>Campgrounds
-<?php if ($total_open ==0 ):?>
+<?php if ($camps['total_open'] ==0 ):?>
 	<span class='red'><b>ALL CAMPGROUNDS ARE FULL!</b></span>
 <?php endif; ?>
 </h3>
@@ -43,8 +28,7 @@ If background is green, data is less than 3 hours old.  If yellow, data is less 
 	?>
 
 <?php if ($status == 'Reserved'): ?>
-	<tr class='bg-orange left'><td colspan='5' ><b>Reserved Campgrounds</b> Make reservations at rec.gov or call 1-877-444-6777. <br />
-	 Available sites </td></tr>
+	<tr class='bg-orange left'><td colspan='5' ><b>Reserved Campgrounds</b> Make reservations at rec.gov or call 1-877-444-6777. </td></tr>
 
 <?php elseif ($status == 'First'): ?>
 	<tr class='bg-orange left'><td colspan='5' ><b>First Come, First Served Campgrounds</b> Find an empty site and claim it. Pay ranger or at entrance station. </td></tr>
@@ -64,7 +48,7 @@ If background is green, data is less than 3 hours old.  If yellow, data is less 
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
 				<td> $&nbsp;<?= Defs::$campfees[$cg] ?> </td>
-				<td style='background-color:<?=$stale[$cg]?>'><?= $camps['cgs'][$cg] ['open']?> </td>
+				<td style='background-color:<?=$camps['cgs'][$cg]['stale']?>'><?= $camps['cgs'][$cg] ['open']?> </td>
 				<td> <?= $camps['cgs'][$cg]['notes'] ?>  </td>
 				</tr>
 			<?php  endif; ?>

@@ -88,18 +88,34 @@ public function prepareDisplayCamps(){
 // U::echor($camps,'camps');
 
 
-
+	$total_open=0;
 	foreach (array_keys($camps) as $cg){
-	$camps['cgs'][$cg]['status'] = $camps[$cg]['status'];
+		$camps['cgs'][$cg]['status'] = $camps[$cg]['status'];
 		$camps['cgs'][$cg]['asof'] = $camps[$cg]['asof'] ?? time();
 		$camps['cgs'][$cg]['open'] = $camps[$cg]['open']?? 0;
 		$camps['cgs'][$cg]['notes'] = $camps[$cg]['notes'];
 		$camps['cgs'][$cg]['asofHM'] = date('M j g:i a',$camps[$cg]['asof']);
 		$camps['updated'] = file_get_contents(REPO_PATH . '/data/rec.gov_update');
-	}
+
+
+		if ((time() - $camps[$cg]['asof'])  < 3*60*60): $stale = '#3F3';
+		elseif ((time() - $camps[$cg]['asof'])  < 12*60*60): $stale = '#FF3';
+		else: $stale = '#F33';
+		endif;
+		$camps['cgs'][$cg]['stale'] = $stale;
+
+		if ($camps[$cg]['status'] == 'Closed') {
+				$camps['cgs'][$cg]['stale'] = '#FFF';
+				$camps['cgs'][$cg]['open'] = 0;
+		}
+
+		if ($camps['cgs'][$cg]['open'] > 0):++$total_open;endif;
+	} #end for each
+	$camps['total_open'] = $total_open;
+
 //	U::echor($camps, 'camps prepared');
 	return $camps;
 
-
-	}
 }
+
+} #end class
