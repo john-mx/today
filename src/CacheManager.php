@@ -560,7 +560,7 @@ public function updateCampsRec (){
 		$camps[$cg]['asof'] = time();
 	}
 	$this->writeCache('camps',$camps);
-	file_put_contents(REPO_PATH . '/data/rec.gov_update',date ('M d H:i'));
+	file_put_contents(REPO_PATH . '/var/rec.gov_update',date ('M d H:i'));
 
 
 	Log::info("Camps updated from rec.gov");

@@ -95,7 +95,7 @@ public function prepareDisplayCamps(){
 		$camps['cgs'][$cg]['open'] = $camps[$cg]['open']?? 0;
 		$camps['cgs'][$cg]['notes'] = $camps[$cg]['notes'];
 		$camps['cgs'][$cg]['asofHM'] = date('M j g:i a',$camps[$cg]['asof']);
-		$camps['updated'] = file_get_contents(REPO_PATH . '/data/rec.gov_update');
+		$camps['updated'] = file_get_contents(REPO_PATH . '/var/rec.gov_update');
 
 
 		if ((time() - $camps[$cg]['asof'])  < 3*60*60): $stale = '#3F3';
