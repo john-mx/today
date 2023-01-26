@@ -92,9 +92,10 @@ public function loadCache ($section) {
 
 
 			$ot = $this->over_cache_time($section);
-			$limit = CacheSettings::getMaxTime($section);
-			$otm = round($ot/60);
-			if ($ot>2*$limit){
+			$limit = abs(CacheSettings::getMaxTime($section));
+
+			if ( $ot > 2*$limit){
+				$otm = $ot/60;
 				Log::notice("Loading $section is stale. $otm minutes");
 				//echo ("$section limit $limit ot $ot").BR;
 				//$this -> refreshCache($section);
@@ -122,14 +123,16 @@ private function over_cache_time($section) {
 		diff if mtime is over the limit by diff
 		XXX Returns true if time is within 5 minutes of limit
 	*/
-
-	$limit = CacheSettings::getMaxTime($section) ; #in seconds
+	$tlimit = 0;
+	$limit = abs(CacheSettings::getMaxTime($section) ); #in seconds
+	// neg means run refresh anyway.  Will handle in refresh section
 	if (!$limit){ return 0;}
-	if (!file_exists(CS::getCacheFile($section))){return 2*$limit;}
+	if (!file_exists(CS::getCacheFile($section))){return 10000;}
+
 	$filetime = filemtime (CS::getCacheFile($section));
 	$age = time() - $filetime;
-	$margin = 0;
-	if ( $age > ($limit - $margin) ) return $age; #in seconds
+
+	if ( $age > $limit  ) return $age; #in seconds
 
 //	echo "$section: limit $limit; diff $diff;" . BR;
 	return 0;
@@ -550,16 +553,17 @@ public function updateCampsRec (){
 
 
 	} # next loc
-	U::echor ($availability,'availability',NOSTOP);
+	//U::echor ($availability,'availability',NOSTOP);
 	$camps = $this->loadCache('camps');
 	foreach ($availability as $cg=>$open){
 		$camps[$cg]['open'] = $open;
 		$camps[$cg]['asof'] = time();
 	}
 	$this->writeCache('camps',$camps);
+	file_put_contents(REPO_PATH . '/data/rec.gov_update',date ('M d H:i'));
 
 
-	Log::info("Saved updated cache camps");
+	Log::info("Camps updated from rec.gov");
 
 }
 
@@ -624,7 +628,7 @@ public function refreshAllCaches($force=false) {
 
 */
 	foreach (CS::$cacheTimes as $cache=>$rtime){
-		if ($rtime) $this->refreshCache($cache);
+		if ($rtime !== 0) $this->refreshCache($cache);
 	}
 
 	#	$this -> rebuild_properties('jr');
@@ -667,10 +671,17 @@ public function refreshCache($cache,$force=0) {
 	$ot = false;
 	if (!file_exists(CS::getCacheFile($cache))) {
 		$force=true; $ot=1;
-	} else {
-		$ot = $this->over_cache_time($cache);
 	}
-	if (!$ot &&  ! $force ) return true;
+	elseif (CS::getMaxTime($cache) < 0) {
+		$force = true;
+	}
+
+		$ot = $this->over_cache_time($cache);
+
+
+	if ($ot == 0 &&  ! $force ) return true;
+	// will refresh if cache is over limt (by ot)
+	// or if cache is always refreshed (ot = -n)
 	Log::info("Starting refresh on $cache");
 	switch ($cache) {
 		case 'admin':
@@ -702,7 +713,7 @@ public function refreshCache($cache,$force=0) {
 			break;
 
 	case 'camps':
-			$this->initializeCache('camps'); #rebuild from radmin
+			$this->updateCampsRec(); #rebuild from recgov
 			Log::info ("Refreshed cache $cache. Overtime = $ot.");
 			echo "$cache Refreshed." . BR;
 			break;

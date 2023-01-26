@@ -88,6 +88,7 @@ public static $coordinates = [
 
       );
 
+// recreation.gov facility codes
 	public static $facilityCodes = array (
 		'jr' => '272300',
 		'hv' => '10005775',
@@ -100,6 +101,7 @@ public static $coordinates = [
 		'bre' => '234723',
 		'be' => '258941',
 		'cw' => '272299',
+		'krtour' => '300004', #keys ranch tour
 
 	);
 
@@ -119,7 +121,10 @@ public static $coordinates = [
 /* time before refresh in minutes.  0 means
 // cache is static except for update by
 // the admin screen.  Caches checked every 60
-mins,
+mins,  negative number means always refresh, regardless
+of time.  (Used for updating data from rec.gov) The value
+of the negative number is still tested against age of the cache
+just for reporting purposes.
 */
 	public static $cacheTimes  = array (
 
@@ -134,7 +139,7 @@ mins,
 				'alerts' => 0,
 				'galerts' => 110,
 
-				'camps' => 0,
+				'camps' => -30,
 				'current' => 55,
 
 

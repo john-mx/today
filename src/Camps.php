@@ -90,13 +90,12 @@ public function prepareDisplayCamps(){
 
 
 	foreach (array_keys($camps) as $cg){
-		$opt = Utilities::buildOptions(Defs::$cgstatus, $camps[$cg]['status'] ?? '');
-		$camps[$cg]['statusopt']  = $opt;
-
-	//	echo "$cg: " ; echo ($rc_newer)? 'rc newer':'manual newer' ; echo  BR;
-		$camps[$cg]['asof'] = $camps[$cg]['asof'] ?? time();
-		$camps[$cg]['open'] = $camps[$cg]['open']?? 100;
-		$camps[$cg]['asofHM'] = date('M j g:i a',$camps[$cg]['asof']);
+	$camps['cgs'][$cg]['status'] = $camps[$cg]['status'];
+		$camps['cgs'][$cg]['asof'] = $camps[$cg]['asof'] ?? time();
+		$camps['cgs'][$cg]['open'] = $camps[$cg]['open']?? 0;
+		$camps['cgs'][$cg]['notes'] = $camps[$cg]['notes'];
+		$camps['cgs'][$cg]['asofHM'] = date('M j g:i a',$camps[$cg]['asof']);
+		$camps['updated'] = file_get_contents(REPO_PATH . '/data/rec.gov_update');
 	}
 //	U::echor($camps, 'camps prepared');
 	return $camps;

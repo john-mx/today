@@ -11,15 +11,15 @@ $cgs = array_keys(Defs::$campsites);
 	sort ($cgs);
 $total_open = 0;
 foreach ($cgs as $cg):
-	if ((time() - $camps[$cg]['asof'])  < 3*60*60): $stale[$cg] = '#3F3';
-	elseif ((time() - $camps[$cg]['asof'])  < 12*60*60): $stale[$cg] = '#FF3';
+	if ((time() - $camps['cgs'][$cg]['asof'])  < 3*60*60): $stale[$cg] = '#3F3';
+	elseif ((time() - $camps['cgs'][$cg]['asof'])  < 12*60*60): $stale[$cg] = '#FF3';
 	else: $stale[$cg] = '#F33';
 	endif;
-	if ($camps[$cg]['status'] == 'Closed'):
+	if ($camps['cgs'][$cg]['status'] == 'Closed'):
 					$stale[$cg] = '#FFF';
-					$camps[$cg]['open'] = 0;
+					$camps['cgs'][$cg]['open'] = 0;
 	endif;
-	if ($camps[$cg]['open'] > 0):++$total_open;endif;
+	if ($camps['cgs'][$cg]['open'] > 0):++$total_open;endif;
 	endforeach;
 ?>
 
@@ -33,7 +33,7 @@ foreach ($cgs as $cg):
 	$cgs = array_keys(Defs::$campsites);
 	sort ($cgs);
 ?>
-<div>Open Sites updated frequently. Green = reported in last 3 hours; yellow = last 12 hours; red = older. </div>
+<div>Open Sites updated frequently. Green = reported in last 3 hours; yellow = last 12 hours; red = older. Reserved sites from Recreation.gov update at <?=$camps['updated']?> </div>
 <div class ='center ' style='vertical-align:top' >
 
 <?php $status = 'Reserved';
@@ -49,14 +49,14 @@ $no_entries = true; ?>
 		<th style='width:4em;'>Fee</th>
 		<th>Open Sites</th></tr>
 	<?php foreach ($cgs as $cg) :
-		if ($camps[$cg]['status'] == $status) :
+		if ($camps['cgs'][$cg]['status'] == $status) :
 				$no_entries=false; ?>
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
 				<td> $&nbsp;<?= Defs::$campfees[$cg] ?> </td>
 
-				<td style='background-color:<?=$stale[$cg]?>' ><?= $camps[$cg]['open'] ?> </td>
+				<td style='background-color:<?=$stale[$cg]?>' ><?= $camps['cgs'][$cg]['open'] ?> </td>
 
 				</tr>
 		<?php endif ?>
@@ -65,6 +65,7 @@ $no_entries = true; ?>
 			<tr><td colspan='4' class='left'>None</td></tr>
 	<?php endif; ?>
 </table>
+
 
 
 <?php $status = 'First';
@@ -77,14 +78,14 @@ $no_entries = true; ?>
 		</td></tr>
 	<tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th><th>Open Sites</th></tr>
 	<?php foreach ($cgs as $cg) :
-		if ($camps[$cg]['status'] == $status) :
+		if ($camps['cgs'][$cg]['status'] == $status) :
 				$no_entries=false; ?>
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
 				<td> $&nbsp;<?= Defs::$campfees[$cg] ?> </td>
 
-				<td style='background-color:<?=$stale[$cg]?>' ><?= $camps[$cg]['open'] ?> </td>
+				<td style='background-color:<?=$stale[$cg]?>' ><?= $camps['cgs'][$cg]['open'] ?> </td>
 
 				</tr>
 			<?php endif ?>
@@ -101,7 +102,7 @@ $no_entries = true; ?>
 
 <tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th><th>Open SItes</th></tr>
 	<?php foreach ($cgs as $cg) :
-		if ($camps[$cg]['status'] == $status) :
+		if ($camps['cgs'][$cg]['status'] == $status) :
 				$no_entries=false; ?>
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
@@ -118,5 +119,6 @@ $no_entries = true; ?>
 		<?php endif; ?>
 </table>
 </div>
+<p><small>Recreation.gov availability updated at <?=$camps['updated']?></small></p>
 </div>
 
