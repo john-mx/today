@@ -15,8 +15,8 @@ $cgs = array_keys(Defs::$campsites);
 	<span class='red'><b>ALL CAMPGROUNDS ARE FULL!</b></span>
 <?php endif; ?>
 </h3>
-<div class='inleft2'>Open Sites checked several times a day.<br/>
-If background is green, data is less than 3 hours old.  If yellow, data is less than 12 hours old and may be optimistic.  If red, data is more than 12 hours old and unreliable.</div>
+<div class='inleft2'>Open Sites checked several times a day.Background indicates age.<br/>
+Green: less than 3 hours old.  Yellow: less than 12 hours old.  Red: older. and unreliable.</div>
 <table  class='alt-gray border center'>
 <tr ><th>Campground</th><th>Sites</th><th>Nightly Fee</th>
 <th>Open Sites</th>
