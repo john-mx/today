@@ -11,6 +11,8 @@ use DigitalMx\jotr\Utilities as U;
 
 class Camps {
 
+private $CM;
+
 function __construct($c){
 	$this->CM = $c['CacheManager'];
 

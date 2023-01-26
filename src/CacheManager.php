@@ -80,9 +80,9 @@ public function loadCache ($section) {
 #echo "loading cache $section" . BR;
 
 	// see if already loaded
-	if (isset($this->$section)){
-		return $this->$section;
-	}
+	// if (isset($this->$Cache[$section])){
+// 		return $this->$Cache[$section];
+// 	}
 	// check validity
 		if  (!file_exists (CS::getCacheFile($section)) ) {
 			Log::info("rebuilding non-existent cache $section.");
@@ -112,7 +112,7 @@ public function loadCache ($section) {
 			return [];
 		}
 		//Utilities::echor($y,$section,NOSTOP) . BR;
-		$this->$section = $y;
+		//$this->$section = $y;
 		return $y;
 }
 

@@ -56,16 +56,16 @@ $current_asof = date('g:i a',$current['updatets']);
 $temp = <<<EOT
 <div  style='margin-bottom:6px;'>
 <b>Temperature: </b>
-		${current['temp_f']}&deg;F ( ${current['temp_c']}&deg;C)
+		{$current['temp_f']}&deg;F ( {$current['temp_c']}&deg;C)
 </div>
 EOT;
 
 $currentWind = <<<EOT
 <div style='margin-bottom:6px;'>
 <b>Wind:</b>
-		${current['wind_mph']} mph ( ${current['wind_kph']} kph) ${current['wind_direction']} <br />
-		Gusts to ${current['gusts_mph']} mph<br />
-		Wind chill: ${current['wind_chillF']}&deg;F (${current['wind_chillC']}&deg;C)
+		{$current['wind_mph']} mph ( {$current['wind_kph']} kph) {$current['wind_direction']} <br />
+		Gusts to {$current['gusts_mph']} mph<br />
+		Wind chill: {$current['wind_chillF']}&deg;F ({$current['wind_chillC']}&deg;C)
 
 </div>
 EOT;
@@ -73,7 +73,7 @@ EOT;
 $currentHumidity = <<<EOT
 <div style='margin-bottom:6px;'>
 <b>Humidity:</b>
-	${current['humidity']} %
+	{$current['humidity']} %
 </div>
 EOT;
 

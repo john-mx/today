@@ -77,18 +77,18 @@ Alerts must have expiration.  If today, just enter the time.  Otherwise enter mo
 Enter message here to display if there are no alerts. HtML is allowed here, so ask for help if needed.  Carriage returns are displayed as new lines.  <br />
 Example: for color red: &lt;span style='color:red;'&gt;text you want &lt;/span&gt;
 <br />See help button for more help.<br />
-<textarea name = 'alert_alt' rows='3' cols='80'><?=$admin['alert_alt'] ??'' ?></textarea>
+<textarea name = 'alert_alt' rows='4' cols='80'><?=$admin['alert_alt'] ??'' ?></textarea>
 
 
 <h4>Enter closures/announcements  <?php U::showHelp('notices');?></h4>
 One announcement per line. They will be listed as bullets <br />
 
-<textarea name='announcements' ><?=$admin['announcements'] ?></textarea>
+<textarea name='announcements' rows='6' cols='80'><?=$admin['announcements'] ?></textarea>
 
 
 <h4>Enter visitor advice <?php U::showHelp('advice');?></h4>
 One announcement per line(carriage return). <br />
-<textarea name='advice' ><?=$admin['advice'] ?></textarea>
+<textarea name='advice' rows='6' ><?=$admin['advice'] ?></textarea>
 
 
 <h4>Enter fire status</h4>

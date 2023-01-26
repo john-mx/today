@@ -81,7 +81,8 @@ class Calendar {
 	'Social Event',
 	);
 
-	//$tz = new \DateTimeZone('America/Los_Angeles');
+	private $tz;
+	private $CM;
 
 	public function __construct($c) {
 		$this->tz = new \DateTimezone('America/Los_Angeles');
@@ -173,12 +174,12 @@ public static function filter_calendar(array $calendar,int $transform = 0) {
 		}
 		elseif (empty ($event['days']) && !empty ($event['date'] )) { //scheduled
 			$z[] = self::parse_scheduled($event);
-			#echo "added scheduled ${event['title']}" . BR;
+			#echo "added scheduled {$event['title']}" . BR;
 
 		} elseif ($transform == 0 ) { #keep for admin sccreen, but don't expand
 			$event['dt'] = 0; // unscheduled; float to top
 			$z[] = $event;
-			#echo "passed for admih scheduled ${event['title']}" . BR;
+			#echo "passed for admih scheduled {$event['title']}" . BR;
 		} else { // active recurring
 				// prepare starting date
 				if (empty($edate = trim($event['date']))){
@@ -201,7 +202,7 @@ public static function filter_calendar(array $calendar,int $transform = 0) {
 					$cevent = self::parse_recurring($event,$begindt,$enddt,$i);
 					if ($cevent) {
 						$z[] = $cevent;
-						#echo "added repeating ${event['title']}" . BR;
+						#echo "added repeating {$event['title']}" . BR;
 						#Utilities::echor($cevent);
 					}
 				}
@@ -246,14 +247,14 @@ private static function parse_recurring($event,$begindt,$enddt,$i) {
 
 		if (strpos ($event['days'],$wd) !== false){
 				$schevent = $event;
-#echo "Set time ${event['time']} to $hrs, $mins. " . BR;
+#echo "Set time {$event['time']} to $hrs, $mins. " . BR;
 				$schevent['date'] = $testdt->format('M d Y');
 				$schevent ['days'] = '';
 				$dts = $testdt->format('U'); #timestamp
 	//	echo "Test dt " .$testdt->format('M d Y H:i') . 'for' . $event['time']  . BR;
 				$schevent['dt'] = $dts;
 				return $schevent;
-				echo "added ${event['title']} on $testdate." . BR;
+				echo "added {$event['title']} on $testdate." . BR;
 		}
 
 

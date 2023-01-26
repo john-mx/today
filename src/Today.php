@@ -89,15 +89,25 @@ fails, they are all abandoned,
 
 class Today {
 
+private $Plates;
+private $Defs;
+private $CM;
+private $Cal;
+private $Camps;
+private $wlocs;
+private $airlocs;
+private $light;
+public $sunset;
+private $nowTZ;
+private $nowDT;
+
+
 
 ###############################
 
 public function __construct($c){
 	$this->Plates = $c['Plates'];
-	$this -> Defs = $c['Defs'];
 	$this-> CM = $c['CacheManager'];
-
-
 	$this->Cal = $c['Calendar'];
 	$this->Camps = $c['Camps'];
 	// locations to use for weather report
@@ -129,10 +139,8 @@ public function build_topics(){
 
 		$topics = array_merge(
 			$this->build_topic_admin(),
-
 			$this->build_topic_weather(),
 			$this->build_topic_campgrounds(),
-
 			$this->build_topic_light(),
 			$this->build_topic_air(),
 			$this->build_topic_calendar(),
@@ -153,43 +161,14 @@ public function build_topics(){
 ]);
 
 
+
+//	Utilities::echor($topics,'topics',STOP);
+
 		return $topics;
 }
 
 
 
-
-
-
-
-
-
-
-public function buildPDF(){
-	$y = $this->prepare_topics ();
-//Utilities::echor($y,'y',STOP);
-
-// using "Today' as title prevents it from re-appearing on the today page.
-$meta=array(
-	'pcode' => 'print',
-	'title'=>'Today',
-	'target'=> $y['target']?? '',
-	'pithy'=> $y['pithy'] ?? '',
-
-	);
-
-	$html = $this->Plates->render ('start',$meta);
-
-//	echo $Today->start_page('Today in the Park',$qs);
-	$html .= $this->Plates -> render('today',['data'=>$y]) ;
-	file_put_contents( SITE_PATH . '/pages/print.html', $html);
-	$this_day = date('m-d-y');
-	// make a pdf version if none exists.  This limits to 1 per day.
-	$pdf = '/pages/' . "${this_day}.pdf";
-	if (!file_exists(SITE_PATH . $pdf)){
-		$this->print_pdf($html,$pdf);
-	}
-}
 /*----------------- BUILD TOPICS ------------------*/
 
 public function build_topic_calendar() {
@@ -202,6 +181,7 @@ public function build_topic_calendar() {
 //	$y=$this->Cal->filter_calendar($z,0);
 	return ['calendar' => $z];
 }
+
 public function build_topic_current() {
 	if (!$z=$this->CM->loadCache('current',false)) {
 	 	Log::error ("Could not load cache current");
@@ -227,18 +207,6 @@ public function build_topic_current() {
 	$y['wind_chillF'] = is_null($y['windChill']['value']) ?
 		'n/a' : $y['wind_chillC'] * 9/5 + 32;
 
-	// if ($temp_f == 'n/a') {
-// 		$y['wind_chill'] = 'n/a';
-// 	} elseif ($wind_f == 'n/a') {
-// 		if ($gusts_mph == 'n/a') $y['wind_chill'] = 'n/a';
-// 		else $wind_f = 0.8*$gusts_mph;
-// 	}
-// 	if (! isset($y['wind_chill'])){
-// 	$y['wind_chill'] =
-// 		35.74 + (0.6215 * $temp_f)
-// 		- (35.75 * $wind_mph**0.16)
-// 		+ (0.4275 * $temp_f * $wind_f**0.16) ;
-// 	}
 
 	$wapi = $this->CM->loadCache('wapi');
 	$current_uv = $wapi['jr']['current']['uv'];
@@ -276,9 +244,9 @@ public function build_topic_air() {
 	 	return [];
 	 }
 	$y = $this->format_airnow($z);
-
+//U::echor($y,'air',STOP);
 	return ['air' => $y];
-U::echor($y,'air',STOP);
+
 }
 
 // prepare data for the ight displlay:
@@ -338,7 +306,7 @@ public function build_topic_light() {
 		$today_done = false;
 		foreach ($wapi['br']['forecast']['forecastday'] as $day) {
 		// make sure it is not passed
-			//echo "On ${day['date']} , ts ${day['date_epoch']} , date ${day['date']}" .BR;
+			//echo "On {$day['date']} , ts {$day['date_epoch']} , date {$day['date']}" .BR;
 			if (time() < $day['date_epoch'])   continue;
 			//echo "passed. " . BR;
 
@@ -421,7 +389,7 @@ public function build_topic_light() {
 		foreach ($wgov['jr']['properties']['periods'] as $period) {
 			$endTimets = strtotime($period['endTime']);
 			if ($endTimets < time()){ #already ended
-				//echo "Skipping period ${period['name']} ".BR;
+				//echo "Skipping period {$period['name']} ".BR;
 				continue;
 			}
 			//if ($period['isDaytime']) continue; // test no night segment
@@ -559,19 +527,7 @@ public function build_topic_campgrounds() {
 }
 
 
-private function getCgDisplay($status,$open,$cgfull,$cgopen_age,$cgres_age,$cg_uncertain) {
-		if ($status == 'Closed'){return 'n/a';}
-		if ($cgfull) {return '0';}
-		if ($status == 'Reservation'){
-			if ($cg_uncertain && (time() - $cgres_age > $cg_uncertain * 60 * 60)){return '?';}
-			return $open;
-		} elseif ($status == 'First') {
-			if ($cg_uncertain && (time() - $cgopen_age > $cg_uncertain  * 60 * 60)){return '?';}
-			return $open;
-		} else {
-			die ("Unknown cg status $status");
-		}
-	}
+
 
 public function build_topic_admin() {
 	/* load date from admin cache, then reformat for display */
@@ -655,8 +611,8 @@ public function format_airowm ($r){
 
 	foreach ($r as $loc => $d){
 			$aqi = $d['list']['0']['main']['aqi'];
-			$aqi_scale = $this -> Defs->aq_scale($aqi);
-			$aqi_color = $this -> Defs->scale_color($aqi_scale);
+			$aqi_scale = Defs::aq_scale($aqi);
+			$aqi_color = Defs::scale_color($aqi_scale);
 
 			$y['aqi'] = $aqi;
 			$y['pm10'] = $d['list'][0]['components']['pm10'];
@@ -715,8 +671,8 @@ Array
 	foreach ($r as $loc => $d){
 
 			$aqi = $d['0']['AQI'] ?? '' ;
-				$aqi_scale = ($aqi)? $this -> Defs->aq_scale($aqi) : '';
-				$aqi_color = ($aqi) ? $this -> Defs->scale_color($aqi_scale) : '';
+				$aqi_scale = ($aqi)? Defs::aq_scale($aqi) : '';
+				$aqi_color = ($aqi) ? Defs::scale_color($aqi_scale) : '';
 
 			$y['aqi'] = $aqi;
 			$y['pm10'] = $d['0']['PM10'] ?? 'n/a';
@@ -807,6 +763,7 @@ public function format_wapi ($r) {
 	return $x;
 }
 
+
 public function format_wapi_like_wgov ($r) {
 
 	$x = [];
@@ -888,6 +845,7 @@ public function format_wapi_like_wgov ($r) {
 //U::echor($x,'wapi as wgov');
 	return $x;
 }
+
 
 
 public function display_weather(array $wslocs=['jr','br','cw'],int $wsdays=3 ) {
@@ -1026,7 +984,7 @@ public  function uv_data($uv) {
 		$uv = array(
 			'uv' => $uv,
 			'uvscale' => $uvscale,
-			'uvwarn' => $this ->Defs->uv_warn($uvscale),
+			'uvwarn' => Defs::uv_warn($uvscale),
 			'uvcolor' => Defs::get_color($uvscale),
 		);
 			return ($uv);
@@ -1097,7 +1055,7 @@ if (empty($html)) die ("no html to print_pdf");
 
 }
 
-####################OBSOLETE ###########################
+
 
 
 } #end class

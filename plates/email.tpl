@@ -46,7 +46,7 @@ EOT;
 
 if(!empty($admin['pithy'])):
 	echo <<<EOT
-	<tr><td style="$fser $tc"><i>${admin['pithy']}</i></td></tr>
+	<tr><td style="$fser $tc"><i>{$admin['pithy']}</i></td></tr>
 EOT;
 endif;
 
@@ -100,25 +100,25 @@ echo <<<EOT
 <tr><td style="$tl">
 <p style="$sgsh">Light and Dark</p>
 	<div style="$ml">
-	Sunrise ${light['sunrise']} Set ${light['sunset']}<br />
-Moonrise ${light['moonrise']} Set ${light['moonset']} ${light['moonphase']}
+	Sunrise {$light['sunrise']} Set {$light['sunset']}<br />
+Moonrise {$light['moonrise']} Set {$light['moonset']} {$light['moonphase']}
 </div>
 </td></tr>
 
 <tr><td style="$tl">
 	<p style="$sgsh">UV Exposure:</p>
 
-	<p style = "$fsan background-color:${uv['uvcolor']};"> <b>${uv['uv']}</b>  ${uv['uvscale']}</p>
+	<p style = "$fsan background-color:{$uv['uvcolor']};"> <b>{$uv['uv']}</b>  {$uv['uvscale']}</p>
 	<div style="$ml">
-	<b>For UV = ${uv['uvscale']}</b><br />${uv['uvwarn']}
+	<b>For UV = {$uv['uvscale']}</b><br />{$uv['uvwarn']}
 
 	</div>
 </td></tr>
 
 <tr><td style="$tl">
 <p style="$sgsh">Fire Danger: </p>
-	 	<p  Current Level: <span style='background-color:${fire['color']}'>
-	 	<b>${fire['level']}</b> </span></p>
+	 	<p  Current Level: <span style='background-color:{$fire['color']}'>
+	 	<b>{$fire['level']}</b> </span></p>
 EOT;
 	$fl = $fire['level'];
 	$fw = Defs::$firewarn[$fl];
@@ -143,13 +143,13 @@ foreach ($air as $loc => $dat) :
 	$rdt = date ('M j H:ia',$dat['dt']);
 echo <<<EOT
 <tr style="$bbg">
-	<td style="$tl">${sitenames[$loc]} </td>
-	<td style="$tc">${dat['aqi']}
-		<span style="background-color: ${dat['aqi_color']}">
-		${dat['aqi_scale']}</span>
+	<td style="$tl">{$sitenames[$loc]} </td>
+	<td style="$tc">{$dat['aqi']}
+		<span style="background-color: {$dat['aqi_color']}">
+		{$dat['aqi_scale']}</span>
 		</td>
-	<td style="$tc">${dat['pm10']}</td>
-	<td style="$tc">${dat['o3']}</td>
+	<td style="$tc">{$dat['pm10']}</td>
+	<td style="$tc">{$dat['o3']}</td>
 </tr>
 EOT;
 endforeach;
@@ -272,14 +272,14 @@ if ( ($cal['dt'] < time() ) || ($cal['dt'] > (time() + 3600*24*3 ) ) ) :
 
 	<tr >
 	<td style="$sgtdb">$datetime  <br />
-	&nbsp;&nbsp;(${cal['duration']}) </td>
+	&nbsp;&nbsp;({$cal['duration']}) </td>
 
  	<td style="$sgtdb">
- 	<b>${cal['title']}</b><br />
- 	${cal['type']} at ${cal['location']} <br />
+ 	<b>{$cal['title']}</b><br />
+ 	{$cal['type']} at {$cal['location']} <br />
 EOT;
 	if (!empty($cal['note'])) :
-		echo "${cal['note']} </p>";
+		echo "{$cal['note']} </p>";
 	endif;
 	echo "</td>
  </tr>";

@@ -51,7 +51,7 @@ use DigitalMx\jotr\Utilities as U;
 				 <?php if ($p = $days[$i]['Day'] ?? ''): ?>
 							<b><?=$p['short']?></b><br />
 								<?= $p['temp']?>.
-								<?php if ($p['wind']):echo " <br />Wind ${p['wind']} "; endif; ?>
+								<?php if ($p['wind']):echo " <br />Wind {$p['wind']} "; endif; ?>
 					<?php endif; ?>
 				</td>
 			<?php endfor; #day ?>
@@ -64,9 +64,9 @@ use DigitalMx\jotr\Utilities as U;
 				<td>
 				<?php if ($p = $days[$i]['Night'] ): ?>
 					<div >
-								<?php if (!trim($p['short'])):echo "<b>${p['short']}</b> <br />"; endif; ?>
+								<?php if (!trim($p['short'])):echo "<b>{$p['short']}</b> <br />"; endif; ?>
 								<?= $p['temp']?>.
-								<?php if ($p['wind']):echo "<br /> Wind ${p['wind']} "; endif; ?>
+								<?php if ($p['wind']):echo "<br /> Wind {$p['wind']} "; endif; ?>
 
 					</div>
 					<?php endif; ?>

@@ -18,12 +18,12 @@ $wday = $wapi['forecast']['jr'][0];
 
 $uvday = <<<EOT
 <div class= 'conditions'>
-	<b>UV: </b>${uv['uv']}
-	<span style="background-color:${uv['uvcolor']};">
-				 ${uv['uvscale']}
+	<b>UV: </b>{$uv['uv']}
+	<span style="background-color:{$uv['uvcolor']};">
+				 {$uv['uvscale']}
 			</span>
 			<br />
-				&mdash; <i> ${uv['uvwarn']}</i>
+				&mdash; <i> {$uv['uvwarn']}</i>
 
 </div>
 EOT;
@@ -42,7 +42,7 @@ EOT;
 
 $windday = <<<EOT
 <div class= 'conditions'>
-<b>Wind</b> up to ${wday['maxwind']} mph (${wday['maxwindM']} kph)
+<b>Wind</b> up to {$wday['maxwind']} mph ({$wday['maxwindM']} kph)
 	<br />
 	&mdash; <i>higher gusts possible</i>
 
@@ -51,7 +51,7 @@ EOT;
 
 $fireday = <<<EOT
 <div class= 'conditions'>
-<b>Fire Danger: </b> ${fire['level']}
+<b>Fire Danger: </b> {$fire['level']}
 
 </div>
 EOT;

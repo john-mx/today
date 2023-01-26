@@ -18,6 +18,12 @@ use DigitalMx\jotr\Utilities as U;
 
 class Admin {
 
+private $Today;
+private $CM;
+private $Cal;
+private $Camps;
+
+
 private static $empty_camps = array(
 	"ic" => "20","jr" => "0","sp" => "0","hv" => "0","be" => "0","wt" => "0","ry" => "0","br" => "0","cw"=>"0"
 	);

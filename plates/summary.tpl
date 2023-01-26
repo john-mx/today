@@ -15,11 +15,11 @@ use DigitalMx\jotr\Calendar;
 
 $air = $air;
 $uvday = <<<EOT
-	UV: ${uvdata['uv']}
-			<div class='inlineblock' style="padding-left:2em;padding-right:2em;background-color:${uvdata['uvcolor']};">
-				 ${uvdata['uvscale']}
+	UV: {$uvdata['uv']}
+			<div class='inlineblock' style="padding-left:2em;padding-right:2em;background-color:{$uvdata['uvcolor']};">
+				 {$uvdata['uvscale']}
 			</div>
-				&mdash; ${uvdata['uvwarn']}
+				&mdash; {$uvdata['uvwarn']}
 			<br />
 EOT;
 		$aircolor = $air['jr']['aqi_color'];
