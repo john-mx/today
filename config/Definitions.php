@@ -18,6 +18,12 @@ class Definitions {
 		'passwords' => 'passwords.ini',
 	];
 
+// used to show age of live data like campgrounds
+// time in hours
+public static $data_timeouts = [
+	'newest' => 3,
+	'new' => 12,
+];
 
 public static $scale_color = [
 

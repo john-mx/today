@@ -100,8 +100,8 @@ public function prepareDisplayCamps(){
 		$camps['updated'] = file_get_contents(REPO_PATH . '/var/rec.gov_update');
 
 
-		if ((time() - $camps[$cg]['asof'])  < 3*60*60): $stale = '#3F3';
-		elseif ((time() - $camps[$cg]['asof'])  < 12*60*60): $stale = '#FF3';
+		if ((time() - $camps[$cg]['asof'])  < Defs::$data_timeouts['newest']*60*60): $stale = '#3F3';
+		elseif ((time() - $camps[$cg]['asof'])  < Defs::$data_timeouts['new']*60*60): $stale = '#FF3';
 		else: $stale = '#F33';
 		endif;
 		$camps['cgs'][$cg]['stale'] = $stale;
