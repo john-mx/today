@@ -22,14 +22,13 @@ switch ($pcode) {
 
 <!-- ############################## -->
 <div id="page1" style="display: block;">
+<?php if ($admin['pithy']): ?>
+	<p class='center'><i><?=$admin['pithy']?></i></p>
+<?php endif; ?>
 
 <?php
 //Utilities::echor($data,'data');
-	try {$this->insert('light');}
-	catch (exception $e) {
-		$einfo = ['src' => 'light','info'=>$e];
-		$this->insert('error',$einfo);
-	}
+	$this->insert('light');
 ?>
 
 <?php	$this->insert('conditions')?>
