@@ -336,6 +336,7 @@ table {
 	border-collapse: collapse;
 	border: 2px solid black;
 	font-size:1.6rem;
+	margin-right: 1rem; /*needed when floating */
 }
 
 table tr td
@@ -343,8 +344,6 @@ table tr td
 	border: 1px solid black;
 	text-align: center;
 	padding: 6px;
-	padding-left:1em;
-	padding-right:1em;
 	vertical-align:top;
 
 }
@@ -471,9 +470,7 @@ table tr.col-border  th {
 	border-left: 1px solid gray;
 		border-right: 1px solid gray;
 	}
-table .alt-gray tr:nth-child(even)  {
-	background: #CCC;
-}
+
 table.no-cells tr td {border:0;}
 table.no-border {border:0;}
 
