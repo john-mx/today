@@ -15,7 +15,8 @@ use DigitalMx\jotr\CacheSettings as CS;
 <form method='post'>
 <input type='hidden' name='type' value='update'>
 <h4>Say something pithy</h4>
-	<input name='pithy' type='text' size='80' value='<?=$this->e($admin['pithy'])?>'>
+	<input name='pithy' type='text' size='80' value='<?=$this->e($admin['pithy'])?>'><br>
+	(Appears at top of Today report and Summary, not on TV)
 </p>
 
 
@@ -53,7 +54,7 @@ use DigitalMx\jotr\CacheSettings as CS;
 
 <p>You can have only one alert.<br>
 Title will be displayed in red.  To remove alert, remove the title.<br>
-Alerts must have expiration.  If today, just enter the time.  Otherwise enter month/day and time. Day without time means 12:01am. You can use the format shown on government alerts, e.g. 2023-01-14T22:00:00-08:00.</p>
+Alerts must have expiration date and time. Time must be in h:m: 6:00 pm, not 6pm. Time without day is today. Day without time is 12:01am.  You can also use the format shown on government alerts, e.g. 2023-01-14T22:00:00-08:00.</p>
 
 <table class='border no-col'>
 <tr class='left'><td>Headline</td>

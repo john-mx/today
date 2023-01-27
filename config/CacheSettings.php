@@ -138,7 +138,7 @@ public static $coordinates = [
 				'airowm' => 0,  // not used
 
 				'galerts' => 110, // weather.gov alerts
-				'tours' => -1,
+				'tours' => 0, // 0 until code set.  then -1
 				'camps' => -1, // every refresh cycle
 				'current' => -1,
 
