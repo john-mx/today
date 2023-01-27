@@ -54,8 +54,6 @@ air	air quality info for jumbo rocks
 
 camps status for each campground.
 
-cgopen conatins open sites at each campground
-
 light	containx sunrise, moon phase, etc.  Derivedd from weatherapi.com
 astro data
 
@@ -73,15 +71,17 @@ data stored in caches, such as an alert or a change in weather forecast.
 The TV page also adds a new style setting the base font size (html {} )
 to 24 pt and line height to 1.1em.
 
-A refresh_cache function checks each cache for age as defined in Defs, and
+A refresh_cache function checks each cache for age as defined
+in CacheSettinigs, and
 if it is out of date reloads it from source,  (Caches that aren't
-auto refreshed have age limit in Defs set to 0).  refresh_cache is run from
-cron, typically ever 4 hours.  When caches are reloaded, sometimes the
-load failsk especially on weather.gov.  If there's a failure, there are two
+auto refreshed have age limit in Defs set to 0. Caches that are
+always refreshed have their age set to -n.  refresh_cache is run from
+cron, typically ever half hour.  When caches are reloaded, sometimes the
+load fails especially on weather.gov.  If there's a failure, there are two
 retries with 2 second delays, and if 3rd attempt fails the refresh is
 abandoned and the cache is not changed.  For weather, each location
 (jumbo rocks, cottonwood, black rock, etc) is a separate request. If one
-fails, they are all abandoned,
+fails, the previous data is retained (new data is merged with old, not replaced),
 
 
 
@@ -94,14 +94,14 @@ private $Defs;
 private $CM;
 private $Cal;
 private $Camps;
-private $wlocs;
-private $airlocs;
 private $light;
-public $sunset;
+public $sunset; // set by prepare_topic_light;;
 private $nowTZ;
 private $nowDT;
 
 
+private $wlocs = ['jr','cw','br','hq'] ; // weather locations
+private $airlocs = ['jr','cw','br']; // air quality locations
 
 ###############################
 
@@ -110,15 +110,6 @@ public function __construct($c){
 	$this-> CM = $c['CacheManager'];
 	$this->Cal = $c['Calendar'];
 	$this->Camps = $c['Camps'];
-	// locations to use for weather report
-	$this -> wlocs = ['jr','cw','br','hq'] ; // weather locations
-	$this -> airlocs = ['jr','cw','br']; // air quality locations
-	// get wgov update imte
-	$wgov = $this->CM->loadCache('wgov');
-	$this->wgovupdate = strtotime($wgov['jr']['properties']['updated']);
-	$wapi = $this->CM->loadCache('wapi');
-	$this->wapiupdate = $wapi['jr']['current']['last_updated_epoch'];
-	$this-> sunset = $this->time_format($wapi['br']['forecast']['forecastday']['0']['astro']['sunrise']);
 
 }
 
@@ -170,17 +161,18 @@ public function build_topics(){
 }
 
 public function showLight() {
-	$meta=array(
-	'qs' => $qs,
-	'page' => basename(__FILE__),
-	'subtitle' => TODAY,
-	'extra' => "<link rel='stylesheet' href='/css/tv.css'>",
-	'rotate' => $rotate,
-	'rdelay' => $rdelay,
-	'sunset' => $this->sunset,
-	'local_site' => $local['local_site'] ?? '',
-
-	);
+	$meta = [];
+	// $meta=array(
+// 	'qs' => $qs,
+// 	'page' => basename(__FILE__),
+// 	'subtitle' => TODAY,
+// 	'extra' => "<link rel='stylesheet' href='/css/tv.css'>",
+// 	'rotate' => $rotate,
+// 	'rdelay' => $rdelay,
+// 	'sunset' => $this->sunset,
+// 	'local_site' => $local['local_site'] ?? '',
+//
+// 	);
 
 		$data = $this->build_topic_light();
 		echo $this->startHTML($meta);
@@ -195,102 +187,6 @@ public function showLight() {
 
 
 
-public function startHTML($meta){
-
-
-/* start with ['title'=>title,'pcode'=style code,'extra'=>extra headers];
-	A working title is creeated from title . pcode (platform)
-	This is used in the title header tag, so that's what shows up as the page's title in the browser.
-	The title without embellishment is used at the top of the page,
-	UNLESS the title is 'Today'.
-	For title = 'Today',  the title is the current date instead.
-
-	So for the today page, use "Today" as the title.  For all other pages,
-	use a reasonable title for the top of the page.
-
-	pcode modifies page for variation animations.
-	extra is additinal codee to put in head (e.g., <style> section)
-	*/
-
-	$qs = $meta['qs'] ?? '';
-	$extra = $meta['extra'] ?? '';
-
-	$page = $meta['page'] ?? 'page?';
-
-	$scbody = '';
-	$titlex = $page . ":$qs" . " (" .PLATFORM . ") ";
-	$added_headers = $extra;
-
-	$rotate ??= [];
-	$rdelay ??=13;
-
-	$pagelist = json_encode($pages);
-
-//Utilities::echor($pagelist,'pagelist');
-
-//$rdelay = 15; #delay on rotation
-
-//echo "qs: $qs"; exit;
-
-		if ($qs == 'scroll'){
-			$scbody='onLoad="pageScroll()"';
-			$added_headers .= "<style>html {scroll-behavior: smooth;}</style>" .NL;
-			$added_headers .= "<script src='/js/scroll_scripts.js'></script>".NL;
-
-
-			$added_headers .= '<meta http-equiv="refresh" content="900" >' .NL;
-
-			} else if ($qs == 'snap'){
-
-				$rdelay ??=13;
-				//echo "rdealy $rdelay" . BR; exit;
-				$pages = [];
-				if ($rotate){
-					foreach ($rotate as $pid){
-						$pages[] = '#page-'.$pid;
-					}
-				}
-
-
-				$scbody = "onLoad=load_snap()";
-				$added_headers .= '<meta http-equiv="refresh" content="900" >'.NL;
-
-
-				$added_headers .= "<script src='/js/load_snap.js'></script>";
-				$added_headers .= "<script>var pageList = $pagelist;var rdelay = $rdelay;</script>" .NL;
-
-		}
-
-
-
-$maints = U::addTimestamp('/css/main.css');
-$printts = U::addTimestamp('/css/print.css');
-echo <<<EOT
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-   <meta charset="utf-8" />
-   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-
-	<title>$titlex</title>
-
-	<script src='/js/check_time.js'></script>
-	<script src='/js/hide.js'></script>
-	<script src='/js/clock.js'></script>
-
-	<script src='/js/help.js'></script>
-	<link rel='stylesheet' href = '/css/Frutiger.css' />
-	<link rel='stylesheet' href = '$maints' />
-	<link rel='stylesheet' href = '$printts' />
-	$added_headers
-
-</head>
-<body $scbody >
-
-EOT;
-}
 
 
 /*----------------- BUILD TOPICS ------------------*/
@@ -604,7 +500,7 @@ public function build_topic_weather() {
 	}
 	if (!$fail &&  (time() - $update ) > 24*60*60) {
 		$fail = true;
-		$f = 'Time over 12 hours ' . date('M d H:i',$update);
+		$f = 'Wgov over 24 hours old: ' . date('M d H:i',$update);
 	}
 	if (!$fail){
 
@@ -626,10 +522,12 @@ public function build_topic_weather() {
 			$weather = $this->format_wapi_like_wgov($wapi);
 			$weather['source'] = 'weatherapi.com';
 			$w['weather'] = $weather;
+
 			return $w ;
 	}
 
-	die ("All weather caches are stale "  . __LINE__);
+	Log::error ("All weather caches are stale "  );
+	exit;
 
 }
 
@@ -638,11 +536,7 @@ public function build_topic_weather() {
 
 
 public function build_topic_campgrounds() {
-/* reads the res and open caches for available
-	sites at each campgrund.  Prepares a display
-	for each site based on campground status
-	(.e., closed) and age of cache (changes to
-	'?' if cache is too old.
+/*
 */
 	$r['camps'] = $this->Camps->prepareDisplayCamps() ;
 // admin cache contains status and notes for each cg
@@ -827,7 +721,7 @@ public function format_wapi ($r) {
 	foreach ($r as $loc => $ldata){
 		 $forecast = $ldata['forecast']['forecastday'];
 		 // there are forecasts for 3 days
-		for ($i=0;$i<3;++$i){
+		for ($i=0;$i<5;++$i){
 			$daily = $forecast[$i]; #array
 
 		//	echo "period: $period";
@@ -971,31 +865,6 @@ public function format_wapi_like_wgov ($r) {
 }
 
 
-
-public function display_weather(array $wslocs=['jr','br','cw'],int $wsdays=3 ) {
-
-//Utilities::echor($wgov,'weather',STOP);
-
-	$wspec = array('wslocs'=>$wslocs,'wsdays'=>$wsdays);
-
-	if(1
-	&& isset($this->wgovupdate)
-	&& ($wgovupdate = $this->wgovupdate )
-	&&( (time() - $wgovupdate) < 8*60*60)
-	) {#use wgov
-
-		echo $this->Plates->render('weather-wgov',$wspec);
-	}elseif (1 #use wapi
-	&& isset($this->wapiupdate)
-	&& ($wapiupdate = $this->wapiupdate )
-	&&( (time() - $wapiupdate) < 8*60*60)
-	) {
-		echo $this->Plates->render('weather-wapi',$wspec);
-	} else { #no good datea
-		echo "Cannot build weather data.  All forecasts are stale.";
-	}
-
-}
 private function format_alerts($alert){
 	if (empty($alert)) return '';
 	if (empty($alert['title']) or ($alert['expires'] < time() )) return '';
@@ -1050,7 +919,7 @@ public function format_wgov ($wgov) {
 			$startts = strtotime($start);
 			$daytext = date('l, M d',$startts);
 
-			if ($day > 3) break;
+			if ($day > 5) break;
 
 			$highlow = $perdata['isDaytime']? 'High':'Low';
 			$daynight= $perdata['isDaytime']? 'Day':'Night';

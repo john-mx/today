@@ -69,3 +69,7 @@ $container['DisplayManager'] = function ($c) {
 	return $pl;
 };
 
+$container['PageManager'] = function ($c) {
+	$pl = new \DigitalMx\jotr\PageManager($c);
+	return $pl;
+};

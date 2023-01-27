@@ -4,6 +4,14 @@ use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx\jotr\Utilities as U;
 
 
+/*
+	call with array of weather day, merged wtih
+	[
+		'wslocs' = ['jr','cw'],
+		'wsdays' = 4,
+		'daystart' = 1,
+	]
+*/
 ?>
 
 
@@ -18,7 +26,8 @@ use DigitalMx\jotr\Utilities as U;
 		//set days and locations
 		$locs =  $wslocs ?? ['jr','br','cw'];
 		$daycnt = $wsdays ?? 3 ;
-		$wsstart = $wsstart ?? 0;
+		$daystart = $wsstart ?? 0;
+
 		$loccols = $daycnt + 1;
 
 	?>
@@ -27,7 +36,7 @@ use DigitalMx\jotr\Utilities as U;
 
 	<tr class='no-border border-bottom'><th></th>
 		<?php
-			for ($i=$wsstart;$i<$wsstart+$daycnt;++$i) : //for 3 days
+			for ($i=$daystart;$i<$daystart+$daycnt;++$i) : //for daycnt days
 				$daytext = $weather['forecast']['jr'][$i]['Night']['daytext'];
 		//Utilities::echor ($day ,'day',STOP);
 				echo "<th>$daytext</th>";
@@ -46,7 +55,7 @@ use DigitalMx\jotr\Utilities as U;
 			<b><?=$locname?></b></td></tr>
 		<tr style = 'border-top:1px solid black;' class='highnoon'>
 			<td><b>Day</b></td>
-			<?php for ($i=$wsstart;$i<$wsstart+$daycnt;++$i) : //for 3 days ?>
+			<?php for ($i=$daystart;$i<$daystart+$daycnt;++$i) : //for 3 days ?>
 				<td>
 				 <?php if ($p = $days[$i]['Day'] ?? ''): ?>
 							<b><?=$p['short']?></b><br />
@@ -60,7 +69,7 @@ use DigitalMx\jotr\Utilities as U;
 
 			<td><b>Night</b></td>
 
-			<?php for ($i=$wsstart;$i<$wsstart+$daycnt;++$i) : //for 3 days ?>
+			<?php for ($i=$daystart;$i<$daystart+$daycnt;++$i) : //for 3 days ?>
 				<td>
 				<?php if ($p = $days[$i]['Night'] ): ?>
 					<div >

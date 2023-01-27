@@ -2,6 +2,7 @@
 namespace DigitalMx\jotr;
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx\jotr\Utilities as U;
+use DigitalMx\jotr\PageManager as PM;
 
 ini_set('display_errors', 1);
 
@@ -12,12 +13,13 @@ ini_set('display_errors', 1);
 
 //
 //
-	$Plates = $container['Plates'];
-
-	$Today = $container['Today'];
-	$Cal = $container['Calendar'];
-	$CM = $container['CacheManager'];
-	$DM = $container['DisplayManager'];
+// 	$Plates = $container['Plates'];
+//
+// //	$Today = $container['Today'];
+// 	$Cal = $container['Calendar'];
+// 	$CM = $container['CacheManager'];
+// 	$DM = $container['DisplayManager'];
+	$PM = $container['PageManager'];
 
 $meta = array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',
@@ -26,7 +28,7 @@ $meta = array(
 	'extra' => "<script src='/js/show_time.js'></script>",
 
 );
-$DM->showLight();
+$PM->showPage('pager',$_SERVER['QUERY_STRING']);
 
 //echo $Plates->render('head',$meta);
 //echo "<body>";

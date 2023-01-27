@@ -39,7 +39,7 @@ https://api.weather.gov/points/
 */
 
 // weather.gov grid points
-public static $cacheFiles  = array (
+private static $cacheFiles  = array (
 				'admin' => REPO_PATH . "/var/admin.json",
 				'airnow' => REPO_PATH . "/var/airnow.json",
 				'airowm' => REPO_PATH . "/var/airowm.json",
@@ -52,6 +52,7 @@ public static $cacheFiles  = array (
 				'properties' => REPO_PATH . "/var/properties.json",
 				'wapi' => REPO_PATH . "/var/wapi.json",
 				'wgov' => REPO_PATH . "/var/wgov.json",
+				'tours' => REPO_PATH . "/var/tours.json",
 );
 
 
@@ -118,29 +119,28 @@ public static $coordinates = [
 	];
 
 
-/* time before refresh in minutes.  0 means
-// cache is static except for update by
-// the admin screen.  Caches checked every 60
-mins,  negative number means always refresh, regardless
-of time.  (Used for updating data from rec.gov) The value
-of the negative number is still tested against age of the cache
-just for reporting purposes.
-*/
-	public static $cacheTimes  = array (
+/*
+	time before refresh in minutes.
+	0 means cache not automatically refreshed
+	-1 means cache is always refreshed on a refresh cyle
+	Caches checked periodically by cron running refreshCaches.
 
-				'calendar' => 60*6,
-				'admin' => 0,
+*/
+	private static $cacheTimes  = array (
+
+				'calendar' => 60*6,  //filtered to remove expired entries
+				'admin' => 0, // always manual
 				'properties' => 0, // manual only
 				'wgov' => 90,
 				'wapi' => 90,
-				'airq' => 0,
+				'airq' => 0, // not used
 				'airnow' => 235,
-				'airowm' => 0,
-				'alerts' => 0,
-				'galerts' => 110,
+				'airowm' => 0,  // not used
 
-				'camps' => -30,
-				'current' => 55,
+				'galerts' => 110, // weather.gov alerts
+				'tours' => -1,
+				'camps' => -1, // every refresh cycle
+				'current' => -1,
 
 
 			);
@@ -154,7 +154,7 @@ just for reporting purposes.
 
 
 	public static function getCacheFile($cache){
-		return self::$cacheFiles[$cache] ?? '';
+		return self::$cacheFiles[$cache] ?? false;
 	}
 	public static function getGridpoints($loc){
 		return self::$gridpoints[$loc] ?? '';
@@ -174,10 +174,13 @@ just for reporting purposes.
 		return self::$urls[$src];
 	}
 
-	public static function getMaxtime($section) {
-		return (60 * self::$cacheTimes[$section]);
+	public static function getCacheLimit($section) {
+		return ( self::$cacheTimes[$section]);
 	}
 
+	public static function getCacheList () {
+		return (array_keys(self::$cacheFiles));
+	}
 
 	public static function getSourceName($source) {
 

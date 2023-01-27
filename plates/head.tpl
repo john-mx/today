@@ -27,7 +27,7 @@ use DigitalMx\jotr\Utilities as U;
 	$page ??= 'page?';
 
 	$scbody = '';
-	$titlex = $page . ":$qs" . " (" .PLATFORM . ") ";
+	$titlex = $page . ":$qs" . " (" .SITE . ") ";
 	$added_headers = $extra;
 
 	$rotate ??= [];

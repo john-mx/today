@@ -67,48 +67,38 @@ public function writeCache(string $section,array $z) {
 	}
 }
 
-private function getCacheMtime($section){
-	$mtime = filemtime (CS::getCacheFile($section));
-	return $mtime;
-}
 
-public function loadCache ($section) {
-	// normally checks for out of date cacghe and rebuilds it.
+
+public function loadCache ($cache) {
+	// normally reports  out of date cacghe and rebuilds it.
 	// prevent refresh check by setting refresh - false.
 	// This is need to prevent endless loop if rebuild includes another load.
 
 #echo "loading cache $section" . BR;
 
-	// see if already loaded
-	// if (isset($this->$Cache[$section])){
-// 		return $this->$Cache[$section];
-// 	}
+
 	// check validity
-		if  (!file_exists (CS::getCacheFile($section)) ) {
-			Log::info("rebuilding non-existent cache $section.");
-			$this->refreshCache($section,true);
+		if (!$cachefile = CS::getCacheFile($cache) ) die ("Undefined cache file for $cache");
+		if  (!file_exists ($cachefile )) {
+			// Log::info("rebuilding non-existent cache $section.");
+// 			$this->refreshCache($section,true);
+				die ("Requested cache file $cachefile does not exist");
 		}
 
+		$age = $this->ageCache($cache);
+		$limit = CacheSettings::getCacheLimit($cache);
 
-
-			$ot = $this->over_cache_time($section);
-			$limit = abs(CacheSettings::getMaxTime($section));
-
-			if ( $ot > 2*$limit){
-				$otm = $ot/60;
-				Log::notice("Loading $section is stale. $otm minutes");
-				//echo ("$section limit $limit ot $ot").BR;
-				//$this -> refreshCache($section);
-			}
-
-
-		if (!$y = json_decode ($this->file_get_contents_locking(CS::getCacheFile($section)), true)) {
-			Log::error("Failed to json decode cache $section.  ");
-
+		if ($limit>0 && ( $age > 2*$limit)){
+			Log::notice("Loading $cache is stale. $age minutes");
+		}
+		$y=[];
+		if (!$y = json_decode ($this->file_get_contents_locking($cachefile), true)) {
+			Log::error("Failed to json decode cache $cache.  ");
+			return [];
 		}
 
 		if (empty($y)) {
-			Log::error("Failed to load cache $section.  Returning empty.");
+			Log::error("Failed to load cache $cache.  Returning empty.");
 			return [];
 		}
 		//Utilities::echor($y,$section,NOSTOP) . BR;
@@ -116,7 +106,25 @@ public function loadCache ($section) {
 		return $y;
 }
 
-private function over_cache_time($section) {
+private function ageCache($cache) {
+	//returns age in minutes since mod
+	if (!file_exists(CS::getCacheFile($cache)))die ("ageCache on non-existent file $cache");
+	$filetime = filemtime (CS::getCacheFile($cache));
+	$age = (time() - $filetime)/60; // in minutes
+	return round($age);
+}
+
+private function expiredCache($cache) {
+	//returns true if cache limit = -1 or age > imit
+	// everything in minutes, not seconds
+	$limit = CacheSettings::getCacheLimit($cache);
+	if ($limit == 0) return false;
+	if ($limit < 0) return true;
+	$age = $this->ageCache($cache);
+	return ($age>$limit);
+}
+
+private function Xover_cache_time($section) {
 	//global $Defs;
 	/* dies if file not exists
 		0 if mtime is under the limit
@@ -124,7 +132,7 @@ private function over_cache_time($section) {
 		XXX Returns true if time is within 5 minutes of limit
 	*/
 	$tlimit = 0;
-	$limit = abs(CacheSettings::getMaxTime($section) ); #in seconds
+	$limit = abs(CacheSettings::getCacheLimit($section) ); #in seconds
 	// neg means run refresh anyway.  Will handle in refresh section
 	if (!$limit){ return 0;}
 	if (!file_exists(CS::getCacheFile($section))){return 10000;}
@@ -419,13 +427,9 @@ coord: 34.0714,-116.3906,
 
 public function mergeCache($cache,$merge){
 // merges data into cache, unless data is empty
-		if (file_exists (CS::$cacheFiles[$cache])){
-			$x = $this->loadCache($cache,false);
-		} else {
-			$x=[];
-		}
-//		Utilities::echor ($x, "merge: Loaded cache $cache");
-//		Utilities::echor ($merge,'merge: Data to merge');
+		$x = $this->loadCache($cache);
+		// returns [] if no cache file
+
 		if (! empty ($merge)){ #if empty you're done
 			$y = array_merge($x,$merge);
 // 		Utilities::echor ($y,'merged cache');
@@ -450,12 +454,11 @@ public function rebuild_cache_current ($locs=[]) {
 
 		$loginfo = "$src $loc";
 		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
-			Log::notice("Failed $loginfo.  Rebuild aborted."); return [];
+			Log::notice("Rebuild Failed $loginfo.  Rebuild aborted."); return [];
 		}
 		//Utilities::echor($aresp,'current aresp');
 		if (is_null($aresp['properties']['temperature']['value'] )) {
 				Log::warning ("Received null temp for $loginfo",$aresp['properties']['temperature']);
-				return [];
 		}
 
 		$x[$loc] = $aresp;
@@ -492,7 +495,6 @@ private function rebuild_cache_airowm() {
 }
 
 private function rebuild_cache_calendar () {
-	if (! file_exists(CS::$cacheFiles['calendar'])) $this->initializeCache['calendar'];
 	$x = $this->loadCache('calendar');
 	$x = Calendar::filter_calendar($x,0);
 	$this->writeCache('calendar',$x);
@@ -548,9 +550,11 @@ public function updateCampsRec (){
 			Log::notice("Failed $loginfo.  Update aborted."); return [];
 		} //if one loc fails, fail the whole thing
 		$cgavail = $this->parseRecCamps($aresp);
-		$cgavaildate = $cgavail[$dateiso];
-		$availability[$loc] = $cgavaildate;
-
+		if (isset( $cgavail[$dateiso] )){
+			$availability[$loc]  = $cgavail[$dateiso] ;
+		} else {
+			$availability[$loc] = 0;
+		}
 
 	} # next loc
 	//U::echor ($availability,'availability',NOSTOP);
@@ -567,6 +571,47 @@ public function updateCampsRec (){
 
 }
 
+public function rebuild_cache_tours (){
+	$x=[];
+	$src = 'ridb';
+	$locs = ['krtour'];#$this->reccamps;
+	$apikey = CS::getKey('ridb');
+	$d = new \DateTime('today',new \DateTimeZone('UTC'));
+	$dateiso = $d->format('Y-m-d\TH:i:s\Z');;
+	$curl_header = [
+			"apikey:$apikey",
+			"accept: application/json",
+				];
+		//	U::echor($curl_header,'curl headers', NOSTOP);
+	echo "Startin tour update" . BR;
+	foreach ($locs as $loc) {
+		$facilityID = CS::getFacility($loc);
+		//$expected = 'aqi'; #field to test for good result
+		$url = "https://" . CS::getURL($src) . '/ticket/' . $facilityID;
+		$expected = '';
+		$loginfo = "$src:$loc";
+	//	echo "URL: $url" . BR;
+		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
+			Log::notice("Failed $loginfo.  Update aborted."); return [];
+		}
+		U::echor($arespon,'result',STOP);
+
+		if (isset( $cgavail[$dateiso] )){
+			$availability[$loc]  = $cgavail[$dateiso] ;
+		} else {
+			$availability[$loc] = 0;
+		}
+
+	} # next loc
+	U::echor ($availability,'availability',STOP);
+
+	$this->writeCache('tours',$ours);
+
+
+
+	Log::info("Tours updated from rec.gov");
+
+}
 
 public function rebuild_cache_wapi(array $locs=[] ) {
 	$x=[];
@@ -627,8 +672,8 @@ public function refreshAllCaches($force=false) {
 /* refreshes all the external caches, if they are due
 
 */
-	foreach (CS::$cacheTimes as $cache=>$rtime){
-		if ($rtime !== 0) $this->refreshCache($cache);
+	foreach (CS::getCacheList() as $cache){
+		if ($this->expiredCache($cache)) $this->refreshCache($cache);
 	}
 
 	#	$this -> rebuild_properties('jr');
@@ -638,13 +683,13 @@ public function refreshAllCaches($force=false) {
 private function initializeCache($cache) {
 	switch ($cache) {
 		case 'admin':
-			$this->writeCache($cache,InitializeCache::$$cache);
+			$this->writeCache($cache,InitializeCache::$admin);
 			break;
 		case 'calendar':
-			$this->writeCache($cache,InitializeCache::$$cache);
+			$this->writeCache($cache,InitializeCache::$calendar);
 			break;
 		case 'camps':
-			$this->writeCache($cache,InitializeCache::$$cache);
+			$this->writeCache($cache,InitializeCache::$camps);
 			break;
 
 		default:
@@ -653,6 +698,7 @@ private function initializeCache($cache) {
 	}
 	return true;
 }
+
 
 public function refreshCache($cache,$force=0) {
 	// refresh individual cache on demand.
@@ -668,88 +714,80 @@ public function refreshCache($cache,$force=0) {
 
 
 	*/
-	$ot = false;
+
 	if (!file_exists(CS::getCacheFile($cache))) {
-		$force=true; $ot=1;
-	}
-	elseif (CS::getMaxTime($cache) < 0) {
-		$force = true;
+		if (!$this->initializeCache($cache) )
+		die ("Cannot initialize non-exisgtent cache $cache");
 	}
 
-		$ot = $this->over_cache_time($cache);
+	$age = $this->ageCache($cache);
+	if (!$this->expiredCache($cache)){return true;}
 
-
-	if ($ot == 0 &&  ! $force ) return true;
-	// will refresh if cache is over limt (by ot)
-	// or if cache is always refreshed (ot = -n)
 	Log::info("Starting refresh on $cache");
-	switch ($cache) {
-		case 'admin':
-			if (!file_exists(CS::$cacheFiles[$cache])) $this->initializeCache($cache);
-			break;
+		switch ($cache) {
 
-		case 'airnow':
-			$this->rebuild_cache_airnow();
-			Log::info ("Refreshed cache $cache. Overtime = $ot.");
-			echo "$cache Refreshed." . BR;
-			break;
+			case 'airnow':
+				$this->rebuild_cache_airnow();
+				Log::info ("Refreshed cache $cache. Age = $age.");
+				echo "$cache Refreshed." . BR;
+				break;
 
-		case 'airowm':
-			$this->rebuild_cache_airowm();
-			Log::info ("Refreshed cache $cache. Overtime = $ot.");
-			echo "$cache Refreshed." . BR;
-			break;
+			case 'airowm':
+				$this->rebuild_cache_airowm();
+				Log::info ("Refreshed cache $cache. Age = $age..");
+				echo "$cache Refreshed." . BR;
+				break;
 
-		case 'airq':
-			$this->rebuild_cache_airq();
-			Log::info ("Refreshed cache $cache. Overtime = $ot.");
-			echo "$cache Refreshed." . BR;
-			break;
+			case 'airq':
+				$this->rebuild_cache_airq();
+				Log::info ("Refreshed cache $cache. Age = $age..");
+				echo "$cache Refreshed." . BR;
+				break;
 
-		case 'calendar':
-			$this->rebuild_cache_calendar(); #filter out old stuff
-			Log::info ("Refreshed cache $cache. Overtime = $ot.");
-			echo "$cache Refreshed." . BR;
-			break;
+			case 'calendar':
+				$this->rebuild_cache_calendar(); #filter out old stuff
+				Log::info ("Refreshed cache $cache. Age = $age.");
+				echo "$cache Refreshed." . BR;
+				break;
 
-	case 'camps':
-			$this->updateCampsRec(); #rebuild from recgov
-			Log::info ("Refreshed cache $cache. Overtime = $ot.");
-			echo "$cache Refreshed." . BR;
-			break;
+		case 'camps':
+				$this->updateCampsRec(); #rebuild from recgov
+				Log::info ("Refreshed cache $cache. Age = $age.");
+				echo "$cache Refreshed." . BR;
+				break;
 
 
-		case 'current':
-			$this->rebuild_cache_current();
-			Log::info ("Refreshed cache $cache. Overtime = $ot.");
-			echo "$cache Refreshed." . BR;
-			break;
+			case 'current':
+				$this->rebuild_cache_current();
+				Log::info ("Refreshed cache $cache. Age = $age.");
+				echo "$cache Refreshed." . BR;
+				break;
 
-		case 'galerts':
-			$this->rebuild_cache_galerts();
-			Log::info ("Refreshed cache $cache. Overtime = $ot.");
-			echo "$cache Refreshed." . BR;
-			break;
-
-
-		case 'wapi':
-			$this->rebuild_cache_wapi($this->wlocs);
-			Log::info ("Refreshed cache $cache. Overtime = $ot.");
-			echo "$cache Refreshed." . BR;
-			break;
-
-		case 'wgov':
-			$this->rebuild_cache_wgov($this->wlocs);
-			Log::info ("Refreshed cache $cache. Overtime = $ot.");
-			echo "$cache Refreshed." . BR;
-			break;
+			case 'galerts':
+				$this->rebuild_cache_galerts();
+				Log::info ("Refreshed cache $cache. Age = $age.");
+				echo "$cache Refreshed." . BR;
+				break;
 
 
-		default:
-			Log::error ("Attempt to refresh unknown cache $cache");
-			return false;
-	}
-	return true;
+			case 'wapi':
+				$this->rebuild_cache_wapi($this->wlocs);
+				Log::info ("Refreshed cache $cache. Age = $age.");
+				echo "$cache Refreshed." . BR;
+				break;
+
+			case 'wgov':
+				$this->rebuild_cache_wgov($this->wlocs);
+				Log::info ("Refreshed cache $cache.Age = $age.");
+				echo "$cache Refreshed." . BR;
+				break;
+
+
+			default:
+				Log::error ("Attempt to refresh unknown cache $cache");
+				return false;
+		}
+		return true;
 
 }
 
@@ -832,36 +870,41 @@ function get_external ($loginfo, $url,string $expected='',array $header=[]) {
 		$tries = 0;
 
 		while (!$success) {
+			$success = 1;
 
-			Log::info("trying external. Tries:$tries. URL: $url");
 			if ($tries > 2){
 					//echo "Can't get valid data from ext source  $loginfo";
 				Log::error("External failed for $loginfo: $fail.",$aresp);
 				return false;
 			}
+			Log::info("trying external. Tries:$tries. URL: $url");
 			if (! $response = curl_exec($curl)) {
 				$success = 0;
 				$fail = "No response on $loginfo";
-			} else { $success = 1;}
-//U::echor ($response,'curl response' );
-			if ($success ){
-				$info = curl_getinfo($curl);
+			}
+//U::echor ($response,'curl response' );			if ($success ){
+
+			if ($success && $info = curl_getinfo($curl)){
 				$httpResult =  $info["http_code"];
-			//	echo "httpResult: $httpResult" . BR;
+		//echo "httpResult: $httpResult" . BR;
 				if ($httpResult !== '200'){
+					$success = 0;
 					$fail = 'Bad return ' . $httpResult;
-				} else {$success = 1;}
+				}
+			} else {
+				$success = 0;
+				$fail = 'Cannot get httpResult';
 			}
 
 			if ($success && !$aresp = json_decode($response, true) ){
 				$success = 0;
 				$fail = " Failed JSON decode ";
-			} else { $success = 1;}
+			}
 
 			if ($success &&  $expected && !Utilities::inMultiArray($expected,$aresp)) {
 				$success = 0;
 				$fail = "Failed expected result $expected";
-			}else { $success = 1;}
+			}
 
 			if (! $success) {
 					++$tries;

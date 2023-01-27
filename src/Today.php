@@ -94,14 +94,14 @@ private $Defs;
 private $CM;
 private $Cal;
 private $Camps;
-private $wlocs;
-private $airlocs;
+
 private $light;
 public $sunset;
 private $nowTZ;
 private $nowDT;
 
-
+private $wlocs = ['jr','cw','br','hq'] ; // weather locations
+private $airlocs = ['jr','cw','br']; // air quality locations
 
 ###############################
 
@@ -111,8 +111,8 @@ public function __construct($c){
 	$this->Cal = $c['Calendar'];
 	$this->Camps = $c['Camps'];
 	// locations to use for weather report
-	$this -> wlocs = ['jr','cw','br','hq'] ; // weather locations
-	$this -> airlocs = ['jr','cw','br']; // air quality locations
+#	$this -> wlocs = ['jr','cw','br','hq'] ; // weather locations
+#	$this -> airlocs = ['jr','cw','br']; // air quality locations
 	$this->light = $this->build_topic_light()['light'];
 	$this->sunset = $this->light['Today']['sunset'];
 	$this->nowTZ = new \DateTimeZone('America/Los_Angeles');

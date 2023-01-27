@@ -16,29 +16,14 @@ class Utilities {
 		echo "He3re";
 	}
 
-	public function over_cache_time($section) {
 
-		/* dies if file not exists
-			0 if mtime is under the limit
-			diff if mtime is over the limit by diff
-		*/
 
-		if (!file_exists(CACHE[$section])){ die ("No cache file for $section");}
-
-		$filetime = filemtime (CACHE[$section]);
-		$limit = Defs::getMaxTime($section);
-		$diff = time() - $filetime;
-		if ($limit && ($diff > $limit)) return $limit;
-	//	echo "$section: limit $limit; diff $diff;" . BR;
-		return 0;
-	}
-
-	public static function showHelp($ref) {
+public static function showHelp($ref) {
 		$t = <<<EOT
 		<div class='inlineblock'><img src='/images/help.png'  style = 'width:24px;' onClick="helpwin('$ref');" /></div>
 EOT;
 		echo $t;
-	}
+}
 
 public static function echop($text){
     echo "<p>$text</p>";

@@ -46,7 +46,7 @@ $twolocs = ['jr','hq'];
 
 // what function?
 
-$f = reccamps();
+$f = tours();
 
 // echo "<script>setInterval(dtime(),60);</script>";
 // function dtime(){
@@ -54,6 +54,12 @@ $f = reccamps();
 // echo
 // "<script>document.write(show_time())</script>"
 // ;}
+
+function tours() {
+	global $CM;
+	$CM->rebuild_cache_tours();
+	exit;
+}
 
 function reccamps(){
 	global $CM;

@@ -1,4 +1,5 @@
 html {
+		scroll-behavior: smooth;
 		font-size: 62.5%
 		/* sets rem to 10px */
 	}

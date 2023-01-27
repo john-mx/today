@@ -17,10 +17,10 @@ namespace DigitalMx\jotr;
 <title>Refresh All Caches</title>
 </head>
 <body>
-Starting all cache refresh
+Starting all cache refresh <br>
 <?php
 echo	$CM->refreshAllCaches ();
-echo "Done" . BRNL
+echo BR. "Done" . BRNL
 . "</body></html>";
 
 exit;
