@@ -22,7 +22,7 @@ use DigitalMx\jotr\Utilities as U;
 
 <div class='head' id='titles' >
 
-	<div class='pad' style='justify-content:flex-start;' onClick = 'getLocal();'> <?php if ($qs == 'snap'):?>Now<br /><div id='clock'> </div>
+	<div class='pad' style='justify-content:flex-start;' onClick = 'getLocal();'> <?php if ($qs == 'snap' || $qs == 'scroll'):?>Now<br /><div id='clock'> </div>
 		<?php else: ?>&nbsp;&nbsp;&nbsp;<br/><?php endif; ?>
 		</div>
 

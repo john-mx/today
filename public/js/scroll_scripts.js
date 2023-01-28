@@ -4,13 +4,14 @@ function pageScroll() {
             if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
         		scrolldelay = setTimeout('PageUp()',2000);
     		}
-
+		display_clock();
 }
 
 function PageUp() {
 	window.scrollTo(0, 0);
 }
 
+display_clock();
 /*
 Add to bottom of page:
 
