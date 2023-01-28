@@ -53,7 +53,7 @@ echo $Plates->render('title',$meta);
 If something stops working, try moving the pointer to the top and press the "Refresh" button next to the address bar.
 </p>
 <h3>Localization</h3>
-There are a few settings that can be made locally on the display device you're using (TV, for example.)  You access the local settings by clicking on the "now" time at the left side of the title bar on the rotating TV display.
+There are a few settings that can be made locally on the display device you're using (TV, for example.)  You access the local settings by clicking on the "now" time at the left side of the title bar on the rotating or scrolling TV display.
 <ol>
 <li>You can choose the name of the site, which will display in the title bar like "Welcome to the Cottonwood Visitor Center."
 <li>You can choose which of the available pages appears in the rotation sequence on your device.
@@ -86,5 +86,8 @@ It should fit on five pages, each with room for expanding content. (today and al
 <p>Campground status (reserved, closed) is manually entered by rangers. Available sites in First Come First Served campgrounds is manually entered.  The available campsite data for reserved sites comes from recreation.gov, updated every 30 minutes. The age of data is indicated by colored backgrounds, so old data can be discounted. Only the Rotate page shows availability.</p>
 <p>The web pages all used NPS Frutiger font early on, but it is only licensed for use on NPS apps, so the font was switched to Google Rubik. </p>
 
+<h3>Scaling</h3>
+<p>TV pages are much wider than they are long (16:9 ratio).  The length of the content on the page is not entirely predictable, as there are lists of notices on some pages, and weather information can take more words.</p>
+<p>To make sure all information is visible on the screen, each page is scaled so the content length fits within the available screen space.  This will show up at the very bottom of the page as the % scaling applied to the page.  If pages are too compressed, it may be necessary to remove some items for the page.</p>
 <h3>Help</h3>
 <p>If you want to change any of the information, or if you have any problems or comments, contact John Springer. Phone or text to (503)329-7909 or email john@digitalmx.com.</p>
