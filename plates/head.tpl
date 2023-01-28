@@ -52,6 +52,8 @@ $maincss=U::addTimestamp('/css/main.css');
 $tvcss=U::addTimestamp('/css/tv.css');
 
 $snapjs = U::addTimestamp('/js/load_snap.js');
+$hidejs = U::addTimestamp('/js/hide.js');
+
 // $root_tv = U::addTimestamp('/css/root-tv.css');
 // $root_std = U::addTimestamp('/css/root-std.css');
 
@@ -102,7 +104,7 @@ $snapjs = U::addTimestamp('/js/load_snap.js');
 	<title><?=$titlex?></title>
 
 	<script src='/js/check_time.js'></script>
-	<script src='/js/hide.js'></script>
+	<script src='<?=$hidejs?>'></script>
 	<script src='/js/clock.js'></script>
 
 	<script src='/js/help.js'></script>
