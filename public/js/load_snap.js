@@ -61,10 +61,6 @@ function doResize(elementID) {
 
 }
 
-function getLocal(){
-/* loads the local options page */
-	var localWindow = window.open('/local.php');
-}
 
 function rotateDivs(idList){
 /* function grabs all the division with id starting with "page".

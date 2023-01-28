@@ -9,3 +9,9 @@ function showDiv(divid) {
     }
     return true;
 }
+
+function getLocal(){
+/* loads the local options page */
+	var localWindow = window.open('/local.php');
+}
+
