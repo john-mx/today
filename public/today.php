@@ -10,12 +10,12 @@ use DigitalMx\jotr\Utilities as U;
 
 
 
-	use DigitalMx\jotr\Today;
+
 
 	$Plates = $container['Plates'];
 
-	$Today = $container['Today'];
-$topics = $Today->build_topics();
+	$DM = $container['DisplayManager'];
+$topics = $DM->build_topics();
 
 //END START
 
@@ -31,14 +31,14 @@ $meta=array(
 	'page' => basename(__FILE__),
 	'title' => TODAY,
 	'pithy'=> $y['pithy'] ?? '',
-	'sunset' => $Today->sunset,
+	'sunset' => $DM->sunset,
 	);
 	$bodycode = ($qs == 'scroll')? "onLoad='pageScroll()'" : '';
 	echo $Plates->render ('head',$meta);
 	echo "<body $bodycode>";
 	echo $Plates->render('title',$meta);
 
-//	echo $Today->start_page('Today in the Park',$qs);
+//	echo $DM->start_page('Today in the Park',$qs);
 
 	echo $Plates -> render('today',$meta) ;
 

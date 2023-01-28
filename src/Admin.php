@@ -18,7 +18,7 @@ use DigitalMx\jotr\Utilities as U;
 
 class Admin {
 
-private $Today;
+private $DM;
 private $CM;
 private $Cal;
 private $Camps;
@@ -31,7 +31,7 @@ private static $empty_camps = array(
 
 public function __construct($c){
 
-	$this->Today = $c['Today'];
+	$this->DM = $c['DisplayManager'];
 	$this->CM = $c['CacheManager'];
 		$this->Cal = $c['Calendar'];
 		$this->Camps = $c['Camps'];

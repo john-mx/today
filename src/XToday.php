@@ -54,8 +54,6 @@ air	air quality info for jumbo rocks
 
 camps status for each campground.
 
-cgopen conatins open sites at each campground
-
 light	containx sunrise, moon phase, etc.  Derivedd from weatherapi.com
 astro data
 
@@ -73,15 +71,17 @@ data stored in caches, such as an alert or a change in weather forecast.
 The TV page also adds a new style setting the base font size (html {} )
 to 24 pt and line height to 1.1em.
 
-A refresh_cache function checks each cache for age as defined in Defs, and
+A refresh_cache function checks each cache for age as defined
+in CacheSettinigs, and
 if it is out of date reloads it from source,  (Caches that aren't
-auto refreshed have age limit in Defs set to 0).  refresh_cache is run from
-cron, typically ever 4 hours.  When caches are reloaded, sometimes the
-load failsk especially on weather.gov.  If there's a failure, there are two
+auto refreshed have age limit in Defs set to 0. Caches that are
+always refreshed have their age set to -n.  refresh_cache is run from
+cron, typically ever half hour.  When caches are reloaded, sometimes the
+load fails especially on weather.gov.  If there's a failure, there are two
 retries with 2 second delays, and if 3rd attempt fails the refresh is
 abandoned and the cache is not changed.  For weather, each location
 (jumbo rocks, cottonwood, black rock, etc) is a separate request. If one
-fails, they are all abandoned,
+fails, the previous data is retained (new data is merged with old, not replaced),
 
 
 
@@ -96,9 +96,7 @@ private $Cal;
 private $Camps;
 
 private $light;
-public $sunset;
-private $nowTZ;
-private $nowDT;
+public $sunset; // set by prepare_topic_light;;
 
 private $wlocs = ['jr','cw','br','hq'] ; // weather locations
 private $airlocs = ['jr','cw','br']; // air quality locations
@@ -110,13 +108,6 @@ public function __construct($c){
 	$this-> CM = $c['CacheManager'];
 	$this->Cal = $c['Calendar'];
 	$this->Camps = $c['Camps'];
-	// locations to use for weather report
-#	$this -> wlocs = ['jr','cw','br','hq'] ; // weather locations
-#	$this -> airlocs = ['jr','cw','br']; // air quality locations
-	$this->light = $this->build_topic_light()['light'];
-	$this->sunset = $this->light['Today']['sunset'];
-	$this->nowTZ = new \DateTimeZone('America/Los_Angeles');
-	$this->nowDT = new \DateTime();
 
 }
 
@@ -480,7 +471,7 @@ public function build_topic_weather() {
 	}
 	if (!$fail &&  (time() - $update ) > 24*60*60) {
 		$fail = true;
-		$f = 'Time over 12 hours ' . date('M d H:i',$update);
+		$f = 'Wgov over 24 hours old: ' . date('M d H:i',$update);
 	}
 	if (!$fail){
 
@@ -514,11 +505,7 @@ public function build_topic_weather() {
 
 
 public function build_topic_campgrounds() {
-/* reads the res and open caches for available
-	sites at each campgrund.  Prepares a display
-	for each site based on campground status
-	(.e., closed) and age of cache (changes to
-	'?' if cache is too old.
+/*
 */
 	$r['camps'] = $this->Camps->prepareDisplayCamps() ;
 // admin cache contains status and notes for each cg
@@ -703,7 +690,7 @@ public function format_wapi ($r) {
 	foreach ($r as $loc => $ldata){
 		 $forecast = $ldata['forecast']['forecastday'];
 		 // there are forecasts for 3 days
-		for ($i=0;$i<3;++$i){
+		for ($i=0;$i<5;++$i){
 			$daily = $forecast[$i]; #array
 
 		//	echo "period: $period";
@@ -847,31 +834,6 @@ public function format_wapi_like_wgov ($r) {
 }
 
 
-
-public function display_weather(array $wslocs=['jr','br','cw'],int $wsdays=3 ) {
-
-//Utilities::echor($wgov,'weather',STOP);
-
-	$wspec = array('wslocs'=>$wslocs,'wsdays'=>$wsdays);
-
-	if(1
-	&& isset($this->wgovupdate)
-	&& ($wgovupdate = $this->wgovupdate )
-	&&( (time() - $wgovupdate) < 8*60*60)
-	) {#use wgov
-
-		echo $this->Plates->render('weather-wgov',$wspec);
-	}elseif (1 #use wapi
-	&& isset($this->wapiupdate)
-	&& ($wapiupdate = $this->wapiupdate )
-	&&( (time() - $wapiupdate) < 8*60*60)
-	) {
-		echo $this->Plates->render('weather-wapi',$wspec);
-	} else { #no good datea
-		echo "Cannot build weather data.  All forecasts are stale.";
-	}
-
-}
 private function format_alerts($alert){
 	if (empty($alert)) return '';
 	if (empty($alert['title']) or ($alert['expires'] < time() )) return '';
@@ -926,7 +888,7 @@ public function format_wgov ($wgov) {
 			$startts = strtotime($start);
 			$daytext = date('l, M d',$startts);
 
-			if ($day > 3) break;
+			if ($day > 5) break;
 
 			$highlow = $perdata['isDaytime']? 'High':'Low';
 			$daynight= $perdata['isDaytime']? 'Day':'Night';

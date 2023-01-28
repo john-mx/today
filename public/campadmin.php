@@ -4,11 +4,11 @@ use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx\jotr\Utilities as U;
 
 
-	use DigitalMx\jotr\Today;
+	use DigitalMx\jotr\DisplayManager as DM;
 
 	$Plates = $container['Plates'];
 
-	$Today = $container['Today'];
+	$DM = $container['DisplayManager'];
 	$Login = $container['Login'];
 
 $open_options = Utilities::buildOptions(['','0','1-3','4-9','10+','?'],'',true);
@@ -31,7 +31,7 @@ $Login->check_pw(1);
 //Utilities::echor($_POST,'post');
 
 if (!empty($_POST) && !isset($_POST['pw'])) {
-		post_data ($_POST,$Today);
+		post_data ($_POST,$DM);
 		echo "<script>window.location.href='/campadmin.php';</script>";
 		exit;
 
@@ -44,7 +44,7 @@ if (!empty($_POST) && !isset($_POST['pw'])) {
 	echo "<body>";
 echo $Plates->render('title',$meta);
 
-		$y = $Today-> prepare_admin();
+		$y = $DM-> prepare_admin();
 // Utilities::echor($y);
 		echo $Plates->render('admin',$y);
 

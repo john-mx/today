@@ -11,11 +11,11 @@ ini_set('display_errors', 1);
 
 
 
-	use DigitalMx\jotr\Today;
+	use DigitalMx\jotr\DisplayManager;
 
 	$Plates = $container['Plates'];
 
-	$Today = $container['Today'];
+	$DM = $container['DisplayManager'];
 
 
 //END START

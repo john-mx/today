@@ -17,8 +17,6 @@ use DigitalMx\jotr\Utilities as U;
 
 	$Plates = $container['Plates'];
 //
-// 	$Today = $container['Today'];
-// 	$Cal = $container['Calendar'];
 
 $meta = array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',

@@ -40,10 +40,10 @@ $container['Errors'] = function ($c) {
 	return $pl;
 };
 
-$container['Today'] = function ($c) {
-	$pl = new \DigitalMx\jotr\Today($c);
-    return $pl;
-};
+// $container['Today'] = function ($c) {
+// 	$pl = new \DigitalMx\jotr\Today($c);
+//     return $pl;
+// };
 
 $container['Calendar'] = function ($c) {
 	$pl = new \DigitalMx\jotr\Calendar($c);

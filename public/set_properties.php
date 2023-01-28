@@ -10,12 +10,12 @@ use DigitalMx\jotr\Utilities as U;
 
 
 
-	use DigitalMx\jotr\Today;
+
 
 	$Plates = $container['Plates'];
 
-	$Today = $container['Today'];
-
+	$DM = $container['DisplayManager'];
+	$CM = $container['CacheManager'];
 
 //END START
 $meta=array(
@@ -33,7 +33,7 @@ echo $Plates->render('title',$meta);
 <p>This page rebuilds the properties (coordinates, zones, etc.) for the sites used for weather forcasts.  Data is stored in properties.json,  It should not normally change and the stored data is not used for anything except reference.</p>
 <?php
 
-if ($z = $Today->rebuild_properties()) {
+if ($z = $CM->rebuild_properties()) {
 	echo "Succeeded";
 	//Utilities::echor($z,'result');
 } else {

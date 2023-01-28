@@ -11,13 +11,7 @@ ini_set('display_errors', 1);
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 
 
-//
-//
-// 	$Plates = $container['Plates'];
-//
-// //	$Today = $container['Today'];
-// 	$Cal = $container['Calendar'];
-// 	$CM = $container['CacheManager'];
+
 // 	$DM = $container['DisplayManager'];
 	$PM = $container['PageManager'];
 
@@ -28,6 +22,8 @@ $meta = array(
 	'extra' => "<script src='/js/show_time.js'></script>",
 
 );
+
+
 $PM->showPage('pager',$_SERVER['QUERY_STRING']);
 
 //echo $Plates->render('head',$meta);

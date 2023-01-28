@@ -7,15 +7,12 @@ use DigitalMx\jotr\Utilities as U;
 //BEGIN START
 	require $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 
-
-
-	use DigitalMx\jotr\Today;
 	use DigitalMx\jotr\Calendar;
 
 	$Plates = $container['Plates'];
 
-	$Today = $container['Today'];
-$topics = $Today->build_topics();
+	$DM = $container['DisplayManager'];
+$topics = $DM->build_topics();
 
 //END START
 
@@ -37,6 +34,5 @@ $meta=array(
 	echo "<body>";
 		echo $Plates->render ('title',$meta);
 
-//	echo $Today->start_page('Today in the Park',$qs);
 
 	echo $Plates -> render('summary') ;

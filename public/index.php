@@ -18,9 +18,6 @@ ini_set('display_errors', 1);
 
 
 	$Plates = $container['Plates'];
-//
-// 	$Today = $container['Today'];
-// 	$Cal = $container['Calendar'];
 
 $meta = array(
 	'qs' =>  $_SERVER['QUERY_STRING'] ?? '',

@@ -94,11 +94,9 @@ private $Defs;
 private $CM;
 private $Cal;
 private $Camps;
+
 private $light;
 public $sunset; // set by prepare_topic_light;;
-private $nowTZ;
-private $nowDT;
-
 
 private $wlocs = ['jr','cw','br','hq'] ; // weather locations
 private $airlocs = ['jr','cw','br']; // air quality locations
@@ -522,12 +520,10 @@ public function build_topic_weather() {
 			$weather = $this->format_wapi_like_wgov($wapi);
 			$weather['source'] = 'weatherapi.com';
 			$w['weather'] = $weather;
-
 			return $w ;
 	}
 
-	Log::error ("All weather caches are stale "  );
-	exit;
+	die ("All weather caches are stale "  . __LINE__);
 
 }
 

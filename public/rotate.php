@@ -12,17 +12,16 @@ use DigitalMx\jotr\Utilities as U;
 
 
 
-	use DigitalMx\jotr\Today;
 	use DigitalMx\jotr\Calendar;
 
 	$Plates = $container['Plates'];
 	$CM = $container['CacheManager'];
-	$Today = $container['Today'];
+	$DM = $container['DisplayManager'];
 
 
 //Utilities::echor ($_SESSION);
 //END START
-$topics = $Today->build_topics();
+$topics = $DM->build_topics();
 
 $y=$CM->loadCache('admin');
 $admin['rotate'] = $y['rotate'] ?: ['today'];
@@ -48,7 +47,7 @@ $meta=array(
 	'extra_style' => 'tv.css',
 	'rotate' => $rotate,
 	'rdelay' => $rdelay,
-	'sunset' => $Today->sunset,
+	'sunset' => $DM->sunset,
 	'local_site' => $local['local_site'] ?? '',
 
 	);

@@ -11,7 +11,7 @@ use DigitalMx\jotr\Utilities as U;
 	require_once 'init.php';
 //echo "At " . basename(__FILE__) . " [". __LINE__ ."]" . BR;
 	$Plates = $container['Plates'];
-	$Today = $container['Today'];
+	$DM = $container['DisplayManager'];
 
 //END START
 //echo basename(__FILE__) . " [". __LINE__ ."]" . BR;

@@ -23,14 +23,14 @@ use DigitalMx\jotr\Utilities as U;
 
 	$Plates = $container['Plates'];
 
-	$Today = $container['Today'];
+	$DM = $container['DisplayManager'];
 	$Login = $container['Login'];
 	$Cal = $container['Calendar'];
 	$Admin = $container['Admin'];
 
 
 //END START
-$topics = $Today->build_topics();
+$topics = $DM->build_topics();
 
 
 
@@ -76,7 +76,7 @@ if (!empty($_POST) && !isset($_POST['pw'])) {
 ####################
 
 
-function login($pw,$Today,$Plates,$Login) {
+function login($pw,$DM,$Plates,$Login) {
 
 
 	if (strlen($pw)<4){
@@ -91,10 +91,10 @@ function login($pw,$Today,$Plates,$Login) {
 		echo "</body></html>" . NL;
 		exit;
 	}
-	show_admin($Today,$Plates);
+	show_admin($DM,$Plates);
 }
 
-function post_data($post,$Today){
+function post_data($post){
 
 	//Utilities::echor ($post,'post submityyted' , STOP);
 	$Admin->post_admin($post);

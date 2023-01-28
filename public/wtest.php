@@ -9,11 +9,10 @@ ini_set('display_errors', 1);
 
 
 
-	use DigitalMx\jotr\Today;
 
 	$Plates = $container['Plates'];
 
-	$Today = $container['Today'];
+	$DM = $container['DisplayManager'];
 
 
 //END START
@@ -35,7 +34,7 @@ $meta=array(
 
 
 
-$y = $Today->prepare_topics ();
+$y = $DM->prepare_topics ();
 //Utilities::echor($y,'y');
 
 echo $Plates -> render('weather',['weather' => $y['wgov'] ]) ;

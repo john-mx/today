@@ -16,7 +16,7 @@ ini_set('display_errors', 1);
 //
 	$Plates = $container['Plates'];
 
-	$Today = $container['Today'];
+	$DM = $container['DisplayManager'];
 	$Cal = $container['Calendar'];
 	$CM = $container['CacheManager'];
 
@@ -73,12 +73,12 @@ function refresh($force=false){
 }
 
 function current() {
-	global $Today,$Plates,$Cal;
-	$Today->rebuild_cache_current();
+	global $CM,$Plates,$Cal;
+	$CM->rebuild_cache_current();
 }
 
 function calendar(){
-	global $Today,$Plates,$Cal;
+	global $DM,$Plates,$Cal;
 
 	$c = $Cal->load_cache();
 #Utilities::echor($c);
@@ -92,18 +92,18 @@ function calendar(){
 
 
 function today(){
-	global $Today,$Plates;
+	global $DM,$Plates;
 
-	$z=$Today->build_topics();
+	$z=$DM->build_topics();
 	echo $Plates->render('today',['data'=>$z]);
 	//Utilities::echor($z,' topics');
 	exit;
 }
 
 function light(){
-	global $Today,$Plates;
+	global $DM,$Plates;
 
-	$z=$Today->build_topic_light();
+	$z=$DM->build_topic_light();
 	echo $Plates->render('light',['data'=>$z]);
 	//echo $Plates->render('conditions',$z);
 	echo "<hr>";
@@ -112,14 +112,14 @@ function light(){
 }
 
 function weather() {
-	global $Today,$Plates;
-	$Today->display_weather(['jr','cw'],2);
+	global $DM,$Plates;
+	$DM->display_weather(['jr','cw'],2);
 
 
 }
 
 function weather_gov(){
-	global $Today,$Plates;
+	global $DM,$Plates;
 #	$Today->rebuild_cache_wgov();
 
 	$z=$Today->build_topic_weather();
@@ -130,51 +130,51 @@ function weather_gov(){
 
 
 function camps(){
-	global $Today,$Plates;
-	$z=$Today->build_topic_campgrounds();
+	global $DM,$Plates;
+	$z=$DM->build_topic_campgrounds();
 	Utilities::echor($z,'topic');
 	echo $Plates->render('campground',$z);
 	exit;
 }
 
 function prep () {
-	global $Today,$Plates;
+	global $DM,$Plates;
 
-	$z = $Today->prepare_topics();
+	$z = $DM->prepare_topics();
 	Utilities::echor($z,'topic array', STOP);
 }
 
 
 function alerts() {
-	global $Today,$Plates;
+	global $DM,$Plates;
 
 	echo "Testing " . 'galerts ' . BR;
-	$Today->rebuild_cache_galerts();;
+	$DM->rebuild_cache_galerts();;
 	exit;
 }
 
 function wapi() {
-global $Today,$Plates;
+global $DM,$Plates;
 
 	echo "Testing " . 'weather ' . BR;
-	$z = $Today->build_topics();
+	$z = $DM->build_topics();
 	echo $Plates->render('weather-wapi',$z);
 	exit
 	;
 	}
 
 function wgov(array $loc) {
-	global $Today,$Plates;
+	global $DM,$Plates;
 
-	$z = $Today->rebuild_cache_wgov($loc);
+	$z = $DM->rebuild_cache_wgov($loc);
 	Utilities::echor($z);
 }
 
 function props (){
-	global $Today,$Plates;
+	global $DM,$Plates;
 
 	 "Testing " . 'props ' . BR;
-	$z = $Today->rebuild_caches(['properties']);
+	$z = $DM->rebuild_caches(['properties']);
 	exit;
 }
 
@@ -189,8 +189,8 @@ function temail ($Plates,$Today) {
 }
 
 function tprint (){
-global $Today,$Plates;
-	$Today->buildPDF();
+global $DM,$Plates;
+	$DM->buildPDF();
 	exit;
 
 }

@@ -4,7 +4,7 @@ use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx\jotr\Utilities as U;
 
 
-	use DigitalMx\jotr\Today;
+	use DigitalMx\jotr\DisplayManager as DM;
 
 /* start with ['title'=>title,'pcode'=style code,'extra'=>extra headers];
 	A working title is creeated from title . pcode (platform)

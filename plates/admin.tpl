@@ -31,7 +31,7 @@ use DigitalMx\jotr\CacheSettings as CS;
 		$alertset = $galerts[$source];
 
 		//Utilities::echor($alertset,$source);
-		$sourcename =CS::getSourceName($source);
+		$sourcename = $source;
 	?>
 	<hr style="height:4px;background-color:green;">
 	<b><?= $sourcename ?></b><br>

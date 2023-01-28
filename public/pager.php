@@ -9,13 +9,14 @@ use DigitalMx\jotr\Utilities as U;
 
 
 
-	use DigitalMx\jotr\Today;
+
 
 
 	$Plates = $container['Plates'];
 
-	$Today = $container['Today'];
+
 	$CM = $container['CacheManager'];
+	$DM = $container['DisplayManager'];
 
 
 
@@ -24,7 +25,7 @@ $page = $_SERVER['QUERY_STRING'];
 
 //$CM->refreshCache('wgov');
 
-$y=$Today->build_topics();
+$y=$DM->build_topics();
 //Utilities::echor ($y,'topics');
 
 $extra = '';

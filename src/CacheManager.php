@@ -421,7 +421,7 @@ coord: 34.0714,-116.3906,
 		$this->mergeCache($src,$x);
 		Log::info("Merged data into cache wgov");
 	}
-	$this->wgovupdate = strtotime($x['jr']['properties']['updated']);
+	//$this->wgovupdate = strtotime($x['jr']['properties']['updated']);
 	return $x;
 }
 
@@ -635,7 +635,7 @@ public function rebuild_cache_wapi(array $locs=[] ) {
 
 	$this->writeCache($src,$x);
 	Log::info("Saved updated cache $src");
-	$this->wapiupdate = $x['jr']['current']['last_updated_epoch'];
+	//$this->wapiupdate = $x['jr']['current']['last_updated_epoch'];
 	return $x;
 }
 
@@ -885,7 +885,7 @@ function get_external ($loginfo, $url,string $expected='',array $header=[]) {
 //U::echor ($response,'curl response' );			if ($success ){
 
 			if ($success && $info = curl_getinfo($curl)){
-				$httpResult =  $info["http_code"];
+				$httpResult =  trim($info["http_code"]);
 		//echo "httpResult: $httpResult" . BR;
 				if ($httpResult !== '200'){
 					$success = 0;
