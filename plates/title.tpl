@@ -8,13 +8,14 @@ use DigitalMx\jotr\Utilities as U;
 
 
 	$qs ??= '';
-	$local_site ??='';
+
 	$subtitle ??='';
 	$title ??=$subtitle;
 
-	$local_site = Defs::getLocName($local_site);
+	$local_site = $_SESSION['local']['local_site'];
+	$local_name = Defs::getLocName($local_site);
 	$local_head = ($local_site && $local_site !== 'None')?
-		"<div><b>Welcome to the $local_site</b></div>"
+		"<div><b>Welcome to the $local_name</b></div>"
 		: 'Today in Joshua Tree National Park';
 ?>
 

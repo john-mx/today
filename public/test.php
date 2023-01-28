@@ -120,9 +120,8 @@ function weather() {
 
 function weather_gov(){
 	global $DM,$Plates;
-#	$Today->rebuild_cache_wgov();
 
-	$z=$Today->build_topic_weather();
+	$z=$DM->build_topic_weather();
 	Utilities::echor($z,'build topic');
 	echo $Plates->render('weather-wgov',$z);
 	exit;
@@ -179,10 +178,10 @@ function props (){
 }
 
 
-function temail ($Plates,$Today) {
+function temail ($Plates,$DM) {
 
 //	echo $Today->start_page('test page','b');
-	$z = $Today->prepare_today();
+	$z = $DM->prepare_today();
 	// Utilities::echor ($z,'Today input to plates');
 
 	echo $Plates->render('email2',$z);

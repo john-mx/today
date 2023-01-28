@@ -32,6 +32,7 @@ $meta=array(
 	'title' => TODAY,
 	'pithy'=> $y['pithy'] ?? '',
 	'sunset' => $DM->sunset,
+	'local_site' => $local['local_site'] ?? '',
 	);
 	$bodycode = ($qs == 'scroll')? "onLoad='pageScroll()'" : '';
 	echo $Plates->render ('head',$meta);
