@@ -16,7 +16,8 @@ $cgs = array_keys(Defs::$campsites);
 <?php endif; ?>
 </h3>
 <div class='inleft2'>Open Sites checked several times a day.Background indicates age.<br/>
-Green: less than 3 hours old.  Yellow: less than 12 hours old.  Red: older. and unreliable.</div>
+Green: less than 3 hours old.  Yellow: less than 12 hours old.  Red: older. and unreliable. <br>
+Group sites not included below..</div>
 <table  class='alt-gray border center'>
 <tr ><th>Campground</th><th>Sites</th><th>Nightly Fee</th>
 <th>Open Sites</th>
