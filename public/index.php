@@ -43,7 +43,7 @@ echo $Plates->render('title',$meta);
 <h3>Overview</h3>
 It includes
 <ul>
-	<li>Weather for several days for several locations, including Jumbo Rocks</li>
+	<li>Weather for several days for several locations, including localized Jumbo Rocks</li>
 	<li>Sun and Moon rising and setting times and moon phase.
 	<li>Live data from Lost Horse RS for air quality, temperature, and wind</li>
 	<li>Visitor Advice and Park Announcements</li>
@@ -58,7 +58,7 @@ The data is provided in four formats:
 	<li>A “slide show” of pages designed for TV screen.  Each viewing location can choose which sections (slides) appear in the rotation. The TV requires only internet access (e.g., any modern Samsung TV) and it only accesses the internet once every 15 minutes for updates.  (<a href='/rotate.php' target='rotate'>Rotate</a>)</li>
 	<li>A one-page printed form, similar to what is used at JTVC.  Includes weather, announcements, and calendar. (<a href='summary.php' target='summary'>Today Summary</a>)</li>
 	<li>A publicly accessible web site that visitors could access themselves.(<a href='today.php' target='today'>Everything</a>)</li>
-	<li>A multi-page document can be printed from the "Everything" site, and one or more pages posted.  (e.g, fees page) </li>
+	<li>A multi-page document can be printed from the "today" site, and one or more pages posted.  (e.g, fees page) </li>
 
 </ol>
 
@@ -76,9 +76,9 @@ The advantages of this system are:
 <div class=' inleft2 width50 auto'>
 
 <ul>
-<li><a href='/about.php'>About the Site</a>
-<li><a href='/pages.php' target='pages'>List of Pages and Resources</a>
-<li><a href='/today.php' target='today'>Today in the Park site</a>
+<li><a href='/about.php'>More info about the Site</a>
+<li><a href='/pages.php' target='pages'>List of Pages</a>
+<li><a href='/today.php' target='today'>Today in the Park web site</a>
 <li><a href='/summary.php' target='today'>Today: one-page summary</a>
 <li><a href='/rotate.php' target='rotate'>Rotating Pages for TV Screen</a>
 </ul>
