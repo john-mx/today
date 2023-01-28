@@ -43,7 +43,7 @@ setTimeout(() => {
 	<h3>Welcome to the <?=Defs::$sitenames[$local_site]?></h3>
 	<?php endif; ?>
  -->
-<?php if (1 && $admin['pithy']): ?>
+<?php if (0 && $admin['pithy']): ?>
 	<p class='center'><i><?=$admin['pithy']?></i></p>
 <?php endif; ?>
 

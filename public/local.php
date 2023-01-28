@@ -12,18 +12,12 @@ ini_set('display_errors', 1);
 
 
 
-	use DigitalMx\jotr\Today;
+	use DigitalMx\jotr\DisplayManager;
 
 	$Plates = $container['Plates'];
-
-	$Today = $container['Today'];
-
+	$DM = $container['DisplayManager'];
 
 //END START
-
-
-
-
 
 //Utilities::echor($y,'y',STOP);
 
@@ -59,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 }
 // set up form
-$admin = $Today->build_topic_admin()['admin'];
+$admin = $DM->build_topic_admin()['admin'];
 //Utilities::echor($admin);
 
 $local = $_SESSION['local'] ?? [];
@@ -78,10 +72,11 @@ foreach (['29vc','jtvc','cwvc','brvc','hqvc','park','none'] as $vc){
 
 	$site_array[$vc] = Defs::$sitenames[$vc];
 }
+$checked = $local['local_site'] ?? '';
 $site_options = Utilities::buildRadioSet(
     'local_site',
     $site_array,
-    $check = $local['local_site'] ?? '',
+    $check = $checked,
 
     $per_row = 1,
     $show_code = false,

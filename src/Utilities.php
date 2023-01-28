@@ -204,7 +204,7 @@ public static function buildRadioSet(
 
           $checkme = ($check == $k)?"checked":'';
           if ($tablestyle){ $opt .= "<td>";}
-          $name = ${$var_name};
+          $name = $var_name;
           $opt .= "<span class='nobreak'><input type='radio' name='$name' value='$k' $checkme>&nbsp; $label</span> ";
             if ($tablestyle){ $opt .= "</td>";}
           ++$rowcount;
