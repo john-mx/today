@@ -57,7 +57,7 @@ The data is provided in four formats:
 <ol>
 	<li>A “slide show” of pages designed for TV screen.  Each viewing location can choose which sections (slides) appear in the rotation. The TV requires only internet access (e.g., any modern Samsung TV) and it only accesses the internet once every 15 minutes for updates.  (<a href='/rotate.php' target='rotate'>Rotate</a>)</li>
 	<li>A one-page printed form, similar to what is used at JTVC.  Includes weather, announcements, and calendar. (<a href='summary.php' target='summary'>Today Summary</a>)</li>
-	<li>A publicly accessible web site that visitors could access themselves.(<a href='today.php' target='today'>Everything</a>)</li>
+	<li>A publicly accessible web site that visitors could access themselves.(<a href='today.php' target='today'>Today in Joshua Tree National Park</a>)</li>
 	<li>A multi-page document can be printed from the "today" site, and one or more pages posted.  (e.g, fees page) </li>
 
 </ol>
