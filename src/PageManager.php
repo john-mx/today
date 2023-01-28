@@ -47,12 +47,13 @@ public function __construct($c){
 
 }
 
-public function showPage(string $page, string $pagename='', string $query_string = '') {
-	$pagename = $pagename ?: $page;
+public function showPage(string $pagename, string $query_string = '') {
+
 
 	echo $this->startHTML();
-	echo $this->startHead($page,$pagename,$querystring);
-	switch ($page) {
+	echo $this->startHead($pagename,$querystring);
+
+	switch ($pagename) {
 		case 'pages':
 			echo "</head><body>";
 			echo $this->Plates->render('pages');
@@ -69,7 +70,9 @@ public function showPage(string $page, string $pagename='', string $query_string
 					echo "Page not recognized: $qs";
 			}
 			break;
+		case 'rotate' :
 
+			break;
 
 
 
@@ -105,35 +108,29 @@ private function startHead($page,$pagename,$querystring){
 			$animation='snap';
 			$refresh_header = '<meta http-equiv="refresh" content="900" >';
 			$scbody = "onLoad=load_snap()";
+			$animation_script = "<script src='/js/load_snap.js'></script>";
 			break;
 		case 'scroll':
 			$animation = 'scroll';
 			$refresh_header = '<meta http-equiv="refresh" content="900" >';
 			$scbody='onLoad="pageScroll()"';
+			$animation_script = "<script src='/js/scroll_scripts.js'></script>";
 			break;
 		default:
 			$animation = '';
 			$refresh_header = '';
 			$scbody = '';
+			$animation_script = "";
 
 	}
 
-	$titlex = $pagename
-			. $animation? ":$animation": ''
-			. ' (' .SITE  .') ';
-			#.  '[' . REPO .']'
+
 
 // for rotation..
 	$rotate ??= [];
 	$rdelay ??=13;
 	//$pagelist = json_encode($pages);
 //Utilities::echor($pagelist,'pagelist');
-
-	if ($qs == 'scroll'){
-
-			$added_headers .= "<style>html {scroll-behavior: smooth;}</style>" .NL;
-			$added_headers .= "<script src='/js/scroll_scripts.js'></script>".NL;
-
 
 
 			} else if ($qs == 'snap'){
@@ -143,16 +140,14 @@ private function startHead($page,$pagename,$querystring){
 				if ($rotate){
 					foreach ($rotate as $pid){
 						$pages[] = '#page-'.$pid;
-					}
-				}
 
-
-
-				$added_headers .= '<meta http-equiv="refresh" content="900" >'.NL;
-				$added_headers .= "<script src='/js/load_snap.js'></script>";
 				$added_headers .= "<script>var pageList = $pagelist;var rdelay = $rdelay;</script>" .NL;
 		}
 
+$titlex = $pagename
+			. $animation? ":$animation": ''
+			. ' (' .SITE  .') ';
+			#.  '[' . REPO .']'
 
 
 $maints = U::addTimestamp('/css/main.css');

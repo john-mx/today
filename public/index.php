@@ -35,12 +35,12 @@ echo $Plates->render('title',$meta);
 
 
 
-<h4>Today In The Park</h4>
+<h3>Today In The Park</h3>
 <p>
 “Today in the Park” is a internet-based system to provide visitors with key information about this day in Joshua Tree National Park.
 </p>
 
-<h4>Overview</h4>
+<h3>Overview</h3>
 It includes
 <ul>
 	<li>Weather for several days for several locations, including Jumbo Rocks</li>

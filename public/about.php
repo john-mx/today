@@ -32,19 +32,7 @@ echo $Plates->render('title',$meta);
 //END START
 
 ?>
-<h3>About Today</h3>
-<p>The “Today” site  is a web-based presentation of today’s conditions and activities in the park. It includes weather, alerts and advice, events, and (soon) campsite availability.   It was designed to make timely information available to visitors with minimal effort from park rangers and staff. The information is produced in four formats:</p>
-<ol>
-<li>You can display it on a internet-enabled TV screen as a rotating series of slides (only tested on Samsung). Uses large type so will look funny on computer.<br />
-<a href='/rotate.php' target='rotate'><code><?=SITE_URL?>/rotate.php</code></a>
-<li>You can print a 1-page summary, including weather, alerts, and events, for use in visitor centers or campgrounds.<br />
-<a href='summary.php' target='summary'><code><?=SITE_URL?>/summary.php</code></a>
-<li>Anyone can view all the key park info. This is a publicly available site.<br>
-<a href='/today.php' target='today'><code><?=SITE_URL?>/today.php</code></a>
-<li>The web site above can be printed as a 5-page document. (You can also render and print each section individually.  See the page list below.)
-</ol>
-<p>For a complete list of available pages and functions, go to <a href='/pages.php' target='pages'>/pages.php</a></p>
-<p>
+
 <h3>How to set up the rotating display on a Samsung TV:</h3>
 </p>
 <ol>
@@ -95,8 +83,8 @@ It should fit on five pages, each with room for expanding content. (today and al
 <p>Alerts are entered manually, by rangers, but informed by weather.gov alerts for Joshua Tree National Park.</p>
 <p>Notices and Advice are entered manually by rangers</p>
 <p>The Calendar is manually maintained by local rangers. This makes it possible to quickly add or remove events.</p>
-<p>Campground status (reserved, closed) is manually entered by local rangers. Available sites in First Come First Served campgrounds is manually entered.  The available campsite data for reserved sites is (will) come from recreation.gov, updated every hour or so.  Availability data more than a few hours old will be displayed as '?'. Only the Rotate page shows availability.</p>
-<p>The web pages all use NPS Frutiger font. You're welcome. </p>
+<p>Campground status (reserved, closed) is manually entered by rangers. Available sites in First Come First Served campgrounds is manually entered.  The available campsite data for reserved sites comes from recreation.gov, updated every 30 minutes. The age of data is indicated by colored backgrounds, so old data can be discounted. Only the Rotate page shows availability.</p>
+<p>The web pages all used NPS Frutiger font early on, but it is only licensed for use on NPS apps, so the font was switched to Google Rubik. </p>
 
 <h3>Help</h3>
 <p>If you want to change any of the information, or if you have any problems or comments, contact John Springer. Phone or text to (503)329-7909 or email john@digitalmx.com.</p>

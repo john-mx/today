@@ -46,17 +46,17 @@ echo $Plates->render('title',$meta);
 <h4>Pages</h4>
 <table class='index'>
 <tr><td >Link</td><td >Result</td></tr>
-<tr class='bg-yellow'><td colspan='2'>Information Pages</td></tr>
+<tr class='bg-yellow'><td colspan='2'>General Information</td></tr>
 
 <tr><td><a href='about.php' target='about'>About</a></td><td>General information about the site.</td></tr>
 <tr><td><a href='/'>Overview</td><td>Overview of the project</td></tr>
 
 <tr class='bg-yellow'><td>'Today' Pages</td><td></td></tr>
 
-<tr><td ><a href="/today.php" target='today'>Today Report</a>
+<tr><td ><a href="/today.php" target='today'>Today Web Site</a>
 </td><td >Public web site with all data. Can be printed (5 pages).  Does not include campsite availability. (or should it?)</td></tr>
 
-<tr><td ><a href="/summary.php" target='summary'>Summary</a>
+<tr><td ><a href="/summary.php" target='summary'>Today Summary</a>
 </td><td >One page summary of today's conditions, alerts, and events. </td></tr>
 
 
