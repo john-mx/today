@@ -128,13 +128,13 @@ public static $coordinates = [
 */
 	private static $cacheTimes  = array (
 
-				'calendar' => 60*6,  //filtered to remove expired entries
+				'calendar' => 110,  //filtered to remove expired entries
 				'admin' => 0, // always manual
 				'properties' => 0, // manual only
-				'wgov' => 90,
-				'wapi' => 90,
+				'wgov' => 220,
+				'wapi' => 220,
 				'airq' => 0, // not used
-				'airnow' => 235,
+				'airnow' => 232,
 				'airowm' => 0,  // not used
 
 				'galerts' => 110, // weather.gov alerts
