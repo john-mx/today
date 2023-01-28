@@ -37,7 +37,7 @@ echo $Plates->render('title',$meta);
 
 <h3>Today In The Park</h3>
 <p>
-“Today in the Park” is a internet-based system to provide visitors with key information about this day in Joshua Tree National Park.
+“Today in the Park” is a internet-based system to provide visitors with key information about this day in Joshua Tree National Park.  It was inspired by the purchase of TV displays for the visitor centers, which provided a way to communicate park information directly to visitors in real time.
 </p>
 
 <h3>Overview</h3>
@@ -48,8 +48,8 @@ It includes
 	<li>Live data from Lost Horse RS for air quality, temperature, and wind</li>
 	<li>Visitor Advice and Park Announcements</li>
 	<li>Weather.gov alerts, edited for local use.</li>
-	<li>Campsite information, including live availability from rec.gov (in process)</li>
-	<li>Fees and where to buy</li>
+	<li>Campsite information, including live availability from rec.gov </li>
+	<li>Entrance Fees and where to buy</li>
 	<li>Events for today and next day</li>
 </ul>
 
