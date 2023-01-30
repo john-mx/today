@@ -127,17 +127,20 @@ button {
 	background-color:#CCF;
 	font-weight: bold;
 }
-input[type=checkbox] {
-	outline:1px solid black;
-	font-size:2rem;
 
+input[type=checkbox] {
+	border:1px solid black;
+	box-shadow:1 1 1 1px #000;
 }
 
 input[type=radio] {
-	outline:1px solid black;
-	font-size:2rem;
+	font-size:inherit;
+	height:1:2em;
+	width:1.2em;
+	border:0.2em solid black;
 
 }
+
 
 
 input.submit, button.submit {

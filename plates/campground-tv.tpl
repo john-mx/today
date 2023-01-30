@@ -7,6 +7,7 @@ use DigitalMx\jotr\Utilities as U;
 if(empty($camps)): echo "No Campground Data"; exit;
 endif;
 
+
 ?>
 
 <h3>Campgrounds
@@ -18,8 +19,13 @@ endif;
 <?php
 	$cgs = array_keys(Defs::$campsites);
 	sort ($cgs);
+	$staletags = array(
+		'0' => '',
+		'1' => "<span class='green'><b>?</b></span>",
+		'2' => "<span class='red'>⁉️</span>",
+	);
 ?>
-<div>Open Sites updated frequently. Green = reported in last 3 hours; yellow = last 12 hours; red = older. Reserved sites from Recreation.gov update at <?=$camps['updated']?> </div>
+<div>Open Sites updated frequently. Tag after open number indicates age. No tag: less than 3 hours old.  <?=$staletags[1]?>: less than 12 hours old.  <?=$staletags[2]?>: older. and unreliable. Reserved sites from Recreation.gov update at <?=$camps['updated']?> </div>
 <div class ='center ' style='vertical-align:top' >
 
 <?php $status = 'Reserved';
@@ -35,14 +41,17 @@ $no_entries = true; ?>
 		<th style='width:4em;'>Fee</th>
 		<th>Open Sites</th></tr>
 	<?php foreach ($cgs as $cg) :
+
 		if ($camps['cgs'][$cg]['status'] == $status) :
+				$staletag = $staletags[$camps['cgs'][$cg]['stale']];
+
 				$no_entries=false; ?>
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
 				<td> $&nbsp;<?= Defs::$campfees[$cg] ?> </td>
 
-				<td style='background-color:<?=$camps['cgs'][$cg]['stale']?>' ><?= $camps['cgs'][$cg]['open'] ?> </td>
+				<td style='background-color:<?=$camps['cgs'][$cg]['stale']?>' ><?= $camps['cgs'][$cg]['open'] ?> <?=$staletag?></td>
 
 				</tr>
 		<?php endif ?>
@@ -65,13 +74,16 @@ $no_entries = true; ?>
 	<tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th><th>Open Sites</th></tr>
 	<?php foreach ($cgs as $cg) :
 		if ($camps['cgs'][$cg]['status'] == $status) :
+				$staletag = $staletags[$camps['cgs'][$cg]['stale']];
+
 				$no_entries=false; ?>
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
 				<td> $&nbsp;<?= Defs::$campfees[$cg] ?> </td>
 
-				<td style='background-color:<?=$camps['cgs'][$cg]['stale']?>' ><?= $camps['cgs'][$cg]['open'] ?> </td>
+				<td style='background-color:<?=$camps['cgs'][$cg]['stale']?>' ><?= $camps['cgs'][$cg]['open'] ?>
+				<?=$staletag?></td>
 
 				</tr>
 			<?php endif ?>
@@ -89,6 +101,8 @@ $no_entries = true; ?>
 <tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th><th>Open SItes</th></tr>
 	<?php foreach ($cgs as $cg) :
 		if ($camps['cgs'][$cg]['status'] == $status) :
+			$staletag = $staletags[$camps['cgs'][$cg]['stale']];
+
 				$no_entries=false; ?>
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>

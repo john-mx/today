@@ -146,12 +146,9 @@ public static function buildCheckBoxSet(
         $opt = '';
 
     $rowcount = 0;
-    $tablestyle=false;
     asort($val_array);
     $varcount = count($val_array);
-    if ($varcount > $per_row){$tablestyle=true;}
     $opt = '';
-    if ($tablestyle){$opt = "<table><tr>";}
 
     foreach ($val_array as $k => $v) {
     #echo "k=$k,v=$v,check=$check" . BRNL;
@@ -161,16 +158,9 @@ public static function buildCheckBoxSet(
         $label .= ($show_code)? " ($k)" : '';
 
           $checkme = (strstr($check, (string)$k))?"checked":'';
-          if ($tablestyle){ $opt .= "<td>";}
-          $opt .= "<span class='nobreak'><input type='checkbox' name='{$var_name}[]' value='$k' $checkme>$label</span> ";
-            if ($tablestyle){ $opt .= "</td>";}
+          $opt .= "<div style='white-space:nowrap;display:inline'> <label><input type='checkbox' name='{$var_name}[]' value='$k' $checkme>$label</label></div> ";
           ++$rowcount;
-        if ($rowcount%$per_row == 0) {
-            $opt .= ($tablestyle)? "</tr><tr>" : '<br>';
-
-        }
     }
-        if ($tablestyle){ $opt .= "</tr></table>\n";}
       return $opt;
 }
 
@@ -178,42 +168,33 @@ public static function buildRadioSet(
     $var_name,
     $val_array,
     $check = '',
-    $per_row = 1,
+    $cols = 1,
     $show_code = false
 ) {
     // like building select options, but shows as
     // checkboxes instead (multiples ok)
     // $check is string with multiple characters to match against the val array
-    //per_row is how many items to put in a row; 1 is verticle list
+    //cols is how many cols to form.  1 makes a verticel column;
+    // n makes a horizontal row.
         $opt = '';
 
     $rowcount = 0;
     $tablestyle=false;
     asort($val_array);
     $varcount = count($val_array);
-    if ($varcount > $per_row){$tablestyle=true;}
+
     $opt = '';
-    if ($tablestyle){$opt = "<table><tr>";}
 
     foreach ($val_array as $k => $v) {
     #echo "k=$k,v=$v,check=$check" . BRNL;
         if (empty($v)){continue;} #removes blank values
-
         $label = $v;
-        $label .= ($show_code)? " ($k)" : '';
+        if ($show_code) $label .= " ($k)";
 
           $checkme = ($check == $k)?"checked":'';
-          if ($tablestyle){ $opt .= "<td>";}
           $name = $var_name;
-          $opt .= "<span class='nobreak'><input type='radio' name='$name' value='$k' $checkme>&nbsp; $label</span> ";
-            if ($tablestyle){ $opt .= "</td>";}
-          ++$rowcount;
-        if ($rowcount%$per_row == 0) {
-            $opt .= ($tablestyle)? "</tr><tr>" : '<br>';
-
-        }
-    }
-        if ($tablestyle){ $opt .= "</tr></table>\n";}
+          $opt .= "<div style='white-space:nowrap;display_inline;'><label><input type='radio' name='$name' value='$k' $checkme>&nbsp; $label</</label></div> ";
+      }
       return $opt;
 }
 

@@ -7,6 +7,11 @@ use DigitalMx\jotr\Utilities as U;
 // set up stale flags
 $cgs = array_keys(Defs::$campsites);
 	sort ($cgs);
+	$staletags = array(
+		'0' => '',
+		'1' => "<span class='green'><b>?</b></span>",
+		'2' => "<span class='red'>⁉️</span>",
+	);
 
 	if(empty($camps)): echo "No Campground Data"; else:
 ?>
@@ -15,8 +20,8 @@ $cgs = array_keys(Defs::$campsites);
 	<span class='red'><b>ALL CAMPGROUNDS ARE FULL!</b></span>
 <?php endif; ?>
 </h3>
-<div class='inleft2'>Open Sites checked several times a day.Background indicates age.<br/>
-Green: less than 3 hours old.  Yellow: less than 12 hours old.  Red: older. and unreliable. <br>
+<div class='inleft2'>Open Sites checked several times a day. Stale tag follows open site number.<br/>
+No tag: less than 3 hours old.  <?=$staletags[1]?>: less than 12 hours old.  <?=$staletags[2]?>: older. and unreliable. <br>
 Group sites not included below..</div>
 <table  class='alt-gray border center'>
 <tr ><th>Campground</th><th>Sites</th><th>Nightly Fee</th>
@@ -43,13 +48,16 @@ Group sites not included below..</div>
 			<?php foreach ($cgs as $cg) : ?>
 			 <?php if ($camps['cgs'][$cg]['status'] == $status):
 				$no_entries=false;
+				$staletag = $staletags[$camps['cgs'][$cg]['stale']];
 
 				?>
 				<tr class='border-bottom'>
 				<td class='left'>  <?=Defs::$sitenames [$cg] ?>  </td>
 				<td> <?= Defs::$campsites[$cg] ?> </td>
 				<td> $&nbsp;<?= Defs::$campfees[$cg] ?> </td>
-				<td style='background-color:<?=$camps['cgs'][$cg]['stale']?>'><?= $camps['cgs'][$cg] ['open']?> </td>
+				<td xstyle='background-color:<?=$camps['cgs'][$cg]['stale']?>'><?= $camps['cgs'][$cg] ['open']?> <?=$staletag?>
+
+						</td>
 				<td> <?= $camps['cgs'][$cg]['notes'] ?>  </td>
 				</tr>
 			<?php  endif; ?>

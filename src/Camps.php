@@ -100,14 +100,22 @@ public function prepareDisplayCamps(){
 		$camps['updated'] = file_get_contents(REPO_PATH . '/var/rec.gov_update');
 
 
-		if ((time() - $camps[$cg]['asof'])  < Defs::$data_timeouts['newest']*60*60): $stale = '#3F3';
-		elseif ((time() - $camps[$cg]['asof'])  < Defs::$data_timeouts['new']*60*60): $stale = '#FF3';
-		else: $stale = '#F33';
+		if ((time() - $camps[$cg]['asof'])  < Defs::$data_timeouts['newest']*60*60):
+			$stale = '0';
+			$camps['cgs'][$cg]['stalex']= 0;
+		elseif ((time() - $camps[$cg]['asof'])  < Defs::$data_timeouts['new']*60*60):
+			$stale = '1';
+			$camps['cgs'][$cg]['stalex']= 1;
+
+
+		else: $stale = '2';
+			$camps['cgs'][$cg]['stalex']= 2;
+
 		endif;
 		$camps['cgs'][$cg]['stale'] = $stale;
 
 		if ($camps[$cg]['status'] == 'Closed') {
-				$camps['cgs'][$cg]['stale'] = '#FFF';
+				$camps['cgs'][$cg]['stale'] = '0';
 				$camps['cgs'][$cg]['open'] = 0;
 		}
 
