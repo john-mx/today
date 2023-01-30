@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
  -->
 <p>
 Enter update to available sites.  No entry means keep current value.
-Reservation sites updated (not implemented yet) from rec.gov hourly.
+Reservation sites updated from recreation.gov hourly.
 </p>
 
 <p>

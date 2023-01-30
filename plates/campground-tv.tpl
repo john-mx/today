@@ -33,7 +33,7 @@ $no_entries = true; ?>
 
 <table class='alt-gray width45 inlineblock'>
 	<tr class='bg-orange '><td colspan='4' ><b>Reserved Campsites</b></td></tr>
-		<tr><td colspan='4' class='left'>Reserve site at rec.gov or call (877) 444-6777 or from outside US +1 (606) 515-6777.<br />
+		<tr><td colspan='4' class='left'>Reserve site at recreation.gov or call (877) 444-6777 or from outside US +1 (606) 515-6777.<br />
 
 		</td></tr>
 	<tr ><th>Campground</th>

@@ -34,7 +34,7 @@ No tag: less than 3 hours old.  <?=$staletags[1]?>: less than 12 hours old.  <?=
 	?>
 
 <?php if ($status == 'Reserved'): ?>
-	<tr class='bg-orange left'><td colspan='5' ><b>Reserved Campgrounds</b> Make reservations at rec.gov or call 1-877-444-6777. </td></tr>
+	<tr class='bg-orange left'><td colspan='5' ><b>Reserved Campgrounds</b> Make reservations at recreation.gov or call 1-877-444-6777. </td></tr>
 
 <?php elseif ($status == 'First'): ?>
 	<tr class='bg-orange left'><td colspan='5' ><b>First Come, First Served Campgrounds</b> Find an empty site and claim it. Pay ranger or at entrance station. </td></tr>

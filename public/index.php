@@ -48,7 +48,7 @@ It includes
 	<li>Live data from Lost Horse RS for air quality, temperature, and wind</li>
 	<li>Visitor Advice and Park Announcements</li>
 	<li>Weather.gov alerts, edited for local use.</li>
-	<li>Campsite information, including live availability from rec.gov </li>
+	<li>Campsite information, including live availability from recreation.gov </li>
 	<li>Entrance Fees and where to buy</li>
 	<li>Events for today and next day</li>
 </ul>

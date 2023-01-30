@@ -108,7 +108,7 @@ Click <button type='button' onClick = "showDiv('camps');">Campground Admin</butt
  -->
 <p>
 Enter update to available sites.  No entry means keep current value.
-Reservation sites updated (not implemented yet) from rec.gov hourly.
+Reservation sites updated (not implemented yet) from recreation.gov hourly.
 </p>
 
 <!--

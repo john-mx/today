@@ -16,7 +16,7 @@ $open_options = U::buildOptions(['','0','a few','around 10','10 +','?'],'',true)
  -->
 <p>
 Enter update to available sites.  No entry means keep current value.
-Reservation sites updated (not implemented yet) from rec.gov hourly.
+Reservation sites updated from recreation.gov hourly.
 </p>
 
 <!--

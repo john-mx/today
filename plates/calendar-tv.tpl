@@ -68,7 +68,7 @@ foreach ($calendar as $cal){
 
 
 	<?php if ($cal['reservation'] ?? ''): ?>
- 		<br /><span class='red'>Reservation Req'd on rec.gov</span>
+ 		<br /><span class='red'>Reservation Req'd</span>
 	<?php endif; ?>
 
 	</td>
@@ -90,5 +90,5 @@ foreach ($calendar as $cal){
 </tbody>
 
 </table>
-
+<div><small>For reservations, go to recreation.gov or call 1-877-444-6777</small></div>
 <?php endif; ?>
