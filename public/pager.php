@@ -33,17 +33,6 @@ $plate2 = '';
 $z=[];
 switch ($page) {
 
-	case 'fees':
-		$subtitle = 'Fee Schedule';
-		$plate= 'fees';
-		$z = $y;
-		break;
-	case 'fees-condensed':
-		$subtitle = 'Fees (Condensed)';
-		$plate='fees-condensed';
-		$z=$y;
-		break;
-
 
 	case 'events':
 		$subtitle = "Upcoming Events";
@@ -69,12 +58,14 @@ switch ($page) {
 		$subtitle = 'Campgrounds';
 		$z=$y;
 		$plate = 'campground';
+		$plate2 = 'qr_camps';
 		break;
 
-	case 'fees2':
-		$subtitle = 'Fees 2';
+	case 'fees':
+		$subtitle = 'Fees';
 		$z=['fees' => Defs::getFees()];
-		$plate = 'fees2';
+		$plate = 'fees';
+		$plate2 = 'qr_fees';
 		break;
 
 	default:
@@ -93,7 +84,6 @@ echo $Plates->render('head',$meta);
 echo "<body>";
 echo $Plates->render('title',$meta);
 echo $Plates->render($plate,$z);
-if ($plate2){
-echo $Plates->render($plate2,$z);
-}
+if ($plate2) echo $Plates->render($plate2,$z);
+
 

@@ -20,7 +20,8 @@
         "pimple/pimple": "^3.2",
 
         "league/plates": "^3.3",
-        "monolog/monolog": "^3.2"
+        "monolog/monolog": "^3.2",
+        "guzzlehttp/guzzle": "^7.0"
 
 
     },
