@@ -32,17 +32,26 @@ echo $Plates->render('title',$meta);
 //END START
 
 ?>
+<h3>How it works</h3>
+<p>The site works by periodically (like every 1/2 hour) querying various web resources to get updated information on weather, alerts, air quality, etc.  This information is stored until the next update.  </p>
+	When a web page is requested, the stored information is
+	retrieved and compiled into the form needed for display,
+	and then sent a template that exists for each web page.
+	The template does the final formatting for displaying the page.
+</p>
+<p>The site is build using a language called "PHP", which is commonly used for web sites, including the nps.gov sites for parks.</p>
 
 <h3>How to set up the rotating display on a Samsung TV:</h3>
-</p>
+One thing the system generates is a web page that produces
+rotating "slides" on a tv screen.  Here's how to use it.
 <ol>
 <li>Turn on the TV and press Source on remote or press Home.  Press  down and right arrow on the remote (may be circle around central button) to move across sources and get to the “Internet:” choice, and select it.
 <li> If you get a page with bookmarks that shows a "Rotate" site, choose it from the bookmarks, and you're basically done.
 <li> Otherwise
 	<ol type='a'>
 <li>Move to the URL field and press Enter.  You'll get a keyboard on the screen.
-<li>Type this url into the url field using the arrow keys and center “Enter” button to navigate the keyboard. <br /> <code>https://jotr.digitalmx.com/rotate.php</code><br />
-<li> Scroll to and press the “Done” key when finished.  The Today page should come up.
+<li>Type this url into the url field using the arrow keys and middle “Enter” button to navigate the keyboard. <br /> <code>https://jotr.digitalmx.com/rotate.php</code><br />
+<li> Scroll to and press the “Done” key when finished.  The rotating Today page should come up.
 <li> Move the pointer to the Star at the right of the address bar and press Enter to bookmark the site.<br />(Choose local, I think).
 
 <li>(One time setup) Use the arrow keys to navigate to the 3-bar menu pattern at very top right ,and choose Settings.  Under General, set the home page to Bookmarks, and Enable the “hide menu bar automatically” choice.
@@ -53,7 +62,7 @@ echo $Plates->render('title',$meta);
 If something stops working, try moving the pointer to the top and press the "Refresh" button next to the address bar.
 </p>
 <h3>Localization</h3>
-There are a few settings that can be made locally on the display device you're using (TV, for example.)  You access the local settings by clicking on the "now" time at the left side of the title bar on the rotating or scrolling TV display.
+There are a few settings that can be made locally on the display device you're using (TV, for example.)  You access the local settings by clicking on the "Now" time at the left side of the title bar on the rotating or scrolling TV display.
 <ol>
 <li>You can choose the name of the site, which will display in the title bar like "Welcome to the Cottonwood Visitor Center."
 <li>You can choose which of the available pages appears in the rotation sequence on your device.
@@ -83,7 +92,7 @@ It should fit on five pages, each with room for expanding content. (today and al
 <p>Alerts are entered manually, by rangers, but informed by weather.gov alerts for Joshua Tree National Park.</p>
 <p>Notices and Advice are entered manually by rangers</p>
 <p>The Calendar is manually maintained by local rangers. This makes it possible to quickly add or remove events.</p>
-<p>Campground status (reserved, closed) is manually entered by rangers. Available sites in First Come First Served campgrounds is manually entered.  The available campsite data for reserved sites comes from recreation.gov, updated every 30 minutes. The age of data is indicated by colored backgrounds, so old data can be discounted. Only the Rotate page shows availability.</p>
+<p>Campground status (reserved, closed) is manually entered by rangers. Available sites in First Come First Served campgrounds is manually entered.  The available campsite data for reserved sites comes from recreation.gov, updated every 30 minutes. The age of data is indicated by tags next to the number, so old data can be discounted. Only the Rotate page shows availability.</p>
 <p>The web pages all used NPS Frutiger font early on, but it is only licensed for use on NPS apps, so the font was switched to Google Rubik. </p>
 
 <h3>Scaling</h3>
