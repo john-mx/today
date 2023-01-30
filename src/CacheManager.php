@@ -7,6 +7,7 @@ use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx\jotr\Utilities as U;
 use DigitalMx\jotr\InitializeCache;
 use DigitalMx\jotr\CacheSettings as CS;
+use DigitalMx]jotr\Api;
 
 
 
@@ -654,6 +655,8 @@ public function rebuild_properties() {
 		$url = "https://api.weather.gov/points/$lat,$lon";
 					//(https://api.weather.gov/points/{lat},{lon}).
 		$expected = 'properties';
+		$client = new Api(CS::getURL('props'));
+
 		if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {sleep (2); #retry
 			if (!$aresp = $this->get_external($loginfo,$url, $expected, $curl_header) ) {
 				return false;

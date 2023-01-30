@@ -112,7 +112,7 @@ public static $coordinates = [
 	'airowm' => 'api.openweathermap.org',
 	'airnow' => 'airnowapi.org/observation',
 	'wapi' => 'api.weatherapi.com forecast',
-	'wgov' => 'weather.gov',
+	'wgov' => 'https://api.weather.gov/gridpoints/',
 	'wgovalerts' => 'weather.gov alerts',
 	'ridb' => 'ridb.recreation.gov/api/availability',
 
