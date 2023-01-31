@@ -25,7 +25,7 @@ endif;
 		'2' => "<span class='red'>⁉️</span>",
 	);
 ?>
-<div>Open Sites updated frequently. Tag after open number indicates age. No tag: less than 3 hours old.  <?=$staletags[1]?>: less than 12 hours old.  <?=$staletags[2]?>: older. and unreliable. Reserved sites from Recreation.gov update at <?=$camps['updated']?> </div>
+<div>Tag after available number indicates age of data. No tag: less than 3 hours old.  <?=$staletags[1]?>: less than 12 hours old.  <?=$staletags[2]?>: older. and unreliable. </div>
 <div class ='center ' style='vertical-align:top' >
 
 <?php $status = 'Reserved';
@@ -39,7 +39,7 @@ $no_entries = true; ?>
 	<tr ><th>Campground</th>
 		<th>Sites</th>
 		<th style='width:4em;'>Fee</th>
-		<th>Open Sites</th></tr>
+		<th>Available</th></tr>
 	<?php foreach ($cgs as $cg) :
 
 		if ($camps['cgs'][$cg]['status'] == $status) :
@@ -71,7 +71,7 @@ $no_entries = true; ?>
 		<tr><td colspan='4'  class='left'>Find a site and claim it.  Pay ranger or at entrance station.<br />
 
 		</td></tr>
-	<tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th><th>Open Sites</th></tr>
+	<tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th><th>Availabile</th></tr>
 	<?php foreach ($cgs as $cg) :
 		if ($camps['cgs'][$cg]['status'] == $status) :
 				$staletag = $staletags[$camps['cgs'][$cg]['stale']];
@@ -98,7 +98,7 @@ $no_entries = true; ?>
 <table class='alt-gray width45' style='margin-top:1em;'>
 <tr class='bg-orange '><td colspan='4' ><b>Closed Campgrounds</b></td></tr>
 
-<tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th><th>Open SItes</th></tr>
+<tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th><th>Availables</th></tr>
 	<?php foreach ($cgs as $cg) :
 		if ($camps['cgs'][$cg]['status'] == $status) :
 			$staletag = $staletags[$camps['cgs'][$cg]['stale']];

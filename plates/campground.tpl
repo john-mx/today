@@ -20,12 +20,12 @@ $cgs = array_keys(Defs::$campsites);
 	<span class='red'><b>ALL CAMPGROUNDS ARE FULL!</b></span>
 <?php endif; ?>
 </h3>
-<div class='inleft2'>Open Sites checked several times a day. Group sites not included below. Stale tag follows open site number.<br/>
+<div class='inleft2'>Open Sites checked several times a day. Group sites not included below. Tag after open site number indicates how old data is.<br/>
 No tag: less than 3 hours old.  <?=$staletags[1]?>: less than 12 hours old.  <?=$staletags[2]?>: older. and unreliable.
 .</div>
 <table  class='alt-gray border center'>
-<tr ><th>Campground</th><th>Sites</th><th>Nightly Fee</th>
-<th>Open Sites</th>
+<tr ><th>Campground</th><th>Total Sites</th><th>Nightly Fee</th>
+<th>Available Sites</th>
 <th style='border-right:2px solid black;'>Note</th>
 </tr>
 <?php

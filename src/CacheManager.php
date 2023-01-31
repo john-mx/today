@@ -7,7 +7,7 @@ use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx\jotr\Utilities as U;
 use DigitalMx\jotr\InitializeCache;
 use DigitalMx\jotr\CacheSettings as CS;
-use DigitalMx]jotr\Api;
+use DigitalMx\jotr\Api;
 
 
 
