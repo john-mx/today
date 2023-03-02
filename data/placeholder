@@ -1,0 +1,8 @@
+# This file is to keep something in the git data directory
+<<<<<<< HEAD
+||||||| 829cae1
+xxx
+=======
+line 2
+<<<<<<< HEAD
+>>>>>>> dev

@@ -1,0 +1,25 @@
+#!/bin/bash
+#Call with link_newest (dir,linkfile)
+# where linkfile is the path to the linkfile
+# dir is the directory to search for newest file
+
+#will make a ln at linknewest (complete path) pointing to newest
+args=("$@")
+pwd="$(pwd)"
+mybin=$(dirname -- "$( readlink -f -- "$0"; )");
+lnto="$pwd/${args[1]}";
+dir="${args[0]}";
+echo params $dir $lnto
+
+newfile=$($mybin/newest "$dir");
+echo newest $newfile
+if [ -e "$lnto" ]; then
+	rm "$lnto"
+fi
+
+ln -s "$newfile" "$lnto"
+
+
+
+#FILE=$(find "$1" -type f -maxdepth 1 -exec stat -lt "%Y-%m-%d" {} \+ | cut -d' ' -f6-  |sort -n | tail -n 1 | cut -d' ' -f2)
+#echo ${FILE##*/}

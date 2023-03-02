@@ -1,0 +1,46 @@
+@font-face {
+	font-family: Frutiger;
+	src: url('/fonts/FrutigerLTStd/FrutigerLTStd-Roman.otf')
+		format('opentype');
+		font-style:normal;
+	}
+@font-face {
+	font-family: Frutiger;
+	src: url('/fonts/FrutigerLTStd/FrutigerLTStd-Bold.otf')
+		format('opentype');
+		font-weight:bold;
+		font-style:normal;
+	}
+
+@font-face {
+	font-family: Frutiger;
+	src: url('/fonts/FrutigerLTStd/FrutigerLTStd-BoldItalic.otf')
+		format('opentype');
+		font-weight:bold;
+		font-style:italic;
+	}
+
+@font-face {
+	font-family: Frutiger;
+	src: url('/fonts/FrutigerLTStd/FrutigerLTStd-Italic.otf')
+		format('opentype');
+		font-weight:normal;
+		font-style:italic;
+
+	}
+
+@font-face {
+	font-family: Frutiger;
+	src: url('/fonts/FrutigerLTStd/FrutigerLTStd-Black.otf')
+		format('opentype');
+		font-weight:800;
+	}
+
+@font-face {
+	font-family: Frutiger;
+	src: url('/fonts/FrutigerLTStd/FrutigerLTStd-BlackItalic.otf')
+		format('opentype');
+		font-weight:800;
+		font-style:italic;
+	}
+

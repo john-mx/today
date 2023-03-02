@@ -1,0 +1,28 @@
+.DS_Store
+
+#backups (starting or ending with ~)
+~*
+*~
+#composer vendor files
+# need to regenerated on local machine
+/vendor/
+
+#generated pages/
+public/pages/
+
+#data files
+/logs/
+/var/*
+*.bbprojectd/
+tests/
+
+#script
+merge-push
+publish
+
+#version
+#data/version
+
+
+#except
+

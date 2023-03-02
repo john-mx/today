@@ -1,0 +1,23 @@
+#!/bin/bash
+
+
+parse_git_branch() {
+      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+gbranch = parse_git_branch();
+
+if [ -z $gbranch ] ; then
+	echo "Not in a git repo"
+	exit;
+fi
+
+if [ $gbranch != 'live' ] ;
+	git switch live
+fi
+
+exit;
+
+if [ ! ghome=$(git rev-parse --show-toplevel) ;then
+	echo "Not in a git repo"
+	exit;
+fi

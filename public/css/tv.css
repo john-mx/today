@@ -1,0 +1,68 @@
+
+
+/* Rubik font imported from google fonts
+	regykar 400
+	regular 400 italic
+	medium 500
+	semibold 600
+	bold 700
+	black 800
+
+	*/
+/* @import url('/css/Frutiger.css'); */
+
+
+html {
+	font-weight:500;
+	font-size:67%;
+}
+@media screen and (min-width:480px) {
+html {
+	font-size:67%;
+}
+@media screen and (min-width:960px) {
+html {
+	font-size:85%;
+}
+@media screen and (min-width:1600px){
+html {
+	font-size:110%;
+
+}
+
+
+}
+body {
+	width:96vw;
+	max-width:100vw;
+	padding-left:1em;
+	padding-right:1em;
+}
+#head {
+
+/* 	min-width:1400px; */
+	padding: 0;
+
+}
+
+#content{
+
+	padding-top:0;
+/* 	min-width:1400px; */
+
+
+}
+.page {
+	transform-origin:top center;
+}
+
+#content h3 {
+		margin-top:1rem;
+	text-align:center;
+	text-decoration:underline;
+}
+
+table tr td {font-size:1.6rem;}
+table th {font-size: 1.6rem;}
+
+

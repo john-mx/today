@@ -1,0 +1,75 @@
+Array
+(
+    [events] => Array
+        (
+            [0] => Array
+                (
+                    [title] => The Lowdown on the Coachella Valley
+                    [type] => Guided Activity
+                    [duration] => 1 hr
+                    [reservation] => on
+                    [time] =>  3:00 pm
+                    [date] =>
+                    [canceldate] => feb 26
+                    [day1] => on
+                    [day3] => on
+                    [day5] => on
+                    [day6] => on
+                    [end] =>
+                    [location] => Keys View
+                    [note] => (Why is that place so low?)
+                )
+
+            [1] => Array
+                (
+                    [title] => every saturday, Mon, Tuesday
+                    [type] => Guided Activity
+                    [duration] => 20 mins
+                    [time] =>  9:00 am
+                    [date] => feb 25
+                    [canceldate] =>
+                    [day1] => on
+                    [day2] => on
+                    [day6] => on
+                    [end] => feb 28
+                    [location] => cottonwood Trailer Park
+                    [note] =>
+                )
+
+            [2] => Array
+                (
+                    [title] => Daily at 7
+                    [type] => Evening Program
+                    [duration] => 1 hour
+                    [time] =>  1:30 pm
+                    [date] =>
+                    [canceldate] =>
+                    [day0] => on
+                    [day1] => on
+                    [day2] => on
+                    [day3] => on
+                    [day4] => on
+                    [day5] => on
+                    [day6] => on
+                    [end] =>
+                    [location] => Indian Cove Amphitheater
+                    [note] =>
+                )
+
+            [3] => Array
+                (
+                    [title] => one time only
+                    [type] => Ranger Chat
+                    [duration] => 30 mins
+                    [time] =>  1:00 am
+                    [date] => mar 1
+                    [canceldate] =>
+                    [end] =>
+                    [location] => someplace
+                    [note] =>
+                )
+
+
+        )
+
+)
