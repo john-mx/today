@@ -39,6 +39,10 @@ use DigitalMx\jotr\Utilities as U;
 		$t .= "</div>";
 		return $t;
 	}
+	//echo LIVE?'true':'false';exit;
+if (! LIVE){
+		echo "<div class='info'><a href='/copy_live.php'>Copy Live</a> You can copy the current calendar and campgrpound info from the live site to have something to work on here.</div>";
+	}
 
 ?>
 

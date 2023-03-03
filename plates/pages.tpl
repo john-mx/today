@@ -65,10 +65,10 @@
 
 <tr><td colspan='2' class='bg-yellow'>Developer Functions</td></tr>
 <tr><td> <a href='/logout.php'>Log Out</a></td><td>Clears login from current session.</td></tr>
-
-<?php $thisclass = $this->hasAccessClass('cache.php');?>
-<tr <?=$thisclass?>><td> <a href='/cache.php' <?=$thisclass?> >Copy Caches </a></td><td>Copies all caches from live site to this site.</td></tr>
-
+<?php if (!LIVE) : ?>
+<?php $thisclass = $this->hasAccessClass('copy_live.php');?>
+<tr <?=$thisclass?>><td> <a href='/copy_live.php' <?=$thisclass?> >Copy from Live </a></td><td>Copies data (camps, calendar, ranger admin) from live site to this site.</td></tr>
+<?php endif; ?>
 
 <?php $thisclass = $this->hasAccessClass('set_properties.php');?>
 <tr <?=$thisclass?>><td ><a href='/set_properties.php' target='_blank' <?=$thisclass?> >Refresh properties </a> </td><td >gets coordinates, zones, and other data from weather.gov for significant sites. (only used for reference, not live).</td></tr>

@@ -2,6 +2,11 @@
 use DigitalMx\jotr\LocationSettings as LS;
 use DigitalMx\jotr\Utilities as U;
 
+if (! LIVE){
+		echo "<div class='info' ><a href='/copy_live.php'>Copy Live</a> You can copy the current calendar and campgrpound info from the live site to have something to work on here.</div>";
+	}
+
+
 ?>
 <p>
 Enter update to available sites.  No entry means keep current value.

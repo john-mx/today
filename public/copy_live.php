@@ -32,7 +32,7 @@ echo "<script>
 $varlive = '/usr/home/digitalm/Sites/jtnp/live/var';
 $varx = REPO_PATH . '/var';
 // -p preserves timestamp
-$cmd = "cp -p $varlive/* $varx/;ls -ltH $varx;";
+$cmd = "cp -p $varlive/*.json $varx/;ls -ltH $varx;";
 //echo $cmd . BR;
  if (!exec($cmd,$output)) {echo "cp failed.";}
  else {foreach ($output as $line) echo $line.BR;}

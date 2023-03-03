@@ -96,7 +96,14 @@ public function prepare_admin() {
 	$r['galerts'] = $this->DM->build_topic_galerts();
 
 // calendar
-$events = $this->CM->loadCache('calendar')['events'];
+if (!$z=$this->CM->loadCache('calendar')) {
+	 	Log::error ("Could not load cache calendar");
+	 	return [];
+	 }
+	// fix format change
+	if (! isset($z['events'])) $z=['events'=>$z];
+
+$events = $z['events'];
 //U::echor($events,'loaded from cache');
 	$events = $this->Cal->filter_events($events,0);
 //U::echor($events,'Post filter');
