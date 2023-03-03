@@ -48,7 +48,7 @@ if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
  	<?=$cal['duration']?>
  	<?=$cal['type']?>
  	<?php if ($cal['reservation'] ?? ''): ?>
- 		<br /><span class='red'>Reservation Req'd</span>
+ 		<br /><span class='red'>Reservation Required</span>
 	<?php endif; ?>
 
 
@@ -71,5 +71,5 @@ if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 </tbody>
 
 </table>
-<div><small>For reservations, go to recreation.gov or call 1-877-444-6777</small></div>
+<div>For reservations, go to recreation.gov or call 1-877-444-6777.</div>
 <?php endif; ?>

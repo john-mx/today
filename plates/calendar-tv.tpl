@@ -72,7 +72,7 @@ foreach ($calendar as $event){
 	<td class='left' >
 	<?=$event['location']?>
 	<?php if ($event['reservation'] ?? ''): ?>
- 		<br /><span class='red'>Reservation Req'd</span>
+ 		<br /><span class='red'>Reservation Required</span>
 	<?php endif; ?>
 	</td>
 	</tr>
@@ -90,5 +90,5 @@ foreach ($calendar as $event){
 </tbody>
 
 </table>
-<div><small>For reservations, go to recreation.gov or call 1-877-444-6777</small></div>
+<div>For reservations, go to recreation.gov or call 1-877-444-6777.</div>
 <?php endif; ?>

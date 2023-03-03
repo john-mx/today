@@ -1141,8 +1141,8 @@ private function time_format($time) {
 	if (substr($time,0,1) == '0'){
 		$time = substr ($time, 1);
 	}
-	$time=str_replace(' AM','&nbsp;AM',$time);
-	$time=str_replace(' PM','&nbsp;PM',$time);
+	$time=str_replace(' AM','&nbsp;am',$time);
+	$time=str_replace(' PM','&nbsp;pm',$time);
 
 	return $time;
 }

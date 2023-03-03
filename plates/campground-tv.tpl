@@ -67,7 +67,7 @@ $no_entries = true; ?>
 $no_entries = true; ?>
 <div class='width45 inlineblock' style='vertical-align:top;'>
 <table >
-<tr class='bg-orange left'><td colspan='4' ><b>First Come, First Served Campgrounds</b></td></tr>
+<tr class='bg-orange left'><td colspan='4' ><b>First-Come, First-Served Campgrounds</b></td></tr>
 
 	<tr ><th>Campground</th><th>Sites</th><th style='width:4em;'>Fee</th><th>Available Now</th></tr>
 		<?php foreach ($cgs as $cg) : ?>
