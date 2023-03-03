@@ -197,7 +197,7 @@ private function checkAlert ($alert) {
 		}
 		try{$alertAx = new \DateTime($alert['expires']);}
 		catch (\Exception $e) {
-			Utilities::alertBadInput ("Cannot understand date/time: {$alert['expires']}");
+			Utilities::alertBadInput ("Cannot understand date/time: {$alert['expires']}.  Time must be h:mm");
 		}
 		$alertAxts = $alertAx->format('U');
 		if ($alertAxts < time()) {
