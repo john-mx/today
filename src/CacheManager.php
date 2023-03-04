@@ -491,7 +491,7 @@ public function rebuild_cache_npscal() {
 private function rebuild_cache_calendar () {
 	$x = $this->loadCache('calendar');
 	if (!isset ($x['events'])){$x=['events'=>$x];}
-	$x['events'] = Calendar::filter_events($x,0);
+	$x['events'] = Calendar::filter_events($x['events'],0);
 	$this->writeCache('calendar',$x);
 	//Log::info('rebuilt calendar cache');
 	return true;
