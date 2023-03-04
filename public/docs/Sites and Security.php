@@ -31,7 +31,7 @@ echo $Plates->render('title',$meta);
 	<li>web site: jotr.local
 	<li>access: no passwords
 	<li>caches: private, cron updates
-	<li>git remotes: dev, beta, livex, live, hub (github).  Remotes link to .git directories below;
+	<li>git remotes: dev, work, livex, live, hub (github).  Remotes link to .git directories below;
 	</ul>
 <li>Remote (on remote server)
 	<ul>
@@ -47,11 +47,11 @@ echo $Plates->render('title',$meta);
 		<li>public html:  jotrd.digitalmx.com
 		<li>web site: jotrd.digitalmx.com
 		<li>access: one pw for all access
-		<li>caches: manual update
+		<li>caches: all private, manual update
 		</ul>
 	<li>Beta Site
 		<ul>
-		<li>root: jbeta (branch beta)
+		<li>root: jbeta (branch work)
 		<li>public html: jotrb.digitalmx.com
 		<li>web site: jotrb.digitalmx.com
 		<li>access: simple pw for site.  Page controls same as live
@@ -62,7 +62,7 @@ echo $Plates->render('title',$meta);
 		<li>root: jotrx (branch live)
 		<li>public html: jotrx.digitalmx.com
 		<li>web site: jotrx.digitalmx.com
-		<li>caches: externals symlink to live,
+		<li>caches: externals symlink to live, others private
 		</ul>
 	<li>Live Site
 		<ul>
@@ -73,32 +73,36 @@ echo $Plates->render('title',$meta);
 		</ul>
 	</ul>
 
-<h3>Process</h3>
+<h3>Development Process</h3>
+Branch live is always the code on remote live and jotrx
+beta branched from live and is the main working copy
+Feature branches are branched from beta
 <ol>
 <li><b>Develop</b><ol>
-	<li>Development occurs on developers machine in repo dev or other branches derived from dev and merged in.
-	<li>push dev to test on server
+	<li>Development occurs on developers machine in repo work or  branches derived from work and merged back in.
+	<li>push dev <dev branch>:dev
 	</ol></li>
 <li><b>Beta Test</b><ol>
-	<li>switch beta, merge dev
-	<li> push beta to beta on server
-	<li> adjust caches if their structure has changed.
-	<li> invite others to test
+	<li>switch work,
+	<li> merge dev and commit
+	<li> push beta (work branch)
+	<li> make sure it works
 	</ol></li>
 <li><b>Live</b><ol>
-	<li>switch to live, merge beta
-	<li>Commit to set version/build in data/version
+	<li>switch to live,
+	<li> merge --squash work
+	<li> change tag
+	<li>Commit -m "what's new" to set version/build in data/version
 	<li> push live to live
-	<li> push live to test
+	<li> push live to jotrx
 
 	</ol></li>
 </ol>
 
 <h3>Data/Version</h3>
 <ul>
-<li>Is excluded in gitignore, so never transferred between branches.
-<li>On live branch only, is set to tag/date and added at commit
-<li>On dev and beta branches, a date code is added on server after upload.
+<li> is set to tag/date and added at commit
+
 </ul>
 
 <h3>Security</h3>
@@ -106,5 +110,5 @@ echo $Plates->render('title',$meta);
 	<li>Passwords are stored in config/passwords.ini
 	<li>Each domain (dev, live) has its own set of passwords.
 	<li> Passwords set a user level (0-9)
-	<li> Each domain and page may require a minimum user level to access. If there is no listing in passwords.ini, there are no restrictions.
+	<li> Each domain and page may require a minimum user level to access. If there is no listing for a page or domain in passwords.ini, there are no restrictions.
 </ul>
