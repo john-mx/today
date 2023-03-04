@@ -26,8 +26,6 @@ Caches have all data needed to display that section of data on today.
 Means all def lookups alreaddy done.
 Also dynamic stuff for forms (like options) need to be done
 
-So get_section includes adding defs and options.
-
 
 sections
 --------
@@ -39,40 +37,4 @@ fire
 camps
 calendar
 info
-
-#############
-main
------
-preapre admin
-prepare today
-post admin
-
-
-sub
------
-get_section
-update_section
-load_section
-
-externals
--------------
-
-external_weather
-external_air
-external_light
-external_uv
-
-
-init
------
-fire
-calendar
-camps
-today??
-
-internal
-------
-fire
-camps
-
 
