@@ -67,12 +67,15 @@ $cgs = LS::getCampCodes();
 <?php endforeach; ?>
 
 </table>
+<div>
 <p class='center'>Recreation.gov availability updated at <?=$camps['rec.gov_update']?>
 <br />
 
-Tag after availability:
- <?=Defs::getStaleTag(1)?>: Data 3 to 12 hours old.  <?=Defs::getStaleTag(2)?>: older and unreliable.
+Tag after availability:<br />
+No tag: Data is less than 3 hours old.<br />
+<?=Defs::getStaleTag(1)?>: Data 3 to 12 hours old.<br />
+<?=Defs::getStaleTag(2)?>: Old data; not reliable.
 </p>
-
+</div>
 <?php endif; ?>
 

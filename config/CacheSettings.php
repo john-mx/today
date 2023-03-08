@@ -48,12 +48,14 @@ private static $cacheFiles  = array (
 				'camps' => REPO_PATH . "/var/camps.json",
 				'current' => REPO_PATH . "/var/ext/current.json",
 				'npscal'=>REPO_PATH . "/var/ext/npscal.json",
+				'npsraw'=>REPO_PATH . "/var/ext/npsraw.json",
 				'props' => REPO_PATH . "/var/ext/properties.json",
 			//	'tours' => REPO_PATH . "/var/ext/tours.json",
 				'wapi' => REPO_PATH . "/var/ext/wapi.json",
 				'wgalerts' => REPO_PATH . "/var/ext/wgalerts.json",
 				'wgov' => REPO_PATH . "/var/ext/wgov.json",
 				'refRequest' => REPO_PATH . "/var/ext/refRequest",
+				'mergecal' => REPO_PATH . "/var/mergecal.json",
 );
 
 
@@ -153,11 +155,12 @@ public static $coordinates = [
 				'airnow' => 232,
 				'airowm' => 6*60,
 				'wgalerts' => 110, // weather.gov alerts
-				'npscal' => 6*60,
+				'npscal' => 8*60,
 				'tours' => 0, // 0 until code set.  then -1
 				'camps' => 20, // every 20 mins
 				'current' => 30,
-				'refRequest' => 60, // tracks last refresh time
+				//'refRequest' => 60, // tracks last refresh time
+				//'mergecal' => 0,
 
 
 			);

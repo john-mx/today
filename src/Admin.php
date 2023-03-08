@@ -96,26 +96,11 @@ public function prepare_admin() {
 	$r['galerts'] = $this->DM->build_topic_galerts();
 
 // calendar
-if (!$z=$this->CM->loadCache('calendar')) {
-	 	Log::error ("Could not load cache calendar");
-	 	return [];
-	 }
-	// fix format change
-	if (! isset($z['events'])) $z=['events'=>$z];
+	$r['calendar'] = $this->prepare_admin_calendar();
 
-$events = $z['events'];
-//U::echor($events,'loaded from cache');
-	$events = $this->Cal->filter_events($events,0);
-//U::echor($events,'Post filter');
-#add 3 blank recordsw
-	for ($i=0;$i<3;++$i) {
-		$events[] = $this->Cal::$empty_cal;
-	}
-//U::echor($events,'post blank adds');
-	$events = $this->Cal->add_types($events);
-	$r['calendar'] = $events;
 
-// Utilities::echor ($r, 'r to admin');
+
+// Utilities::echor ($r, 'r to admin',STOP);
 	return $r;
 }
 
@@ -164,21 +149,44 @@ public function post_admin ($post) {
 	if ($post['campu'])
 		$this->Camps->postCamps($post['campu']);
 
-	if ($post['events'])
+
+	if ($post['events']) {
+		$cal['events'] = $post['events'];
+		$cal['npstags'] = $post['npstags'];
 //U::echor($post['events'],'post');
-	$this->Cal->post_calendar(['events'=>$post['events']]);
+	$this->Cal->post_calendar($cal);
+	}
 
 }
 
-public function build_admin_calendar() {
-	if (!$z=$this->loadCache('calendar')) {
+public function prepare_admin_calendar() {
+	if (!$cal=$this->CM->loadCache('calendar')) {
 	 	Log::error ("Could not load cache calendar");
 	 	return [];
 	 }
+	// U::echor($cal,'loaded');
+	// remove expired events
+	$events =$this->Cal->filter_events($cal['events'],0);
+// 	U::echor($events,'filtered events');
+	// addd 3 blank records
+	for ($i=0;$i<1;++$i) {
+		$events[] = $this->Cal::$empty_cal;
+	}
 
-#	Utilities::echor($z,'calendar',STOP);
-	$y=$this->Cal->filter_calendar($z,0);
-	return ['calendar' => $y];
+	$events = $this->Cal->add_types($events);
+// 	U::echor($events,'types added');
+	if (!$npscal=$this->CM->loadCache('npscal')['npscal']) {
+	 	Log::error ("Could not load cache npscal");
+	 	return [];
+	 }
+
+	// merge
+	$events = array_merge($events,$npscal);
+// 		U::echor($events,'merged');
+	$cal['events'] = $events;
+	//cal npstags already there.
+//U::echor($cal,'prepared admin');
+	return  $cal;
 }
 
 private function checkAlert ($alert) {

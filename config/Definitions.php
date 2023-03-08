@@ -21,7 +21,7 @@ public static $files = [
 // used to show age of live data like campgrounds
 // time in hours
 public static $data_timeouts = [
-	'newest' => 3,
+	'newest' => 1,
 	'new' => 12,
 ];
 

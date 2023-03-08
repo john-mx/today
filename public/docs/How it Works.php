@@ -35,7 +35,7 @@ echo $Plates->render('title',$meta);
 <p>The site works by periodically (like every 1/2 hour) querying various web resources to get updated information on weather, alerts, air quality, etc.  This information is stored (cached) until the next update.  </p>
 	When a web page is requested, the stored information is
 	retrieved and compiled into the form needed for display,
-	and then sent a template that exists for each web page.
+	and then sent to a template that exists for each web page or piece of a web page.
 	The template does the final formatting for displaying the page.
 </p>
 <p>CacheManager runs the refresh operations, stores caches, and retrieves caches.  No other page touches the caches.</p>
@@ -43,7 +43,6 @@ echo $Plates->render('title',$meta);
 </p>
 <p>All data is displayed using Templates in directory plates/.  </p>
 <p>Pages start out with
-
 	<ul><li>namespace:DigitalMx\jotr;
 	<li>set aliases for Utility and Definitions class
 	<div class='code'>use DigitalMx\jotr\Definitions as Defs;
@@ -97,3 +96,30 @@ Local caches are the ones controlled by local admin settings: calendar, camps, r
 <p>All sites use the css file main.css.  It contains media rules for print which lowers font size and sets margins.  The rotate page adds an additional file tv.css.  This uses media rules to increase the root type size based on screen width, and changes the widely used h3 tag from left justified to center and underline.</p>
 <p>Uses google font Rubik everywhere.  san-serif fallback.
 <p>The "today.php" page is designed to be printed, so there are css pagebreaks between pages.  The "rotate.php" page is divided into sections also, and a javascript is used to rotate visibility among the desired sections.</p>
+
+<h3>Development Process</h3>
+Branch live is always the code on remote live and jotrx.
+Branch work is branched from live and is the main working copy
+Feature branches are branched from work
+<ol>
+<li><b>Develop</b><ol>
+	<li>Development occurs on developers machine in repo work or  branches derived from work and merged back in.
+	<li> Keep dev branches rebased to work
+	<li>For testing, push dev &lt;dev branch&gt;:dev
+	</ol></li>
+<li><b>Beta Test</b><ol>
+	<li>switch work,
+	<li> merge dev and commit
+	<li> push beta (work branch)
+	<li> make sure it works
+	</ol></li>
+<li><b>Live</b><ol>
+	<li>switch to live,
+	<li> merge --squash work
+	<li> change tag
+	<li>Commit -m "what's new" to set version/build in data/version
+	<li> push live to live
+	<li> push live to jotrx
+
+	</ol></li>
+</ol>

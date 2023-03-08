@@ -25,7 +25,7 @@ if (!$container['Login']->checklevel(basename(__FILE__))) exit;
 if (!empty($_POST) ) {
 //		U::echor($_POST, 'POST');
 		$Cal->post_calendar($_POST);
-		echo "<script>location.reload();</script>";
+	echo "<script>location.reload();</script>";
 		exit;
 
 
@@ -36,7 +36,14 @@ $y = $Admin-> prepare_admin();
 	echo $Plates->render('title',$meta);
 
 echo "<form method=post>";
-echo $Plates->render('cal-admin',$y);
+ $merge = $y['calendar'];
+// $cal = $CM->loadCache('calendar');
+// $npscal = $CM->loadCache('npscal')['npscal'];
+// $merge['events'] = array_merge($cal['events'],$npscal);
+
+// 	U::echor($merge,'merged admin');
+
+echo $Plates->render('cal-admin',['calendar'=>$merge]);
 echo "</form>";
 
 

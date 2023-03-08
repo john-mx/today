@@ -167,7 +167,7 @@ public function build_topics(){
 			$this->build_topic_current(),
 			$this->build_topic_uv(),
 			$this->build_topic_fees(),
-			$this->build_topic_npscal(),
+// 			$this->build_topic_npscal(),
 			$this->build_topic_galerts(),
 
 		);
@@ -220,15 +220,31 @@ public function showLight() {
 /*----------------- BUILD TOPICS ------------------*/
 
 public function build_topic_calendar() {
-	if (!$z=$this->CM->loadCache('calendar')) {
+	if (!$cal=$this->CM->loadCache('calendar')) {
 	 	Log::error ("Could not load cache calendar");
 	 	return [];
 	 }
-	// fix format change
-	if (! isset($z['events'])) $z=['events'=>$z];
+	 // fix format change
+	//if (! isset($cal['events'])) $cal['events']=$cal;
 
-#	Utilities::echor($z,'calendar',STOP);
-	//$y=$this->Cal->filter_calendar($z,0);
+	 if (!$npscal=$this->CM->loadCache('npscal')) {
+	 	Log::error ("Could not load cache npscal");
+	 	return [];
+	 }
+	 $tags = $cal['npstags'];
+	 $newcal = [];
+	 // got through each nps event, and add tags if matching id
+	 foreach ($npscal['npscal'] as $npsevent){
+		$id = $npsevent['npsid'];
+		if (isset ($tags[$id])){
+			$npsevent = array_merge($npsevent,$tags[$id]);
+		}
+
+		$newcal[] = $npsevent;
+	 }
+	$z['events'] = array_merge($cal['events'],$newcal);
+//   	U::echor($z,'merged cal',STOP);
+
 	return ['calendar' => $z];
 }
 
@@ -514,25 +530,26 @@ public function build_topic_weather() {
 	*/
 
 	$fail = false;
-
+	$update = 0;
 	// set first term to 1 to force fail for testing.  Otherwise 0.
 	if (0  || !$wgov = $this->CM->loadCache('wgov')['wgov']){
 		$fail = true;
 		$f = 'could not load wgov cache';
 	}
 
-	if (!$fail and !array_key_exists('hq',$wgov)){
+	if (!$fail and !array_key_exists('jr',$wgov)){
 		$fail = true;
-		$f = 'No hq in wgov';
+		$f = 'No jr data in wgov';
 	}
-	if (!$fail && !$update =
-		strtotime($wgov['jr']['properties']['updateTime'])){
+	if (!$fail
+		&& !$update = strtotime($wgov['jr']['properties']['updateTime']) ?? 0
+		){
 		$fail = true;
-		$f = 'Could not convert update time to time';
+		$f = 'Could not get update time for jr in wgov ';
 	}
 	if (!$fail &&  (time() - $update ) > 24*60*60) {
 		$fail = true;
-		$f = 'Wgov over 24 hours old: ' . date('M d H:i',$update);
+		$f = 'Wgov update over 24 hours old: ' . date('M d H:i',$update);
 	}
 	if (!$fail){
 
@@ -579,6 +596,7 @@ public function build_topic_campgrounds() {
 public function build_topic_npscal() {
 	//builds calendar from the nsp cal
 	$y = $this->CM->loadCache('npscal');
+
 	//U::echor($y);
 	$start = date('Y-m-d');
 	foreach ($y['nps']['camps']['data'] as $event) {
@@ -608,6 +626,7 @@ public function build_topic_npscal() {
 		$r[] = $ev;
 	}
 	$r = U::element_sort($r,'dt'); // sort by dt
+	U::echor($r,'npscal prepared');
 	$z['npscal']['events'] = $r;
 	return $z;
 

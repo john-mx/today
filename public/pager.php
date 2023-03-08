@@ -32,24 +32,26 @@ $y=$DM->build_topics();
 $extra = '';
 $plate2 = '';
 $z=[];
+$title = TODAY;
 switch ($page) {
 
 
 	case 'events':
-		$subtitle = "Upcoming Events";
+//		$subtitle = "Upcoming Events";
 		$plate = 'calendar';
-//U::echor($y['calendar'],'y',STOP);
+//	U::echor($y['calendar'],'y');
 		$z['calendar']['events'] = Calendar::filter_events($y['calendar']['events'],3);
+// U::echor($z,'z in pager');
 		break;
 
 	case 'weather':
-		$subtitle = "Weather";
+		//$subtitle = "Weather";
 		$plate = 'weather';
 
 		//$z['wgov'] = $y['weather'];
 		break;
 	case 'notices':
-		$subtitle = "Alerts, Notices, and Advice";
+		//$subtitle = "Alerts, Notices, and Advice";
 		$z=$y;
 		$plate = 'alerts';
 		$plate2 = 'notices';
@@ -57,30 +59,31 @@ switch ($page) {
 		break;
 
 	case 'campgrounds':
-		$subtitle = 'Campgrounds';
+		//$subtitle = 'Campgrounds';
 		$z=$y;
 		$plate = 'campground';
 		$plate2 = 'qr_camps';
 		break;
 
 	case 'camp-tv':
-		$subtitle = 'Campgrounds';
+		//$subtitle = 'Campgrounds';
 		$z=$y;
 		$plate = 'campground-tv';
 
 		break;
 
 	case 'fees':
-		$subtitle = 'Fees';
+		//$subtitle = 'Fees';
 		$z=['fees' => LS::getFees()];
 		$plate = 'fees';
 		$plate2 = 'qr_fees';
 		break;
 
 	case 'npscal':
-		$subtitle = "NPS Calendar";
+		//$subtitle = "NPS Calendar";
 		$plate='calendar';
-		$z['calendar'] = $y['npscal'];
+		$z['calendar']['events'] = $CM->loadCache('npscal')['npscal'];
+		U::echor($z['calendar']);
 		break;
 
 	default:
@@ -89,7 +92,7 @@ switch ($page) {
 
 $meta=array('meta'=>[
 	'file' => basename(__FILE__),
-	'title' => $subtitle,
+	'title' => $title,
 	]);
 
 echo $Plates->render('head',$meta);

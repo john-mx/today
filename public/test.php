@@ -21,28 +21,22 @@ ini_set('display_errors', 1);
 	$PM = $container['PageManager'];
 
 
+$meta=array('meta'=>[
+	'file' => basename(__FILE__),
+	'title' => 'About Today in the Park',
+	]);
 
-$r = ['root' =>[
-	'sub1'=> [
-		'l3'=>1,
-		'l4'=>2,
-		],
-	'sub2'=>[
-		'l5'=>1,
-		'l6'=>2,
-	]
-	]
-	];
+echo $Plates->render('head',$meta);
+echo $Plates->render('title',$meta);
 
-U::echor($r);
-$j = json_encode($r);
-echo $j;
+//END START
 
-exit;
 
-?>
-<hr>
-<form method='post'>
-<input type='text' name='ttime'>
-<input type='submit'>
-</form>
+$Cal->convert_nps();
+
+$nc = $CM->loadCache('mergecal');
+//$nc = $CM->loadCache('calendar');
+
+	$mc['events'] = $Cal->filter_events($nc['events'],4);
+	U::echor($mc,'new filtered');
+	echo $Plates->render('calendar',['calendar'=>$mc]);

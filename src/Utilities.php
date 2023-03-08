@@ -406,8 +406,9 @@ public static function humanSecs2($esecs){
     	}
     }
 
-
-	if ($mins == '30') {
+	if ($mins == '30' && $hours == 1){
+		$t .= "90 minutes";
+	} elseif ($mins == '30') {
 			$hours += '.5';
 			$t .= "$hours hours";
 	} elseif ($mins && ($hours == 0)) {

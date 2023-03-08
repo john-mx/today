@@ -77,21 +77,27 @@ class Calendar {
 	 	);
 
 	 static $eventtypes = array(
-
+	'Astronomy Program',
+	'Childrens Program',
+	'Cultural Program',
 	'Evening Program',
 	'Guided Activity',
 	'Guided Tour',
+	'Partner Program',
 	'Ranger Chat',
-	'Ranger Walk',
+	'Ranger-led Hike',
 	'Social Event',
+
 	);
 
 	private $tz;
 	private $CM;
+	private $Plates;
 
 	public function __construct($c) {
 		$this->tz = new \DateTimezone('America/Los_Angeles');
 		$this->CM = $c['CacheManager'];
+		$this->Plates = $c['Plates'];
 	}
 
 	public function dayset(int $i,string $days) {
@@ -117,19 +123,21 @@ public function add_types ($events) {
 		$event['typeoptions']  = Utilities::buildOptions(self::$eventtypes,$event['type']);
 		$z[] = $event;
 	}
-	$cal['events']= $z;
-return $cal;
+
+return $z;
 }
 
 public function post_calendar($cal){
-// U::echor($cal,'calpost');
 	$cal['events'] = $this->check_events($cal['events']);
 //U::echor($cal,'after check');
-	$cal['events'] = self::filter_events($cal['events'],0);
+//	$cal['events'] = self::filter_events($cal['events'],0);
 // U::echor ($cal ,'to write');
+	$cal['npstags'] = self::check_npstags($cal['npstags']);
+//  U::echor($cal,'calpost',STOP);
 	$this->write_calendar($cal);
 	return true;
 }
+
 
 public static function filter_events(array $events,int $transform = 0) {
 	/*
@@ -154,25 +162,34 @@ public static function filter_events(array $events,int $transform = 0) {
 
 	$z=[];
 //echo "Transform $transform" . BR;
+$now = time();
 	foreach ($events as $event){ #keep if these conditions:
 // Utilities::echor ($event,'foreach event');
 		if (empty ($event['time'])) {continue;} #drop
 
-		if ( empty($event['suspended'])) $event['suspended'] = false;
 
 
-#	echo "Testing " . $event['title'] . BR;
+// 	echo "Filtering " . $event['title'] . BR;
 
 
-		if ($event['suspended']) {
-			if ($transform == 0) {
-				$event['dt'] = 0;
+		if (!empty($event['npsid'])) { // from nps calendar
+			if ($transform == 0){
+				$event['dt'] = 0; // unscheduled; float to top
 				$z[] = $event;
+			} else {
+				foreach ($event['dates'] as $sdate){
+					foreach ($event['times'] as $stime) {
+						if ($e= self::parse_npscal("$sdate $stime",$event,$transform)){
+							$z[] = $e;
+						}
+					}
+				}
 			}
-			else{ continue;} #skip if not admin
-		}
-		elseif (empty ($event['days']) && !empty ($event['date'] )) { //scheduled event
-			$z[] = self::parse_scheduled($event,$transform);
+
+		} elseif (empty ($event['days']) && !empty ($event['date'] )) { //scheduled event
+			if ($e=self::parse_scheduled($event,$transform)){
+				$z[] = $e;
+			}
 			//echo "added scheduled {$event['title']}" . BR;
 
 		} elseif ($transform == 0 ) { #keep for admin sccreen, but don't expand
@@ -209,15 +226,40 @@ public static function filter_events(array $events,int $transform = 0) {
 
 
 	}
-// Utilities::echor($z, 'presort cal', false);
-		$z = Utilities::element_sort($z, 'dt');
+//  Utilities::echor($z, 'presort cal', false);
+	$nz=[];
+	foreach ($z as $event){
+		$event['status'] = self::setStatus($event);
+		$nz[] = $event;
+	}
+	$z=$nz;
+
+	$z = Utilities::element_sort($z, 'dt');
 
 
-	$cal=$z;
-
-// U::echor($cal, 'post filterl');
-	return $cal;
+//U::echor($z, 'post filter', STOP);
+	return $z;
 }
+
+private static function setStatus ($event) {
+//U::echor($event,' event');
+
+if (empty($event['title'])) {echo "Bad event" . BR; return;}
+// 	echo ">>> Status on " . $event['title'];
+	if( !empty($event['canceldt']) && ($event['dt'] < $event['canceldt'] )) { #cancelled
+		$status= 'Cancelled' ;
+
+	}
+	elseif  ( !empty($event['suspenddt']) && ($event['dt'] < $event['suspenddt'] )) {
+		$status= 'Suspended';
+	}
+	else {
+		$status = 'OK';
+	}
+
+	return $status;
+}
+
 
 private static function parse_recurring($event,$begindt,$enddt,$i) {
 		$now = new \DateTime();
@@ -254,7 +296,7 @@ private static function parse_recurring($event,$begindt,$enddt,$i) {
 	//	echo "Test dt " .$testdt->format('M d Y H:i') . 'for' . $event['time']  . BR;
 				$schevent['dt'] = $dts;
 // 			echo "added recurring {$event['title']} on $testdate." . BR;
-				$schevent['cancelled'] = (!empty($event['canceldt']) && ($dts < $event['canceldt']) )? 1:0;
+
 
 				return $schevent;
 		}
@@ -290,21 +332,67 @@ public static	function parse_scheduled ($event,$transform) {
 		if ($transform && ($diff > $transform)) {
 			//echo "late $edate; ";
 		return [];}
-		$event['cancelled'] = (!empty($event['canceldt']) && ($edts < $event['canceldt']) ) ? 1:0;
+
 		$event['dt'] = $edts;
 		//
 		return $event;
 
 	}
 
-#@	Utilities::echor($z, 'presort', false);
+public static	function parse_npscal ($edatetime,$event,$transform) {
+ //	echo "parsing $edatetime" . BR;
+		$edt = strtotime($edatetime);
+		$tdate = strtotime('+ ' . $transform . ' day') ;
+		$now = time();
+		if ($edt < $now){
+			//echo "expired $edate; ";
+			return [];
+		} #past date
+
+		if ($transform && ($edt >= $tdate)) return [];
+			//late $edate; ";
+		$event['dt'] = $edt;
+		//
+// 	U::echor ($event,'parse npscal');
+		return $event;
+
+	}
 
 
+public function check_npstags(array $tags) {
+// 	U::echor($tags);
+	$z=[];
+	foreach ($tags as $npsid=>$tag){
+
+		if (!empty($canceldate = trim($tag['canceldate']))) {
+
+			try {$canceldt = new \DateTime($canceldate);}
+			catch (\Exception $e){	Utilities::alertBadInput ("Illegal Cancel date for event: $canceldate");
+			}
+			$tag['canceldt'] = $canceldt->format('U');
+			$tag['canceldate'] = $canceldt->format('n/j g:i a');
+		}
+
+		if (!empty($suspenddate = trim($tag['suspenddate']))) {
+
+			try {$suspenddt = new \DateTime($suspenddate);}
+			catch (\Exception $e){	Utilities::alertBadInput ("Illegal Suspend date for event: $suspenddate");
+			}
+			$tag['suspenddt'] = $suspenddt->format('U');
+			$tag['suspenddate'] = $suspenddt->format('n/j g:i a');
+		}
+
+		$z[$npsid] = $tag;
+
+	}
+
+	return $z;
+}
 
 
 public function check_events(array $events) {
 // check post data
-	//U::echor ($events,'check in');
+//	U::echor ($events,'check events',STOP);
 	$z=[];
 	foreach ($events as $event){
 		//U::echor($event,'event' );
@@ -320,15 +408,26 @@ public function check_events(array $events) {
 			catch (\Exception $e){	Utilities::alertBadInput ("Illegal Start date for event: $startdate");
 			}
 			$event['startdatedt'] = $startdt->format('U');
+			$event['date'] = date('n/j/y',$event['startdatedt']);
 		}
 
 	if (!empty($canceldate = trim($event['canceldate']))) {
-			// if empty, then today will be used for start
 			try {$canceldt = new \DateTime($canceldate);}
 			catch (\Exception $e){	Utilities::alertBadInput ("Illegal Cancel date for event: $canceldate");
 			}
 			$event['canceldt'] = $canceldt->format('U');
+			$event['canceldate'] = $canceldt->format('n/j g:i a');
 		}
+
+	if (!empty($suspenddate = trim($event['suspenddate']))) {
+			try {$suspenddt = new \DateTime($suspenddate);}
+			catch (\Exception $e){	Utilities::alertBadInput ("Illegal Suspend date for event: $suspenddate");
+			}
+			$event['suspenddt'] = $suspenddt->format('U');
+			$event['suspenddate'] = $suspenddt->format('n/j g:i a');
+		}
+
+
 		if (!empty($enddate = trim($event['end']))){
 			if (! $enddt = new \DateTime($enddate) ){
 				Utilities::alertBadInput ("Illegal end date for recurring event: $enddate");
@@ -389,6 +488,8 @@ public function load_cache() {
 		}
 		return $y;
 }
+
+
 
 
 

@@ -182,7 +182,7 @@ textarea {
 .gray {color:#999;}
 
 .lt-grn { background-color: #D4FB79; }
-.bg-lgrn { background-color: #D4FB79; }
+.bg-lgrn { background-color: #C9EFC2; }
 .bg-yellow {background-color: yellow; }
 .bg-orange {background-color:#F3984D;}
 .midnight {background-color:#011993; color:#FFF;}
@@ -416,7 +416,8 @@ table.caltable td {
 table.caltable tr.eventrow, table.caltable tr.eventrow td {
 	border-top:6px solid #F39840;
 	border-bottom:0;
-	text-align:left;
+	text-align:center;
+	padding:0.5rem;
 }
 table.caltable tr.noterow, table.caltable tr.noterow td {
 	border-top:1px solid gray;

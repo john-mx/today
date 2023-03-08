@@ -13,6 +13,8 @@ if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 //U::echor($calendar );
 foreach ($calendar as $event){
 		$eventdate = date('l, F j',$event['dt']);
+		if ($event['status']=='Suspended'){continue;}
+		// count nbumbe of events on a day to get rowspan right
 		$caldays[$eventdate] = (isset($caldays[$eventdate])) ?
 			$caldays[$eventdate] + 1
 			:
@@ -31,7 +33,7 @@ foreach ($calendar as $event){
 <?php
 	$lasteventdate = '';
 	foreach ($calendar as $event) :
-		if ($event['suspended']){continue;} // dont display
+		if ($event['status']=='Suspended'){continue;} // dont display
 		$eventdate = date('l, F j',$event['dt']);
 		$eventtime = date('g:i a', $event['dt']);
 		$eventshortdate = date('l, n/j',  $event['dt']);
@@ -56,19 +58,16 @@ foreach ($calendar as $event){
  	<tr class='eventrow'>
 <?php endif; ?>
 
-	<td><?=$eventtime?>
-<?php if ($event['cancelled']): ?> <span class='red'>Cancelled!</span><?php endif; ?>
+	<td class='center'><?=$eventtime?>
+<?php if ($event['status']=='Cancelled'): ?> <br /><span class='red'><b>Cancelled!</b></span><?php endif; ?>
 
 	</td>
 	<td class='left'>
  	<b><?=$event['title']?></b><br/>
  	<?=$event['type']?>
  	(<?=$event['duration']?>)
-
-
-
-
 	</td>
+
 	<td class='left' >
 	<?=$event['location']?>
 	<?php if ($event['reservation'] ?? ''): ?>

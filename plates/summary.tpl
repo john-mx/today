@@ -74,7 +74,7 @@ if(empty($calendar['events'])) : echo "<p class='inleft2'>No Events Scheduled</p
 <table class='inleft2  no-border'>
 
 <?php foreach ($calendar ['events']as $event) :
-		if ($event['suspended']){continue;} // dont display
+		if ($event['status']=='Suspended'){continue;} // dont display
 		$eventdate = date('l, F j',$event['dt']);
 		$eventtime = date('g:i a', $event['dt']);
 		$reservation = $event['reservation'] ? ' (Reservation required)':'';
@@ -89,7 +89,7 @@ if(empty($calendar['events'])) : echo "<p class='inleft2'>No Events Scheduled</p
   at <?=$event['location']?>
   </td><td>
 
-  <?php if ($event['cancelled']): ?><span class='red'>Cancelled!</span><?php endif; ?>
+  <?php if ($event['status']=='Cancelled'): ?><span class='red'>Cancelled!</span><?php endif; ?>
 	</td>
   </tr>
 

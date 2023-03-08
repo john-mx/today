@@ -463,9 +463,11 @@ public function rebuild_cache_npscal() {
 	$dt = new \DateTime();
 	$dateStart = $dt->format('Y-m-d');
 	$loc = 'camps';
-	$dt->modify('+5 days');
+	$dt->modify('+7 days');
 	$dateEnd = $dt->format('Y-m-d');
 	$query = ['parkCode'=>'jotr','dateStart'=>$dateStart,'dateEnd'=>$dateEnd,'api_key' => CS::getKey($src)];
+	// to exapnd all repeats into sep records, add 'expandRecurring'=>'true'
+
 	$loginfo = "$src-$loc";
 	$relurl = '';
 	if ($r=$api->apiRequest($loginfo, $relurl,$query)){
@@ -479,13 +481,116 @@ public function rebuild_cache_npscal() {
 		}
 		//U::echor($resp,'cal',STOP);
 	if ($ok){
-		$this->writeCache('npscal',$resp);
+		//$this->writeCache('npsraw',$resp);
+
+		$npscal = $this->format_nps($resp);
+		$this->writeCache('npscal',$npscal);
+
 		return true;
 	} else {
 		return false;
 	}
 	//Log::info("Saved updated cache $src");
 
+
+}
+
+private function format_nps($rawnps) {
+	//builds calendar from the nsp cal
+
+
+	/* need:
+	title
+	type
+	duration
+	location
+	time
+	date
+	end
+	day0, day1 ,... day6 (sun..sat)
+	suspended
+	canceldate
+	note
+	reservation
+	days
+	dt
+	*/
+	/* recording this as a repeating event is difficult
+
+		Simpler solution.  Each record contains the specific date in the
+		next few days that the event occurs.  So build a new field for dates
+		(and one for times too).  When expanding out to individual records,
+		the filter script will detect this and produce correct events.
+
+		These records all have NPS id, so cancel/suspend/notes can be tied to
+		that id, so they don't get lost when data is refreshed.
+
+	*/
+	// needed to translate NPS days to day0..day6
+	$daylist = array('SU','MO','TU','WE','TH','FR','SA');
+	foreach ($rawnps['nps']['camps']['data'] as $event) {
+		$ev = [];
+
+		$ev['title'] = $event['title'];
+		$ev['location'] = $event['location'];
+		$ev['npsid'] = $event['id'];
+		$ev['type'] = $event['types']['0'];
+		$ev['note'] = ''; // $event['description'];
+		$ev['days'] = '';
+
+		//get duration: end - start
+		$startdt = strtotime($event['times'][0]['timestart']);
+		$enddt = strtotime($event['times'][0]['timeend']);
+		$ev['duration'] = U::humanSecs2($enddt - $startdt);
+		$ev['regresurl'] = $event['regresurl'];
+		// res required?
+		$ev['reservation'] = (
+			$event['isregresrequired'] == 'true'
+			|| $event['isfree'] == 'false'
+			) ? 1 : 0;
+
+		if ($event['isrecurring'] == 'false') { //recurring record data
+			$ev['date']= $event['date'];  //next occurence.  not useful ??
+		}
+		if (1) { // code to parse the recurring rule in the nps cal
+			$ev['date'] = $event['recurrencedatestart'];
+			$ev['end'] = $event['recurrencedateend']??'';
+			$rec = $event['recurrencerule'];
+			preg_match('/BYDAY=([\w\,]*);/',$rec,$m);
+			$byday = $m[1];
+			$ev['days'] = '';
+		//echo $ev['title'] . ' '  .$byday . BR;
+			for ($i=0;$i<=6;++$i){
+				if (strpos($byday,$daylist[$i]) !== false) {
+					$ev['day'.$i] = 'on';
+					$ev['days'] .=$i;
+				}
+			}
+		}
+
+		//date and time can have multiples in one record
+		// will save here and parse out in filter
+		foreach ($event['times'] as $stimes)
+			 $ev['times'][]=$stimes['timestart'];
+		$ev['dates'] = $event['dates'];
+
+		$ev['date'] = $ev['dates'][0];
+		$ev['time'] = $ev['times'][0];
+		$ev['dt'] = 0;
+
+		$ev['canceldate']='';
+		$ev['suspended'] = false;
+
+
+	// get days
+
+	//U::echor($ev, 'event');
+
+// use id as key so I can replace/add/remove from merged cal
+		$r['npscal'][] = $ev;
+
+	}
+	return $r;
 
 }
 private function rebuild_cache_calendar () {
@@ -1082,7 +1187,7 @@ class Api {
 					//Log::notice("Empty response for $loginfo; retrying");
 					throw new \RuntimeException ("Empty result. ");
 				}
-				if ($einfo) Log::notice("$loginfo $tries trys. $einfo");
+
 				return $result;
 				break;
 			} catch(GuzzleHttp\Exception\ServerException $e) {
@@ -1094,6 +1199,7 @@ class Api {
 			} catch (\RuntimeException $e) {
 				$einfo = "Api error $loginfo. (try $tries): ". $e->getMessage();
 			} finally {
+				if ($einfo) Log::notice("$loginfo $tries trys. $einfo");
 				++$tries;
 				sleep(1);
 			}

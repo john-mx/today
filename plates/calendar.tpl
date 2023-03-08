@@ -20,8 +20,9 @@ if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 
 <?php
 	$lasteventdate = '';
+	$now = time();
 	foreach ($calendar['events'] as $cal) :
-		if ($cal['suspended']){continue;} // dont display
+		if ($cal['status'] == 'Suspended'){continue;} // dont display
 		$eventdate = date('l, F j',$cal['dt']);
 		$eventtime = date('g:i a', $cal['dt']);
 		$rowclass = (empty($cal['note'])) ? 'border-bottom' : 'no-bottom';
@@ -38,15 +39,18 @@ if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 
 	<tr class='eventrow'>
 	<td><?=$eventtime?>
-<?php if ($cal['cancelled']): ?><br /><span class='red'>Cancelled!</span><?php endif; ?>
+<?php if ($cal['status']=='Cancelled') : ?><br /><span class='red'>Cancelled!</span><?php endif; ?>
 	</td>
 	<td class='left'>
  	<b><?=$cal['title']?></b>
 
  	</td>
  	<td>
- 	<?=$cal['duration']?>
  	<?=$cal['type']?>
+ 	&bull;
+ 	<?=$cal['duration']?>
+
+ 	<?php if (empty($cal['npsid'])): echo '#';endif;?>
  	<?php if ($cal['reservation'] ?? ''): ?>
  		<br /><span class='red'>Reservation Required</span>
 	<?php endif; ?>
@@ -71,5 +75,6 @@ if(empty($calendar)) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
 </tbody>
 
 </table>
-<div>For reservations, go to recreation.gov or call 1-877-444-6777.</div>
+<div><span class='red'>For reservations</span>, go to recreation.gov or call 1-877-444-6777. <br />
+# local items not on nps calendar.</div>
 <?php endif; ?>

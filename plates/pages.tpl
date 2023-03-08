@@ -22,11 +22,11 @@
 
 
 
-<tr class='bg-yellow'><td>Topic Pages</td><td>Individual topics </td></tr>
+<tr class='bg-yellow'><td colspan='2'>Individual Topics </td></tr>
 <tr><td><a href='/pager.php?weather' target='topic'>Weather</td><td>3-day forecast, Jumbo Rocks, Black Rock and Cottonwood</tr>
 <tr><td><a href='/pager.php?fees' target='topic'>Fee Schedule</td><td>All fees and where to buy</td></tr>
 <tr><td><a href='/pager.php?events' target='topic'>Calendar</td><td>Events for next 3 days</td></tr>
-<tr><td><a href='/pager.php?npscal' target='topic'>NPS Calendar</td><td>Events from the nps.gov/jotr calendar</td></tr>
+<!-- <tr><td><a href='/pager.php?npscal' target='topic'>NPS Calendar</td><td>Events from the nps.gov/jotr calendar</td></tr> -->
 
 <tr><td><a href='/pager.php?notices' target='topic'>Notices</td><td>Advice, Alerts and Notices</tr>
 <tr><td><a href='/pager.php?campgrounds' target='topic'>Campgrounds</td><td>Campground status, sites, and fees</tr>

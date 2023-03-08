@@ -22,18 +22,29 @@ echo $Plates->render('title',$meta);
 ?>
 <h3>Organization</h3>
 <ul>
-<li> Web access: git root determines overall access
-
-<li>Local (on developer machiine)
+<li>Project Directories
+	<ul>
+	<li>.git, .gitignore (vendor, docs, among others)
+	<li>composer.json, vendor dir.  Guzzle, Plates, Monolog, Pimple
+	<li>docs - various notes on project
+	<li>config - Definitions, Local settings, Cache Settings, constants, initialize, passwords
+	<li>var, var/ext - cache files.  All external are in var/ext to make it easy to symlink to other dirs on server
+	<li>data - only used for file containing version
+	<li>logs - monolog log files, rotate 5 days
+	<li>plates - templates for all data.
+	<li>public - public_html.  has css/, js/, docs/, fonts/ (has Frutiger, but not used), all public php/html pages
+	<li>src - all Classes.  DisplayManager, CacheManager, Calendar, Camps.
+	</ul>
+<li>Local (on developer's machine)
 	<ul>
 	<li>path to root: /Users/john/Sites/
-	<li>git root: jotr
+
 	<li>web site: jotr.local
 	<li>access: no passwords
 	<li>caches: private, cron updates
 	<li>git remotes: dev, work, livex, live, hub (github).  Remotes link to .git directories below;
 	</ul>
-<li>Remote (on remote server)
+<li>Remotes (on remote server)
 	<ul>
 	<li>Path to git roots: /usr/home/digitalm/Sites/jtnp/
 	<li>Each site has a root dir (all the files) and root.git directory (receives uploads and checks them out to the root dir).
@@ -41,63 +52,40 @@ echo $Plates->render('title',$meta);
 	<li>on receiving repo, git checks out indicated branch to root.
 	<li>Each site has its own set of caches, except for Livex, which shares the real site's external caches.
 
-	<li>Dev Site
+	<li>Dev Site: dev
 		<ul>
-		<li>root: jdev (branch dev)
-		<li>public html:  jotrd.digitalmx.com
-		<li>web site: jotrd.digitalmx.com
+		<li>root: jdev, jdev.git
+		<li>default git branch: dev
+		<li>public html:  jotrd.digitalmx.com -> root/public
 		<li>access: one pw for all access
 		<li>caches: all private, manual update
 		</ul>
-	<li>Beta Site
+	<li>Beta Site: beta
 		<ul>
-		<li>root: jbeta (branch work)
-		<li>public html: jotrb.digitalmx.com
-		<li>web site: jotrb.digitalmx.com
+		<li>root: jbeta, jbeta.git
+		<li>default git branch: work
+		<li>public html: jotrb.digitalmx.com -> root/public
 		<li>access: simple pw for site.  Page controls same as live
 		<li>caches: all private, manual update
 		</ul>
-	<li>Test Site
+	<li>Practice Site: jotrx
 		<ul>
-		<li>root: jotrx (branch live)
-		<li>public html: jotrx.digitalmx.com
-		<li>web site: jotrx.digitalmx.com
+		<li>root: jotrx, jotrx.git
+		<li>default git branch: live
+		<li>public html: jotrx.digitalmx.com -> root/public
+		<li>access: has its own set
 		<li>caches: externals symlink to live, others private
 		</ul>
-	<li>Live Site
+	<li>Live Site: live
 		<ul>
-		<li>root: jotr (branch live)
-		<li>public html: jotr.digitalmx.com
-		<li>web site: jotr.digitalmx.com
+		<li>root: live, live.git
+		<li>default git branch: live
+		<li>public html: jotr.digitalmx.com -> root/public
+		<li>access: public, but pw for admin functions
 		<li>caches: cron update every 30 mins
 		</ul>
 	</ul>
 
-<h3>Development Process</h3>
-Branch live is always the code on remote live and jotrx
-beta branched from live and is the main working copy
-Feature branches are branched from beta
-<ol>
-<li><b>Develop</b><ol>
-	<li>Development occurs on developers machine in repo work or  branches derived from work and merged back in.
-	<li>push dev <dev branch>:dev
-	</ol></li>
-<li><b>Beta Test</b><ol>
-	<li>switch work,
-	<li> merge dev and commit
-	<li> push beta (work branch)
-	<li> make sure it works
-	</ol></li>
-<li><b>Live</b><ol>
-	<li>switch to live,
-	<li> merge --squash work
-	<li> change tag
-	<li>Commit -m "what's new" to set version/build in data/version
-	<li> push live to live
-	<li> push live to jotrx
-
-	</ol></li>
-</ol>
 
 <h3>Data/Version</h3>
 <ul>
