@@ -30,20 +30,21 @@ if (!empty($_POST) ) {
 
 
 }
-$y = $Admin-> prepare_admin();
 	echo $Plates->render('head',$meta);
 	echo "<script src='/js/clearupdate.js'></script>";
 	echo $Plates->render('title',$meta);
 
+$y = $Cal-> prepare_admin_calendar();
+
 echo "<form method=post>";
- $merge = $y['calendar'];
+// $merge = $y['calendar'];
 // $cal = $CM->loadCache('calendar');
 // $npscal = $CM->loadCache('npscal')['npscal'];
 // $merge['events'] = array_merge($cal['events'],$npscal);
 
 // 	U::echor($merge,'merged admin');
 
-echo $Plates->render('cal-admin',['calendar'=>$merge]);
+echo $Plates->render('cal-admin',['calendar'=>$y]);
 echo "</form>";
 
 

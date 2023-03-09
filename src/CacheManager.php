@@ -536,7 +536,7 @@ private function format_nps($rawnps) {
 		$ev['npsid'] = $event['id'];
 		$ev['type'] = $event['types']['0'];
 		$ev['note'] = ''; // $event['description'];
-		$ev['days'] = '';
+		$ev['dayset'] = '';
 
 		//get duration: end - start
 		$startdt = strtotime($event['times'][0]['timestart']);
@@ -558,12 +558,11 @@ private function format_nps($rawnps) {
 			$rec = $event['recurrencerule'];
 			preg_match('/BYDAY=([\w\,]*);/',$rec,$m);
 			$byday = $m[1];
-			$ev['days'] = '';
+			$ev['dayset']=[];
 		//echo $ev['title'] . ' '  .$byday . BR;
 			for ($i=0;$i<=6;++$i){
 				if (strpos($byday,$daylist[$i]) !== false) {
-					$ev['day'.$i] = 'on';
-					$ev['days'] .=$i;
+					$ev['dayset'][$i] ='on';
 				}
 			}
 		}

@@ -48,7 +48,7 @@ private static $cacheFiles  = array (
 				'camps' => REPO_PATH . "/var/camps.json",
 				'current' => REPO_PATH . "/var/ext/current.json",
 				'npscal'=>REPO_PATH . "/var/ext/npscal.json",
-				'npsraw'=>REPO_PATH . "/var/ext/npsraw.json",
+
 				'props' => REPO_PATH . "/var/ext/properties.json",
 			//	'tours' => REPO_PATH . "/var/ext/tours.json",
 				'wapi' => REPO_PATH . "/var/ext/wapi.json",

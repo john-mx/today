@@ -9,30 +9,32 @@ use DigitalMx\jotr\Utilities as U;
 	into a form on another page.  Does NOT include a form.
 */
 
-	function dayset(int $i,string $days) {
-		// i is the events line
-		// days is a string of '' or up to 7 digits, for day nuymbers 0..6
-		$t='';
-		for ($j=0;$j<7;++$j) {
+	// function dayset(int $i,array $dayset) {
+// 		// i is the events line
+// 		// days is a array of '' or up to 7 digits, for day nuymbers 0..6
+// 		$t='';
+// 		for ($j=0;$j<7;++$j) {
+//
+// 			$daychecked = key_exists(strval($j),$dayset) !== false ?'checked':'';
+// 			#echo "checking for $j in $days $daychecked" . BR;
+// 			$t .= "<input type='checkbox' name='events[$i][dayset][$j]' $daychecked> " . '&nbsp;';
+// 		}
+// 		return $t;
+// 	}
 
-			$daychecked = strpos($days,strval($j)) !== false ?'checked':'';
-			#echo "checking for $j in $days $daychecked" . BR;
-			$t .= "<input type='checkbox' name='events[$i][day$j]' $daychecked> " . '&nbsp;';
-		}
-		return $t;
-	}
-	function daylist (int $i,string $days,$no_input) {
+	function daylist (int $i,array $dayset,$no_input) {
+	// thius function produces the set of checkboxes for input
 		// i is the calendar line
-		// days is a string of '' or up to 7 digits, for day nuymbers 0..6
-		// no_input makes this form display only; false makes it actually input
-		$dayids=['S','M','T','W','Th','F','Sa'];
+		// days is a array of '' or up to 7 digits, for day nuymbers 0..6
+		// no_input makes this form display only (for nps items); false makes it actually input
+		$daylabels=['S','M','T','W','Th','F','Sa'];
 		$t='<div>';
 		for ($j=0;$j<7;++$j) {
-			$daychecked = strpos($days,strval($j)) !== false ?'checked':'';
-			$boxinput = ($no_input)? '': "name = 'events[$i][day$j]'";
+			$daychecked = key_exists(strval($j),$dayset) !== false ?'checked':'';
+			$boxinput = ($no_input)? '': "name = 'events[$i][dayset][$j]'";
 			$t .=
 			"<div class='inlineblock' style='padding-left:6px;padding-right:6px;'>"
-			. $dayids[$j] . '<br />'
+			. $daylabels[$j] . '<br />'
 			. "<input type='checkbox' $boxinput $daychecked> "
 			. "</div>";
 
@@ -71,13 +73,15 @@ if (0 && ! LIVE && (PLATFORM == 'remote')){
 	foreach ($calendar['events'] as $event) :
 
 	$npsid = $event['npsid']??'';
-	$dayset = daylist($i,$event['days']??'',$npsid);
+	$dayseti = $event['dayset']??[];
+	$daychecks = daylist($i,$dayseti,$npsid);
 	$eventtimeclass = 'input';
+	$eventstyle = (!empty($event['status']) && $event['status']=='new')? 'bg-gray':'';
 	if (empty($event['time'])){$eventtimeclass='invalid';}
 ?>
 <?php if (!$npsid) : ?>
 
-		<tr style='vertical-align:top;'>
+		<tr class='<?=$eventstyle?>' style='vertical-align:top;'>
 
 			<td class='left'>Title: <br /><input type = 'text' size='20'
 				name="events[<?=$i?>][title]"
@@ -106,14 +110,14 @@ if (0 && ! LIVE && (PLATFORM == 'remote')){
 		</tr>
 
 
-		<tr  style='vertical-align:top;'>
+		<tr  class='<?=$eventstyle?>' style='vertical-align:top;'>
 
 				<td class='left' id='timetd'>Start time: <input type=text name="events[<?=$i?>][time]" size='8' value="<?=$event['time']?>" id='timeset[<?=$i?>]' placeholder = '2:30 pm' onChange='checkTime(this)' class='<?=$eventtimeclass?>'>
 			</td>
 
 				<td >On/start date: <br /><input type = 'text' size='15'
 				name="events[<?=$i?>][date]"
-				value ="<?= $event['date'] ?>" ><br />
+				value ="<?= $event['date'] ?? '' ?>" ><br />
 				Repeat Ends<br />
 				<input type='text' size='15' name = "events[<?=$i?>][end]" value="<?=$event['end']??'' ?>">
 
@@ -121,29 +125,29 @@ if (0 && ! LIVE && (PLATFORM == 'remote')){
 			<td>
 
  Repeat Every: <br />
-			<?=$dayset?>
+			<?=$daychecks?>
 
 			</td>
 
 		</tr>
 
-		<tr><td colspan='4' class='left'>
+		<tr><td colspan='4' class='left '<?=$eventstyle?>''>
 		<label>Suspend (hide) until <input type='text' size='15'
-					value="<?= $event['suspenddate'] ?? ''?>" name="events[<?=$i?>][suspenddate]?> " >
+					value="<?= $event['suspenddate'] ?? ''?>" name="events[<?=$i?>][suspenddate]" >
 					</label>&bull;&bull;
 	<label>Cancel until <input type='text' size='15'
-					value="<?= $event['canceldate'] ?? ''?>" name="events[<?=$i?>][canceldate]?> " >
+					value="<?= $event['canceldate'] ?? ''?>" name="events[<?=$i?>][canceldate] " >
 					</label>
 					&bull;
 		<label> Delete <input type='checkbox' name='events[<?=$i?>][delete]'>
 					</label>
 		 </td></tr>
 
-		<tr class='left' style='border-bottom:8px solid black;'><td class='right' colspan='4'>
+		<tr class='left <?=$eventstyle?>' style='border-bottom:8px solid black;'><td colspan='4'>
 		Notes:
 		<input type = 'text' size='80'
 				name="events[<?=$i?>][note]"
-				value="<?=$event['note']?>" ?? '' > </td>
+				value="<?=$event['note'] ?? '' ?>"  > </td>
 		</tr>
 
 	<?php  endif; ++$i; endforeach; ?>
@@ -160,7 +164,8 @@ if (0 && ! LIVE && (PLATFORM == 'remote')){
 	foreach ($calendar['events'] as $event) :
 
 	$npsid = $event['npsid']??'';
-	$dayset = daylist($i,$event['days']??'',$npsid);
+		$dayseti = $event['dayset']??[];
+	$daychecks = daylist($i,$dayseti,$npsid);
 	$eventtimeclass = 'input';
 	if (empty($event['time'])) :$eventtimeclass='invalid'; endif;
 ?>
@@ -190,16 +195,16 @@ if (0 && ! LIVE && (PLATFORM == 'remote')){
 				<?=$event['end']??'' ?></td>
 			<td>
  Repeat Every: <br />
-			<?=$dayset?>
+			<?=$daychecks?>
 			</td>
 		</tr>
 
 		<tr><td colspan='4' class='left '>
 		<label>Suspend (hide) until <input type='text' size='15'
-					value="<?= $calendar['npstags'][$npsid]['suspenddate'] ?? ''?> " name="npstags[<?=$npsid?>][suspenddate]?> " >
+					value="<?= $calendar['npstags'][$npsid]['suspenddate'] ?? ''?> " name="npstags[<?=$npsid?>][suspenddate]" >
 					</label>&bull;
 	<label>Cancel until <input type='text' size='15'
-					value="<?= $calendar['npstags'][$npsid]['canceldate'] ?? ''?> " name="npstags[<?=$npsid?>][canceldate]?> "
+					value="<?= $calendar['npstags'][$npsid]['canceldate'] ?? ''?> " name="npstags[<?=$npsid?>][canceldate]"
 					</label>
 
 

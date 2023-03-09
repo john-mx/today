@@ -39,9 +39,11 @@ switch ($page) {
 	case 'events':
 //		$subtitle = "Upcoming Events";
 		$plate = 'calendar';
-//	U::echor($y['calendar'],'y');
-		$z['calendar']['events'] = Calendar::filter_events($y['calendar']['events'],3);
-// U::echor($z,'z in pager');
+		$y=$DM->build_topic_calendar();
+
+//  	U::echor($y['calendar'],'prefilter');
+		$z['calendar']['events'] = Calendar::filter_events($y['calendar']['events'],5);
+//  U::echor($z,'z in pager');
 		break;
 
 	case 'weather':

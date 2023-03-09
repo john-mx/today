@@ -96,7 +96,7 @@ public function prepare_admin() {
 	$r['galerts'] = $this->DM->build_topic_galerts();
 
 // calendar
-	$r['calendar'] = $this->prepare_admin_calendar();
+	$r['calendar'] = $this->Cal->prepare_admin_calendar();
 
 
 
@@ -159,35 +159,6 @@ public function post_admin ($post) {
 
 }
 
-public function prepare_admin_calendar() {
-	if (!$cal=$this->CM->loadCache('calendar')) {
-	 	Log::error ("Could not load cache calendar");
-	 	return [];
-	 }
-	// U::echor($cal,'loaded');
-	// remove expired events
-	$events =$this->Cal->filter_events($cal['events'],0);
-// 	U::echor($events,'filtered events');
-	// addd 3 blank records
-	for ($i=0;$i<1;++$i) {
-		$events[] = $this->Cal::$empty_cal;
-	}
-
-	$events = $this->Cal->add_types($events);
-// 	U::echor($events,'types added');
-	if (!$npscal=$this->CM->loadCache('npscal')['npscal']) {
-	 	Log::error ("Could not load cache npscal");
-	 	return [];
-	 }
-
-	// merge
-	$events = array_merge($events,$npscal);
-// 		U::echor($events,'merged');
-	$cal['events'] = $events;
-	//cal npstags already there.
-//U::echor($cal,'prepared admin');
-	return  $cal;
-}
 
 private function checkAlert ($alert) {
  // Utilities::echor($alert,'start alert check');
