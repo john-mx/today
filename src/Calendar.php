@@ -45,6 +45,13 @@ class Calendar {
 
 	);
 
+	// translations of rec.gov types to my types
+	static $eventTranslations = array(
+		'Other'=>'Social Event',
+		'Walk' => 'Ranger-led Walk',
+		'Hike' => 'Ranger-led Hike',
+
+	);
 	private $tz;
 	private $CM;
 	private $Plates;
@@ -136,6 +143,10 @@ private function filterAdmin($events){
 	}
 
 	return $r;
+}
+
+public function getTranslatedType($type) {
+	return self::$eventTranslations[$type] ?? $type;
 }
 
 public function post_calendar($cal){

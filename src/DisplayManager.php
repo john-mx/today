@@ -239,6 +239,8 @@ public function build_topic_calendar() {
 		if (isset ($tags[$id])){
 			$npsevent = array_merge($npsevent,$tags[$id]);
 		}
+		// substititue better type descriptions
+		$npsevent['type'] = $this->Cal->getTranslatedType($npsevent['type']);
 
 		$newcal[] = $npsevent;
 	 }

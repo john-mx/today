@@ -481,7 +481,8 @@ public function rebuild_cache_npscal() {
 		}
 		//U::echor($resp,'cal',STOP);
 	if ($ok){
-		//$this->writeCache('npsraw',$resp);
+		// save the raw download.  Can't say why
+		$this->writeCache('npscalraw',$resp);
 
 		$npscal = $this->format_nps($resp);
 		$this->writeCache('npscal',$npscal);

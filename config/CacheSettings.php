@@ -56,8 +56,12 @@ private static $cacheFiles  = array (
 				'wgov' => REPO_PATH . "/var/ext/wgov.json",
 				'refRequest' => REPO_PATH . "/var/ext/refRequest",
 				'mergecal' => REPO_PATH . "/var/mergecal.json",
+
+				'npscalraw' => REPO_PATH . "/var/ext/npscalraw.json",
 );
 
+
+//
 
 public static $gridpoints = [
 	'hq' => 'VEF/72,12',
@@ -199,7 +203,7 @@ public static $coordinates = [
 	}
 
 	public static function getCacheList () {
-		$clist = array_keys(self::$cacheFiles);
+		$clist = array_keys(self::$cacheTimes);
 		sort ($clist);
 		return $clist;
 	}
