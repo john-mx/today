@@ -643,14 +643,19 @@ public function rebuild_ref_request() {
 	$this->writeCache('refRequest',['refreshed']);
 	return true;
 }
+
+
 public function rebuild_cache_CampsRec (){
 	$x=[];
 	$src = 'ridb';
 	$ok=true;
 	$locs = $this->reccamps;
 	$apikey = CS::getKey('ridb');
-	$d = new \DateTime('today',new \DateTimeZone('UTC'));
-	$dateiso = $d->format('Y-m-d\TH:i:s\Z');;
+	//$d = new \DateTime('today');
+
+	//$dateiso = $d->format('Y-m-d\TH:i:s\Z');;
+	$dateiso=gmdate('Y-m-d\T00:00:00\Z');
+	//echo $dateiso . BR; exit;
 	$header = [];
 
 	$api = new Api($src);
@@ -687,6 +692,8 @@ public function rebuild_cache_CampsRec (){
 
 	} # next loc
 	//U::echor ($availability,'availability',STOP);
+
+
 	$camps = $this->loadCache('camps');
 
 	foreach ($availability as $cg=>$open){
@@ -734,7 +741,7 @@ public function rebuild_cache_tours (){
 			continue;
 		}
 
-		$cgavail = $this->parseRecCamps($r);
+		$cgavail = $this->parseRecTours($r);
 		//U::echor($cgavail,'cgavail');
 
 		if (isset( $cgavail[$dateiso] )){
@@ -1104,6 +1111,12 @@ public static function split_coord ($loc) {
 	[$lat,$long] = explode(',',$coord);
 	return [$lat,$long];
 }
+
+private function parseRecTours($rec){
+	// not implemented
+	return [];
+}
+
 
 private function parseRecCamps ($rec){
 // parses rec.gov campsite data to determine

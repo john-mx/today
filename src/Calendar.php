@@ -50,7 +50,6 @@ class Calendar {
 		'Other'=>'Social Event',
 		'Walk' => 'Ranger-led Walk',
 		'Hike' => 'Ranger-led Hike',
-
 	);
 	private $tz;
 	private $CM;

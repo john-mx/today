@@ -57,7 +57,8 @@ private static $cacheFiles  = array (
 				'refRequest' => REPO_PATH . "/var/ext/refRequest",
 				'mergecal' => REPO_PATH . "/var/mergecal.json",
 
-				'npscalraw' => REPO_PATH . "/var/ext/npscalraw.json",
+				'npscalraw' => REPO_PATH . "/var/raw/npscalraw.json",
+				'reccampsavail' => REPO_PATH . "/var/raw/reccampsavail.json",
 );
 
 
