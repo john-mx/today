@@ -16,7 +16,7 @@ $topics = $DM->build_topics();
 
 $z['calendar']['events'] = Calendar::filter_events($topics['calendar']['events'],1);
 //U::echor($z);
-
+$z['uv'] = $topics['uv'];
 //END START
 
 
@@ -37,4 +37,4 @@ $meta=array('meta'=>[
 	echo $Plates->render ('title',$meta);
 
 
-	echo $Plates -> render('summary',['calendar' => $z['calendar']]) ;
+	echo $Plates -> render('summary',['calendar' => $z['calendar'],'uv'=>$topics['uv']]) ;

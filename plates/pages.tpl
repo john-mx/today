@@ -30,7 +30,7 @@
 
 <tr><td><a href='/pager.php?notices' target='topic'>Notices</td><td>Advice, Alerts and Notices</tr>
 <tr><td><a href='/pager.php?campgrounds' target='topic'>Campgrounds</td><td>Campground status, sites, and fees</tr>
-
+<tr><td><a href='/pager.php?current' target='current'>Current Conditions</td><td>From LHRS</td></tr>
 
 <tr><td colspan='2' class='bg-yellow'>Miscellaneous Pages</td></tr>
 <tr><td><a href="/rotate.php?nosnap" target='snap'>No Rotate</a></td><td>All Rotation pages without the rotation.</td></tr>

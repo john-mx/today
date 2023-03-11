@@ -8,9 +8,7 @@ use DigitalMx\jotr\Utilities as U;
 // $conditions = $data['fire'],4data['air'],$data['current'];
 //Utilities::echor($data,'data',STOP);
 
-$uv = $light['uv'];
 
-$air = $air;
 $gday = $wgov['jr'][1];
 $wday = $wapi['forecast']['jr'][0];
 
