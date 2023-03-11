@@ -64,7 +64,7 @@ switch ($page) {
 		$z = array_merge(
 			$DM->build_topic_current(),$DM->build_topic_uv()
 		);
-		U::echor($z);
+	//	U::echor($z);
 		$plate = 'conditions';
 		break;
 
