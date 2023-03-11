@@ -60,6 +60,14 @@ switch ($page) {
 		$plate3 = 'advice';
 		break;
 
+	case 'current':
+		$z = array_merge(
+			$DM->build_topic_current(),$DM->build_topic_uv()
+		);
+		U::echor($z);
+		$plate = 'conditions';
+		break;
+
 	case 'campgrounds':
 		//$subtitle = 'Campgrounds';
 		$z=$y;

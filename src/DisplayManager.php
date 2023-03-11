@@ -256,6 +256,7 @@ public function build_topic_current() {
 	 	return [];
 	 }
 
+
 	$y=$z['current']['lhrs']['properties'];
 	$y['updatets'] = strtotime($z['current']['lhrs']['properties']['timestamp']);
 	$y['temp_c']= is_null($y['temperature']['value']) ? 'n/a' : round($y['temperature']['value']);
@@ -276,9 +277,8 @@ public function build_topic_current() {
 		'n/a' : $y['wind_chillC'] * 9/5 + 32;
 
 
-	$wapi = $this->CM->loadCache('wapi')['wapi'];
-	$current_uv = $wapi['jr']['current']['uv'];
-	$y['uv'] = $this->uv_data($current_uv);
+
+
 
 // Utilities::echor($y,'current', STOP);
 	return ['current' => $y];
@@ -297,11 +297,15 @@ public function degToDir($deg) {
 }
 
 public function build_topic_uv() {
-	$y = $this->CM->loadCache('wapi')['wapi'];
-//Utilities::echor ($y);
-	$uv = $y['jr']['forecast']['forecastday'][0]['day']['uv'];
-	$uvdata=$this->uv_data($uv);
-	return ['uvdata'=>$uvdata];
+	if (!$wapi = $this->CM->loadCache('wapi')['wapi']) {
+	 	Log::error ("Could not load cache wapi");
+	 	$uvFC = $uvC = 'n/a';
+	 } else {
+	 	$uvFC = $wapi['jr']['forecast']['forecastday'][0]['day']['uv'];
+	 	$uvC = $wapi['jr']['current']['uv'];
+	 }
+	$uvData=$this->uv_data($uvC,$uvFC);
+	return ['uv'=>$uvData];
 }
 
 
@@ -1170,14 +1174,20 @@ private function time_format($time) {
 
 
 
-public  function uv_data($uv) {
+public  function uv_data($uvC,$uvFC) {
 	// takes numeric uv, returns array of uv, name, warning
-		$uvscale =  Defs::uv_scale($uv);
+		$uvCscale =  Defs::uv_scale($uvC);
+		$uvFCscale = Defs::uv_scale($uvFC);
 		$uv = array(
-			'uv' => $uv,
-			'uvscale' => $uvscale,
-			'uvwarn' => Defs::uv_warn($uvscale),
-			'uvcolor' => Defs::get_color($uvscale),
+			'uvC' => $uvC,
+			'uvCscale' => $uvCscale,
+			'uvCwarn' => Defs::uv_warn($uvCscale),
+			'uvCcolor' => Defs::get_color($uvCscale),
+			'uvFC' => $uvFC,
+			'uvFCscale' => $uvFCscale,
+			'uvFCwarn' => Defs::uv_warn($uvFCscale),
+			'uvFCcolor' => Defs::get_color($uvFCscale),
+
 		);
 			return ($uv);
 }

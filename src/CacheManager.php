@@ -651,10 +651,10 @@ public function rebuild_cache_CampsRec (){
 	$ok=true;
 	$locs = $this->reccamps;
 	$apikey = CS::getKey('ridb');
-	//$d = new \DateTime('today');
+	$d = new \DateTime('today');
 
-	//$dateiso = $d->format('Y-m-d\TH:i:s\Z');;
-	$dateiso=gmdate('Y-m-d\T00:00:00\Z');
+	$dateiso = $d->format('Y-m-d\TH:i:s\Z');;
+	//$dateiso=date('Y-m-d\T00:00:00\Z');
 	//echo $dateiso . BR; exit;
 	$header = [];
 
@@ -1144,6 +1144,10 @@ private function parseRecCamps ($rec){
 	//U::echor($cgavail, 'cgavail');
 	return $cgavail;
 }
+
+	private function countOpenCamps($r){
+
+	}
 	public function setMtime($cache,$ts){
 		$cfile = CS::getCacheFile($cache);
 		Log::info ( "Resetting mtime $cfile, $ts") ;
