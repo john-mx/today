@@ -19,7 +19,7 @@ $wday = $wapi['forecast']['jr'][0] ?? [];
 
 $uvday = <<<EOT
 <div  style='margin-bottom:6px;'>
-	<b>UV</b> Current: {$uv['uvC']}<br />
+	<b>UV:</b> Current: {$uv['uvC']}<br />
 	<b>Forecast: {$uv['uvFC']}</b>
 	<span style="background-color:{$uv['uvFCcolor']};">
 				 {$uv['uvFCscale']}

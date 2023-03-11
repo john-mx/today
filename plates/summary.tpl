@@ -15,12 +15,12 @@ use DigitalMx\jotr\Calendar;
 
 $air = $air;
 $uvday = <<<EOT
-	UV: {$uv['uvFC']}
-			<div class='inlineblock' style="padding-left:2em;padding-right:2em;background-color:{$uv['uvFCcolor']};">
+	<p><b>UV:</b> {$uv['uvFC']}
+			<span  style="padding-left:2em;padding-right:2em;background-color:{$uv['uvFCcolor']};">
 				 {$uv['uvFCscale']}
-			</div>
+			</span>
 				&mdash; {$uv['uvFCwarn']}
-			<br />
+			</p>
 EOT;
 		$aircolor = $air['jr']['aqi_color'];
 $aqday = <<<EOT
@@ -42,7 +42,7 @@ EOT;
 <?php endif; ?>
 
 <?php $this->insert('light',[$light]); ?>
-
+<?=$uvday?>
 <!--
 <h4>Next Two Days</h4>
 		<?php
@@ -97,4 +97,6 @@ if(empty($calendar['events'])) : echo "<p class='inleft2'>No Events Scheduled</p
 </table>
 <?php endif; ?>
 
-<?php $this->insert('sig'); ?>
+
+<?php
+$this->insert('sig'); ?>

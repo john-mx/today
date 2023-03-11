@@ -16,7 +16,7 @@ $topics = $DM->build_topics();
 
 $z['calendar']['events'] = Calendar::filter_events($topics['calendar']['events'],1);
 //U::echor($z);
-$z['uv'] = $topics['uv'];
+
 //END START
 
 
