@@ -101,7 +101,7 @@ EOT;
 
 <div class='floatl ' style='width:30%'>
 		<?=$uvday?>
-		<?=$aqday?>
+
 	</div>
 </div>
 

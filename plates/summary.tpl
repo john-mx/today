@@ -88,7 +88,7 @@ if(empty($calendar['events'])) : echo "<p class='inleft2'>No Events Scheduled</p
 	</td>
 	<td class='lrpad'><b><?=$event['title']?></b>
 	</td>
- 	<td>
+ 	<td><?=$event['duration']?> <?=$event['type']?>
   at <?=$event['location']?>
   </td><td>
 
