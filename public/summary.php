@@ -37,4 +37,4 @@ $meta=array('meta'=>[
 	echo $Plates->render ('title',$meta);
 
 
-	echo $Plates -> render('summary',['calendar' => $z['calendar'],'uv'=>$topics['uv']]) ;
+	echo $Plates -> render('summary') ;
