@@ -76,12 +76,11 @@ One announcement per line. They will be listed as bullets <br />
 <textarea name='announcements' rows='6' cols='80'><?=$admin['announcements'] ?></textarea>
 
 
-<h4>Enter visitor advice <?php U::showHelp('advice');?></h4>
-One announcement per line(carriage return). Rotating pages will always show the first one below plus another chosen at random from the rest of the list each time page changes.<br />
+<h4>Enter safety advice <?php U::showHelp('advice');?></h4>
+One announcement per line(carriage return). Rotating pages and summary page show 1 or 2 random items from the list.<br />
 
 <textarea name='advice' rows='6' ><?=$admin['advice'] ?></textarea>
 <br />
-Enter one fixed advice to be shown with the random one from above:<br />
 
 <h4>Enter fire status</h4>
 <p>General Fire Level: <select name='fire_level'><?=$admin['fire_level_options']?></select>
