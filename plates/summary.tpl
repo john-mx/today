@@ -36,7 +36,8 @@ $aqday = <<<EOT
 			<br />
 EOT;
 
-
+	$anlist = explode("\n",$admin['advice']);
+	$fixed = $anlist[array_rand($anlist)];
 
 ?>
 
@@ -45,7 +46,9 @@ EOT;
 <?php endif; ?>
 
 <?php $this->insert('light',[$light]); ?>
-<?=$uvday?>
+
+<?php $this->insert('alerts'); ?>
+
 <!--
 <h4>Next Two Days</h4>
 		<?php
@@ -57,10 +60,13 @@ EOT;
 		?>
 <br />
  -->
-<?php $this->insert('advice')?>
-<?php
-	$this->insert('alerts');
-?>
+<h3>Hike Safely</h3>
+	<div class='indent2 left'>
+	<ul>
+		<li><?= $fixed ?>
+	</ul>
+</div>
+
 
 <?php
 	$this->insert('notices',['notices' => $admin['notices']]);
