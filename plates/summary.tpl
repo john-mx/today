@@ -77,7 +77,7 @@ EOT;
 $calendar['events'] = Calendar::filter_events($calendar['events'],1); #one day
 // U::echor($calendar,'filtered for summary');
 if(empty($calendar['events'])) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
-//Utilities::echor($calendar,'data-calendar',NOSTOP);
+Utilities::echor($calendar,'data-calendar',NOSTOP);
 
 ?>
 <table class='inleft2  no-border'>
@@ -97,7 +97,7 @@ if(empty($calendar['events'])) : echo "<p class='inleft2'>No Events Scheduled</p
  	<td><?=$event['duration']?> <?=$event['type']?>
   at <?=$event['location']?>
   </td><td>
-
+	<?=$reservation?>
   <?php if ($event['status']=='Cancelled'): ?><span class='red'>Cancelled!</span><?php endif; ?>
 	</td>
   </tr>

@@ -198,6 +198,7 @@ if ($transform == 0){
 				foreach ($event['times'] as $etime) {
 					$ets = strtotime("$edate $etime");
 					$event['dt'] = $ets;
+					$event['time'] = $etime;
 					$z[] = $event;
 				}
 			}
