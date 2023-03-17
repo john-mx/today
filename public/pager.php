@@ -42,7 +42,7 @@ switch ($page) {
 		$y=$DM->build_topic_calendar();
 
 //  	U::echor($y['calendar'],'prefilter');
-		$z['calendar']['events'] = Calendar::filter_events($y['calendar']['events'],5);
+		$z['calendar']['events'] = Calendar::filter_events($y['calendar']['events'],3);
 //  U::echor($z,'z in pager');
 		break;
 

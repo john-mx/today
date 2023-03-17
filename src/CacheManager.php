@@ -644,6 +644,66 @@ public function rebuild_ref_request() {
 	return true;
 }
 
+public function rebuild_campsites() {
+	$x=[];
+	$src= 'ridb2';
+	$ok = true;
+	$locs = ['ic'];
+	$apikey = CS::getKey('ridb');
+	$header = [];
+
+	$api = new Api($src);
+	$attr = [];
+	foreach ($locs as $loc){
+		$facilityID = LS::getFacility($loc);
+		$relurl = 'facilities/' . $facilityID .'/campsites';
+		$query = ['apikey'=>$apikey]; //,'limit'=>1
+		$loginfo = "$src:$loc";
+		if ($r=$api->apiRequest($loginfo, $relurl,$query)){
+			// go on
+
+// U::echor($r,$loginfo);
+		} else {
+			Log::notice("Failed to get $loginfo",[$r]);
+			continue;
+		}
+
+		if (!$cgattr = $this->parseRecCampsite($r)){
+			Log::notice("Camps $loginfo has no campsites.",$r);
+			//don't change avaibility for this campground
+		} else{
+			$attr[$loc]  = $cgattr ;
+
+		}
+
+	} # next loc
+// 	U::echor ($attr,'attributes');
+	return ['cga'=>$attr];
+}
+
+public function parseRecCampsite($r){
+	// takes campsite attributes returned from rec.gov
+	// and puts key data into an array keyed on campsite
+
+	$x=[];
+	foreach ($r['RECDATA'] as $cgdata){
+		$site=$cgdata['CampsiteName'];
+		foreach ($cgdata['ATTRIBUTES'] as $cgattr) {
+			$attributes[$cgattr['AttributeName']] = $cgattr['AttributeValue'];
+		}
+		foreach ($cgdata['PERMITTEDEQUIPMENT'] as $cgattr) {
+			$attributes[$cgattr['EquipmentName']] = $cgattr['MaxLength'];
+		}
+		$x[$site] = $attributes;
+//		U::echor($x,'x');
+	}
+	ksort ($x, SORT_STRING);
+	return $x;
+}
+
+
+
+
 
 public function rebuild_cache_CampsRec (){
 	$x=[];

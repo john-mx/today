@@ -39,8 +39,11 @@
 
 <tr class='bg-yellow'><td colspan='2'>General Information</td></tr>
 
-<tr><td><a href='about.php' target='about'>About</a></td><td>General information about the site.</td></tr>
 <tr><td><a href='/'>Overview</a></td><td>Overview of the project</td></tr>
+
+<tr><td><a href='about.php' target='about'>About</a></td><td>How it Works.</td></tr>
+<tr><td><a href='setup.php' target='setup'>TV Setup</a></td>
+	<td>Instructions for setting up display on a TV</td></tr>
 <tr><td><a href='/structure.php' target='structure'>Structure</a></td><td>Structure of the system</td></tr>
 
 

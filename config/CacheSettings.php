@@ -130,6 +130,7 @@ public static $coordinates = [
 	'wgov' => 'https://api.weather.gov/gridpoints/',
 	'wgalerts' => 'https://api.weather.gov/alerts/active/zone/',
 	'ridb' => 'https://ridb.recreation.gov/api/availability/',
+	'ridb2'=>'https://ridb.recreation.gov/api/v1/',
 	'props' => 'https://api.weather.gov/points/',
 	'airnowfc' => 'https://www.airnowapi.org/aq/forecast/latLong/',
 	'airowm' => 'https://api.openweathermap.org/data/3.0/onecall',

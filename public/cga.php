@@ -4,6 +4,7 @@ namespace DigitalMx\jotr;
 use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx\jotr\Utilities as U;
 use DigitalMx\jotr\CacheManager as CM;
+use DigitalMx\jotr\LocationSettings as LS;
 
 ini_set('display_errors', 1);
 
@@ -21,6 +22,7 @@ ini_set('display_errors', 1);
 	$PM = $container['PageManager'];
 
 
+
 $meta=array('meta'=>[
 	'file' => basename(__FILE__),
 	'title' => 'Campsite Attributes',
@@ -33,4 +35,4 @@ echo $Plates->render('title',$meta);
 
 $cga = $CM->rebuild_campsites();
 echo $Plates->render('cga',array_merge($meta,$cga));
-
+echo $Plates->render('sig');
