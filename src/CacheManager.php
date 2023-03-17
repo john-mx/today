@@ -644,11 +644,11 @@ public function rebuild_ref_request() {
 	return true;
 }
 
-public function rebuild_campsites() {
+public function rebuild_campsites($cg) {
 	$x=[];
 	$src= 'ridb2';
 	$ok = true;
-	$locs = ['ic'];
+	$locs = [$cg];
 	$apikey = CS::getKey('ridb');
 	$header = [];
 

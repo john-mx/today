@@ -34,6 +34,10 @@
 
 <tr><td colspan='2' class='bg-yellow'>Miscellaneous Pages</td></tr>
 <tr><td><a href="/rotate.php?nosnap" target='snap'>No Rotate</a></td><td>All Rotation pages without the rotation.</td></tr>
+
+<tr><td><a href="/cga.php">Campground Attributes</a></td>
+	<td>List of campsites and attributes (max length, etc) for each campground. </td></tr>
+
 <tr><td><a href="/docs/">Project Docs</a></td>
 	<td>Documents about the site and status.</td></tr>
 
