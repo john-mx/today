@@ -91,7 +91,7 @@
 <tr <?=$thisclass?> ><td ><a href='/refresh.php' target='refresh' <?=$thisclass?> >Refresh caches </a></td><td > Updates all the external data (weather, airq, alerts); should run automatically every hour or so. This is an emergency tool. Can force updates of any or all caches regardless of age.</td></tr>
 
 <?php $thisclass = $this->hasAccessClass('logview.php');?>
-<tr <?=$thisclass?> ><td ><a href='/logview.php' target='_blank'>View Logs.</a> </td>
+<tr <?=$thisclass?> ><td ><a href='/logview.php' target='_blank' <?=$thisclass?> >View Logs.</a> </td>
 	<td>Displays list of log records.  Click log to view last 40 records.</td></tr>
 
 </table>
