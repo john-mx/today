@@ -49,7 +49,7 @@ if (!$cga ){
 
 <tr><td><?=$site?></td>
 	<td><?=$attr['Max Num of Vehicles'] ?></td>
-	<td><?=$attr['Max Vehicle Length'] ?></td>
+	<td><?=$attr['Max Vehicle Length']?? n/a ?></td>
 	<td><?=$attr['Max Num of People'] ?></td>
 	</td></tr>
 	<?php endforeach ; ?>

@@ -689,10 +689,10 @@ public function parseRecCampsite($r){
 	foreach ($r['RECDATA'] as $cgdata){
 		$site=$cgdata['CampsiteName'];
 		foreach ($cgdata['ATTRIBUTES'] as $cgattr) {
-			$attributes[$cgattr['AttributeName']] = $cgattr['AttributeValue'];
+			$attributes[$cgattr['AttributeName']] = $cgattr['AttributeValue'] ?? 'n/a';
 		}
 		foreach ($cgdata['PERMITTEDEQUIPMENT'] as $cgattr) {
-			$attributes[$cgattr['EquipmentName']] = $cgattr['MaxLength'];
+			$attributes[$cgattr['EquipmentName']] = $cgattr['MaxLength'] ?? 'n/a';
 		}
 		$x[$site] = $attributes;
 //		U::echor($x,'x');
