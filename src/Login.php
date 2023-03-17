@@ -114,6 +114,7 @@ class Login
 	public function logOut($sender=false){
 		unset ($_SESSION['loginLevel']);
 		unset ($_SESSION['loginTime']);
+		$this->userLevel = 0;
 
 	echo <<<EOT
 	<script>
