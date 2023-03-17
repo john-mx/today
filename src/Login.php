@@ -105,7 +105,10 @@ class Login
 
 	}
 	public function hasAccess($page){
+	echo "Checking $page" . BR;
 		$pageLevel = $this->getPageLevel($page);
+	echo "page is " . $pageLevel .'; user is '. $this->userLevel. BR;
+
 		if ($this->userLevel >= $pageLevel) return true;
 		return false;
 
