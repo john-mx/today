@@ -731,7 +731,7 @@ This function only save wgov alerts.  If both needed the other is
 
 
 	$src = 'wgalerts';
-	$locs = ['jr'];
+	$locs = ['jr','cv'];
 
 	$wgalerts = $this->CM->loadCache('wgalerts');
 // Utilities::echor($wgalerts,'get wgalerts',0);
@@ -747,8 +747,8 @@ This function only save wgov alerts.  If both needed the other is
 			if ($alert_exp < time()) continue;
 			$alert=[];
 
-			$alert['headline'] = $ad['parameters']['NWSheadline'][0];
-//	U::echor ( $alert['headline'],'params') . BR;
+			$alert['headline'] = $ad['headline'];
+
 			$alert['category'] = $ad['category'];
 			$alert['event'] = $ad['event'];
 			$alert['expires'] = $ad['expires'];

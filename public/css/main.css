@@ -50,7 +50,7 @@ body {
 
 	.page { break-after:page;}
 	.last-page {}
-
+	table.weather_table tr td {font-size:0.9rem;}
 	#conditions {display:none;}
 }
 
@@ -384,7 +384,7 @@ div.nightblock  img{
 table {
 	border-collapse: collapse;
 	border: 2px solid black;
-	font-size:1.6rem;
+	font-size:1.4rem;
 	margin-right: 1rem; /*needed when floating */
 }
 

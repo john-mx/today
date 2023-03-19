@@ -254,13 +254,14 @@ PDX ORZ006
  atom	CAZ230	Joshua Tree National Park
 
 */
-	$locs = ['jr','shasta'];
+	$locs = ['jr','cv'];
 	//getting shasta to improve likelyhood of getting something.
 	$src = 'wgalerts';
-#	$zone = 'CAZ560'; #joshua tree np
+#	$zone = 'CAZ560'; #joshua tree np (jr, br, cw)
 #	$zone = 'ORZ006'; #pdx
 #	$zone = 'CAZ082'; #shasta
 #	$zone = 'COZ040'; #denver
+#	$zone = 'CAZ061' ; #coachella valley
 	$query = [];
 	$ok=true;
 	 $api = new Api($src);

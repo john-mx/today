@@ -59,7 +59,7 @@ $print_title = "
 <?=$print_title?>
 
 <?php
-	$wspec = array('wslocs'=>['jr','cw','br','hq'],'wsdays'=>3);
+	$wspec = array('wslocs'=>['jr','cw','br'],'wsdays'=>3);
 	$this->insert('weather',$wspec);
 
 ?>

@@ -36,7 +36,7 @@ use DigitalMx\jotr\LocationSettings as LS;
 		$loccols = $daycnt + 1;
 
 	?>
-	<table class = 'col-border indent2 ' style='margin:auto'>
+	<table class = 'weather_table col-border' style='margin:auto'>
 
 
 	<tr class='no-border border-bottom'><th></th>

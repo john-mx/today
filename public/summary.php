@@ -37,7 +37,7 @@ $meta=array('meta'=>[
 <style>
 	@media print {
 		html {
-		font-size: 65%;
+		font-size: 50%;
 			}
 
 		table tr td {font-size:1.5rem;}

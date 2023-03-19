@@ -275,8 +275,8 @@ private static $campfees = [
 		];
 	//forecast zones used for alerts.  Weeather uses PSRs
 private static $zones = array(
-	'jr' => 'CAZ560',
-	'cv' => 'CAZ061',
+	'jr' => 'CAZ560', #hq, br, cw.
+	'cv' => 'CAZ061', #coachewlla valley
 	'shasta' => 'CAZ285',
 	'pdx' => 'ORZ006',
 	'cw'=>'CAZ560',
