@@ -6,7 +6,7 @@ use DigitalMx\jotr\Utilities as U;
 $e = $admin['advice'] ?? '';
 $animation ??= '';
 ?>
-<h3>Today's Safety Tips</h3>
+<h3>Hike Safely</h3>
 <?php if ($e) :
 	$anlist = explode("\n",$e);
 	//$fixed = $admin['fixedAdvice'];
