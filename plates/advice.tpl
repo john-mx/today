@@ -24,7 +24,7 @@ $animation ??= '';
 		else:
 		?>
 		<li><div id='randomAdvice'>Hike Safely!</div></li>
-		<li><?= $fixed ?>
+
 	<?php endif; ?>
 
 		</ul>
