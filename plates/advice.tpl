@@ -11,7 +11,7 @@ $animation ??= '';
 	$anlist = explode("\n",$e);
 	//$fixed = $admin['fixedAdvice'];
 	//$fixed = array_shift($anlist);
-	$fixed = $anlist[rand(0,sizeof($anlist))];
+	$fixed = $anlist[rand(0,sizeof($anlist)-1)];
 	?>
 	<div class='indent2 left'>
 	<ul>
