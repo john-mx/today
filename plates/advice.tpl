@@ -20,7 +20,7 @@ $animation ??= '';
 					if (empty(trim($item))):continue;endif;
 					echo "<li>$item</li>";
 				endforeach;
-				echo "<li>$fixed</li>";
+
 		else:
 		?>
 		<li><div id='randomAdvice'>Hike Safely!</div></li>
