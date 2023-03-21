@@ -16,8 +16,8 @@ use DigitalMx\jotr\Utilities as U;
 
 $topics['calendar']['events'] = Calendar::filter_events($topics['calendar']['events'],1);
 
-//U::echor($z);
-$z['uv'] = $topics['uv'];
+// U::echor($topics['calendar']);
+
 //END START
 
 
