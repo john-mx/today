@@ -121,7 +121,9 @@ class Login
 	alert('You have been logged out.');
 	</script>
 EOT;
-	$this->goSender($sender);
+
+	$this-> showLogin($sender,'');
+
 
 }
 
@@ -167,7 +169,7 @@ EOT;
 	<form method = 'post' action = '/login.php'>
 	<input type='hidden' name='type' value='login'>
 	<input type='hidden' name='sender' value="$sender">
-	<label>Your name: <input type='text' name='uname'></label>
+	<!-- <label>Your name: <input type='text' name='uname'></label> -->
 	<label >Password:  <input type='password' name='pw' id = 'pw' size=10> </label>
 	<input type='submit'>
 	</form>

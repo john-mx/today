@@ -74,38 +74,9 @@ EOT;
 
 <h3>Today's Events</h3>
 <?php
-$calendar['events'] = Calendar::filter_events($calendar['events'],1); #one day
-// U::echor($calendar,'filtered for summary');
-if(empty($calendar['events'])) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
-// U::echor($calendar,'data-calendar',NOSTOP);
-
-?>
-<table class='inleft2  no-border'>
-
-<?php foreach ($calendar ['events']as $event) :
-		if ($event['status']=='Suspended'){continue;} // dont display
-		$eventdate = date('l, F j',$event['dt']);
-		$eventtime = date('g:i a', $event['dt']);
-		$reservation = $event['reservation'] ? ' (Reservation required)':'';
-	?>
-	<tr class='left border-gray no-cols'>
-	<td ><b><?=$eventtime?> </b>
-
-	</td>
-	<td class='lrpad'><b><?=$event['title']?></b>
-	</td>
- 	<td><?=$event['duration']?> <?=$event['type']?>
-  at <?=$event['location']?>
-  </td><td>
-	<?=$reservation?>
-  <?php if ($event['status']=='Cancelled'): ?><span class='red'>Cancelled!</span><?php endif; ?>
-	</td>
-  </tr>
-
-<?php endforeach; ?>
-</table>
-<?php endif; ?>
+$calendar['cal1day'] = true;
+$this->insert('calendar',['calendar'=>$calendar]);
 
 
-<?php
+
 $this->insert('sig'); ?>

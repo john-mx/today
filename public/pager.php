@@ -35,6 +35,13 @@ $z=[];
 $title = TODAY;
 switch ($page) {
 
+	case 'sum2':
+		$plate = 'summary2';
+		$z=$DM->getTopics(['cal','air','uv','light','admin']);
+
+//U::echor($y,'y');
+		$z['calendar']['events'] = Calendar::filter_events($z['calendar']['events'],1);
+		break;
 
 	case 'events':
 //		$subtitle = "Upcoming Events";

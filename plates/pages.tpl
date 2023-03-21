@@ -35,24 +35,29 @@
 <tr><td colspan='2' class='bg-yellow'>Miscellaneous Pages</td></tr>
 <tr><td><a href="/rotate.php?nosnap" target='snap'>No Rotate</a></td><td>All Rotation pages without the rotation.</td></tr>
 
-<tr><td><a href="/cga.php">Campground Attributes</a></td>
+<tr><td><a href="/cga.php" target='attributes'>Campground Attributes</a></td>
 	<td>List of campsites and attributes (max length, etc) for each campground. </td></tr>
 
-<tr><td><a href="/docs/">Project Docs</a></td>
+<tr><td><a href="/docs/" target='docs'>Project Docs</a></td>
 	<td>Documents about the site and status.</td></tr>
 
 <tr class='bg-yellow'><td colspan='2'>General Information</td></tr>
 
-<tr><td><a href='/'>Overview</a></td><td>Overview of the project</td></tr>
+<tr><td><a href='/' target='overview'>Overview</a></td><td>Overview of the project</td></tr>
 
 <tr><td><a href='about.php' target='about'>About</a></td><td>How it Works.</td></tr>
-<tr><td><a href='setup.php' target='setup'>TV Setup</a></td>
+<tr><td><a href='setup.php' target='tvsetup'>TV Setup</a></td>
 	<td>Instructions for setting up display on a TV</td></tr>
 <tr><td><a href='/structure.php' target='structure'>Structure</a></td><td>Structure of the system</td></tr>
 
 
 
 <tr><td colspan='2' class='bg-yellow'>Admin Pages</td></tr>
+
+<?php $thisclass = $this->hasAccessClass('ranger.php');?>
+<tr <?=$thisclass?> ><td><a href='ranger.php' target='admin' <?=$thisclass?> >Ranger Admin  </a></td><td>Sets alerts, notices, calendar events, etc. Includes campgrounds.</td></tr>
+
+
 <?php $thisclass = $this->hasAccessClass('campadmin.php');?>
 <tr <?=$thisclass?> >
 	<td ><a href='campadmin.php' target='admin' <?=$thisclass?> >Campground Admin </a></td><td>Set status and availability for campgrounds</td></tr>
@@ -61,11 +66,8 @@
 <tr <?=$thisclass?> >
 	<td ><a href='caladmin.php' target='admin' <?=$thisclass?> >Calendar Admin </a></td><td>Set Events</td></tr>
 
-<?php $thisclass = $this->hasAccessClass('ranger.php');?>
-<tr <?=$thisclass?> ><td><a href='ranger.php' target='admin' <?=$thisclass?> >Ranger Admin  </a></td><td>Sets alerts, notices, calendar events, etc. Includes campgrounds.</td></tr>
-
 <?php $thisclass = $this->hasAccessClass('admin.php');?>
-<tr <?=$thisclass?> ><td ><a href='/admin.php' target='admin' <?=$thisclass?> >Main Admin </a> </td><td >Ranger page, plus default rotation pages, alternate alert.</td></tr>
+<tr <?=$thisclass?> ><td ><a href='/admin.php' target='admin' <?=$thisclass?> >Primary Admin </a> </td><td >Ranger page, plus default rotation pages, alternate alert.</td></tr>
 
 <tr><td ><a href='/local.php' target='local'>Local Settings</a> </td><td >Settings for local display (like this one, right here) Sets pages in rotation, rotation time, etc. Saved in a 48-hour cookie on local device. Access from the rotation page on the device by clicking over the "Now" time in the title.</td></tr>
 

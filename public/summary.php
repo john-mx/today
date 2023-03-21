@@ -12,9 +12,10 @@ use DigitalMx\jotr\Utilities as U;
 	$Plates = $container['Plates'];
 
 	$DM = $container['DisplayManager'];
-$topics = $DM->build_topics();
+	$topics = $DM->build_topics();
 
-$z['calendar']['events'] = Calendar::filter_events($topics['calendar']['events'],1);
+$topics['calendar']['events'] = Calendar::filter_events($topics['calendar']['events'],1);
+
 //U::echor($z);
 $z['uv'] = $topics['uv'];
 //END START
@@ -55,4 +56,4 @@ EOT;
 	echo $Plates->render ('title',$meta);
 
 
-	echo $Plates -> render('summary',$meta) ;
+	echo $Plates -> render('summary',array_merge($meta,$topics)) ;

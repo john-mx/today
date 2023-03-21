@@ -41,13 +41,11 @@ use DigitalMx\jotr\LocationSettings as LS;
 	<?php if (empty($alertset)): echo "No alerts"; else:
 		foreach ($alertset as $alert) : ?>
 		<div class='inleft2 border'>
-		<p><b><?=$alert['event'] ?? '' ?></b>:
-		<p>Area: <?=$alert['areaDesc']?></p>
+		<p><b><?=$alert['event'] ?? '' ?> for <?=$alert['areaDesc']?></b></p>
+
 			<?=$alert['headline']?></p>
 			<p>Description: <?=$alert['description']?></p>
-
-			<p>Instructions: <br>
-				<?=$alert['instruction'] ?? '' ?></p>
+			<p>Onset: <?=$alert['onset']?></p>
 			<p>Ends: <?=$alert['ends']?> (<?= $alert['ends-short']?>) </p>
 			<p>(alert Expires <?= $alert['expires']?> )</p>
 		</div>

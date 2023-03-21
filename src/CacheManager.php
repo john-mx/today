@@ -663,7 +663,7 @@ public function rebuild_campsites($cg) {
 		if ($r=$api->apiRequest($loginfo, $relurl,$query)){
 			// go on
 
-// U::echor($r,$loginfo);
+// U::echor($r,$loginfo,STOP);
 		} else {
 			Log::notice("Failed to get $loginfo",[$r]);
 			continue;
@@ -732,7 +732,7 @@ public function rebuild_cache_CampsRec (){
 		if ($r=$api->apiRequest($loginfo, $relurl,$query)){
 			// go on
 			// $rec = [campsites=>siteid=>'availabilities'=>'2023-01-14T00:00:00Z' = 'Rewsereved|Not Avaialbe|Available
-//U::echor($r,$loginfo,STOP);
+U::echor($r,$loginfo,STOP);
 		} else {
 			Log::notice("Failed to get $loginfo",$r);
 			continue;
