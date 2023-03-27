@@ -85,7 +85,7 @@ EOT;
 
 <div class='center clearafter width90 border auto' id='conditions'>
 <h3 style='margin-bottom:0px;text-align:center;'>Park Conditions  at <?=$current_asof?></h3>
-<div style='font-weight:normal;font-size:1.2rem; margin-bottom:0.8em;'>Reported near Hidden Valley</div>
+<div style='font-weight:normal;margin-bottom:0.8em;'>Reported near Hidden Valley</div>
 
 	<div class=' floatl' style='width:30%'>
 	<?=$temp?>
