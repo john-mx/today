@@ -297,18 +297,21 @@ public function degToDir($deg) {
 }
 
 public function build_topic_uv() {
-	if (!$wapi = $this->CM->loadCache('wapi')['wapi']) {
-	 	Log::error ("Could not load cache wapi");
-	 	$uvFC = $uvC = 'n/a';
-	 } else {
-	 	$uvFC = $wapi['jr']['forecast']['forecastday'][0]['day']['uv'];
-	 	$uvC = $wapi['jr']['current']['uv'];
-	 }
+	// if (!$wapi = $this->CM->loadCache('wapi')['wapi']) {
+// 	 	Log::error ("Could not load cache wapi");
+// 	 	$uvFC = $uvC = 'n/a';
+// 	 } else {
+// 	 	$uvFC = $wapi['jr']['forecast']['forecastday'][0]['day']['uv'];
+// 	 	$uvC = $wapi['jr']['current']['uv'];
+// 	 }
+	 // wapi seems to have low numbers.  owm matches other
+	 // sources better
 	 if (!$wowm = $this->CM->loadCache('airowm')['airowm']) {
 	 	Log::error ("Could not load cache airowm");
 	 } else {
 	 	//U::echor($wowm['jr']['daily'],'daily',STOP);
-	 	$uvFC = $wowm['jr']['daily'][0]['uvi'];
+	 	$uvC = round($wowm['jr']['current']['uvi'],1);
+	 	$uvFC = round($wowm['jr']['daily'][0]['uvi'],1);
 	 }
 	$uvData=$this->uv_data($uvC,$uvFC);
 	return ['uv'=>$uvData];
