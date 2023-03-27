@@ -19,14 +19,16 @@ $wday = $wapi['forecast']['jr'][0] ?? [];
 
 $uvday = <<<EOT
 <div  style='margin-bottom:6px;'>
-	<b>UV:</b> Current: {$uv['uvC']}<br />
-	<b>Forecast: {$uv['uvFC']}</b>
+	<b>UV Max: </b>
+	{$uv['uvFC']}
 	<span style="background-color:{$uv['uvFCcolor']};">
 				 {$uv['uvFCscale']}
 			</span>
-			<br />
-				&mdash; <i> {$uv['uvFCwarn']}</i>
-			<br />
+
+	<br />Current: {$uv['uvC']}<br />
+
+				<i> {$uv['uvFCwarn']}</i>
+
 </div>
 EOT;
 
