@@ -59,6 +59,7 @@ private static $cacheFiles  = array (
 
 				'npscalraw' => REPO_PATH . "/var/raw/npscalraw.json",
 				'reccampsavail' => REPO_PATH . "/var/raw/reccampsavail.json",
+				'willy' => REPO_PATH . "/var/ext/willy.json",
 );
 
 
@@ -77,6 +78,8 @@ public static $gridpoints = [
 public static $stations = [
 'lhrs' => 'LTHC1',
 ];
+
+
 
 public static $coordinates = [
 // no spaces!
@@ -100,6 +103,7 @@ public static $coordinates = [
         'ridb' => '3c4e8e8a-10d0-4512-8459-c79fe9d9a8b1',
         'airowm' => '302eb76fa7f85542bce7c866c1e3b241',
         'nps' => 'd0hnF83GzfCqXdZqUQMStNc9kR77Vcwo0wJAMsC2',
+        'willy' => 'NDdiZThiZmM2NWEzNzMyYWZmMGY0NG',
 
 
 
@@ -134,6 +138,7 @@ public static $coordinates = [
 	'props' => 'https://api.weather.gov/points/',
 	'airnowfc' => 'https://www.airnowapi.org/aq/forecast/latLong/',
 	'airowm' => 'https://api.openweathermap.org/data/3.0/onecall',
+	'willy' => 'https://api.willyweather.com/v2/',
 
 	'nps' => 'https://developer.nps.gov/api/v1/events',
 	'current' => 'https://api.weather.gov/stations/',
@@ -165,6 +170,7 @@ public static $coordinates = [
 				'tours' => 0, // 0 until code set.  then -1
 				'camps' => 20, // every 20 mins
 				'current' => 30,
+				'willy'=>12*60,
 				//'refRequest' => 60, // tracks last refresh time
 				//'mergecal' => 0,
 

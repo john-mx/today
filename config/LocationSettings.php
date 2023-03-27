@@ -274,6 +274,8 @@ private static $campfees = [
 
 		];
 	//forecast zones used for alerts.  Weeather uses PSRs
+
+
 private static $zones = array(
 	'jr' => 'CAZ560', #hq, br, cw.
 	'cv' => 'CAZ061', #coachewlla valley
@@ -283,6 +285,9 @@ private static $zones = array(
 	'br'=>'CAZ560',
 );
 
+public static $willylocs = [
+	'jotr' =>105156,
+];
 
 private static $rpages = array (
 		'today' => 'Today and Tonight, Park conditions',
@@ -346,5 +351,10 @@ public static function getRpageArray() {
 public static function getZone($loc){
 	return self::$zones[$loc];
 }
+
+	public static function getWillyLoc($loc){
+		$result = self::$willylocs[$loc];
+		return $result;
+	}
 
 }

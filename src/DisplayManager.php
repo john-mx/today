@@ -304,6 +304,12 @@ public function build_topic_uv() {
 	 	$uvFC = $wapi['jr']['forecast']['forecastday'][0]['day']['uv'];
 	 	$uvC = $wapi['jr']['current']['uv'];
 	 }
+	 if (!$wowm = $this->CM->loadCache('airowm')['airowm']) {
+	 	Log::error ("Could not load cache airowm");
+	 } else {
+	 	//U::echor($wowm['jr']['daily'],'daily',STOP);
+	 	$uvFC = $wowm['jr']['daily'][0]['uvi'];
+	 }
 	$uvData=$this->uv_data($uvC,$uvFC);
 	return ['uv'=>$uvData];
 }

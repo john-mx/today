@@ -32,7 +32,7 @@ echo $Plates->render('title',$meta);
 <p>This page rebuilds the properties (coordinates, zones, etc.) for the sites used for weather forcasts.  Data is stored in properties.json,  It should not normally change and the stored data is not used for anything except reference.</p>
 <?php
 
-if ($z = $CM->rebuild_properties()) {
+if ($z = $CM->rebuild_cache_props()) {
 	echo "Succeeded";
 	//Utilities::echor($z,'result');
 } else {

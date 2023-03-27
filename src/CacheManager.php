@@ -871,6 +871,44 @@ public function rebuild_cache_wapi( ) {
 }
 
 
+public function rebuild_cache_willy() {
+	$locs = ['jr'];
+	$x=[];
+	$ok = true;
+	$x['update'] = time();
+	$src = 'willy';
+	$api = new Api($src);
+	$key =  CS::getKey('willy');
+	$query = [
+		'forecasts'=>'uv',
+		'days'=>'1',
+		'startDate'=> date('Y-m-d'),
+		];
+	foreach ($locs as $loc){
+		$loginfo = "$src: $loc";
+		$locid = LS::getWillyLoc('jotr');
+		$apikey=CS::getKey('willy');
+		$relurl = $key . "/locations/" . $locid . "/weather.json";
+
+		if ($r=$api->apiRequest($loginfo, $relurl,$query)){
+			$resp[$src][$loc] = $r;
+			//$ok doesn't change
+		} else {
+			Log::notice("Failed to get $loginfo",$r);
+			$ok = false;
+			continue;
+		}
+
+		$x[$src][$loc] = $r;
+	}
+	if ($ok){
+		$this->writeCache($src,$x);
+	//Log::info("Retrieved properities");
+		return true;
+	} else {
+	return $ok;
+	}
+}
 
 
 public function rebuild_cache_props() {
@@ -1015,6 +1053,9 @@ public function refreshCache($cache,$force=false) {
 
 			case 'refRequest':
 				$rf = $this->rebuild_ref_request();
+				break;
+			case 'willy':
+				$rf = $this->rebuild_cache_willy();
 				break;
 
 			default:

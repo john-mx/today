@@ -1,0 +1,8 @@
+willyweather  api
+
+key NDdiZThiZmM2NWEzNzMyYWZmMGY0NG
+
+location
+https://api.willyweather.com/v2/NDdiZThiZmM2NWEzNzMyYWZmMGY0NG/search.json?query=joshua+tree+national+park
+
+[{"id":105156,"name":"Joshua Tree National Park","region":"Riverside County","state":"CA","postcode":"","timeZone":"America\/Los_Angeles","lat":33.869,"lng":-115.758,"typeId":22}]
