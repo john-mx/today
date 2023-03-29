@@ -77,6 +77,6 @@ EOT;
 $calendar['cal1day'] = true;
 $this->insert('calendar',['calendar'=>$calendar]);
 
+?>
+<hr>
 
-
-$this->insert('sig'); ?>

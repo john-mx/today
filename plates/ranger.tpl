@@ -45,7 +45,7 @@ use DigitalMx\jotr\LocationSettings as LS;
 
 			<?=$alert['headline']?></p>
 			<p>Description: <?=$alert['description']?></p>
-			<p>Onset: <?=$alert['onset']?></p>
+			<p>Onset: <?=$alert['onset']??'n/a' ?></p>
 			<p>Ends: <?=$alert['ends']?> (<?= $alert['ends-short']?>) </p>
 			<p>(alert Expires <?= $alert['expires']?> )</p>
 		</div>
