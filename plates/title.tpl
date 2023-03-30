@@ -50,13 +50,13 @@ use DigitalMx\jotr\Login as Login;
 	if (!$this->checkLevel($meta['file'])) exit;
 
 ?>
-<div class='head' id='head' >
+<div class='head' id='head'  >
 
-	<div class='pad' style='justify-content:flex-start;' onClick = 'getLocal();'> <?php if ($animated):?>Now<br /><div id='clock'> </div>
+	<div class='pad' style='justify-content:flex-end;' onClick = 'getLocal();'> <img src='/images/trans1x1.png' style='margin-top:4px;height:5rem;' /><br /><?php if ($animated):?>Now<br /><div id='clock'> </div>
 		<?php else: ?>&nbsp;&nbsp;&nbsp;<br/><?php endif; ?>
 		</div>
 
-	<div class='title' style='justify-content:flex-center;flex-grow:8'>
+	<div class='title' style='justify-content:flex-center;flex-grow:8;'>
 	<h1><?=$local_head ?></h1>
 		<h2><?=$title?></h2>
 	</div>
