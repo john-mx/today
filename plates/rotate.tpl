@@ -12,7 +12,7 @@ else {
 }
 
 if (!empty($calendar)){
-	$calendar = Calendar::filter_events($calendar['events'],2);
+	$calendar = Calendar::filter_events($calendar['events'],1);
 }
 ?>
 

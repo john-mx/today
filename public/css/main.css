@@ -21,7 +21,8 @@ html {
 body {
 	font-size: 1.6rem;
 	/* sets it back to 16 pt */
-	font-family:Rubik,san-serif;
+	/* font-family:Rubik,san-serif; */
+	font-family:Frutiger,san-serif;
 	padding:1rem;
 	font-weight:400;
 

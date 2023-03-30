@@ -62,6 +62,7 @@ use DigitalMx\jotr\Login as Login;
 	</div>
 
 	<div class='pad' style='justify-content:flex-end;'>
+		<img src='/images/Shield-flat-alpha-5775.png' style='margin-top:4px;' /><br />
 		<?php if (!empty($sunset)): ?>Sunset <br /><?=$sunset?>
 		<?php endif; ?>
 	</div>
