@@ -52,8 +52,8 @@ use DigitalMx\jotr\Login as Login;
 ?>
 <div class='head' id='head'  >
 
-	<div class='pad no-print' style='justify-content:flex-end;' onClick = 'getLocal();'> <img src='/images/trans1x1.png' style='margin-top:4px;height:5rem;' /><br /><?php if ($animated):?>Now<br /><div id='clock'> </div>
-		<?php else: ?>&nbsp;&nbsp;&nbsp;<br/><?php endif; ?>
+	<div class='pad no-print' style='justify-content:flex-start;' onClick = 'getLocal();'> <img src='/images/trans1x1.png' style='margin-top:4px;height:5rem;' /><br/><?php if ($animated):?>Now<br /><div id='clock'></div>
+		<?php else: ?><p>&nbsp;&nbsp;&nbsp;</p><?php endif; ?>
 		</div>
 
 	<div class='title' style='justify-content:flex-center;flex-grow:8;'>
@@ -61,14 +61,14 @@ use DigitalMx\jotr\Login as Login;
 		<h2><?=$title?></h2>
 	</div>
 
-	<div style='justify-content:flex-end'  class='print-only' style='font-size:0.4em;'><p style='text-align:left;'>National Park Service<br />U.S. Department of the Interior<br /><br />Joshua Tree National Park</p>
+	<div style='justify-content:flex-end'  class='print-only'><p style='text-align:left;margin-top:3px;font-size:0.7rem;'>National Park Service<br />U.S. Department of the Interior<br /><br />Joshua Tree National Park</p>
 	</div>
 <div style='justify-content:flex-end; width:2rem;'>&nbsp;</div>
-	<div  style='justify-content:flex-end;margin-right:1rem;'>
+	<div  style='justify-content:flex-end;margin-right:1rem;text-align:center;'>
 
 		<img src='/images/shield-flat-alpha-696.png' style='margin-top:4px;height:5rem;' class='auto' />
 
-		<?php if (!empty($sunset)): ?><p style='text-align:center;'>Sunset <br /><?=$sunset?></p>
+		<?php if (!empty($sunset)): ?> <br />Sunset <br /><?=$sunset?>
 		<?php endif; ?>
 	</div>
 

@@ -53,7 +53,8 @@ body {
 	.last-page {}
 	table.weather_table tr td {font-size:0.9rem;}
 	#conditions {display:none;}
-	.head .title, .head .title>h2 {text-align:left;}
+	.head .title h1 {font-size:2rem;text-align:left;}
+	.head .title h2 {font-size:1.6rem;text-align:left;}
 }
 
 
