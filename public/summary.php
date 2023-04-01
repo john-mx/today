@@ -40,7 +40,7 @@ $meta=array('meta'=>[
 		html {
 		font-size: 50%;
 			}
-
+		.head .div {font-size:0.8em;}
 		table tr td {font-size:1.5rem;}
 		table tr th{font-size:1.5rem;}
 

@@ -52,7 +52,7 @@ use DigitalMx\jotr\Login as Login;
 ?>
 <div class='head' id='head'  >
 
-	<div class='pad' style='justify-content:flex-end;' onClick = 'getLocal();'> <img src='/images/trans1x1.png' style='margin-top:4px;height:5rem;' /><br /><?php if ($animated):?>Now<br /><div id='clock'> </div>
+	<div class='pad no-print' style='justify-content:flex-end;' onClick = 'getLocal();'> <img src='/images/trans1x1.png' style='margin-top:4px;height:5rem;' /><br /><?php if ($animated):?>Now<br /><div id='clock'> </div>
 		<?php else: ?>&nbsp;&nbsp;&nbsp;<br/><?php endif; ?>
 		</div>
 
@@ -60,11 +60,15 @@ use DigitalMx\jotr\Login as Login;
 	<h1><?=$local_head ?></h1>
 		<h2><?=$title?></h2>
 	</div>
+	<div  style='justify-content:flex-end;'>
 
-	<div class='pad' style='justify-content:flex-end;'>
-		<img src='/images/shield-flat-alpha-696.png' style='margin-top:4px;height:5rem;' /><br />
+	<div class='pad' style='margin-left:2rem;margin-right:3rem;float:right;'>
+		<img src='/images/shield-flat-alpha-696.png' style='margin-top:4px;height:5rem;' />
+
 		<?php if (!empty($sunset)): ?>Sunset <br /><?=$sunset?>
 		<?php endif; ?>
+	</div>
+	<p class='print-only' style='float:right;font-size:0.4em;text-align:left;'>National Park Service<br />U.S. Department of the Interior<br /><br /><br />Joshua Tree National Park</p>
 	</div>
 </div>
 
