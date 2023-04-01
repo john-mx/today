@@ -60,16 +60,18 @@ use DigitalMx\jotr\Login as Login;
 	<h1><?=$local_head ?></h1>
 		<h2><?=$title?></h2>
 	</div>
-	<div  style='justify-content:flex-end;'>
 
-	<div class='pad' style='margin-left:2rem;margin-right:3rem;float:right;'>
-		<img src='/images/shield-flat-alpha-696.png' style='margin-top:4px;height:5rem;' />
+	<div style='justify-content:flex-end'  class='print-only' style='font-size:0.4em;'><p style='text-align:left;'>National Park Service<br />U.S. Department of the Interior<br /><br />Joshua Tree National Park</p>
+	</div>
+<div style='justify-content:flex-end; width:2rem;'>&nbsp;</div>
+	<div  style='justify-content:flex-end;margin-right:1rem;'>
 
-		<?php if (!empty($sunset)): ?>Sunset <br /><?=$sunset?>
+		<img src='/images/shield-flat-alpha-696.png' style='margin-top:4px;height:5rem;' class='auto' />
+
+		<?php if (!empty($sunset)): ?><p style='text-align:center;'>Sunset <br /><?=$sunset?></p>
 		<?php endif; ?>
 	</div>
-	<p class='print-only' style='float:right;font-size:0.4em;text-align:left;'>National Park Service<br />U.S. Department of the Interior<br /><br /><br />Joshua Tree National Park</p>
-	</div>
+
 </div>
 
 

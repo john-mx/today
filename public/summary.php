@@ -37,20 +37,15 @@ $meta=array('meta'=>[
 	echo <<<EOT
 <style>
 	@media print {
-		html {
-		font-size: 50%;
-			}
-		.head .div {font-size:0.8em;}
+
+
 		table tr td {font-size:1.5rem;}
 		table tr th{font-size:1.5rem;}
 
-		@page {
-			size: 8.5in 11in;
-			margin: 0.3in;
-			padding 0;
 
-		}
 	}
+	.no-print {display:none;}
+	.head .title, .head .title>h2 {text-align:left;}
 	</style>
 EOT;
 	echo $Plates->render ('title',$meta);
