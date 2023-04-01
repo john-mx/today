@@ -63,7 +63,7 @@ use DigitalMx\jotr\Login as Login;
 
 	<div style='justify-content:flex-end'  class='print-only'><p style='text-align:left;margin-top:3px;font-size:0.7rem;'>National Park Service<br />U.S. Department of the Interior<br /><br />Joshua Tree National Park</p>
 	</div>
-<div style='justify-content:flex-end; width:2rem;'>&nbsp;</div>
+<div style='justify-content:flex-end; width:1rem;'>&nbsp;</div>
 	<div  style='justify-content:flex-end;margin-right:1rem;text-align:center;'>
 
 		<img src='/images/shield-flat-alpha-696.png' style='margin-top:4px;height:5rem;' class='auto' />
