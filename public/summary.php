@@ -37,18 +37,17 @@ $meta=array('meta'=>[
 	echo <<<EOT
 <style>
 	@media print {
-
-
 		table tr td {font-size:1.5rem;}
 		table tr th{font-size:1.5rem;}
+		}
 
 
-	}
 	.no-print {display:none;}
 	.head .title, .head .title>h2 {text-align:left;}
+
 	</style>
 EOT;
-	echo $Plates->render ('title',$meta);
+	echo $Plates->render ('title_nps',$meta);
 
 
 	echo $Plates -> render('summary',array_merge($meta,$topics)) ;

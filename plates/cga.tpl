@@ -10,17 +10,23 @@ if (!$cga ){
 	echo "No Data Available (cga)";
 	return;
 }
-
+$last_site1 = '';
 ?>
-<style>@media print {
-	@page {size: landscape;}
-	}
+<style>
+@page {
+   	size: 11in 8.5in;
+      margin: 0.3in;
+      padding 0;
+
+
+   }
 	table {float:left;
 		page-break-inside : avoid;
 		margin-bottom:6px;}
-	table tr td {
+	table tr td , table tr th{
 		font-size:9pt;
 		padding:2px;
+		width:3rem;
 	}
 </style>
 
@@ -29,22 +35,27 @@ if (!$cga ){
 	foreach ($cga as $loc=>$sites) :
 	?>
 
-	<h4><?php echo LS::getLocName($loc); ?></h4>
+	<h4><?php echo LS::getLocName($loc) . ' ' . TODAY; ?></h4>
 
 	<?php
 		$lines=0;
 		foreach (array_keys($sites) as $site):
-			if ($lines%25 == 0) :
+			$site1 = substr(trim($site),0,1);
+			if ($site1 == 'G' && $last_site1 !== 'G'):
+				echo "<tr><td colspan=4>&nbsp;</td></tr>\n";
+				$last_site1 = 'G';
+			endif;
+			if ($lines%30 == 0) :
 				if ($lines != 0 ) : ?>
 					</table>
 				<?php endif; ?>
-
 				<table>
-	<tr><th>Site</th><th>Max Veh</th><th>Max Length</th><th>Max People</th></tr>
+	<tr><th>Site</th><th>Veh</th><th>Len</th><th>Ppl</th></tr>
 	<?php
 		endif;
 	 $attr = $sites[$site];
 	 ++$lines;
+
 	 ?>
 
 <tr><td><?=$site?></td>

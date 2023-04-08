@@ -147,12 +147,15 @@ EOT;
 		// look up value from pw table
 // 		U::echor($post,'post');
 		$pw = $post['pw'];
+		$uname = $post['uname'];
 		$sender = $post['sender'];
+		$uip = $_SERVER['REMOTE_ADDR'];
 		$pwLevel = $this->getLevelFromPw($pw);
 // echo "pwl $pwLevel" . BR; exit;
 		if ($pwLevel >0){
 			$_SESSION['loginLevel'] = $pwLevel;
 			$_SESSION['loginTime'] = time();
+			Log::info("$uname login from $uip");
 			$this->userLevel = $pwLevel;
 		}
 
@@ -169,7 +172,7 @@ EOT;
 	<form method = 'post' action = '/login.php'>
 	<input type='hidden' name='type' value='login'>
 	<input type='hidden' name='sender' value="$sender">
-	<!-- <label>Your name: <input type='text' name='uname'></label> -->
+	<label>Your name: <input type='text' name='uname'> -->
 	<label >Password:  <input type='password' name='pw' id = 'pw' size=10> </label>
 	<input type='submit'>
 	</form>
