@@ -32,7 +32,7 @@ function rotateDivs(){
 //  		rotateDivs.dlist = document.querySelectorAll('div[id^="page"]');
 
 	if (!idList) {
-		 	rotateDivs.dlist = document.querySelectorAll('div[id^="page"]');
+		 rotateDivs.dlist = document.querySelectorAll('div[id^="page"]');
 	} else {
 		rotateDivs.dlist = document.querySelectorAll(idList);
 	}
