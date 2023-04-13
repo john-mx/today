@@ -10,18 +10,19 @@ if ($meta['rotation']['animation'] == 'snap'){
 else {
 	$divvis='block';
 }
-
-if (!empty($calendar)){
+$calendarf = []; //filtered calendar
+$filterday = 1;
+while (empty($calendarf)){
 // normally, get events for today;
 // if there are none, get tomorrow;s event instead.
-	$calendarf = Calendar::filter_events($calendar['events'],1);
+// keep going until you have some events
+	$calendarf = Calendar::filter_events($calendar['events'],$filterday);
 	//U::echor($calendarf);
-	if (empty($calendarf)){
-		// nothing today; load tomorrow
-		$calendarf = Calendar::filter_events($calendar['events'],2);
-	}
-	$calendar = $calendarf;
+		++$filterday;
+		if ($filterday > 7) break;
 }
+$calendar = $calendarf;
+
 ?>
 
 
