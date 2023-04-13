@@ -32,6 +32,7 @@ if (!empty($_POST) ) {
 $y = $Admin-> prepare_admin();
 	echo $Plates->render('head',$meta);
 	echo "<script src='/js/clearupdate.js'></script>";
+	echo $Plates->render('body',$meta);
 	echo $Plates->render('title',$meta);
 
 echo "<form method=post>";

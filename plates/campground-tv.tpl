@@ -118,14 +118,13 @@ $closed = [];
 </div>
 </div>
 <div>
-<p class='center'>Recreation.gov availability updated at <?=$camps['rec.gov_update']?>
-<br />
-
-Data is less than 1 hour old unless tagged.<br />
-<?=Defs::getStaleTag(1)?>: Up to 12 hours old.
-<?=Defs::getStaleTag(2)?>: Old data; not reliable.
+<p class='center'>
+Availability as of <?=$camps['rec.gov_update']?>. <br />
+Fresh unless tagged:
+<?=Defs::getStaleTag(1)?>: <?=Defs::getTimeout('newest')?> to <?=Defs::getTimeout('new')?> hours old.
+<?=Defs::getStaleTag(2)?>: Old and unreliable.
 </p>
 </div>
-</div>
+
 
 

@@ -32,8 +32,8 @@ if (!empty($_POST) ) {
 }
 	echo $Plates->render('head',$meta);
 	echo "<script src='/js/clearupdate.js'></script>";
-	echo $Plates->render('title',$meta);
-
+	echo $Plates->render('body',$meta);
+echo $Plates->render('title',$meta);
 $y = $Cal-> prepare_admin_calendar();
 
 echo "<form method=post>";

@@ -20,7 +20,7 @@ $meta=array('meta'=>[
 
 
 echo $Plates->render('head',$meta);
-
+echo $Plates->render('body',$meta);
 echo $Plates->render('title',$meta);
 
 if (isset($_SESSION['loginTime'])):

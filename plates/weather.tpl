@@ -13,12 +13,10 @@ use DigitalMx\jotr\LocationSettings as LS;
 		'daystart' = 1,
 	]
 */
+
 ?>
 
-
-
 <h3>Weather</h3>
-
 
 <?php
 	// check if file

@@ -4,12 +4,10 @@ html {
 		/* sets rem to 10px */
 	}
 
-.print-only{display:none;}
 
 
 
-
- div.flex-container > div{
+div.flex-container > div{
   	flex:100%;
   	}
 @media (max-width: 800px) {
@@ -31,6 +29,8 @@ body {
 
 }
 
+.print-only {display:none;}
+.no-print {display:block;}
 @media print {
 	/* use smaller type, larger lin spacing. */
 
@@ -51,7 +51,8 @@ body {
 
 	.page { break-after:page;}
 	.last-page {}
-	table.weather_table tr td {font-size:0.9rem;}
+	table tr td {font-size:1.2rem;}
+	/* table.caltable tr td {font-size:0.9rem;} */
 	#conditions {display:none;}
 	.head .title h1 {font-size:2rem;text-align:left;}
 	.head .title h2 {font-size:1.6rem;text-align:left;}
@@ -81,6 +82,7 @@ h4
 	font-size: 1.5rem;
 	font-weight:600,bold;
 }
+
 
 h3 { font-size:2rem;
 	font-weight:600;
@@ -312,11 +314,12 @@ div.alert{
 		color:white;
 		margin-bottom: 0.5rem;
 /* 		width:100%; */
-		padding:1rem;
+		padding:2em;
 		display:flex;
 		align-items:flex-start;
 		vertical-align:middle;
 		}
+
 
 
 	.head .title {
@@ -422,6 +425,8 @@ table.caltable td {
 	text-align:left;
 }
  */
+table.caltable {}
+
 table.caltable tr.eventrow, table.caltable tr.eventrow td {
 	border-top:6px solid #F39840;
 	border-bottom:0;

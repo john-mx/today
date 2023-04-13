@@ -7,7 +7,6 @@ use DigitalMx\jotr\Utilities as U;
 use DigitalMx\jotr\Calendar;
 
 //$Cal = new Calendar();
-//$title_bar = $this->insert('title',['meta'=>$meta]);
 
 ?>
 
@@ -41,12 +40,32 @@ EOT;
 	$fixed = $anlist[array_rand($anlist)];
 
 ?>
-
+<div class='page'>
 <?php if ($admin['pithy']): ?>
 	<p class='center'><i><?=$admin['pithy']?></i></p>
 <?php endif; ?>
 
 <?php $this->insert('light',[$light]); ?>
+
+<?php
+/*
+call with array of weather day, merged wtih
+	[
+		'wslocs' = ['jr','cw'],
+		'wsdays' = 4,
+		'daystart' = 1,
+	]
+*/
+	$wsday = [
+		'wslocs' => ['jr'],
+		'wsdays' => 3,
+		'daystart' => 1,
+	]
+		;
+
+	//$this->insert('weather-tv',array_merge($wsday,$weather));
+	?>
+
 
 <?php $this->insert('alerts'); ?>
 
@@ -72,12 +91,18 @@ EOT;
 <?php
 	$this->insert('notices',['notices' => $admin['notices']]);
 ?>
-
+<div style='break-inside:avoid;'>
 <h3>Today's Events</h3>
 <?php
 $calendar['cal1day'] = true;
 $this->insert('calendar',['calendar'=>$calendar]);
 
 ?>
-<hr>
+</div>
+</div>
+
+<div class='last-page'>
+<?php $this->insert('weather'); ?>
+</div>
+
 

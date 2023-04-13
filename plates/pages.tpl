@@ -13,6 +13,8 @@
 
 <tr><td ><a href="/summary.php" target='summary'>Summary</a>
 </td><td >One page summary of today's conditions, alerts, and events. </td></tr>
+<tr><td ><a href="/summary2.php" target='summary'>Two-page Summary</a>
+</td><td >Includes Summary page, plus a second page with weather for 3 locations, 3 days. </td></tr>
 
 <tr><td><a href="/rotate.php" target='rotate'>Rotate</a>
 </td>

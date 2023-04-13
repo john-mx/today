@@ -8,7 +8,7 @@ $cal1day = $calendar['cal1day'] ??  false;
 
 ?>
 
-
+<div style='break-inside:avoid;'>
 <?php if (!$cal1day): ?><h3>Upcoming Events</h3><?php endif;?>
 <?php
 if(empty($calendar['events'])) : echo "<p class='inleft2'>No Events Scheduled</p>"; else:
@@ -84,3 +84,4 @@ if(empty($calendar['events'])) : echo "<p class='inleft2'>No Events Scheduled</p
 # local items not on nps calendar.</div>
 <?php endif; ?>
 <?php endif; ?>
+</div>

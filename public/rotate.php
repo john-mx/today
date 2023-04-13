@@ -56,15 +56,23 @@ if ($qs == '' || $qs== 'snap'){ #rotate
 $meta=array('meta'=>[
 	'file' => basename(__FILE__),
 	'title' => TODAY,
-	'sunset' => $DM->sunset,
+	'sunset' => $DM->getSunset(),
 	'rotation' => $rotation,
 	'fixedAdvice' => $admin['fixedAdvice'],
 	]);
 //U::echor($meta,'meta',STOP);
 	echo $Plates->render ('head',$meta);
 
-	echo $Plates->render('title',$meta);
+//	echo $Plates->render('title',$meta);
+echo $Plates->render('body',$meta);
 
-	echo $Plates -> render('rotate',$meta) ;
+echo $Plates->render('title',$meta);
 
+echo "<div class='no-print' >";
+echo $Plates -> render('rotate',$meta) ;
+echo "</div>\n";
 ?>
+<div class='print-only'>
+<b>This Page cannot be printed correctly</b>
+</div>
+

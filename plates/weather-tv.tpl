@@ -37,6 +37,7 @@ use DigitalMx\jotr\LocationSettings as LS;
 	<?php
 	foreach ($locs as $loc) :
 		$days = $weather['forecast'][$loc];
+
 		$locname = LS::getLocName($loc);
 		?>
 

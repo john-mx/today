@@ -111,9 +111,13 @@ $meta=array('meta'=>[
 	'file' => basename(__FILE__),
 	'title' => $title,
 	]);
+$z=array_merge($z,$meta);
 
 echo $Plates->render('head',$meta);
+echo $Plates->render('body',$meta);
 echo $Plates->render('title',$meta);
+$z['meta'] = $meta;
+
 echo $Plates->render($plate,$z);
 if (!empty($plate2)) echo $Plates->render($plate2,$z);
 if (!empty($plate3)) echo $Plates->render($plate3,$z);

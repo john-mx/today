@@ -26,7 +26,7 @@ use DigitalMx\jotr\Utilities as U;
 	$rotation=$meta['rotation'] ?? [];
 	$animation = $meta['rotation']['animation'] ?? '';
 
-	if ($animation) $titlex .= ":$animation " ;
+
 	if (! LIVE) $titlex .=  REPO_ID;
 
 
@@ -39,6 +39,11 @@ $hidejs = U::addTimestamp('/js/hide.js');
 $maincss = U::addTimestamp('/css/main.css');
 $tvcss=U::addTimestamp('/css/tv.css');
 //Utilities::echor($pagelist,'pagelist');
+
+if ($animation) {
+	$titlex .= ":$animation " ;
+	$added_headers .= "<script src='/js/clock.js'></script>\n";
+}
 
 if ($animation=='snap'){
 
@@ -89,6 +94,15 @@ elseif ($animation == 'scroll'){
 	<script src='/js/help.js'></script>
 	<link rel='stylesheet' href = '/css/Frutiger.css' />
 	<link rel='stylesheet' type='text/css' href = '<?=$maincss?>' />
+
+
+
+<!-- hide clock and sunset in title if no javascript -->
+<noscript> <style> .pad {display:none;} </style> </noscript>
+<?php if ($_SESSION['local']['hide_js'] ?? false ):  ?>
+	<style> .pad {display:none;} </style>
+<?php endif; ?>
+
 
 	<!--
 	<link rel='preconnect' href='https://fonts.googleapis.com'>

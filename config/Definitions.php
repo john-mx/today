@@ -18,12 +18,6 @@ public static $files = [
 		'passwords' => 'passwords.ini',
 	];
 
-// used to show age of live data like campgrounds
-// time in hours
-public static $data_timeouts = [
-	'newest' => 1,
-	'new' => 12,
-];
 
 
 
@@ -134,6 +128,15 @@ private static $firewarnlong = [
 
 
 	}
+
+	// used to show age of live data like campgrounds
+// time in hours
+public static $data_timeouts = [
+	'newest' => 1,
+	'new' => 6,
+];
+
+
 // tags used to mark stale campground open sites
 	private static $staletags = array(
 		'0' => '',
@@ -207,7 +210,9 @@ private static $firewarnlong = [
 	public static function getTimeout($to) {
 		return self::$data_timeouts[$to];
 	}
-
+	public static function getStaleLabel($to) {
+		return self::$stale_labels[$to];
+	}
 
 	public static function getFireKeys(){
 		return array_keys(self::$firewarn);

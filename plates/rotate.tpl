@@ -25,6 +25,8 @@ if (!empty($calendar)){
 </div>
  -->
 <div id="page-today" class='page width100' style='display:<?=$divvis?>;' >
+
+
 <!-- set transform on this page to scale to fit available display height -->
 <!--
 
@@ -44,6 +46,7 @@ if (!empty($calendar)){
 
 <div id="page-notices" style="display: <?=$divvis?>;"  class="page">
 <!-- start notices -->
+
 <?php $this->insert('alerts')?>
 
 <?php $this->insert('notices',
@@ -68,7 +71,7 @@ if (!empty($calendar)){
 <div id='page-weather-scale'  class='scaler'></div>
 </div><!-- end page-->
 
-<?php if (!empty($calendar)) : ?>
+
 <div id="page-events" style="display: <?=$divvis?>;" class="page">
 
 <?php  //use filtered calewndar from top o page.
@@ -76,20 +79,19 @@ if (!empty($calendar)){
 
 <div id='page-events-scale'  class='scaler'></div>
 </div><!-- end page-->
-<?php endif; ?>
+
 
 <div id="page-camps" style="display: <?=$divvis?>;" class="page">
+
  <?php $this->insert('campground-tv',['camps'=>$camps]); ?>
 <div id='page-camps-scale'  class='scaler'></div>
 </div><!-- end page-->
 
 <div id="page-fees" style="display: <?=$divvis?>;" class="last-page">
+
 <?php $this->insert('fees'); ?>
 <div id='page-fees-scale'  class='scaler'></div>
 </div> <!-- end page -->
-
-
-
 
 </div> <!-- end content -->
 

@@ -8,22 +8,12 @@ use DigitalMx\jotr\Calendar as Cal;
 use DigitalMx\jotr\DisplayManager as DM;
 $pcode ??= '';
 
-$print_title = "
-	<div class='print-only'>
-	<div class='head'>
-	<div class='title'>
-		<h1>Today in Joshua Tree National Park</h1>
-		<h2>" . TODAY . "</h2>
-	</div>
-	</div>
-	</div>
-";
-
-
 ?>
 
 <!-- ############################## -->
 <div id="page1" class='page'>
+<?=$title_bar?>
+
 <?php if ($admin['pithy']):
 
 ?>
@@ -56,7 +46,7 @@ $print_title = "
 </div>
 <!-- end page-->
 <div id="page3" class='page' >
-<?=$print_title?>
+<?=$title_bar?>
 
 <?php
 	$wspec = array('wslocs'=>['jr','cw','br'],'wsdays'=>3);
@@ -70,7 +60,7 @@ $print_title = "
 </div>
 <!-- end page-->
 <div id="page4" class='page' ">
-<?=$print_title?>
+<?=$title_bar?>
 <?php
 $tcalendar['events'] = Calendar::filter_events($calendar['events'],3);
 $this->insert('calendar',['calendar'=>$tcalendar])
@@ -79,7 +69,7 @@ $this->insert('calendar',['calendar'=>$tcalendar])
 </div>
 <!-- end page-->
 <div id="page5" class='page' >
-<?=$print_title?>
+<?=$title_bar?>
 
 <?php $this->insert('campground',['camps'=>$camps]); ?>
 <?php $this->insert('qr_camps'); ?>
@@ -87,7 +77,7 @@ $this->insert('calendar',['calendar'=>$tcalendar])
 </div> <!-- end page-->
 <div id="page6"  class='last-page' >
 <!-- class !=  page prevents page break after -->
-<?=$print_title?>
+<?=$title_bar?>
 <?php $this->insert('fees'); ?>
 <?php $this->insert('qr_fees'); ?>
 

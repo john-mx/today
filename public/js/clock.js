@@ -12,15 +12,13 @@ minutes = x.getMinutes();
 if ( minutes < 10) {minutes = '0' + minutes ;}
 // var x1=(x.getMonth() + 1) + "/" + x.getDate() + "/" + x.getFullYear();
 var ctime = hours+':'+ minutes + ampm;
-document.getElementById('clock').innerHTML = ctime;
-display_c();
+if (document.getElementById('clock')) {
+	document.getElementById('clock').innerHTML = ctime;
+	display_c();
  }
+}
 
 /* on page, div id='clock'
 	 body onload=display_clock();
 */
-function getLocal(){
-/* loads the local options page */
-	var localWindow = window.open('/local.php');
-}
 

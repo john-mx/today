@@ -70,4 +70,10 @@ function helpwin(hsrc) {
 	return false;
 }
 
+function getLocal(){
+/* loads the local options page */
+	var localWindow = window.open('/local.php');
+}
+
+
 // use this for copy button

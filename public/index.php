@@ -12,12 +12,13 @@ use DigitalMx\jotr\Utilities as U;
 
 $meta=array('meta'=>[
 	'file' => basename(__FILE__),
-	'title' => 'Today in the Park',
+	'title' => 'Today in the Park: Overview',
 	]);
 
 echo $Plates->render('head',$meta);
-
+echo $Plates->render('body',$meta);
 echo $Plates->render('title',$meta);
+
 //END START
 
 //$here = $_SERVER['

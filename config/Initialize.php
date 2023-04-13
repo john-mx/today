@@ -32,7 +32,7 @@ class Initialize
 
     public function __construct ()
     {
-
+		 date_default_timezone_set('America/Los_Angeles');
       //  $paths = $this->setPaths();
 
        // $this->repo  = basename($paths ['repo'] ); # jotr, jbeta
@@ -40,7 +40,7 @@ class Initialize
        // $this->setIncludes($paths['repo'] );
         $this->setConstants();
       #  $this->startLogger();
-      date_default_timezone_set('America/Los_Angeles');
+
     }
 
 
@@ -115,27 +115,6 @@ class Initialize
 
 
 
-    private function XsetIncludes($repo)
-    {
-
-    #add other paths here .
-    $proj_dir = dirname($repo);
-    $current_path = get_include_path();
-    ini_set('include_path',
-         join (':',[
-         	'.',
-         	'/usr/local/lib/php',
-        		'/usr/local/bin',
-				$repo . '/libmx',
-				$repo . '/src',
-				$repo . '/config',
-        		$repo . '/public',
- #       	$repo . '/public/scripts',
-        		$current_path
-        		]
-        )
-      );
-    }
 
 } #end class init
 

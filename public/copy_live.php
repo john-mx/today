@@ -16,7 +16,8 @@ $meta=array('meta'=>[
 	]);
 
 echo $Plates->render('head',$meta);
-echo $Plates->render('title',$meta);
+$title_bar = $this->insert('title',$meta);
+echo $title_bar;
 
 //END START
 // page to copy caches from the live site into current site

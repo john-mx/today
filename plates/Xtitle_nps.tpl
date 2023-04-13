@@ -59,7 +59,7 @@ use DigitalMx\jotr\Login as Login;
 	<div class='pad no-print' style='justify-content:flex-start;' onClick = 'getLocal();'><p>&nbsp;&nbsp;&nbsp;</p>
 		</div>
 
-	<div class='title' style='justify-content:flex-center;flex-grow:8;'>
+	<div class='title' style='text-align:left;flex-grow:8;'>
 	<p style='font-size:2.5rem;font-weight:bold;margin:10px;vertical-align:center;'>Joshua Tree</p>
 
 	</div>

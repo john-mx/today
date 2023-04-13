@@ -56,6 +56,7 @@ if (!empty($_POST) ) {
 
 	echo $Plates->render('head',$meta);
 	echo "<script src='/js/clearupdate.js'></script>";
+	echo $Plates->render('body',$meta);
 	echo $Plates->render('title',$meta);
 
 	$y = $Admin-> prepare_admin();

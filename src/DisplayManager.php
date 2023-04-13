@@ -539,6 +539,7 @@ public function build_topic_light() {
 } #end function
 
 
+
 public function build_topic_weather() {
 /* delivers 'weather' array in same format
 	using either wgov or wapi files.

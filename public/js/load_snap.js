@@ -14,6 +14,7 @@ function startRotation(){
 
 function rotateDivs(){
 	var idList = snapVars['pageList'];
+	//alert ('idlist: ' + idList.length);
 /* function grabs all the division with id starting with "page".
 	They should (or all but one) initially be set as display:none.
 	The script will run through turning on one div after the other
@@ -31,21 +32,23 @@ function rotateDivs(){
 	if ( typeof rotateDivs.dlist == 'undefined' ) {
 //  		rotateDivs.dlist = document.querySelectorAll('div[id^="page"]');
 
-	if (!idList) {
-		 rotateDivs.dlist = document.querySelectorAll('div[id^="page"]');
-	} else {
-		rotateDivs.dlist = document.querySelectorAll(idList);
-	}
+		if (typeof idList == 'undefined') {
+				rotateDivs.dlist = document.querySelectorAll('div[id^="page"]');
+		} else {
+			rotateDivs.dlist = document.querySelectorAll(idList);
+		}
+	//alert ('page1: ' + idList[1]);
+//  alert("dsize (40): " + rotateDivs.dlist.length);
+		
+rotateDivs.dsize = rotateDivs.dlist.length - 1;
+// 	 alert("dsize (42): " + rotateDivs.dsize.length);
 
-		rotateDivs.dsize = rotateDivs.dlist.length - 1;
-
-// 		alert("dsize " + rotateDivs.dsize);
 		for (let i = 0; i < rotateDivs.dsize; i++) {
 			rotateDivs.dlist[i].style.display='none';
 		}
 		 rotateDivs.pointer = 0;
       rotateDivs.last = rotateDivs.dsize;
-//       alert ("Initialized. " + rotateDivs.dsize + " divs" );
+//    s     alert ("Initialized. " + rotateDivs.dsize + " divs" );
 	}
 
 
@@ -104,7 +107,7 @@ function doResize(elementID) {
 	var contentWidth = element.offsetWidth;
  // content
 	var titleHeight = document.getElementById('head').offsetHeight;
-
+	//titleHeight = 0; //each page has its own title now
 	var pageHeight = contentHeight + titleHeight;
 	var  winHeight = window.innerHeight;
 	var  winwidth = window.outerWidth;
