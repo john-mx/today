@@ -15,7 +15,7 @@ if (!empty($calendar)){
 // normally, get events for today;
 // if there are none, get tomorrow;s event instead.
 	$calendarf = Calendar::filter_events($calendar['events'],1);
-	U::echor($calendarf);
+	//U::echor($calendarf);
 	if (empty($calendarf)){
 		// nothing today; load tomorrow
 		$calendarf = Calendar::filter_events($calendar['events'],2);
