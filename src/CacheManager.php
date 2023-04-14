@@ -641,13 +641,14 @@ echo ("airq not working" . BR); return false;
 }
 
 public function rebuild_ref_request() {
+	// easy accerss to date/time camp avail is updated
 	$this->writeCache('refRequest',['refreshed']);
 	return true;
 }
 
 public function rebuild_campsites($cg) {
 	$x=[];
-	$src= 'ridb2';
+	$src= 'cga'; // same as ridb2 for api
 	$ok = true;
 	$locs = [$cg];
 	$apikey = CS::getKey('ridb');
@@ -668,7 +669,7 @@ public function rebuild_campsites($cg) {
 			Log::notice("Failed to get $loginfo",[$r]);
 			continue;
 		}
-
+		$this->writeCache('cga',$r);
 		if (!$cgattr = $this->parseRecCampsite($r)){
 			Log::notice("Camps $loginfo has no campsites.",$r);
 			//don't change avaibility for this campground
@@ -692,9 +693,8 @@ public function parseRecCampsite($r){
 		foreach ($cgdata['ATTRIBUTES'] as $cgattr) {
 			$attributes[$cgattr['AttributeName']] = $cgattr['AttributeValue'] ?? 'n/a';
 		}
-		foreach ($cgdata['PERMITTEDEQUIPMENT'] as $cgattr) {
-			$attributes[$cgattr['EquipmentName']] = $cgattr['MaxLength'] ?? 'n/a';
-		}
+		$attributes['permitted'] = $this->permittedEquip($cgdata['PERMITTEDEQUIPMENT']);
+
 		$x[$site] = $attributes;
 //		U::echor($x,'x');
 	}
@@ -702,7 +702,23 @@ public function parseRecCampsite($r){
 	return $x;
 }
 
-
+private function permittedEquip(array $permitted) {
+	$equip = '';$p=[];
+	foreach ($permitted as $eq) {
+			$eqCode = Defs::getEquipCode($eq['EquipmentName']);
+			if ($eqCode) {
+				$eqDesc = $eqCode;
+				$eqLen = $eq['MaxLength'] ?? 0;
+				if ($eqLen)$eqDesc .= "($eqLen)";
+				$p[$eqCode] = $eqDesc;
+			}
+	}
+	if (key_exists('Tl',$p)) {unset($p['Tm']); unset ($p['Ts']);}
+	if (key_exists('Tm',$p)) { unset ($p['Ts']);}
+	asort($p);
+	$equip = implode(array_values($p));
+	return $equip;
+}
 
 
 

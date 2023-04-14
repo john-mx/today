@@ -61,7 +61,6 @@ if (empty($qs = $_SERVER['QUERY_STRING'])){
 	exit;
 
 } elseif (in_array($qs,$clist)){
-	echo "Retrieving attributes for campground $cgs[$qs]" . BR;
 	$cga = $CM->rebuild_campsites($qs);
 
 	echo $Plates->render('cga',array_merge($meta,$cga));

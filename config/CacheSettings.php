@@ -48,7 +48,7 @@ private static $cacheFiles  = array (
 				'camps' => REPO_PATH . "/var/camps.json",
 				'current' => REPO_PATH . "/var/ext/current.json",
 				'npscal'=>REPO_PATH . "/var/ext/npscal.json",
-
+				'cga' => REPO_PATH . "/var/ext/cga.json",
 				'props' => REPO_PATH . "/var/ext/properties.json",
 			//	'tours' => REPO_PATH . "/var/ext/tours.json",
 				'wapi' => REPO_PATH . "/var/ext/wapi.json",
@@ -139,7 +139,7 @@ public static $coordinates = [
 	'airnowfc' => 'https://www.airnowapi.org/aq/forecast/latLong/',
 	'airowm' => 'https://api.openweathermap.org/data/3.0/onecall',
 	'willy' => 'https://api.willyweather.com/v2/',
-
+	'cga'=>'https://ridb.recreation.gov/api/v1/', // same as ridb2
 	'nps' => 'https://developer.nps.gov/api/v1/events',
 	'current' => 'https://api.weather.gov/stations/',
 
@@ -173,7 +173,7 @@ public static $coordinates = [
 				'willy'=>12*60,
 				//'refRequest' => 60, // tracks last refresh time
 				//'mergecal' => 0,
-
+				'cga'=> 0,
 
 			);
 

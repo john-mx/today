@@ -31,6 +31,7 @@ $last_site1 = '';
 </style>
 
 <h3>Campground Attributes</h3>
+Permitted: C=camper; L=trailer; Tx=tent:small,med,large; R=RV; U=pop-up; (size)
 <?php
 	foreach ($cga as $loc=>$sites) :
 	?>
@@ -50,7 +51,7 @@ $last_site1 = '';
 					</table>
 				<?php endif; ?>
 				<table>
-	<tr><th>Site</th><th>Veh</th><th>Len</th><th>Ppl</th></tr>
+	<tr><th>Site</th><th>Veh</th><th>Len</th><th>Ppl</th><th>Equip</th></tr>
 	<?php
 		endif;
 	 $attr = $sites[$site];
@@ -62,7 +63,8 @@ $last_site1 = '';
 	<td><?=$attr['Max Num of Vehicles'] ?></td>
 	<td><?=$attr['Max Vehicle Length']?? 'n/a' ?></td>
 	<td><?=$attr['Max Num of People'] ?></td>
-	</td></tr>
+	<td><?=$attr['permitted'] ?></td>
+</tr>
 	<?php endforeach ; ?>
 </table>
 

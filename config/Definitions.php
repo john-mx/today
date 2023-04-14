@@ -170,11 +170,21 @@ public static $data_timeouts = [
 			'Last Quarter' => '368a.png'
 		);
 
-/* list of pages for rotation in the tv page
-// key is suffix of id of the page in condensed.tpl
-	e.g, "<div id= "page-suffix" ..."
 
-*/
+
+	public static $equipmentCodes = array (
+	"Tent" => "Tm",
+	"RV" => "R",
+	"Trailer" => "L",
+	"PICKUP CAMPER" => "C",
+	"CARAVAN/CAMPER VAN" => "C",
+
+	"SMALL TENT" => "Ts",
+	"LARGE TENT OVER 9X12`" => "Tl",
+	"VEHICLE" => "V",
+	"FIFTH WHEEL" => "L",
+	"POP UP" => "U",
+);
 
 
 	public static function uv_warn($uvd) {
@@ -222,5 +232,7 @@ public static $data_timeouts = [
 		return self::$staletags[$x] ?? '';
 	}
 
-
+	public static function getEquipCode($eq) {
+		return self::$equipmentCodes[$eq] ;
+	}
 }
