@@ -30,24 +30,19 @@ $meta=array('meta'=>[
 	]);
 
 echo $Plates->render('head',$meta);
-echo $Plates->render('body',$meta);
-//echo $Plates->render('title',$meta);
-//END START
-
-?>
-<html><head>
-<title>Campsite Attributes</title>
+echo <<<EOT
 <script>
 function getCg(cs){
 	window.location = '/cga.php?'+cs;
 	return true;
 }
 </script>
+EOT;
 
-</head>
-<body>
+echo $Plates->render('body',$meta);
 
-<?php
+//END START
+
 	$clist = ['ic','jr','br','cw','be','wt','hv','sp','ry'];
 	foreach ( $clist as $cg){
 		$cgs[$cg] = LS::getLocName($cg);
@@ -57,6 +52,7 @@ function getCg(cs){
 	$coptions = U::buildOptions($cgs);
 
 if (empty($qs = $_SERVER['QUERY_STRING'])){
+	echo $Plates->render('title',$meta);
 	show_instructions($coptions);
 	exit;
 

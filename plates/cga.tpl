@@ -15,7 +15,9 @@ $last_site1 = '';
 
 <?php foreach ($cga as $loc=>$sites) : ?>
 <h4>Campground Attributes for <?php echo LS::getLocName($loc) . ' ' . TODAY; ?></h4>
-Permitted (size): C=camper; L=trailer; Tx=tent:small,med,large; R=RV; U=pop-up; V=vehicle; <br />
+Data from recreation.gov<br />
+Permitted: C=camper; L=trailer; Tx=tent:small,med,large; R=RV; U=pop-up; V=vehicle; <br />
+
 
 <div class='landscape'>
 	<?php

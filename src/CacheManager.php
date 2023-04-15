@@ -708,8 +708,8 @@ private function permittedEquip(array $permitted) {
 			$eqCode = Defs::getEquipCode($eq['EquipmentName']);
 			if ($eqCode) {
 				$eqDesc = $eqCode;
-				$eqLen = $eq['MaxLength'] ?? 0;
-				if ($eqLen)$eqDesc .= "($eqLen)";
+				//$eqLen = $eq['MaxLength'] ?? 0;
+				//if ($eqLen)$eqDesc .= "($eqLen)";
 				$p[$eqCode] = $eqDesc;
 			}
 	}
