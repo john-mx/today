@@ -30,13 +30,11 @@ $last_site1 = '';
 	}
 </style>
 
-<h3>Campground Attributes</h3>
-Permitted: C=camper; L=trailer; Tx=tent:small,med,large; R=RV; U=pop-up; (size)
-<?php
-	foreach ($cga as $loc=>$sites) :
-	?>
 
-	<h4><?php echo LS::getLocName($loc) . ' ' . TODAY; ?></h4>
+<?php foreach ($cga as $loc=>$sites) : ?>
+<h4>Campground Attributes for <?php echo LS::getLocName($loc) . ' ' . TODAY; ?></h4>
+Permitted: C=camper; L=trailer; Tx=tent:small,med,large; R=RV; U=pop-up; (size)<br />
+
 
 	<?php
 		$lines=0;
@@ -51,7 +49,7 @@ Permitted: C=camper; L=trailer; Tx=tent:small,med,large; R=RV; U=pop-up; (size)
 					</table>
 				<?php endif; ?>
 				<table>
-	<tr><th>Site</th><th>Veh</th><th>Len</th><th>Ppl</th><th>Equip</th></tr>
+	<tr><th>Site</th><th>Veh</th><th>Len</th><th>Ppl</th><th>Permitted</th></tr>
 	<?php
 		endif;
 	 $attr = $sites[$site];
