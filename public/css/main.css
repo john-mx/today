@@ -46,6 +46,14 @@ body {
       padding 0;
 
    }
+   .landscape {
+		@page {
+			size: 11in 8.5in;
+			margin: 0.3in;
+			padding 0;
+		}
+
+	}
    .print-only {display:block;}
 	.no-print {display:none;}
 
@@ -469,7 +477,16 @@ table.header>img {
 	margin:0;
 }
 
+.landscape table {
+		float:left;
+			page-break-inside : avoid;
+			margin-bottom:6px;
+			}
+.landscape		table tr td , table tr th{
+			font-size:9pt;
+			padding:2px;
 
+		}
 
 table tr.left td {text-align:left;}
 table tr td.center {text-align:center;}

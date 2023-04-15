@@ -12,30 +12,12 @@ if (!$cga ){
 }
 $last_site1 = '';
 ?>
-<style>
-@page {
-   	size: 11in 8.5in;
-      margin: 0.3in;
-      padding 0;
-
-
-   }
-	table {float:left;
-		page-break-inside : avoid;
-		margin-bottom:6px;}
-	table tr td , table tr th{
-		font-size:9pt;
-		padding:2px;
-		width:3rem;
-	}
-</style>
-
 
 <?php foreach ($cga as $loc=>$sites) : ?>
 <h4>Campground Attributes for <?php echo LS::getLocName($loc) . ' ' . TODAY; ?></h4>
-Permitted: C=camper; L=trailer; Tx=tent:small,med,large; R=RV; U=pop-up; (size)<br />
+Permitted (size): C=camper; L=trailer; Tx=tent:small,med,large; R=RV; U=pop-up; V=vehicle; <br />
 
-
+<div class='landscape'>
 	<?php
 		$lines=0;
 		foreach (array_keys($sites) as $site):
@@ -67,3 +49,4 @@ Permitted: C=camper; L=trailer; Tx=tent:small,med,large; R=RV; U=pop-up; (size)<
 </table>
 
 <?php endforeach; ?>
+</div>
