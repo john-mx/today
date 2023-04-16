@@ -60,7 +60,7 @@ if (empty($qs = $_SERVER['QUERY_STRING'])){
 } elseif ($qs=='rebuild'){
 	// rebuild attribute file
 
-	$cga = $Camps->rebuild_campsites($clist);
+	$cga = $CM->rebuild_campsites($clist);
 	show_instructions($coptions);
 	exit;
 } elseif (in_array($qs,$clist)){
