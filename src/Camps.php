@@ -14,9 +14,12 @@ class Camps {
 
 private $CM;
 
+private $equipCodes=[];
+
+
 function __construct($c){
 	$this->CM = $c['CacheManager'];
-
+	$this->equipCodes = Defs::$equipmentCodes;
 }
 
 
@@ -147,5 +150,56 @@ public function prepareDisplayCamps(){
 	return $camps;
 
 }
+
+public function parseRecCampsite($loc){
+	// takes campsite attributes returned from rec.gov
+	// and puts key data into an array keyed on campsite
+	$locdata = $this->CM->loadCache('cga');
+	$r = $locdata[$loc];
+	$x=[];
+	//U::echor($r,'r');
+	foreach ($r['RECDATA'] as $cgdata){
+		$site=$cgdata['CampsiteName'];
+		//echo $site . BR;
+
+		foreach ($cgdata['ATTRIBUTES'] as $cgattr) {
+			$attributes[$cgattr['AttributeName']] = $cgattr['AttributeValue'] ?? 'n/a';
+		}
+		$max_length = $attributes['Max Vehicle Length'];
+		$attributes['permitted'] = $this->permittedEquip($cgdata['PERMITTEDEQUIPMENT'],(int) $max_length);
+
+		$x[$site] = $attributes;
+		//U::echor($x,'x',STOP);
+	}
+	ksort ($x, SORT_STRING);
+	return $x;
+}
+
+private function permittedEquip(array $permitted, $max_length) {
+	$equip = '';$eqG=$eqV = [];
+
+	foreach ($permitted as $eq) {
+	//U::echor($permitted,'permitted',STOP);
+			$eqCode = $this->equipCodes[$eq['EquipmentName']];
+			if ($eqCode) {
+				if (in_array($eqCode,['T6','T4','T2','U'])){
+					$eqG[]=$eqCode;
+				} else {
+					$eqDesc = $eqCode;
+					$eqLen = ($eq['MaxLength'] ?? 0) +0;
+					if (($eqLen !== 0) && ($eqLen !== $max_length)) $eqDesc .= "($eqLen)";
+					$eqV[$eqCode] = $eqDesc; #removes dups with same code
+				}
+			}
+	}
+
+	if (in_array('T6',$eqG)) {$eqG = array_diff($eqG,['T4','T2']);}
+	if (in_array('T4',$eqG)) { $eqG = array_diff($eqG,['T2']);}
+
+	asort($eqV); asort ($eqG);
+	$equip = implode('',array_values($eqV)) . ' ' . implode('',$eqG);
+	return $equip;
+}
+
 
 } #end class

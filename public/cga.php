@@ -5,6 +5,7 @@ use DigitalMx\jotr\Definitions as Defs;
 use DigitalMx\jotr\Utilities as U;
 use DigitalMx\jotr\CacheManager as CM;
 use DigitalMx\jotr\LocationSettings as LS;
+use DigitalMx\jotr\Camps;
 
 ini_set('display_errors', 1);
 
@@ -20,6 +21,7 @@ ini_set('display_errors', 1);
 	$Cal = $container['Calendar'];
 	$CM = $container['CacheManager'];
 	$PM = $container['PageManager'];
+	$Camps = $container['Camps'];
 
 
 
@@ -42,8 +44,8 @@ EOT;
 echo $Plates->render('body',$meta);
 
 //END START
-
-	$clist = ['ic','jr','br','cw','be','wt','hv','sp','ry'];
+	// list all campgrounds that have attribute data on rec.gov
+	$clist = ['ic','jr','br','cw','ry','sp'];
 	foreach ( $clist as $cg){
 		$cgs[$cg] = LS::getLocName($cg);
 	}
@@ -55,12 +57,17 @@ if (empty($qs = $_SERVER['QUERY_STRING'])){
 	echo $Plates->render('title',$meta);
 	show_instructions($coptions);
 	exit;
+} elseif ($qs=='rebuild'){
+	// rebuild attribute file
 
+	$cga = $Camps->rebuild_campsites($clist);
+	show_instructions($coptions);
+	exit;
 } elseif (in_array($qs,$clist)){
-	$cga = $CM->rebuild_campsites($qs);
+	//report results
+	$cga = $Camps->parseRecCampsite($qs);
 
-	echo $Plates->render('cga',array_merge($meta,$cga));
-
+	echo $Plates->render('cga',['cga'=>$cga,'loc'=>$qs]);
 	exit;
 } else {
 	echo "Error: $qs campground not found.";
@@ -84,9 +91,10 @@ This data comes directly from recreation.gov, so is the official restriction on 
 <p>
 Select campground: <select name='cache' id ='cselect' onChange='getCg(this.value)'>$coptions</select>
 </p>
-<p>When printing, be sure to select Landscape orientation. There are 75 sites per page.</p>
+<p>When printing, be sure to select Landscape orientation. There are up to 120 sites per page.</p>
 
 <p><a href='/pages.php'>Click to return to page list</a>
+<p><a href='/cga.php?rebuild'>Click</a> to rebuild attribute data file
 <hr>
 Additional site information may be available on this report.  Contact developer for info.  John Springer, john@digitalmx.com.
 EOT;
@@ -94,6 +102,5 @@ EOT;
 
 ?>
 
-
-</body></html>
+}
 

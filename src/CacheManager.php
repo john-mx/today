@@ -646,16 +646,16 @@ public function rebuild_ref_request() {
 	return true;
 }
 
-public function rebuild_campsites($cg) {
+public function rebuild_campsites($locs) {
 	$x=[];
 	$src= 'cga'; // same as ridb2 for api
 	$ok = true;
-	$locs = [$cg];
+
 	$apikey = CS::getKey('ridb');
 	$header = [];
 
 	$api = new Api($src);
-	$attr = [];
+	$attr = [];$locations=[];
 	foreach ($locs as $loc){
 		$facilityID = LS::getFacility($loc);
 		$relurl = 'facilities/' . $facilityID .'/campsites';
@@ -667,49 +667,59 @@ public function rebuild_campsites($cg) {
 // U::echor($r,$loginfo,STOP);
 		} else {
 			Log::notice("Failed to get $loginfo",[$r]);
+			echo "Failed to get $loginfo" . BR;
 			continue;
 		}
-		$this->writeCache('cga',$r);
-		if (!$cgattr = $this->parseRecCampsite($r)){
-			Log::notice("Camps $loginfo has no campsites.",$r);
-			//don't change avaibility for this campground
-		} else{
-			$attr[$loc]  = $cgattr ;
-
-		}
-
+		$attr[$loc]  = $r ;
+		$locations[]=$loc;
 	} # next loc
-// 	U::echor ($attr,'attributes');
-	return ['cga'=>$attr];
+	$this->writeCache('cga',$attr);
+	echo "Wrote cache cga with attributes for " . implode (', ',$locations) . BR;
+	return true;
 }
 
-public function parseRecCampsite($r){
+
+	// 	if (!$cgattr = $this->parseRecCampsite($r)){
+// 			Log::notice("Camps $loginfo has no campsites.",$r);
+// 			echo "Camps $loginfo has no campsites.";
+// 			//don't change avaibility for this campground
+// 		} else{
+//
+// 		}
+
+
+public function parseRecCampsite($loc){
 	// takes campsite attributes returned from rec.gov
 	// and puts key data into an array keyed on campsite
-
+	$locdata = $this->loadCache('cga');
+	$r = $locdata[$loc];
 	$x=[];
+	//U::echor($r,'r');
 	foreach ($r['RECDATA'] as $cgdata){
 		$site=$cgdata['CampsiteName'];
+		echo $site . BR;
+
 		foreach ($cgdata['ATTRIBUTES'] as $cgattr) {
 			$attributes[$cgattr['AttributeName']] = $cgattr['AttributeValue'] ?? 'n/a';
 		}
-		$attributes['permitted'] = $this->permittedEquip($cgdata['PERMITTEDEQUIPMENT']);
+		$max_length = $attributes['Max Vehicle Length'];
+		$attributes['permitted'] = $this->permittedEquip($cgdata['PERMITTEDEQUIPMENT'],$max_length);
 
 		$x[$site] = $attributes;
-//		U::echor($x,'x');
+		//U::echor($x,'x',STOP);
 	}
 	ksort ($x, SORT_STRING);
 	return $x;
 }
 
-private function permittedEquip(array $permitted) {
+private function permittedEquip(array $permitted,$max_length) {
 	$equip = '';$p=[];
 	foreach ($permitted as $eq) {
 			$eqCode = Defs::getEquipCode($eq['EquipmentName']);
 			if ($eqCode) {
 				$eqDesc = $eqCode;
-				//$eqLen = $eq['MaxLength'] ?? 0;
-				//if ($eqLen)$eqDesc .= "($eqLen)";
+				$eqLen = $eq['MaxLength'] ?? 0;
+				if ($eqLen !== $max_length)$eqDesc .= "($eqLen)";
 				$p[$eqCode] = $eqDesc;
 			}
 	}

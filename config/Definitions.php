@@ -173,14 +173,14 @@ public static $data_timeouts = [
 
 
 	public static $equipmentCodes = array (
-	"Tent" => "Tm",
+	"Tent" => "T4",
 	"RV" => "R",
 	"Trailer" => "L",
 	"PICKUP CAMPER" => "C",
 	"CARAVAN/CAMPER VAN" => "C",
 
-	"SMALL TENT" => "Ts",
-	"LARGE TENT OVER 9X12`" => "Tl",
+	"SMALL TENT" => "T2",
+	"LARGE TENT OVER 9X12`" => "T6",
 	"VEHICLE" => "V",
 	"FIFTH WHEEL" => "L",
 	"POP UP" => "U",

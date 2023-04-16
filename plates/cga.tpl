@@ -11,15 +11,17 @@ if (!$cga ){
 	return;
 }
 $last_site1 = '';
+//U::echor($cga,'cga',STOP);
 ?>
 
-<?php foreach ($cga as $loc=>$sites) : ?>
-<h4>Campground Attributes for <?php echo LS::getLocName($loc) . ' ' . TODAY; ?></h4>
-Data from recreation.gov<br />
-Permitted: C=camper; L=trailer; Tx=tent:small,med,large; R=RV; U=pop-up; V=vehicle; <br />
+<?php //foreach ($cga as $loc=>$sites) :
+	$sites = $cga;
+?>
+<div class='landscape page'>
+<b>Campground Attributes for <?php echo LS::getLocName($loc) . ' ' . TODAY; ?></b><br />
+Max length = vehicle length unless (size). Prints one page in landscape. Data from recreation.gov. <br />
+Permitted: C=camper/pickup; L=trailer; R=RV; V=vehicle;  T2,T4,T6=tent:small,med,large; U=pop-up;<br />
 
-
-<div class='landscape'>
 	<?php
 		$lines=0;
 		foreach (array_keys($sites) as $site):
@@ -43,12 +45,11 @@ Permitted: C=camper; L=trailer; Tx=tent:small,med,large; R=RV; U=pop-up; V=vehic
 
 <tr><td><?=$site?></td>
 	<td><?=$attr['Max Num of Vehicles'] ?></td>
-	<td><?=$attr['Max Vehicle Length']?? 'n/a' ?></td>
+	<td><?=$attr['Max Vehicle Length']?? 0 ?></td>
 	<td><?=$attr['Max Num of People'] ?></td>
 	<td><?=$attr['permitted'] ?></td>
 </tr>
 	<?php endforeach ; ?>
 </table>
-
-<?php endforeach; ?>
 </div>
+
