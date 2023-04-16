@@ -90,7 +90,7 @@
 
  -->
 <?php $thisclass = $this->hasAccessClass('refresh.php');?>
-<tr <?=$thisclass?> ><td ><a href='/refresh.php' target='refresh' <?=$thisclass?> >Refresh caches </a></td><td > Updates all the external data (weather, airq, alerts); should run automatically every hour or so. This is an emergency tool. Can force updates of any or all caches regardless of age.</td></tr>
+<tr <?=$thisclass?> ><td ><a href='/refresh.php' target='refresh' <?=$thisclass?> >Refresh caches and other</a></td><td > Updates external data (weather, airq, alerts). Most updates run automatically every hour or so. This is an emergency tool. Can force updates of any or all caches regardless of age. Also update site properties and campground attributes.</td></tr>
 
 <?php $thisclass = $this->hasAccessClass('logview.php');?>
 <tr <?=$thisclass?> ><td ><a href='/logview.php' target='_blank' <?=$thisclass?> >View Logs.</a> </td>
