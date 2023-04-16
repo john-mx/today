@@ -94,7 +94,7 @@ Select campground: <select name='cache' id ='cselect' onChange='getCg(this.value
 <p>When printing, be sure to select Landscape orientation. There are up to 120 sites per page.</p>
 
 <p><a href='/pages.php'>Click to return to page list</a>
-<p><a href='/cga.php?rebuild'>Click</a> to rebuild attribute data file
+
 <hr>
 Additional site information may be available on this report.  Contact developer for info.  John Springer, john@digitalmx.com.
 EOT;

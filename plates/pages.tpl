@@ -81,8 +81,6 @@
 <tr <?=$thisclass?>><td> <a href='/copy_live.php' <?=$thisclass?> >Copy from Live </a></td><td>Copies data (camps, calendar, ranger admin) from live site to this site.</td></tr>
 <?php endif; ?>
 
-<?php $thisclass = $this->hasAccessClass('set_properties.php');?>
-<tr <?=$thisclass?>><td ><a href='/set_properties.php' target='_blank' <?=$thisclass?> >Refresh properties </a> </td><td >gets coordinates, zones, and other data from weather.gov for significant sites. (only used for reference, not live).</td></tr>
 
 <?php $thisclass = $this->hasAccessClass('session.php');?>
 <tr <?=$thisclass?>><td> <a href='/session.php' <?=$thisclass?> >Show Session </a></td><td>Current $_SESSION</td></tr>

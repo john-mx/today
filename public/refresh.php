@@ -68,7 +68,14 @@ Force Refresh <select name='cache' id ='cselect' onChange='getCache(this.value)'
 </p>
 
 <p><a href='/pages.php'>Click to return to page list</a>
+</p>
+<p><b>Other Data</b></p>
+<p><a href='/cga.php?rebuild'>Click</a> to rebuild campground attribute data file</p>
+
+<p><a href='/set_properties.php' target='_blank' >Refresh properties </a>Gets coordinates, zones, and other data from weather.gov for significant sites. (only used for reference, not live).</p>
+
 EOT;
+
 }
 
 ?>
