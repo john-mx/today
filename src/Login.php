@@ -36,47 +36,27 @@ class Login
 	public function __construct(){
 		$this->pwdata = parse_ini_file(REPO_PATH . '/config/'. Defs::getFile('passwords'),true);
 //  		U::echor($this->pwdata);
-		$this->userLevel = $_SESSION['loginLevel'] ?? false ;
+
 
 	}
+
+	public function getUserLevel(){
+		return $_SESSION['loginLevel'] ?? 0;
+	}
+
 	private function getPageLevel($page) {
 		return intval($this->pwdata['pages'][$page] ?? 0);
 	}
 
-	public function checkSite($site) {
-		$siteLevel = $this->pwdata['site'][REPO];
-		if(!siteLevel) return true;
 
-		if (!$this->userLevel):
-			$loginMessage = "Login is required for this site";
-		elseif ($this->userLevel < $siteLevel):
-			$loginMessage = "You need a higher level login for this page.";
-		elseif ((time() - $loginTime) > self::$loginLife):
-			$loginMessage = "Login has expired.";
-			unset ($_SESSION['loginLevel']);
-		else:
-			// reset the login time to now
-			// expires applies to time since last used
-			$_SESSION['loginTime'] = time();
-			return true;
-		endif;
-
-		$this->showLogin($sender,$loginMessage);
-
-
-
-	}
 	public function checkLevel ($sender='') {
 		if (!$sender) throw new \RuntimeException("Cannot check level without sender");
 // 	echo "Checking sender $sender" . BR;
 
-		// check for local user; skip all login tests
-		// REPO is git root; LOCAL is root defined in Initialize
-		if (REPO == LOCAL) {
-			$this->userLevel = 9;
-			return true;
-		}
+
 		$pageLevel = $this->getPageLevel($sender);
+		$userLevel = $this->getUserLevel();
+
 		$loginTime = $_SESSION['loginTime'] ?? 0;
 
 //		echo "ulevel " . $this->userLevel . BR;
@@ -84,9 +64,9 @@ class Login
 
 		if ( !$pageLevel) return true;
 
-		if (!$this->userLevel):
+		if (!$userLevel):
 			$loginMessage = "Login is required for this page.";
-		elseif ($this->userLevel < $pageLevel):
+		elseif ($userLevel < $pageLevel):
 			$loginMessage = "You need a higher level login for this page.";
 		elseif ((time() - $loginTime) > self::$loginLife):
 			$loginMessage = "Login has expired.";
@@ -106,7 +86,9 @@ class Login
 	}
 	public function hasAccess($page){
 		$pageLevel = $this->getPageLevel($page);
-		if ($this->userLevel >= $pageLevel) return true;
+		$userLevel = $this->getUserLevel();
+	//	echo "page $pageLevel; user $userLevel" . BR; exit;
+		if ($userLevel >= $pageLevel) return true;
 		return false;
 
 	}
@@ -139,7 +121,7 @@ EOT;
 
 	private function getLevelFromPw($pw){
 		$pwx = intval($this->pwdata[REPO][$pw] ?? 0); // get level from password
-
+//echo "repo " . REPO . "$pw: $pwx";exit;
 		return $pwx;
 	}
 
@@ -147,7 +129,7 @@ EOT;
 		// look up value from pw table
 // 		U::echor($post,'post');
 		$pw = $post['pw'];
-		$uname = $post['uname'];
+		$uname = $post['username'];
 		$sender = $post['sender'];
 		$uip = $_SERVER['REMOTE_ADDR'];
 		$pwLevel = $this->getLevelFromPw($pw);
@@ -172,7 +154,7 @@ EOT;
 	<form method = 'post' action = '/login.php'>
 	<input type='hidden' name='type' value='login'>
 	<input type='hidden' name='sender' value="$sender">
-	<label>Your name: <input type='text' name='uname'> -->
+	<label>Your name: <input type='text' name='username'> -->
 	<label >Password:  <input type='password' name='pw' id = 'pw' size=10> </label>
 	<input type='submit'>
 	</form>

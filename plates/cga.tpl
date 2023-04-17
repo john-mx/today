@@ -17,10 +17,10 @@ $last_site1 = '';
 <?php //foreach ($cga as $loc=>$sites) :
 	$sites = $cga;
 ?>
-<div class='landscape page'>
+<div class='landscape last-page'>
 <b>Campground Attributes for <?php echo LS::getLocName($loc) . ' ' . TODAY; ?></b><br />
 Max length = vehicle length unless (size). Prints one page in landscape. Data from recreation.gov. <br />
-Permitted: Vehicles: C=Camper/van/pickup; L=Trailer/5th-wh; R=RV; V=vehicle;  Ground: T2,T4,T6=tent:small,med,large; U=pop-up;<br />
+Permitted: C=Camper/van/pickup; L=Trailer/5th-wh; R=RV; V=vehicle;  Ground: T2,T4,T6=tent:small,med,large; U=pop-up;<br />
 
 	<?php
 		$lines=0;

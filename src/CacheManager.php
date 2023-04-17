@@ -688,47 +688,6 @@ public function rebuild_campsites($locs) {
 // 		}
 
 
-public function parseRecCampsite($loc){
-	// takes campsite attributes returned from rec.gov
-	// and puts key data into an array keyed on campsite
-	$locdata = $this->loadCache('cga');
-	$r = $locdata[$loc];
-	$x=[];
-	//U::echor($r,'r');
-	foreach ($r['RECDATA'] as $cgdata){
-		$site=$cgdata['CampsiteName'];
-		echo $site . BR;
-
-		foreach ($cgdata['ATTRIBUTES'] as $cgattr) {
-			$attributes[$cgattr['AttributeName']] = $cgattr['AttributeValue'] ?? 'n/a';
-		}
-		$max_length = $attributes['Max Vehicle Length'];
-		$attributes['permitted'] = $this->permittedEquip($cgdata['PERMITTEDEQUIPMENT'],$max_length);
-
-		$x[$site] = $attributes;
-		//U::echor($x,'x',STOP);
-	}
-	ksort ($x, SORT_STRING);
-	return $x;
-}
-
-private function permittedEquip(array $permitted,$max_length) {
-	$equip = '';$p=[];
-	foreach ($permitted as $eq) {
-			$eqCode = Defs::getEquipCode($eq['EquipmentName']);
-			if ($eqCode) {
-				$eqDesc = $eqCode;
-				$eqLen = $eq['MaxLength'] ?? 0;
-				if ($eqLen !== $max_length)$eqDesc .= "($eqLen)";
-				$p[$eqCode] = $eqDesc;
-			}
-	}
-	if (key_exists('Tl',$p)) {unset($p['Tm']); unset ($p['Ts']);}
-	if (key_exists('Tm',$p)) { unset ($p['Ts']);}
-	asort($p);
-	$equip = implode(array_values($p));
-	return $equip;
-}
 
 
 

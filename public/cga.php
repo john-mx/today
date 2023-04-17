@@ -25,9 +25,10 @@ ini_set('display_errors', 1);
 
 
 
-
+$qs = $_SERVER['QUERY_STRING'];
+$qsx=($qs)? "-$qs":'';
 $meta=array('meta'=>[
-	'file' => basename(__FILE__),
+	'file' => basename(__FILE__) . $qsx,
 	'title' => 'Campsite Attributes',
 	]);
 
@@ -53,7 +54,7 @@ echo $Plates->render('body',$meta);
 // 		U::echor($clist,'clist',STOP);
 	$coptions = U::buildOptions($cgs);
 
-if (empty($qs = $_SERVER['QUERY_STRING'])){
+if (!$qs){
 	echo $Plates->render('title',$meta);
 	show_instructions($coptions);
 	exit;
