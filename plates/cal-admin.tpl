@@ -157,6 +157,7 @@ if (0 && ! LIVE && (PLATFORM == 'remote')){
 <button class='submit' type='submit'>Submit Form</button>
 
 	<h3>Events Copied From NPS Calendar</h3>
+	(You can cancel, hide, and add notes, but not make any other changes to these events.)
 	<table>
 
 <tr><th>Title</th><th>Type</th><th>Duration</th><th style='width:20rem;'>Location</th></tr>

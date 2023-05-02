@@ -73,7 +73,7 @@ It should fit on five pages, each with room for expanding content. (today and al
 	<dt>Live</dt>
 		<dd>This is the live site used for the TV displays or anything intended for public access.</dd>
 	<dt>Jotrx</dt>
-	<dd>This is a "test" site.  It is exactly like the live site, but the data is different.  This is for admin users to make changes on the admin page and see what the results are, without affecting the live site.
+	<dd>This is a "test" site.  It is exactly like the live site, but the data is different.  This is for admin users to make changes on the admin, calendar, or camps page and see what the results are, without affecting the live site.
 	<dt>Beta</dt><dd>This is a site used to test software before it is moved to the live site.
 	<dt>others</dt><dd>There may be other versions of the site used for development
 

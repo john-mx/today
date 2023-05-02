@@ -24,7 +24,7 @@ class Initialize
 
     protected  static $db_ini = '/config/db.ini'; # all the connection params
 	// designate host/repo that represents live site
-	protected $live_id = '[remote:jotr]';
+	protected $live_id = '[remote:live]';
 
     protected $repo;
     protected $site; #/beta.amdflames.org
