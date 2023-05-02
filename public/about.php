@@ -49,8 +49,8 @@ echo $Plates->render('title',$meta);
 <p>Fire Danger is entered manually by rangers.</p>
 <p>Alerts are entered manually, by rangers, but informed by weather.gov alerts for Joshua Tree National Park.</p>
 <p>Notices and Advice are entered manually by rangers</p>
-<p>The Calendar is drawn from the jotr calendar on nps.gov.  That is supplemented by a built-in local calendar, where it is easy to quickly add events not on the nps calendar.  Any of the events can be marked as cancelled; they continue to show on-line but with a "Cancelled" legend.  </p>
-<p>Campground status (reserved, closed) is manually entered by rangers. Availability for reserved sites comes from recreation.gov, updated every 30 minutes. Available sites in First-Come First-Served campgrounds is manually entered.  Tabs next to the availability number indicates the age of the data; data over 12 hours old is removed.</p>
+<p>The Calendar is drawn from the jotr calendar on nps.gov.  That is supplemented by a built-in local calendar, where it is easy to quickly add events not on the nps calendar.  Any of the events can be marked as cancelled; they continue to show on-line but with a "Cancelled" legend.  Note: Calendar events no longer display after their start time has passed, so late in the day, you are likely to see "No Events Scheduled".</p>
+<p>Campground status (reserved, closed) is manually entered by rangers. Availability for reserved sites comes from recreation.gov, updated every 30 minutes. Available sites in First-Come First-Served campgrounds can be manually entered.  Tags next to the availability number indicates the age of the data; data over 12 hours old is removed.</p>
 <p>The web pages all use Google Rubik font. </p>
 
 <h3>Printing Today Pages</h3>
@@ -62,6 +62,7 @@ The page "today.php" can be printed from a web browser, and appropriate pages po
  <li>change the margins to 0.5" on 8.5x11 pages
  <li> reduce the type size,
  <li> remove the "Current temperature" entry.
+ <li> Reformat page headings to NPS print standard.
  </ul>
 It should fit on five pages, each with room for expanding content. (today and alerts on page 1;  weather on page 2,  calendar on page 3; campgrounds on page 4; fees on page 5). Campgrounds page doesn't include site availability, so is fairly static.
 </p>
@@ -73,9 +74,8 @@ It should fit on five pages, each with room for expanding content. (today and al
 	<dt>Live</dt>
 		<dd>This is the live site used for the TV displays or anything intended for public access.</dd>
 	<dt>Jotrx</dt>
-	<dd>This is a "test" site.  It is exactly like the live site, but the data is different.  This is for admin users to make changes on the admin, calendar, or camps page and see what the results are, without affecting the live site.
+	<dd>This is a "test" site.  It is exactly like the live site, but the data can be different.  This is for users to make changes on the admin, calendar, or camps page and see what the results are, without affecting the live site.
 	<dt>Beta</dt><dd>This is a site used to test software before it is moved to the live site.
-	<dt>others</dt><dd>There may be other versions of the site used for development
 
 </dl>
 

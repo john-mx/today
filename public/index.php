@@ -50,9 +50,10 @@ The data is provided in four formats:
 	<li><a href='summary.php' target='summary'>A one-page summary.</a><br />
 	Designed to be posted at Visitor Centers or elsewhere.  Includes weather, announcements, and calendar. </li>
 	<li><a href='today.php' target='today'>A complete web site</a><br />
-	Has more info than the other pages.  Can be viewed on-line or printed as a multi-page document, with one page per topic.  (e.g, fees page, or weather) </li>
+	Can be viewed on-line or printed as a multi-page document, with one page per topic.  (e.g, fees page, or weather) </li>
 
 </ol>
+There are also several individual topic pages that display just one piece of information from the main Today pages.
 <h3>Advantages</h3>
 <ul>
 	<li>	Most of the information is self-updating, using a variety of internet sources such as weather.gov and the eps site.</li>
