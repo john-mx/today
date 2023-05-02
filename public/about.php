@@ -67,6 +67,17 @@ It should fit on five pages, each with room for expanding content. (today and al
 </p>
 <p>If printed to a PDF, then the pdf can easily be distributed electronically</p>
 
+<h3>Web Sites</h3>
+<p>There are (at least) 3 different web sites used for the system:
+<dl>
+	<dt>Live</dt>
+		<dd>This is the live site used for the TV displays or anything intended for public access.</dd>
+	<dt>Jotrx</dt>
+	<dd>This is a "test" site.  It is exactly like the live site, but the data is different.  This is for admin users to make changes on the admin page and see what the results are, without affecting the live site.
+	<dt>Beta</dt><dd>This is a site used to test software before it is moved to the live site.
+	<dt>others</dt><dd>There may be other versions of the site used for development
+
+</dl>
 
 <h3>Help</h3>
 <p>If you want to change any of the information, or if you have any problems or comments, contact John Springer. Phone or text to (503)329-7909 or email john@digitalmx.com.</p>
