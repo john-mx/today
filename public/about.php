@@ -40,7 +40,7 @@ echo $Plates->render('title',$meta);
 </p>
 <p>The site runs on a linux-based server and is built using a language called "PHP", which is commonly used for web sites, including the nps.gov sites for parks.</p>
 
-<img src='/images/structure.jpg' alt='Structure Drawing' width='80%' class='auto'/>
+<div width='100%' class='center'><img src='/images/structure.jpg' alt='Structure Drawing'  class='auto'/></div>
 <h3>Information Sources</h3>
 <p>Weather information comes from both weather.gov (NOAA) and weatherapi.com (commercial site).  The NOAA data is focused better on a geographic area, so it forecasts for Jumbo Rocks, not just 29 palms.  The weatherapi data is substituted if weather.gov fails, but the data is for 29 Palms and Indio, not Jumbo rocks and Cottonwood.</p>
 <p>Current data comes from the sensors at Lost Horse Ranger Station, updated every few hours.  If data is not available, it is reported as "n/a". </p>
