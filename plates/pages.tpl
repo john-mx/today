@@ -9,22 +9,20 @@
 <tr class='bg-yellow'><td colspan='2'>'Today in the Park' Pages</td><td></td></tr>
 
 <tr><td ><a href="/today.php" target='today'>Today Page</a>
-</td><td >Web site with all data on one web page. Can be printed (5 pages). </td></tr>
+</td><td >Web site with all data on one web page. Prints as 5 pages, one for each topic. </td></tr>
 
 <tr><td ><a href="/summary.php" target='summary'>Summary</a>
 </td><td >One page summary of today's conditions, alerts, and events. </td></tr>
 <tr><td ><a href="/summary2.php" target='summary'>Two-page Summary</a>
-</td><td >Includes Summary page, plus a second page with weather for 3 locations, 3 days. </td></tr>
+</td><td >Summary page, plus a second page with weather for 3 locations, 3 days. </td></tr>
 
 <tr><td><a href="/rotate.php" target='rotate'>Rotate</a>
 </td>
-<td> (recommended) Large type version designed for TV. Rotates through topics, changing every 15 seconds.  (You can choose which pages (or just one page) appear in the rotation using the admin page. ) Uses "snap" animation unless url is "/rotate.php?nosnap" </td></tr>
+<td> Large type version designed for TV. Rotates through topics, like a slide show, changing every 15 seconds.  (You can choose which pages (or just one page) appear in the rotation using the admin page. ) </td></tr>
 <tr><td ><a href="/rotate.php?scroll" target='rotate'>Scroll</a>
-</td><td >(not recommended) Rotate page (limited info, large type) scrolls to the bottom, then restarts</td></tr>
+</td><td >(not recommended) Same as Rotate, but slowly scrolls to the bottom, then restarts</td></tr>
 
-
-
-<tr class='bg-yellow'><td colspan='2'>Individual Topics </td></tr>
+<tr class='bg-yellow'><td colspan='2'>Single Topics </td></tr>
 <tr><td><a href='/pager.php?weather' target='topic'>Weather</td><td>3-day forecast, Jumbo Rocks, Black Rock and Cottonwood</tr>
 <tr><td><a href='/pager.php?fees' target='topic'>Fee Schedule</td><td>All fees and where to buy</td></tr>
 <tr><td><a href='/pager.php?events' target='topic'>Calendar</td><td>Events for next 3 days</td></tr>
@@ -35,7 +33,7 @@
 <tr><td><a href='/pager.php?current' target='current'>Current Conditions</td><td>From LHRS</td></tr>
 
 <tr><td colspan='2' class='bg-yellow'>Miscellaneous Pages</td></tr>
-<tr><td><a href="/rotate.php?nosnap" target='snap'>No Rotate</a></td><td>All Rotation pages without the rotation.</td></tr>
+<tr><td><a href="/rotate.php?nosnap" target='snap'>No Rotate</a></td><td>The Rotation page, without the rotation. Mostly useful for testing.</td></tr>
 
 <tr><td><a href="/cga.php" target='attributes'>Campground Attributes</a></td>
 	<td>List of campsites and attributes (max length, etc) for each campground. </td></tr>
