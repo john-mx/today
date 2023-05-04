@@ -104,7 +104,7 @@ class Login
 	</script>
 EOT;
 
-	$this-> showLogin($sender,'');
+	$this-> showLogin($sender,'Leave password blank to access public pages.');
 
 
 }

@@ -87,7 +87,7 @@ $container['Plates']->registerFunction('hasAccess', function ($string)use ($Logi
 		});
 
 $container['Plates']->registerFunction('hasAccessClass', function ($string)use ($Login) {
-			 return ($Login->hasAccess($string)) ? '' : "class='gray noanchor'";
+			 return ($Login->hasAccess($string)) ? '' : "class='gray '"; // was also noanchor
 		});
 
 $container['Plates']->registerFunction('checkLevel', function ($string)use ($Login) {
