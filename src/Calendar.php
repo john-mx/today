@@ -192,7 +192,7 @@ if ($transform == 0){
 	foreach ($events as $event){ #keep if these conditions:
 		// expand events in 3 classes: scheduled, repeating, npscal
 
-		// expand nps events
+		// expand nps events.  they all have dates already
 		if (!empty($event['npsid'])) { // from nps calendar - already limited to 7days
 			foreach ($event['dates'] as $edate){
 				foreach ($event['times'] as $etime) {

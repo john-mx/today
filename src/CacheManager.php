@@ -557,16 +557,26 @@ private function format_nps($rawnps) {
 		if (1) { // code to parse the recurring rule in the nps cal
 			$ev['date'] = $event['recurrencedatestart'];
 			$ev['end'] = $event['recurrencedateend']??'';
-			$rec = $event['recurrencerule'];
-			preg_match('/BYDAY=([\w\,]*);/',$rec,$m);
-			$byday = $m[1];
+			$rec = $event['recurrencerule']?? '';
 			$ev['dayset']=[];
-		//echo $ev['title'] . ' '  .$byday . BR;
-			for ($i=0;$i<=6;++$i){
-				if (strpos($byday,$daylist[$i]) !== false) {
+
+			if (stripos($rec,'FREQ=DAILY') !== FALSE) {
+				for ($i=0;$i<=6;++$i){
 					$ev['dayset'][$i] ='on';
 				}
+			} else {
+				if (preg_match('/BYDAY=([\w\,]*);/',$rec,$m) ){
+					$byday = $m[1];
+
+			//echo $ev['title'] . ' '  .$byday . BR;
+					for ($i=0;$i<=6;++$i){
+						if (strpos($byday,$daylist[$i]) !== false) {
+							$ev['dayset'][$i] ='on';
+						}
+					}
+				}
 			}
+// 			U::echor ($ev['dayset'],'dayset');
 		}
 
 		//date and time can have multiples in one record

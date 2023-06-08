@@ -59,7 +59,7 @@ foreach ($calendar as $event){
 <?php endif; ?>
 
 	<td class='center'><?=$eventtime?>
-<?php if ($event['status']=='Cancelled'): ?> <br /><span class='red'><b>Cancelled!</b></span><?php endif; ?>
+<?php if ($event['status']=='Cancelled'): ?> <br /><span class='red'><b> </b></span><?php endif; ?>
 
 	</td>
 	<td class='left'>
@@ -89,5 +89,6 @@ foreach ($calendar as $event){
 </tbody>
 
 </table>
-<div>For reservations, go to recreation.gov or call 1-877-444-6777.</div>
+<div>
+For events marked "Reservation Required", visit recreation.gov or call 877-444-6777.</div>
 <?php endif; ?>

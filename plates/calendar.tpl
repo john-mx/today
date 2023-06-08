@@ -80,8 +80,10 @@ if(empty($calendar['events'])) : echo "<p class='inleft2'>No Events Scheduled</p
 
 </table>
 <?php if (!$cal1day): ?>
-<div><span class='red'>For reservations</span>, go to recreation.gov or call 1-877-444-6777. <br />
-# local items not on nps calendar.</div>
+<div>
+For events marked <span class='red'>"Reservation Required"</span>, go to recreation.gov or call <nobr>877-444-6777</nobr><br />
+# local items not on nps calendar.
+</div>
 <?php endif; ?>
 <?php endif; ?>
 </div>

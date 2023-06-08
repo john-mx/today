@@ -104,6 +104,8 @@ public static $coordinates = [
         'airowm' => '302eb76fa7f85542bce7c866c1e3b241',
         'nps' => 'd0hnF83GzfCqXdZqUQMStNc9kR77Vcwo0wJAMsC2',
         'willy' => 'NDdiZThiZmM2NWEzNzMyYWZmMGY0NG',
+        // for project 'today'
+        'google' => 'AIzaSyB2n2lCfNL0Zuk6ju8NcobS-tWO4VeaULI',
 
 
 
