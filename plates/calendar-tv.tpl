@@ -90,5 +90,5 @@ foreach ($calendar as $event){
 
 </table>
 <div>
-For events marked "Reservation Required", visit recreation.gov or call 877-444-6777.</div>
+For events marked <span class='red'>"Reservation Required"</span>, go to recreation.gov or call <nobr>877-444-6777</nobr></div>
 <?php endif; ?>
