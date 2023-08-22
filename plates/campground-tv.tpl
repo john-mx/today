@@ -13,7 +13,7 @@ endif;
 
 <h3>Campgrounds
 <?php if ($camps['total_open'] == 0) : ?>
-	<span class='red'><b>ALL CAMPGROUNDS ARE FULL!</b></span>
+	<span class='red'><b>No Campsites Are Availabile.</b></span>
 <?php endif; ?>
 </h3>
 

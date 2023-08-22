@@ -189,3 +189,11 @@ Weatherbit alerts, forecast
 weatherbit.io
 user: jorygun
 apikey: fadae99f3f834942980eceec7637925b
+
+
+weatherapi.com
+https://www.weatherapi.com/docs/
+
+key: 098273e9f48149029c4141515220107
+url: https://api.weatherapi.com/v1/forecast.json
+
