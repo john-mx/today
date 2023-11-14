@@ -3,6 +3,7 @@
 namespace DigitalMx\jotr;
 use \DigitalMx\jotr\Definitions as Defs;
 use DigitalMx\jotr\LocationSettings as LS;
+use DigitalMx\jotr\Utilities as U;
 
 
 /*
@@ -40,6 +41,7 @@ class Initialize
        // $this->setIncludes($paths['repo'] );
         $this->setConstants();
       #  $this->startLogger();
+
 
     }
 
@@ -100,6 +102,14 @@ class Initialize
 
 			define ('LIVE', (REPO_ID == $this->live_id));
 			//echo REPO_ID; echo LIVE?'true':'false';exit;
+
+			// add api keys to evn
+			// $envapi = REPO_PATH . "/.envapi";
+// 			echo "$envapi  ";
+			if (!$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__) )
+				die ("Could not create dotenv");
+			if (! $dotenv->load() ) die ("dotenv did not load");
+      //	U::echor($_ENV); exit;
     }
 
  	private function setPlatform(){

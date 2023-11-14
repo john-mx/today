@@ -1,5 +1,6 @@
 <?php
 namespace DigitalMx\jotr;
+use DigitalMx\jotr\Utilities as U;
 
 /* This file contains tables of names, lists, etc
 	used throughout the site and grouped into
@@ -94,22 +95,13 @@ public static $coordinates = [
 	'lhrs' => '34.01779,-116.18857',
 ];
 
-	public static $api_keys = array (
-		'airnow' => '7FB4BEFF-A568-4FE4-8E67-F1EE36B5C04B',
-		'airnowfc' => '7FB4BEFF-A568-4FE4-8E67-F1EE36B5C04B',
-		 'weatherapi' => '098273e9f48149029c4141515220107',
-        'openweathermap' => '8f15b8d7833c050a41538d5b0ee4204a',
-        'iqair' => '8e4fb9bb-1502-4711-b3d7-f98447082dcf',
-        'ridb' => '3c4e8e8a-10d0-4512-8459-c79fe9d9a8b1',
-        'airowm' => '302eb76fa7f85542bce7c866c1e3b241',
-        'nps' => 'd0hnF83GzfCqXdZqUQMStNc9kR77Vcwo0wJAMsC2',
-        'willy' => 'NDdiZThiZmM2NWEzNzMyYWZmMGY0NG',
-        // for project 'today'
-        'google' => 'AIzaSyB2n2lCfNL0Zuk6ju8NcobS-tWO4VeaULI',
+/* API keys Moved to .env file
+
+
+*/
 
 
 
-      );
 
 // recreation.gov facility codes
 	public static $facilityCodes = array (
@@ -198,7 +190,14 @@ public static $coordinates = [
 	}
 
 	public static function getKey($site){
-		return self::$api_keys[$site] ?? '';
+		$envsite = $site . '_api';
+		if (!$key = $_ENV[$envsite] ) {
+			echo "No api key for site $site in envapi:";
+			U::echor($_ENV);
+			exit;
+		}
+		return $key;
+		//return self::$api_keys[$site] ?? '';
 	}
 
 	public static function getFacility($fcode){
